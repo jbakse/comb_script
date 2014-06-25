@@ -70,24 +70,25 @@ Region.prototype.preview = function(_parentContext) {
 	// find context
 	var context = _parentContext.deriveContext(this.properties);
 
-	if (this.properties.log) console.log("Log of " + this.properties.name,context);
+	if (this.properties.log) console.log("Log of " + this.properties.name + " context.",context);
 
 	// draw children
 	this.previewChildren(context);
 
 	// draw bounds
-	var boundsRect = context.bounds.clone();
-	boundsRect.x += context.position.x;
-	boundsRect.y += context.position.y;
-	var boundsPath = new paper.Path.Rectangle(boundsRect);
+	// var boundsRect = context.bounds.clone();
+	// boundsRect.x += context.position.x;
+	// boundsRect.y += context.position.y;
+	var boundsPath = new paper.Path.Rectangle(context.bounds);
 	boundsPath.strokeColor = this.typeProperties.strokeColor;
 	boundsPath.strokeWidth = 0.25;
 
 	// todo only if not identity
+	
 	boundsPath.transform(context.matrix);
 	
 	// draw rect
-	var positionRect = new paper.Rectangle(context.position.x - 0.5, context.position.y - 0.5, 1, 1);
+	var positionRect = new paper.Rectangle(-0.5, -0.5, 1, 1);
 	var positionPath = new paper.Path.Ellipse(positionRect);
 	positionPath.strokeColor = this.typeProperties.strokeColor;
 	positionPath.strokeWidth = 0.25;

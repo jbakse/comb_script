@@ -6,30 +6,15 @@ children:
             name: dimensions
             width: 200
             height: 200
+            log: true
 
         children:
             - region:
                 properties:
                     name: child
-                    margin_top: 0
+                    margin_top: 10
                     width: 50
-                    height: 75
+                    height: 50
+                    log: true
                     rotation: 45
-                children: &grandchildren
-                    - region:
-                        properties:
-                            margin_bottom: 0
-                            width: 10
-                            height: 10
-                            rotation: 45
-                            # registration: center
 
-            - region:
-                properties:
-                    name: child
-                    margin_bottom: 0
-                    width: 50
-                    height: 75
-                    rotation: 45
-                    registration: center
-                children: *grandchildren

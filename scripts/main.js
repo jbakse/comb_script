@@ -44,24 +44,24 @@ function parseYAML(_yaml) {
 	console.log("Tree");
 	console.log(d.tree());
 
-	var context = new Context(
-					new paper.Point(200, 200), 
-				    new paper.Rectangle(new paper.Point(-200,-200), new paper.Point(200, 200))
+	var context = new Context( 
+				    new paper.Rectangle(new paper.Point(-200,-200), new paper.Point(200, 200)),
+				    (new paper.Matrix()).translate(200, 200)
 				    );
 	
 
 	
 
 	
-	output = d.build(context);
+	// output = d.build(context);
 
-	var outputLayer = new paper.Layer();
-	_.each(output, function(path) {
-		outputLayer.addChild(path);
-		outputLayer.strokeColor = "black";
-		outputLayer.fillColor = new paper.Color(1, 1, 0, 0.1);
+	// var outputLayer = new paper.Layer();
+	// _.each(output, function(path) {
+	// 	outputLayer.addChild(path);
+	// 	outputLayer.strokeColor = "black";
+	// 	outputLayer.fillColor = new paper.Color(1, 1, 0, 0.1);
 
-	});
+	// });
 
 
 	

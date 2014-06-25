@@ -1,36 +1,27 @@
-function Context(_position, _bounds) {
-	this.position = new paper.Point(0, 0);
-	this.bounds = new paper.Rectangle(0, 0, 0, 0);
-	this.matrix = new paper.Matrix();
-
-	if (_position) {
-		this.position = _position;
-	}
-	if (_bounds) {
-		this.bounds = _bounds;
-	}
+function Context(_bounds, _matrix) {
+	this.bounds = _bounds || new paper.Rectangle(0, 0, 0, 0);
+	this.matrix = _matrix || new paper.Matrix();
 }
 
 Context.prototype.toString = function() {
-	return "Context " + this.position + this.bounds;
+	return "Context: " + this.bounds;
 };
 
-Context.prototype.globalBounds = function() {
-	var globalBounds = this.bounds.clone();
-	globalBounds.x += this.position.x;
-	globalBounds.y += this.position.y;
-	return globalBounds;
-};
+// Context.prototype.globalBounds = function() {
+// 	var globalBounds = this.bounds.clone();
+// 	globalBounds.x += this.position.x;
+// 	globalBounds.y += this.position.y;
+// 	return globalBounds;
+// };
 
 
 // currentPosition this.globalP
 
 
-function deriveBound(parentBound, parentPosition, parentOppositeBound, positionRelative, boundRelative, oppositePositionRelative, oppositeBoundRelative, dimension, direction)
-{
+function deriveBound(parentBound, parentOppositeBound, positionRelative, boundRelative, oppositePositionRelative, oppositeBoundRelative, dimension, direction) {
 
 	if (typeof positionRelative === "number") {
-		return parentPosition + positionRelative;
+		return positionRelative;
 	}
 
 	else if (typeof boundRelative === "number") {
@@ -38,7 +29,7 @@ function deriveBound(parentBound, parentPosition, parentOppositeBound, positionR
 	}
 
 	else if (typeof oppositePositionRelative === "number" && typeof dimension === "number") {
-		return  parentPosition + oppositePositionRelative + dimension * direction;
+		return oppositePositionRelative + dimension * direction;
 	}
 
 	else if (typeof oppositeBoundRelative === "number" && typeof dimension === "number") {
@@ -46,59 +37,62 @@ function deriveBound(parentBound, parentPosition, parentOppositeBound, positionR
 	}
 
 	else if (typeof dimension === "number") {
-		return  parentPosition + (dimension * 0.5 * direction);
+		return (dimension * 0.5 * direction);
 	}
 
 	else if (typeof oppositePositionRelative === "number") {
-		return parentPosition + oppositePositionRelative;
+		return oppositePositionRelative;
 	}
-
+	
 	else {
 		return parentBound;
 	}
 }
 
+
 Context.prototype.deriveContext = function(_properties) {
-	
+
 	var global_top, global_bottom, global_left, global_right;
 
-	var globalBounds = new paper.Rectangle(0,0,0,0);
+	var derivedBounds = new paper.Rectangle(0, 0, 0, 0);
 
-	globalBounds.top = deriveBound(
-		this.globalBounds().top, this.position.y, this.globalBounds().bottom, 
+	derivedBounds.top = deriveBound(
+		this.bounds.top, this.bounds.bottom,
 		_properties.top, _properties.margin_top, _properties.bottom, _properties.margin_bottom, _properties.height, -1
 	);
-	
-	globalBounds.bottom = deriveBound(
-		this.globalBounds().bottom, this.position.y, this.globalBounds().top, 
+
+
+	derivedBounds.bottom = deriveBound(
+		this.bounds.bottom, this.bounds.top,
 		_properties.bottom, _properties.margin_bottom, _properties.top, _properties.margin_top, _properties.height, 1
 	);
-	
-	globalBounds.left = deriveBound(
-		this.globalBounds().left, this.position.x, this.globalBounds().right, 
+
+	derivedBounds.left = deriveBound(
+		this.bounds.left, this.bounds.right,
 		_properties.left, _properties.margin_left, _properties.right, _properties.margin_right, _properties.width, -1
 	);
 
-	globalBounds.right = deriveBound(
-		this.globalBounds().right, this.position.x, this.globalBounds().left, 
+	derivedBounds.right = deriveBound(
+		this.bounds.right, this.bounds.left,
 		_properties.right, _properties.margin_right, _properties.left, _properties.margin_left, _properties.width, 1
 	);
 
 
 
 	// Calc registration
-	var position = this.position;
+	var position = new paper.Point(0, 0);
 
 	if (_properties.registration === "center") {
 		position = globalBounds.center;
+		//and we got to update the transofrm
 	}
 
 	// make bounds relative
-	var relativeBounds = globalBounds.clone();
-	relativeBounds.x -= position.x;
-	relativeBounds.y -= position.y;
+	var newBounds = derivedBounds.clone();
+	newBounds.x -= position.x;
+	newBounds.y -= position.y;
 
-	var derivedContext = new Context(position, relativeBounds);
+	var derivedContext = new Context(newBounds);
 
 
 	derivedContext.matrix = this.matrix.clone();
@@ -106,7 +100,6 @@ Context.prototype.deriveContext = function(_properties) {
 	if (_properties.rotation) {
 		derivedContext.matrix.rotate(_properties.rotation, derivedContext.position);
 	}
-
 
 	return derivedContext;
 };
