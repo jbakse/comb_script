@@ -11,6 +11,10 @@ First Priority
 
 ----	Github it
 
+change context to be current matrix relative always. drop the positoin (thats part of translate)
+	get rid of registration
+
+should preview be responsible for transforming?
 
 Shapes
 +-	rectangle
@@ -82,7 +86,7 @@ Sketching:
 -	Openscad is awesome
 -	YAML is suprisingly powerful and awesome
 -	Illustrator is frustrating
+-	Comb Script
+	The BEST Way to Design a Comb
 
 
-change context to be current matrix relative always. drop the positoin (thats part of translate)
-	get rid of registration

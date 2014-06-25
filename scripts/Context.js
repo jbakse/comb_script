@@ -26,40 +26,30 @@ Context.prototype.globalBounds = function() {
 // currentPosition this.globalP
 
 
-function deriveBound(parentBound, parentPosition, parentOppositeBound, positionRelative, boundRelative, oppositePositionRelative, oppositeBoundRelative, dimension)
-{	//positionRelative, boundRelative, oppositePositionRelative, oppositeBoundRelative, dimension
-	
-	var direction = (parentBound - parentOppositeBound) > 0 ? 1 : -1;
-
-	console.log("db", parentBound, parentPosition, parentOppositeBound, positionRelative, boundRelative, oppositePositionRelative, oppositeBoundRelative, dimension);
+function deriveBound(parentBound, parentPosition, parentOppositeBound, positionRelative, boundRelative, oppositePositionRelative, oppositeBoundRelative, dimension, direction)
+{
 
 	if (typeof positionRelative === "number") {
-		console.log("if (positionRelative) {");
 		return parentPosition + positionRelative;
 	}
 
 	else if (typeof boundRelative === "number") {
-		console.log("else if (boundRelative) {");
-		return parentBound + boundRelative;
+		return parentBound + boundRelative * -direction;
 	}
 
 	else if (typeof oppositePositionRelative === "number" && typeof dimension === "number") {
-		console.log("else if (oppositePositionRelative && dimension) {");
 		return  parentPosition + oppositePositionRelative + dimension * direction;
 	}
 
 	else if (typeof oppositeBoundRelative === "number" && typeof dimension === "number") {
-		console.log("else if (oppositeBoundRelative && dimension) {");
 		return (parentOppositeBound + oppositeBoundRelative * direction) + dimension * direction;
 	}
 
 	else if (typeof dimension === "number") {
-		console.log("else if (dimension) {");
 		return  parentPosition + (dimension * 0.5 * direction);
 	}
 
 	else if (typeof oppositePositionRelative === "number") {
-		console.log("else if (oppositePositionRelative) {");
 		return parentPosition + oppositePositionRelative;
 	}
 
@@ -72,40 +62,28 @@ Context.prototype.deriveContext = function(_properties) {
 	
 	var global_top, global_bottom, global_left, global_right;
 
-	// var position = new paper.Point(0,0);
 	var globalBounds = new paper.Rectangle(0,0,0,0);
 
-
-	console.log("_p", _properties);
-
-	console.log("check globalBounds.top");
 	globalBounds.top = deriveBound(
 		this.globalBounds().top, this.position.y, this.globalBounds().bottom, 
-		_properties.top, _properties.margin_top, _properties.bottom, _properties.margin_bottom, _properties.height
-	);
-
-	console.log("check globalBounds.bottom");
-	globalBounds.bottom = deriveBound(
-		this.globalBounds().bottom, this.position.y, this.globalBounds().top, 
-		_properties.bottom, _properties.margin_bottom, _properties.top, _properties.margin_top, _properties.height
+		_properties.top, _properties.margin_top, _properties.bottom, _properties.margin_bottom, _properties.height, -1
 	);
 	
-
-	console.log("check globalBounds.left");
+	globalBounds.bottom = deriveBound(
+		this.globalBounds().bottom, this.position.y, this.globalBounds().top, 
+		_properties.bottom, _properties.margin_bottom, _properties.top, _properties.margin_top, _properties.height, 1
+	);
+	
 	globalBounds.left = deriveBound(
 		this.globalBounds().left, this.position.x, this.globalBounds().right, 
-		_properties.left, _properties.margin_left, _properties.right, _properties.margin_right, _properties.width
+		_properties.left, _properties.margin_left, _properties.right, _properties.margin_right, _properties.width, -1
 	);
-	console.log("left:", globalBounds.left);
 
-	console.log("check globalBounds.right");
 	globalBounds.right = deriveBound(
 		this.globalBounds().right, this.position.x, this.globalBounds().left, 
-		_properties.right, _properties.margin_right, _properties.left, _properties.margin_left, _properties.width
+		_properties.right, _properties.margin_right, _properties.left, _properties.margin_left, _properties.width, 1
 	);
-	console.log("right:", globalBounds.right);
 
-	console.log("derived bounds", globalBounds);
 
 
 	// Calc registration

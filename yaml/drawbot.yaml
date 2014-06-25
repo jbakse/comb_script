@@ -43,9 +43,9 @@ children:
                             width: 3
             - region:
                 properties:
-                    name: bearing_mount
+                    name: bearing_mount_1
                     margin_right: 14
-                    margin_bottom: 11
+                    margin_top: 11
                     width: 0
                     height: 0
                     registration: center
@@ -56,7 +56,7 @@ children:
                 properties:
                     name: bearing_mount
                     margin_right: 14
-                    margin_top: 11
+                    margin_bottom: 11
                     width: 0
                     height: 0
                     registration: center

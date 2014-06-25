@@ -70,7 +70,8 @@ Region.prototype.preview = function(_parentContext) {
 	// find context
 	var context = _parentContext.deriveContext(this.properties);
 
-	console.log(this.properties.name, context);
+	if (this.properties.log) console.log("Log of " + this.properties.name,context);
+
 	// draw children
 	this.previewChildren(context);
 

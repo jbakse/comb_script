@@ -12,55 +12,38 @@ children:
             # - ellipse:
             - region:
                 properties:
-                    name: bar_1
-                    margin_left: 10
-                    width: 100
-                    height: 100
+                    name: cross
+                    width: 0
+                    height: 0
+                    margin_left: 100
                     registration: center
-                    rotation: -60
-                children: &cross_bar
+                    rotation: 45
+                children:
                     - region:
                         properties:
-                            height: 20
+                            name: bar_1
+                            width: 100
+                        children: &cross_bar
+                            - region:
+                                properties:
+                                    height: 20
+                            - region:
+                                properties:
+                                    margin_left: 0
+                                    width: 20
+                                    height: 40
+                            - region:
+                                properties:
+                                    margin_right: 0
+                                    width: 20
+                                    height: 40
+                                    rotation: 45
+                                    registration: center
                     - region:
                         properties:
-                            margin_left: 0
-                            width: 20
-                            height: 40
-                    - region:
-                        properties:
-                            margin_right: 0
-                            width: 20
-                            height: 40
-            - region:
-                properties:
-                    name: bar_1
-                    margin_left: 10
-                    width: 100
-                    height: 100
-                    registration: center
-                    rotation: 30
-                children: &cross_bar
-                    - region:
-                        properties:
-                            height: 20
-                    - region:
-                        properties:
-                            margin_left: 0
-                            width: 20
-                            height: 40
-                    - region:
-                        properties:
-                            margin_right: 0
-                            width: 20
-                            height: 40
-
-            # - region:
-            #     properties:
-            #         margin_left: 0
-            #         width: 100
-            #         height: 100
-            #         registration: center
-            #     children: *cross_bar
+                            name: bar_2
+                            rotation: 90
+                            width: 200
+                        children: *cross_bar
 
 
