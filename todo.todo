@@ -22,8 +22,8 @@ Shapes
 --	import svg
 
 Transform
----	translate
----	rotate
+----	translate
++---	rotate
 ---	scale
 ---	mirror
 
@@ -82,3 +82,7 @@ Sketching:
 -	Openscad is awesome
 -	YAML is suprisingly powerful and awesome
 -	Illustrator is frustrating
+
+
+change context to be current matrix relative always. drop the positoin (thats part of translate)
+	get rid of registration
