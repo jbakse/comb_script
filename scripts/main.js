@@ -5,7 +5,7 @@ var _ = require('underscore');
 var Region = require('./Region.js');
 var Context = require('./Context.js');
 
-var file_url = "../yaml/transform2.yaml";
+var file_url = "../yaml/simple.yaml";
 
 // kick
 $( function() {

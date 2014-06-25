@@ -37,8 +37,6 @@ children:
                                     margin_right: 0
                                     width: 20
                                     height: 40
-                                    rotation: 45
-                                    registration: center
                     - region:
                         properties:
                             name: bar_2
