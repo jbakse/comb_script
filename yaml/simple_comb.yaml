@@ -1,0 +1,35 @@
+children:
+    - region:
+        properties:
+            id: comb
+            width: 400
+            height: 100
+            x: 100
+        children:
+            - rectangle:
+            - region:
+                properties:
+                    id: teeth
+                    margin_left: 20
+                    margin_right: 20
+                    margin_top: 20
+                    margin_bottom: -20
+                    col_width: 10
+                    rows: 1
+                children:
+                    - rectangle:
+                        properties:
+                            corner_radius: 4
+            - region:
+                properties:
+                    id: handle
+                    margin_left: -100
+                    width: 100
+                    margin_top: 0
+                    margin_bottom: 50
+                children:
+                    - rectangle:
+
+    - region:
+        properties:
+            id: second

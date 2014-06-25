@@ -1,0 +1,31 @@
+
+children:
+    - region:
+        properties:
+            name: comb_dimensions
+            width: 400
+            height: 100
+            boolean: add
+        children:
+            - rectangle:
+                properties:
+                    margin_left: 0
+                    margin_top: 0
+                    width: 110
+                    height: 20
+            - region:
+                properties:
+                    margin_right: 0
+                    margin_top: 0
+                    width: 300
+                    boolean: subtract
+                children:
+                    - rectangle:
+                    - rectangle:
+                        properties:
+                            margin_top: 20
+                            margin_left: 20
+                            margin_right: 20
+                            margin_bottom: -10
+
+

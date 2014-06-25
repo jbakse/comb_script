@@ -1,0 +1,9 @@
+
+library:
+  - &func
+      height: 10
+      width: 10
+
+anotherlist:
+  - << : *func    # merge *sites into this mapping
+    height: 15

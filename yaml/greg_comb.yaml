@@ -1,0 +1,51 @@
+properties:
+    name: simple.yaml
+children:
+    - region:
+        properties:
+            name: comb
+            left: -100
+            width: 200
+            height: 350
+        children:
+            - region:
+                properties:
+                    name: handle
+                    margin_top: 0
+                    left: -50
+                    width: 100
+                    height: 155
+                children:
+                    - rectangle:
+            - region:
+                properties:
+                    name: body
+                    margin_bottom: 0
+                    margin_left: 10
+                    margin_right: 10
+                    margin_top: 150
+                children:
+                    - rectangle:
+                        properties:
+                            boolean: unite
+                    - region_grid:
+                        properties:
+                            name: teeth
+                            margin_bottom: 0
+                            margin_left: 10
+                            margin_right: 10
+                            margin_top: 50
+                            rows: 1
+                            cols: 3
+                        children:
+                            - region:
+                                properties:
+                                    name: tooth
+                                    margin_top: 12
+                                    margin_bottom: -4
+                                    margin_left: 6
+                                    margin_right: 6
+                                children:
+                                    - rectangle:
+                                        properties:
+                                            boolean: subtract

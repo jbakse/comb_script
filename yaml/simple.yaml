@@ -1,0 +1,24 @@
+properties:
+    name: simple.yaml
+children:
+    - region:
+        properties:
+            name: base
+            width: 200
+            height: 100
+
+    - region:
+        properties:
+            name: base2
+            width: 100
+            height: 200
+
+        children:
+            - region:
+                properties:
+                    name: kid
+                    margin_top: 10
+                    margin_bottom: 10
+                    margin_left: -10
+                    width: 20
+                    rotate: 45

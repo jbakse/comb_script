@@ -1,0 +1,35 @@
+
+properties:
+    name: boolean.yaml
+
+library:
+    - &inseter
+        properties:
+            name: main
+            margin_left: 5
+            margin_right: 5
+            margin_top: 5
+            margin_bottom: 5
+
+
+children:
+
+
+    - region:
+        variables:
+            test: 10
+            test2: 20
+        properties:
+            name: main
+            width: 300
+            height: 300
+        children:
+            - rectangle: *inseter
+            - region:
+                properties:
+                    width: 100
+                    height: 100
+                    margin_left: 0
+                    margin_top: 0
+                children: 
+                    - region: *inseter

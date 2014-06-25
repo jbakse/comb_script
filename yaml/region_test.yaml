@@ -1,0 +1,31 @@
+properties:
+    name: root_doc
+
+children:
+    - region:
+        properties:
+            name: one
+            x: 0
+            y: 0
+            top: 0
+            left: 0
+            height: 50
+            width: 100
+
+    - region:
+        properties:
+            name: two
+            x: 50
+            y: 75
+            top: -25
+            left: -50
+            height: 50
+            width: 100
+
+    - region:
+        properties:
+            name: three
+            top: 100
+            bottom: 150
+            left: 0
+            right: 100

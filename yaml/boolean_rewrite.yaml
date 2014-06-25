@@ -1,0 +1,41 @@
+
+properties:
+    name: boolean.yaml
+
+
+
+children:
+    - region:
+        variables:
+            width: &width  200
+        properties:
+            name: main
+            width: *width
+            height: 100
+            boolean: add
+        children:
+            - region:
+                properties:
+                    boolean: subtract
+                    name: base
+                children:
+                    - rectangle:
+                    - rectangle:
+                        properties:
+                            name: notch
+                            margin_top: -10
+                            width: 50
+                            height: 20
+                    - rectangle:
+                        properties:
+                            name: notch
+                            margin_bottom: -10
+                            width: 50
+                            height: 20
+            - rectangle:
+                properties:
+                    name: tab
+                    margin_left: -10
+                    margin_right: -10
+                    height: 50
+

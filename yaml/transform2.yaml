@@ -1,0 +1,42 @@
+properties:
+    name: transform2.yaml
+
+children:
+    - region:
+        properties:
+            name: dimension
+            width:  300
+            height: 300
+            boolean: add
+        children:
+            - ellipse:
+            - region:
+                properties:
+                    name: bar_1
+                    margin_left: 0
+                    width: 100
+                    height: 100
+                    registration: center
+                children: &cross_bar
+                    - region:
+                        properties:
+                            height: 20
+                    - region:
+                        properties:
+                            margin_left: 0
+                            width: 20
+                            height: 80
+                    - region:
+                        properties:
+                            margin_right: 0
+                            width: 20
+                            height: 30
+            # - region:
+            #     properties:
+            #         margin_left: 0
+            #         width: 100
+            #         height: 100
+            #         registration: center
+            #     children: *cross_bar
+
+

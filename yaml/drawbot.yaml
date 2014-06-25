@@ -1,0 +1,84 @@
+properties:
+    name: drawbot.yaml
+
+
+library:
+    - &m3pass
+        ellipse:
+            properties:
+                name: m3Pass
+                height: 3
+                width: 3
+
+children:
+    - region:
+        properties:
+            name: dimensions
+            width: 53
+            height: 64
+            boolean: subtract
+        children:
+            - rectangle:
+                properties:
+                    name: main
+                    radius: 3
+
+            - region:
+                properties:
+                    name: belt_attachment
+                    left: 4.5
+                    width: 3
+                    registration: center
+                children:
+                    - *m3pass
+                    - rectangle:
+                        properties:
+                            margin_top: -1
+                            height: 9
+                            width: 3
+                    - rectangle:
+                        properties:
+                            margin_bottom: -1
+                            height: 9
+                            width: 3
+            - region:
+                properties:
+                    name: bearing_mount
+                    margin_right: 14
+                    margin_bottom: 11
+                    width: 0
+                    height: 0
+                    registration: center
+                children:
+                    - *m3pass
+
+            - region:
+                properties:
+                    name: bearing_mount
+                    margin_right: 14
+                    margin_top: 11
+                    width: 0
+                    height: 0
+                    registration: center
+                children:
+                    - *m3pass
+
+            - region:
+                properties:
+                    name: bearing_mount
+                    margin_left: 14
+                    width: 0
+                    height: 0
+                    registration: center
+                children:
+                    - *m3pass
+
+            - region_grid:
+                properties:
+                    name: taps
+                    margin_left: 5
+                    width: 8
+                    row_height: 8
+                children:
+                    - *m3pass
+

@@ -1,0 +1,40 @@
+
+properties:
+    name: boolean.yaml
+
+
+
+children:
+    - region:
+        properties:
+            name: main
+            width:  200
+            height: 200
+            boolean: add
+        children:
+            - region:
+                properties:
+                    name: child
+                    margin_right: -50
+                    height: 100
+                    width: 100
+                    rotation: -45
+                    registration: center
+                children:
+                    - region:
+                        properties:
+                            name: grandchild
+                            x: 50
+                            height: 50
+                            width: 50
+                            rotation: 45
+                            registration: center
+                    - region:
+                        properties:
+                            name: grandchild
+                            y: 50
+                            height: 50
+                            width: 50
+                            rotation: 45
+                            registration: center
+

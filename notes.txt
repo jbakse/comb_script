@@ -1,0 +1,23 @@
+to calculate "top" we need
+- top
+- margin_top
+- bottom, height
+- margin_bottom, height
+- height (either half up (cenered reg), or 0 up (ul reg))
+- nothing (either zero or context)
+
+
+http://zaach.github.io/jison/demos/calc/
+
+
+_.each(this.properties, function(value, key, object) {
+			if (typeof value === "string" && value.charAt(0) === "=") {
+				with(this.variables) {
+					object[key] =  eval(value.substr(1)) ;
+				}
+			}
+		}
+
+
+
+
