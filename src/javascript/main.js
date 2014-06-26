@@ -3,7 +3,7 @@ var _ = require('underscore');
 var Region = require('./Region.js');
 var Context = require('./Context.js');
 
-var file_url = "../yaml/drawbot.yaml";
+var file_url = "../yaml/transform2.yaml";
 
 // kick
 $(function() {
@@ -52,9 +52,9 @@ function parseYAML(_yaml) {
 	var outputLayer = new paper.Layer();
 	var output = doc.build(context);
 
-	_.each(output, function(path) {
-		outputLayer.addChild(path);
-	});
+	// _.each(output, function(path) {
+	// 	outputLayer.addChild(path);
+	// });
 
 	outputLayer.style = {
 			strokeScaling: false,
@@ -65,15 +65,15 @@ function parseYAML(_yaml) {
 
 	$("#paper-svg").get(0).appendChild(paper.project.exportSVG());
 	outputLayer.visible = false;
-
+	
 	// Build Preview
 	//using scale instead of zoom until paper.js has stable build with strokescaling
 	context.matrix.scale(doc.properties.zoom || 1);
 	var previewLayer = new paper.Layer();
 	doc.preview(context);
 
-	// Render SVG
-	
+
+
 
 	// paper.view.zoom = doc.properties.zoom || 1;
 	paper.view.center = new paper.Point(200, 200);

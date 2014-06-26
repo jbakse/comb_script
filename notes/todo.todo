@@ -14,15 +14,23 @@ First Priority
 
 OVERHAUL Context system
 =====
--	change context to be current matrix relative always. 
--	drop the positoin (thats part of translate)
++-	change context to be current matrix relative always. 
++-	drop the position from context (thats part of translate)
 -	merge context into region? maybe think of context as a light version of the region, passed to children with only the information they should have access too
+-	have a "cascading" properties in the context for variables, etc.
+
 --	should preview and draw need to transform their drawing or should that be handled upstream?
---	get preview and draw working
--- should rectangles and ellipses  be allowed children
++--	get preview and draw working
+-- 	should rectangles and ellipses be allowed children?
 
+--	add list of supported properties, have it log warnings if you use ones it don't know
 
-should preview be responsible for transforming?
+UI
+=====
+---	rollover inspection 
+-	zoom/pan
+-	the svg output should be its own paper.project or paper.view probably
+
 
 Shapes
 +-	rectangle
@@ -34,10 +42,10 @@ Shapes
 --	import svg
 
 Transform
-----	translate
+--	translate
 +---	rotate
----	scale
----	mirror
+--	scale
+--	mirror
 
 Booleans
 +-	union
@@ -48,7 +56,7 @@ Booleans
 -	sibling interseciton?
 
 Positioning
---	min/max width/height: 
+-	min/max width/height: 
 -	combined attributes: margin: 0 sets top/left/bottom/right
 
 
