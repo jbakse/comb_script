@@ -1,6 +1,7 @@
 properties:
     name: drawbot.yaml
-
+    scale: 2.83464567
+    zoom: 2
 
 library:
     - &m3pass
@@ -79,6 +80,7 @@ children:
                     margin_left: 5
                     width: 8
                     row_height: 8
+                    registration: center
                 children:
                     - *m3pass
 

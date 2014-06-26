@@ -5,8 +5,8 @@ module.exports = Context;
 
 
 function Context(_bounds, _matrix) {
-	this.bounds = _bounds || new paper.Rectangle(0, 0, 0, 0);
-	this.matrix = _matrix || new paper.Matrix();
+	this.bounds = _bounds ? _bounds.clone() : new paper.Rectangle(0, 0, 0, 0);
+	this.matrix = _matrix ? _matrix.clone() : new paper.Matrix();
 }
 
 Context.prototype.toString = function() {
@@ -43,19 +43,24 @@ Context.prototype.deriveContext = function(_properties) {
 
 	// Calculate Matrix
 	var derivedMatrix = this.matrix.clone();
-	
+	var derivedContext = new Context(derivedBounds, derivedMatrix);
+
 	if (_properties.registration === "center") {
-		var tempCenter = derivedBounds.center;
-		derivedBounds.x -= tempCenter.x;
-		derivedBounds.y -= tempCenter.y;
-		derivedMatrix.translate(tempCenter);
+		derivedContext.centerRegistration();
 	}
 
 	if (_properties.rotation) {
-		derivedMatrix.rotate(_properties.rotation);
+		derivedContext.matrix.rotate(_properties.rotation);
 	}
 
-	return new Context(derivedBounds, derivedMatrix);
+	return derivedContext;
+};
+
+Context.prototype.centerRegistration = function() {
+		var oldCenter = this.bounds.center;
+		this.bounds.x -= oldCenter.x;
+		this.bounds.y -= oldCenter.y;
+		this.matrix.translate(oldCenter);
 };
 
 

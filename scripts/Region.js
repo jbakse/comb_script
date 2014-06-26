@@ -7,19 +7,26 @@ var Context = require('./Context.js');
 
 module.exports.Document = Document;
 
-var regionTypes = {"region": Region, "region_grid": RegionGrid, "rectangle": Rectangle, "ellipse": Ellipse};
+var regionTypes = {
+	"region": Region,
+	"region_grid": RegionGrid,
+	"rectangle": Rectangle,
+	"ellipse": Ellipse
+};
 
 function Region(_data) {
 	this.type = "Region";
 	this.children = [];
 	this.properties = {};
-	this.typeProperties = {strokeColor: 'red'};
+	this.typeProperties = {
+		strokeColor: '#0088AA'
+	};
 
 	this.loadData(_data);
 }
 
 Region.prototype.toString = function() {
-	
+
 	return this.type + ": " + (this.properties.name || "unnamed");
 };
 
@@ -29,10 +36,12 @@ Region.prototype.tree = function(_depth) {
 	var text = this + "\n";
 
 	_.each(this.children, function(_child) {
-		_(_depth + 1).times( function(i) { text += "\t"; }); // indent
-		text += _child.tree(_depth+1);
+		_(_depth + 1).times(function(i) {
+			text += "\t";
+		}); // indent
+		text += _child.tree(_depth + 1);
 	});
-	
+
 	return text;
 };
 
@@ -46,57 +55,46 @@ Region.prototype.loadData = function(_data) {
 	if ('children' in _data) {
 		this.loadChildren(_data.children);
 	}
-}; 
+};
 
-Region.prototype.loadChildren = function(_childrenData) {	
+Region.prototype.loadChildren = function(_childrenData) {
 
-	_.each(_childrenData, function (_childData) {
+	_.each(_childrenData, function(_childData) {
 		var childKey = _.keys(_childData)[0];
 		var childData = _.extend({}, _.values(_childData)[0]);
 
 		if (childKey in regionTypes) {
-			var child = new (regionTypes[childKey])(childData);
+			var child = new(regionTypes[childKey])(childData);
 			this.children.push(child);
 
-		} else {
-			console.warn ("Unknown Region Type: " + childKey);
 		}
-		
+		else {
+			console.warn("Unknown Region Type: " + childKey);
+		}
+
 	}, this);
 };
 
 
 Region.prototype.preview = function(_parentContext) {
-
-
-	// find context
+	// derive context (pull this out?)
 	var context = _parentContext.deriveContext(this.properties);
 
-	if (this.properties.log) console.log("Log of " + this.properties.name + " context.",context);
-
-	// draw children
+	// preview children (pull this out?)
 	this.previewChildren(context);
 
-	// draw bounds
-	// var boundsRect = context.bounds.clone();
-	// boundsRect.x += context.position.x;
-	// boundsRect.y += context.position.y;
+	// draw self
 	var boundsPath = new paper.Path.Rectangle(context.bounds);
 	boundsPath.strokeColor = this.typeProperties.strokeColor;
 	boundsPath.strokeWidth = 0.25;
 
-	// todo only if not identity
-	
-	boundsPath.transform(context.matrix);
-	
-	// draw rect
-	var positionRect = new paper.Rectangle(-0.5, -0.5, 1, 1);
-	var positionPath = new paper.Path.Ellipse(positionRect);
+	var positionPath = new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
 	positionPath.strokeColor = this.typeProperties.strokeColor;
 	positionPath.strokeWidth = 0.25;
 
 
-	// todo only if not identity
+	// todo only if not identity (pull this out?)
+	boundsPath.transform(context.matrix);
 	positionPath.transform(context.matrix);
 
 };
@@ -111,21 +109,24 @@ Region.prototype.build = function(_parentContext) {
 	var context = _parentContext.deriveContext(this.properties);
 	var childPaths = this.buildChildren(context);
 
-	if (! ('boolean' in this.properties)) {
+	if (!('boolean' in this.properties)) {
 		return childPaths;
 	}
-	
+
 	// maps the allowed yaml name to the coresponding paperjs function
-	var booleanOperations = {"add": "unite", "subtract": "subtract", "intersect": "intersect"};
+	var booleanOperations = {
+		"add": "unite",
+		"subtract": "subtract",
+		"intersect": "intersect"
+	};
+
 	if (this.properties.boolean in booleanOperations) {
 		var op = booleanOperations[this.properties.boolean];
-		childPaths =  combinePaths(childPaths, op);
+		childPaths = combinePaths(childPaths, op);
 	}
 
 	return childPaths;
 };
-
-
 
 
 
@@ -137,7 +138,8 @@ Region.prototype.buildChildren = function(_context) {
 
 		if (Array.isArray(s)) {
 			childPaths = childPaths.concat(s);
-		} else {
+		}
+		else {
 			childPaths.push(s);
 		}
 
@@ -167,135 +169,144 @@ function RegionGrid(_data) {
 RegionGrid.prototype = Object.create(Region.prototype);
 RegionGrid.prototype.constructor = RegionGrid;
 
-
-RegionGrid.prototype.preview = function(_parentContext) {	
+RegionGrid.prototype.preview = function(_parentContext) {
+	// derive context (pull this out?)
 	var context = _parentContext.deriveContext(this.properties);
-	
-	var rows = 1;
-	rows = (context.bounds.height / this.properties.row_height) || rows;
-	rows = this.properties.rows || rows;
 
-	var cols = 1;
-	cols = (context.bounds.height / this.properties.column_width) || cols;
-	cols = this.properties.cols || cols;
+	var gridContexts = this.generateContexts(context);
 
-	for (var row = 0; row < rows; row++) {
-		for (var col = 0; col < cols; col++) {
-			var width = context.bounds.width / cols;
-			var height = context.bounds.height / rows;
-			var x = context.globalBounds().left + col * width;
-			var y = context.globalBounds().top + row * height;
+	_.each(gridContexts, function(gridContext) {
+		// draw preview bounds
+		var gridPath = new paper.Path.Rectangle(gridContext.bounds);
+		gridPath.strokeColor = "#FF0000";
+		gridPath.strokeWidth = 0.25;
+		console.log(gridPath);
+		gridPath.transform(gridContext.matrix);
 
-			var grid_rectangle = new paper.Rectangle(new paper.Point(x, y), new paper.Size(width, height));
-			var grid_path = new paper.Path.Rectangle(grid_rectangle);
-			grid_path.strokeColor = new paper.Color(0, 0, 1, 0.2);
-			grid_path.strokeWidth = 0.25;
+		this.previewChildren(gridContext);
 
-			this.previewChildren(new Context(grid_rectangle.center, grid_rectangle));
-		}		
-	}
+	}, this);
 
 
 };
 
-RegionGrid.prototype.build = function(_parentContext) {	
+RegionGrid.prototype.build = function(_parentContext) {
+	// derive context (pull this out?)
 	var context = _parentContext.deriveContext(this.properties);
-	
-	var rows = 1;
-	rows = (context.bounds.height / this.properties.row_height) || rows;
-	rows = this.properties.rows || rows;
 
-	var cols = 1;
-	cols = (context.bounds.height / this.properties.column_width) || cols;
-	cols = this.properties.cols || cols;
+	var gridContexts = this.generateContexts(context);
 
 	var childPaths = [];
+	_.each(gridContexts, function(gridContext) {
+		childPaths = childPaths.concat(this.buildChildren(gridContext));
+	}, this);
+
+	return childPaths;
+};
+
+RegionGrid.prototype.generateContexts = function(_gridContext) {
+	// calculate rows/cols to draw
+	var rows = 1;
+	rows = (_gridContext.bounds.height / this.properties.row_height) || rows;
+	rows = this.properties.rows || rows;
+
+	var cols = 1;
+	cols = (_gridContext.bounds.height / this.properties.column_width) || cols;
+	cols = this.properties.cols || cols;
+
+	var generatedContexts = [];
 
 	for (var row = 0; row < rows; row++) {
 		for (var col = 0; col < cols; col++) {
-			var width = context.bounds.width / cols;
-			var height = context.bounds.height / rows;
-			var x = context.globalBounds().left + col * width;
-			var y = context.globalBounds().top + row * height;
 
-			var grid_rectangle = new paper.Rectangle(new paper.Point(x, y), new paper.Size(width, height));
-			// var grid_path = new paper.Path.Rectangle(grid_rectangle);
-			// grid_path.strokeColor = new paper.Color(0, 0, 1, 0.2);
-			// grid_path.strokeWidth = 0.25;
+			// generate bounds			
+			var width = _gridContext.bounds.width / cols;
+			var height = _gridContext.bounds.height / rows;
+			var x = _gridContext.bounds.left + col * width;
+			var y = _gridContext.bounds.top + row * height;
 
-			childPaths = childPaths.concat(this.buildChildren(new Context(grid_rectangle.center, grid_rectangle)));
-		}		
+			var gridRectangle = new paper.Rectangle(
+				new paper.Point(x, y),
+				new paper.Size(width, height)
+			);
+
+			// generate context
+			var gridContext = new Context(gridRectangle, _gridContext.matrix);
+			if (this.properties.registration === "center") {
+				gridContext.centerRegistration();
+				console.log("center");
+				console.log(gridContext);
+			}
+
+			generatedContexts.push(gridContext);
+		}
 	}
 
-	return childPaths;
+	return generatedContexts;
 
 };
-
-
-
-
-
-
 
 
 function Rectangle(_data) {
 	Region.call(this, _data);
 	this.type = "Rectangle";
-	this.typeProperties.strokeColor = "#BBBBBB";
+	this.typeProperties.strokeColor = "#333333";
 }
 
 Rectangle.prototype = Object.create(Region.prototype);
 Rectangle.prototype.constructor = Rectangle;
 
 Rectangle.prototype.build = function(_parentContext) {
+	// derive context (pull this out?)
 	var context = _parentContext.deriveContext(this.properties);
 
-	var boundsRect = context.bounds.clone();
-	boundsRect.x += context.position.x;// + _.random(-100, 100) * 0.000001;
-	boundsRect.y += context.position.y;// + _.random(-100, 100) * 0.000001;
-	
-	var boundsPath = new paper.Path.Rectangle(boundsRect, this.properties.radius || 0);
-
+	// build shape
+	var boundsPath = new paper.Path.Rectangle(context.bounds, this.properties.radius || 0);
+	boundsPath.transform(context.matrix);
 	boundsPath.remove();
 
 	return boundsPath;
 };
 
 Rectangle.prototype.preview = function(_parentContext) {
-
-	// find context
+	// derive context (pull this out?)
 	var context = _parentContext.deriveContext(this.properties);
 
+	// preview children (pull this out?)
+	this.previewChildren(context);
 
-	// draw bounds
-	var boundsRect = context.bounds.clone();
-	boundsRect.x += context.position.x;
-	boundsRect.y += context.position.y;
-	var boundsPath = new paper.Path.Rectangle(boundsRect, this.properties.radius || 0);
+	// draw self
+	var boundsPath = new paper.Path.Rectangle(context.bounds, this.properties.radius || 0);
 	boundsPath.strokeColor = this.typeProperties.strokeColor;
-	boundsPath.strokeWidth = 0.25;
+
+	var positionPath = new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
+	positionPath.strokeColor = "#0088AA";
+
+
+	// todo only if not identity (pull this out?)
+	boundsPath.transform(context.matrix);
+	positionPath.transform(context.matrix);
 
 };
+
 
 
 function Ellipse(_data) {
 	Region.call(this, _data);
 	this.type = "Ellipse";
-	this.typeProperties.strokeColor = "#BBBBBB";
+	this.typeProperties.strokeColor = "#333333";
 }
 
 Ellipse.prototype = Object.create(Region.prototype);
 Ellipse.prototype.constructor = Ellipse;
 
 Ellipse.prototype.build = function(_parentContext) {
+	// derive context (pull this out?)
 	var context = _parentContext.deriveContext(this.properties);
 
-	var boundsRect = context.bounds.clone();
-	boundsRect.x += context.position.x;// + _.random(-100, 100) * 0.000001;
-	boundsRect.y += context.position.y;// + _.random(-100, 100) * 0.000001;
-	
-	var boundsPath = new paper.Path.Ellipse(boundsRect);
-
+	// build shape
+	var boundsPath = new paper.Path.Ellipse(context.bounds);
+	boundsPath.transform(context.matrix);
 	boundsPath.remove();
 
 	return boundsPath;
@@ -303,37 +314,34 @@ Ellipse.prototype.build = function(_parentContext) {
 
 
 Ellipse.prototype.preview = function(_parentContext) {
-
-	// find context
+	// derive context (pull this out?)
 	var context = _parentContext.deriveContext(this.properties);
 
+	// preview children (pull this out?)
+	this.previewChildren(context);
 
-	// draw bounds
-	var boundsRect = context.bounds.clone();
-	boundsRect.x += context.position.x;
-	boundsRect.y += context.position.y;
-	var boundsPath = new paper.Path.Ellipse(boundsRect);
+	// draw self
+	var boundsPath = new paper.Path.Ellipse(context.bounds);
 	boundsPath.strokeColor = this.typeProperties.strokeColor;
-	boundsPath.strokeWidth = 0.25;
+
+	var positionPath = new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
+	positionPath.strokeColor = "#0088AA";
+
+
+	// todo only if not identity (pull this out?)
+	boundsPath.transform(context.matrix);
+	positionPath.transform(context.matrix);
 
 };
 
 
 
-
-
-
-
-
-
-
-
 function combinePaths(_paths, _operation) {
 	if (_paths.length < 1) return [];
-	
+
 
 	var newPath = _paths[0];
-	for (i = 1; i < _paths.length; i++) {
+	for (var i = 1; i < _paths.length; i++) {
 		newPath = newPath[_operation](_paths[i]);
 		newPath.remove();
 	}

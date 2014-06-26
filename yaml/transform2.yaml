@@ -1,38 +1,40 @@
 properties:
     name: transform2.yaml
-
+    zoom: 1
+    
 children:
     - region:
         properties:
             name: dimension
             width:  300
             height: 300
-            boolean: add
+            boolean: subtract
         children:
-            # - ellipse:
+            - ellipse:
             - region:
                 properties:
                     name: cross
-                    width: 100
-                    height: 100
-                    margin_left: 10
+                    width: 0
+                    height: 0
+                    margin_left: 20
                     registration: center
                     rotation: 45
+                    # boolean: add #not needed, all shapes will be subtracted individually above
                 children:
                     - region:
                         properties:
                             name: bar_1
                             width: 100
                         children: &cross_bar
-                            - region:
+                            - rectangle:
                                 properties:
                                     height: 20
-                            - region:
+                            - rectangle:
                                 properties:
                                     margin_left: 0
                                     width: 20
                                     height: 40
-                            - region:
+                            - rectangle:
                                 properties:
                                     margin_right: 0
                                     width: 20

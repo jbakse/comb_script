@@ -19,6 +19,7 @@ OVERHAUL Context system
 -	merge context into region? maybe think of context as a light version of the region, passed to children with only the information they should have access too
 --	should preview and draw need to transform their drawing or should that be handled upstream?
 --	get preview and draw working
+-- should rectangles and ellipses  be allowed children
 
 
 should preview be responsible for transforming?
@@ -48,6 +49,7 @@ Booleans
 
 Positioning
 --	min/max width/height: 
+-	combined attributes: margin: 0 sets top/left/bottom/right
 
 
 Region (basic unit of position & transforming)
