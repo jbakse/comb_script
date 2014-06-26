@@ -146,16 +146,11 @@ Region.prototype.preview = function(_parentContext) {
 };
 
 Region.prototype.mouseEnter = function() {
-	console.log("mouseenter", this, parent);
 	this.previewGroup.selected = true;
-
-	console.log("me", this);
 	$("#tool-tip").html(this.breadCrumb().join("<br />"));
-
 };
 
 Region.prototype.mouseLeave = function() {
-	console.log("mouseenter", this);
 	this.previewGroup.selected = false;
 	$("#tool-tip").text('');
 };

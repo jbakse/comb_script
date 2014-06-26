@@ -6,6 +6,9 @@ var Context = require('./Context.js');
 
 var file_url = "../yaml/drawbot.yaml";
 
+var editor;
+var doc;
+
 // kick
 $(function() {
 	main();
@@ -14,6 +17,12 @@ $(function() {
 function main() {
 	console.log("Hello, Main!");
 	paper.setup($('#paper-canvas').get(0));
+
+	/* global ace */
+	editor = ace.edit("editor");
+	editor.setTheme("ace/theme/twilight");
+	editor.getSession().setMode("ace/mode/yaml");
+	document.getElementById('editor').style.fontSize='15px';
 
 
 	$.ajax({
@@ -56,16 +65,44 @@ function injectYAML(_yaml) {
 
 }
 
+function changeCursor(e) {
+	console.log("change", editor.selection.getCursor());
+	var t = searchTree(doc, editor.selection.getCursor().row + 1);
+	console.log("t", t);
+	if (t !== null) {
+		t.mouseEnter();
+	}
+	paper.view.update();
+}
 
+
+function searchTree(_node, _line){
+	if(_node.editorProperties.line === _line) {
+		return _node;
+	}else{
+		var result = null;
+		for (var i = 0; result === null && i < _node.children.length; i++) {
+			result = searchTree(_node.children[i], _line);
+		}
+		return result;
+	}
+
+}
 
 function parseYAML(_yaml) {
 	console.log("YAML Retrieved");
+	editor.setValue(_yaml);
+	editor.clearSelection();
+	editor.scrollToLine(0);
+
+	editor.getSession().selection.on('changeCursor', changeCursor);
+
 
 	_yaml = injectYAML(_yaml);
 	// Load Document
 	var yamlData = jsyaml.load(_yaml);
 	console.log(yamlData);
-	var doc = new Region.Document(yamlData);
+	doc = new Region.Document(yamlData);
 	console.log("Tree");
 	console.log(doc.tree());
 
