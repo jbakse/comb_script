@@ -4,7 +4,7 @@ var _ = require('underscore');
 var Region = require('./Region.js');
 var Context = require('./Context.js');
 
-var file_url = "../yaml/simple.yaml";
+var file_url = "../yaml/drawbot.yaml";
 
 // kick
 $(function() {

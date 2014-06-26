@@ -273,7 +273,6 @@ RegionGrid.prototype = Object.create(Region.prototype);
 RegionGrid.prototype.constructor = RegionGrid;
 
 RegionGrid.prototype.preview = function(_parentContext) {
-	// derive context (pull this out?)
 	var context = _parentContext.deriveContext(this.properties);
 
 	var gridContexts = this.generateContexts(context);
@@ -293,7 +292,6 @@ RegionGrid.prototype.preview = function(_parentContext) {
 };
 
 RegionGrid.prototype.build = function(_parentContext) {
-	// derive context (pull this out?)
 	var context = _parentContext.deriveContext(this.properties);
 
 	var gridContexts = this.generateContexts(context);

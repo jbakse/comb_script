@@ -19,10 +19,11 @@ OVERHAUL Context system
 -	merge context into region? maybe think of context as a light version of the region, passed to children with only the information they should have access too
 -	have a "cascading" properties in the context for variables, etc.
 
---	should preview and draw need to transform their drawing or should that be handled upstream?
++--	should preview and draw need to transform their drawing or should that be handled upstream?
 +--	get preview and draw working
--- 	should rectangles and ellipses be allowed children?
++-- 	should rectangles and ellipses be allowed children?
 
+--	defaults for region properties
 --	add list of supported properties, have it log warnings if you use ones it don't know
 
 UI
