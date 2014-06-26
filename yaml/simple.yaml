@@ -9,7 +9,7 @@ children:
             boolean: subtract
 
         children:
-            - region:
+            - rectangle:
                 properties:
                     name: child
                     margin_top: -50
@@ -17,6 +17,3 @@ children:
                     height: 50
                     log: true
                     rotation: 45
-                children:
-                    - rectangle: 
-

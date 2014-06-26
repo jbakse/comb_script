@@ -1,11 +1,12 @@
-"use strict";
+'use strict';
 
 var _ = require('underscore');
 var Context = require('./Context.js');
-
+var paperUtil = require('./paperUtil.js');
 
 module.exports.Document = Document;
 
+// maps the allowed yaml name to the region type
 var regionTypes = {
 	"region": Region,
 	"region_grid": RegionGrid,
@@ -20,6 +21,10 @@ var booleanOperations = {
 	"subtract": "subtract",
 	"intersect": "intersect"
 };
+
+
+
+
 
 function Region(_data) {
 	this.type = "Region";
@@ -41,26 +46,9 @@ function Region(_data) {
 	this.loadData(_data);
 }
 
-Region.prototype.toString = function() {
-	return this.type + ": " + (this.properties.name || "unnamed");
-};
 
-Region.prototype.tree = function(_depth) {
-	_depth = _depth || 0;
-
-	var text = this + "\n";
-
-	_.each(this.children, function(_child) {
-		// create indent
-		_(_depth + 1).times(function(i) {
-			text += "\t";
-		});
-
-		text += _child.tree(_depth + 1);
-	});
-
-	return text;
-};
+//////////////////////////////////////////////////////////////////////
+// Loading
 
 Region.prototype.loadData = function(_data) {
 	if ('properties' in _data) {
@@ -91,6 +79,34 @@ Region.prototype.loadChildren = function(_childrenData) {
 };
 
 
+//////////////////////////////////////////////////////////////////////
+// Util
+
+Region.prototype.toString = function() {
+	return this.type + ": " + (this.properties.name || "unnamed");
+};
+
+Region.prototype.tree = function(_depth) {
+	_depth = _depth || 0;
+
+	var text = this + "\n";
+
+	_.each(this.children, function(_child) {
+		// create indent
+		_(_depth + 1).times(function(i) {
+			text += "\t";
+		});
+
+		text += _child.tree(_depth + 1);
+	});
+
+	return text;
+};
+
+
+//////////////////////////////////////////////////////////////////////
+// Preview
+
 Region.prototype.preview = function(_parentContext) {
 	var context = _parentContext.deriveContext(this.properties);
 
@@ -118,6 +134,8 @@ Region.prototype.previewChildren = function(_context) {
 };
 
 
+//////////////////////////////////////////////////////////////////////
+// Build
 
 Region.prototype.build = function(_parentContext) {
 
@@ -136,7 +154,7 @@ Region.prototype.build = function(_parentContext) {
 	}
 	else {
 		var op = booleanOperations[this.properties.boolean];
-		childPaths = combinePaths(childPaths, op);
+		childPaths = paperUtil.combinePaths(childPaths, op);
 	}
 
 	return childPaths;
@@ -159,6 +177,8 @@ Region.prototype.buildChildren = function(_context) {
 };
 
 
+//////////////////////////////////////////////////////////////////////
+// Document
 
 function Document(_data) {
 	Region.call(this, _data);
@@ -169,6 +189,79 @@ function Document(_data) {
 Document.prototype = Object.create(Region.prototype);
 Document.prototype.constructor = Document;
 
+
+
+
+//////////////////////////////////////////////////////////////////////
+// Rectangle
+
+function Rectangle(_data) {
+	Region.call(this, _data);
+	this.type = "Rectangle";
+	this.typeProperties.boundsStyle = {
+		strokeWeight: 1,
+		strokeColor: '#333333'
+	};
+}
+
+Rectangle.prototype = Object.create(Region.prototype);
+Rectangle.prototype.constructor = Rectangle;
+
+Rectangle.prototype.drawBuild = function(_bounds) {
+	var boundsPath = new paper.Path.Rectangle(_bounds, this.properties.radius || 0);
+	return boundsPath;
+};
+
+Rectangle.prototype.drawPreview = function(_bounds) {
+	var boundsPath = new paper.Path.Rectangle(_bounds, this.properties.radius || 0);
+	boundsPath.style = this.typeProperties.boundsStyle;
+
+	var positionPath = new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
+	positionPath.style = this.typeProperties.positionStyle;
+
+	return new paper.Group([boundsPath, positionPath]);
+};
+
+
+
+
+//////////////////////////////////////////////////////////////////////
+// Ellipse
+
+function Ellipse(_data) {
+	Region.call(this, _data);
+	this.type = "Ellipse";
+	this.typeProperties.boundsStyle = {
+		strokeWeight: 1,
+		strokeColor: '#33333'
+	};
+}
+
+Ellipse.prototype = Object.create(Region.prototype);
+Ellipse.prototype.constructor = Ellipse;
+
+Ellipse.prototype.drawBuild = function(_bounds) {
+	var boundsPath = new paper.Path.Ellipse(_bounds);
+	return boundsPath;
+};
+
+
+Ellipse.prototype.drawPreview = function(_bounds) {
+	var boundsPath = new paper.Path.Ellipse(_bounds);
+	boundsPath.style = this.typeProperties.boundsStyle;
+
+	var positionPath = new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
+	positionPath.style = this.typeProperties.positionStyle;
+
+	return new paper.Group([boundsPath, positionPath]);
+};
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////
+// RegionGrid
 
 function RegionGrid(_data) {
 	Region.call(this, _data);
@@ -253,77 +346,3 @@ RegionGrid.prototype.generateContexts = function(_gridContext) {
 
 };
 
-
-function Rectangle(_data) {
-	Region.call(this, _data);
-	this.type = "Rectangle";
-	this.typeProperties.boundsStyle = {
-		strokeWeight: 1,
-		strokeColor: '#333333'
-	};
-}
-
-Rectangle.prototype = Object.create(Region.prototype);
-Rectangle.prototype.constructor = Rectangle;
-
-Rectangle.prototype.drawBuild = function(_bounds) {
-	var boundsPath = new paper.Path.Rectangle(_bounds, this.properties.radius || 0);
-	return boundsPath;
-};
-
-Rectangle.prototype.drawPreview = function(_bounds) {
-	var boundsPath = new paper.Path.Rectangle(_bounds, this.properties.radius || 0);
-	boundsPath.style = this.typeProperties.boundsStyle;
-
-	var positionPath = new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
-	positionPath.style = this.typeProperties.positionStyle;
-
-	return new paper.Group([boundsPath, positionPath]);
-};
-
-
-function Ellipse(_data) {
-	Region.call(this, _data);
-	this.type = "Ellipse";
-	this.typeProperties.boundsStyle = {
-		strokeWeight: 1,
-		strokeColor: '#33333'
-	};
-}
-
-Ellipse.prototype = Object.create(Region.prototype);
-Ellipse.prototype.constructor = Ellipse;
-
-Ellipse.prototype.drawBuild = function(_bounds) {
-	var boundsPath = new paper.Path.Ellipse(_bounds);
-	return boundsPath;
-};
-
-
-Ellipse.prototype.drawPreview = function(_bounds) {
-	var boundsPath = new paper.Path.Ellipse(_bounds);
-	boundsPath.style = this.typeProperties.boundsStyle;
-
-	var positionPath = new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
-	positionPath.style = this.typeProperties.positionStyle;
-
-	return new paper.Group([boundsPath, positionPath]);
-};
-
-
-
-
-
-function combinePaths(_paths, _operation) {
-	if (_paths.length < 1) return [];
-
-
-	var newPath = _paths[0];
-	for (var i = 1; i < _paths.length; i++) {
-		newPath.remove();
-		_paths[i].remove();
-		newPath = newPath[_operation](_paths[i]);
-	}
-
-	return newPath;
-}
