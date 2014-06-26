@@ -24,21 +24,22 @@ var booleanOperations = {
 
 
 
-
-
 function Region(_data) {
 	this.type = "Region";
+	this.parent = null;
 	this.children = [];
 	this.properties = {};
 	this.typeProperties = {};
+	this.editorProperties = {};
+
 	this.previewGroup = new paper.Group();
 
-	this.id = Math.floor(Math.random()*1000);
+	this.id = Math.floor(Math.random() * 1000);
 
 	this.typeProperties.boundsStyle = {
 		strokeWeight: 1,
 		strokeColor: '#0088AA',
-		fillColor: new paper.Color(0,0,0,0)
+		fillColor: new paper.Color(0, 0, 0, 0)
 	};
 
 	this.typeProperties.positionStyle = {
@@ -55,6 +56,10 @@ function Region(_data) {
 // Loading
 
 Region.prototype.loadData = function(_data) {
+	if ('editor_properties' in _data) {
+		this.editorProperties = _.clone(_data.editor_properties);
+	}
+
 	if ('properties' in _data) {
 		this.properties = _.clone(_data.properties);
 	}
@@ -72,8 +77,8 @@ Region.prototype.loadChildren = function(_childrenData) {
 
 		if (childKey in regionTypes) {
 			var child = new(regionTypes[childKey])(childData);
+			child.parent = this;
 			this.children.push(child);
-
 		}
 		else {
 			console.warn("Unknown Region Type: " + childKey);
@@ -87,8 +92,22 @@ Region.prototype.loadChildren = function(_childrenData) {
 // Util
 
 Region.prototype.toString = function() {
-	// return this.type + "("+this.id+"): " + (this.properties.name || "unnamed");
-	return this.type + ": " + (this.properties.name || "unnamed");
+	var s = this.type;
+	if (this.editorProperties.line) {
+		s += "(" + this.editorProperties.line + ")";
+	}
+	s += ": ";
+	s += this.properties.name || "unnamed";
+	return s;
+};
+
+Region.prototype.breadCrumb = function() {
+	var bc = ["" + this];
+
+	if (this.parent !== null) {
+		bc = this.parent.breadCrumb().concat(bc);
+	}
+	return bc;
 };
 
 Region.prototype.tree = function(_depth) {
@@ -118,7 +137,7 @@ Region.prototype.preview = function(_parentContext) {
 	// this.previewGroup = this.drawPreview(context.bounds);
 	var newChildren = this.drawPreview(context.bounds);
 	newChildren.transform(context.matrix);
-	
+
 	this.previewGroup.addChildren(newChildren.children);
 	this.previewGroup.onMouseEnter = _.bind(this.mouseEnter, this);
 	this.previewGroup.onMouseLeave = _.bind(this.mouseLeave, this);
@@ -127,9 +146,11 @@ Region.prototype.preview = function(_parentContext) {
 };
 
 Region.prototype.mouseEnter = function() {
-	console.log("mouseenter", this);
+	console.log("mouseenter", this, parent);
 	this.previewGroup.selected = true;
-	$("#tool-tip").text(this);
+
+	console.log("me", this);
+	$("#tool-tip").html(this.breadCrumb().join("<br />"));
 
 };
 
@@ -248,7 +269,6 @@ Rectangle.prototype.drawPreview = function(_bounds) {
 
 
 
-
 //////////////////////////////////////////////////////////////////////
 // Ellipse
 
@@ -281,8 +301,6 @@ Ellipse.prototype.drawPreview = function(_bounds) {
 
 
 
-
-
 //////////////////////////////////////////////////////////////////////
 // RegionGrid
 
@@ -310,7 +328,7 @@ RegionGrid.prototype.preview = function(_parentContext) {
 
 
 		this.previewGroup.addChild(gridPath);
-		
+
 
 		this.previewChildren(gridContext);
 
@@ -373,4 +391,3 @@ RegionGrid.prototype.generateContexts = function(_gridContext) {
 	return generatedContexts;
 
 };
-

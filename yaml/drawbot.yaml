@@ -3,6 +3,8 @@ properties:
     scale: 2.83464567
     zoom: 2
 
+
+
 library:
     - &m3pass
         ellipse:
@@ -13,9 +15,10 @@ library:
     - &m3tap
         ellipse:
             properties:
-                name: m3Pass
+                name: m3Tap
                 height: 2
                 width: 2
+
 
 children:
     - rectangle:
