@@ -1,4 +1,8 @@
+"use strict";
+
+
 module.exports = Context;
+
 
 function Context(_bounds, _matrix) {
 	this.bounds = _bounds || new paper.Rectangle(0, 0, 0, 0);
@@ -50,7 +54,7 @@ Context.prototype.deriveContext = function(_properties) {
 	if (_properties.rotation) {
 		derivedMatrix.rotate(_properties.rotation);
 	}
-	
+
 	return new Context(derivedBounds, derivedMatrix);
 };
 

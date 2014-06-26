@@ -1,4 +1,4 @@
-//'use strict';
+"use strict";
 
 var _ = require('underscore');
 
@@ -14,12 +14,6 @@ $( function() {
 
 function main() {
 	console.log("Hello, Main!");
-
-	// p1 = new paper.Point(10, 10);
-	// p2 = new paper.Point(20, 20);
-	
-	// console.log(p1.add(p2), p1, p2);
-
 	paper.setup($('#paper-canvas').get(0));
 	
 
@@ -34,63 +28,42 @@ function main() {
 
 
 function parseYAML(_yaml) {
-	console.log("Loaded YAML");
+	console.log("YAML Retrieved");
 
+
+	// Load Document
 	var yamlData = jsyaml.load(_yaml);
 	console.log(yamlData);
-
-	var d = new Region.Document(yamlData);
-
+	var doc = new Region.Document(yamlData);
 	console.log("Tree");
-	console.log(d.tree());
+	console.log(doc.tree());
 
+
+	// Preview
 	var context = new Context( 
 				    new paper.Rectangle(new paper.Point(-200,-200), new paper.Point(200, 200)),
 				    (new paper.Matrix()).translate(200, 200)
 				    );
-	
-
-	
-
-	
-	// output = d.build(context);
-
-	// var outputLayer = new paper.Layer();
-	// _.each(output, function(path) {
-	// 	outputLayer.addChild(path);
-	// 	outputLayer.strokeColor = "black";
-	// 	outputLayer.fillColor = new paper.Color(1, 1, 0, 0.1);
-
-	// });
+	doc.preview(context);
 
 
 	
+	// Build Vector
+	var output = doc.build(context);
 
-	$("#paper-svg").get(0).appendChild(paper.project.exportSVG());
+	var outputLayer = new paper.Layer();
+	_.each(output, function(path) {
+		outputLayer.addChild(path);
+		outputLayer.strokeColor = "black";
+		outputLayer.fillColor = new paper.Color(1, 1, 0, 1);
 
-	d.preview(context);
+	});
 
 
+	// Render SVG
+	//$("#paper-svg").get(0).appendChild(paper.project.exportSVG());
 
 	paper.view.zoom = 1;
 	paper.view.center = new paper.Point(200, 200);
 	paper.view.update();
 }
-
-
-
-
-
-
-
-	// region = new Region();
-	// console.log(region);
-
-
-
-
-	// var r1 = new paper.Rectangle(new paper.Point(10, 10), new paper.Size(100, 100));
-	// var p1 = new paper.Path.Ellipse(r1);
-	// p1.strokeColor = 'red';
-
-	// paper.view.draw();

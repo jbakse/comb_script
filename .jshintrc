@@ -1,0 +1,15 @@
+{
+	"browser": true,
+	"devel": true,
+	"jquery": true,
+
+	"strict": false,
+	"globalstrict": true,
+	"globals" :
+		{
+			"module": false,
+			"paper": false,
+			"require": false,
+			"jsyaml": false
+		}
+}

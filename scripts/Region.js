@@ -1,19 +1,18 @@
+"use strict";
+
+
 var _ = require('underscore');
 var Context = require('./Context.js');
 
 
-module.exports.Region = Region;
 module.exports.Document = Document;
-module.exports.Rectangle = Rectangle;
 
-
-regionTypes = {"region": Region, "region_grid": RegionGrid, "rectangle": Rectangle, "ellipse": Ellipse};
+var regionTypes = {"region": Region, "region_grid": RegionGrid, "rectangle": Rectangle, "ellipse": Ellipse};
 
 function Region(_data) {
 	this.type = "Region";
 	this.children = [];
 	this.properties = {};
-	this.variables = {};
 	this.typeProperties = {strokeColor: 'red'};
 
 	this.loadData(_data);
@@ -39,9 +38,6 @@ Region.prototype.tree = function(_depth) {
 
 Region.prototype.loadData = function(_data) {
 
-	if ('variables' in _data) {
-		this.variables = _.clone(_data.variables);
-	}
 
 	if ('properties' in _data) {
 		this.properties = _.clone(_data.properties);
@@ -68,6 +64,7 @@ Region.prototype.loadChildren = function(_childrenData) {
 		
 	}, this);
 };
+
 
 Region.prototype.preview = function(_parentContext) {
 
@@ -136,7 +133,7 @@ Region.prototype.buildChildren = function(_context) {
 	var childPaths = [];
 
 	_.each(this.children, function(_child) {
-		s = _child.build(_context);
+		var s = _child.build(_context);
 
 		if (Array.isArray(s)) {
 			childPaths = childPaths.concat(s);
@@ -212,7 +209,7 @@ RegionGrid.prototype.build = function(_parentContext) {
 	cols = (context.bounds.height / this.properties.column_width) || cols;
 	cols = this.properties.cols || cols;
 
-	childPaths = [];
+	var childPaths = [];
 
 	for (var row = 0; row < rows; row++) {
 		for (var col = 0; col < cols; col++) {
