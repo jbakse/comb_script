@@ -3,6 +3,7 @@
 Design Decisions
 -	size never considers children, only parent context
 -	inspired by openscad, -illustrator, html/css, flash symbols
+-	like a text editor vs word processor for vector (minimizing styling)
 
 QUESTIONS
 -	sibling relative positioning: what are some options
@@ -11,8 +12,14 @@ First Priority
 
 ----	Github it
 
-change context to be current matrix relative always. drop the positoin (thats part of translate)
-	get rid of registration
+OVERHAUL Context system
+=====
+-	change context to be current matrix relative always. 
+-	drop the positoin (thats part of translate)
+-	merge context into region? maybe think of context as a light version of the region, passed to children with only the information they should have access too
+--	should preview and draw need to transform their drawing or should that be handled upstream?
+--	get preview and draw working
+
 
 should preview be responsible for transforming?
 

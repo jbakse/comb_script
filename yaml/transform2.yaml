@@ -13,9 +13,9 @@ children:
             - region:
                 properties:
                     name: cross
-                    width: 0
-                    height: 0
-                    margin_left: 100
+                    width: 100
+                    height: 100
+                    margin_left: 10
                     registration: center
                     rotation: 45
                 children:

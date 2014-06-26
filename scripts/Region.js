@@ -1,6 +1,11 @@
 var _ = require('underscore');
 var Context = require('./Context.js');
-// Regions are the basic unit of a drawing. 
+
+
+module.exports.Region = Region;
+module.exports.Document = Document;
+module.exports.Rectangle = Rectangle;
+
 
 regionTypes = {"region": Region, "region_grid": RegionGrid, "rectangle": Rectangle, "ellipse": Ellipse};
 
@@ -322,9 +327,6 @@ Ellipse.prototype.preview = function(_parentContext) {
 
 
 
-module.exports.Region = Region;
-module.exports.Document = Document;
-module.exports.Rectangle = Rectangle;
 
 
 
