@@ -31,10 +31,14 @@ function Region(_data) {
 	this.children = [];
 	this.properties = {};
 	this.typeProperties = {};
+	this.previewGroup = new paper.Group();
+
+	this.id = Math.floor(Math.random()*1000);
 
 	this.typeProperties.boundsStyle = {
 		strokeWeight: 1,
-		strokeColor: '#0088AA'
+		strokeColor: '#0088AA',
+		fillColor: new paper.Color(0,0,0,0)
 	};
 
 	this.typeProperties.positionStyle = {
@@ -83,6 +87,7 @@ Region.prototype.loadChildren = function(_childrenData) {
 // Util
 
 Region.prototype.toString = function() {
+	// return this.type + "("+this.id+"): " + (this.properties.name || "unnamed");
 	return this.type + ": " + (this.properties.name || "unnamed");
 };
 
@@ -110,10 +115,28 @@ Region.prototype.tree = function(_depth) {
 Region.prototype.preview = function(_parentContext) {
 	var context = _parentContext.deriveContext(this.properties);
 
-	var previewGroup = this.drawPreview(context.bounds);
-	previewGroup.transform(context.matrix);
+	// this.previewGroup = this.drawPreview(context.bounds);
+	var newChildren = this.drawPreview(context.bounds);
+	newChildren.transform(context.matrix);
+	
+	this.previewGroup.addChildren(newChildren.children);
+	this.previewGroup.onMouseEnter = _.bind(this.mouseEnter, this);
+	this.previewGroup.onMouseLeave = _.bind(this.mouseLeave, this);
 
 	this.previewChildren(context);
+};
+
+Region.prototype.mouseEnter = function() {
+	console.log("mouseenter", this);
+	this.previewGroup.selected = true;
+	$("#tool-tip").text(this);
+
+};
+
+Region.prototype.mouseLeave = function() {
+	console.log("mouseenter", this);
+	this.previewGroup.selected = false;
+	$("#tool-tip").text('');
 };
 
 
@@ -189,6 +212,8 @@ function Document(_data) {
 Document.prototype = Object.create(Region.prototype);
 Document.prototype.constructor = Document;
 
+Document.prototype.mouseEnter = function() {};
+Document.prototype.mouseLeave = function() {};
 
 
 
@@ -198,10 +223,9 @@ Document.prototype.constructor = Document;
 function Rectangle(_data) {
 	Region.call(this, _data);
 	this.type = "Rectangle";
-	this.typeProperties.boundsStyle = {
-		strokeWeight: 1,
+	_.extend(this.typeProperties.boundsStyle, {
 		strokeColor: '#333333'
-	};
+	});
 }
 
 Rectangle.prototype = Object.create(Region.prototype);
@@ -231,10 +255,9 @@ Rectangle.prototype.drawPreview = function(_bounds) {
 function Ellipse(_data) {
 	Region.call(this, _data);
 	this.type = "Ellipse";
-	this.typeProperties.boundsStyle = {
-		strokeWeight: 1,
-		strokeColor: '#33333'
-	};
+	_.extend(this.typeProperties.boundsStyle, {
+		strokeColor: '#333333'
+	});
 }
 
 Ellipse.prototype = Object.create(Region.prototype);
@@ -266,7 +289,9 @@ Ellipse.prototype.drawPreview = function(_bounds) {
 function RegionGrid(_data) {
 	Region.call(this, _data);
 	this.type = "RegionGrid";
-	this.typeProperties.strokeColor = "#BBBBBB";
+	_.extend(this.typeProperties, {
+		strokeColor: '#BBBBBB'
+	});
 }
 
 RegionGrid.prototype = Object.create(Region.prototype);
@@ -280,14 +305,19 @@ RegionGrid.prototype.preview = function(_parentContext) {
 	_.each(gridContexts, function(gridContext) {
 		// draw preview bounds
 		var gridPath = new paper.Path.Rectangle(gridContext.bounds);
-		gridPath.strokeColor = "#FF0000";
-		gridPath.strokeWidth = 0.25;
+		gridPath.style = this.typeProperties.boundsStyle;
 		gridPath.transform(gridContext.matrix);
+
+
+		this.previewGroup.addChild(gridPath);
+		
 
 		this.previewChildren(gridContext);
 
 	}, this);
 
+	this.previewGroup.onMouseEnter = _.bind(this.mouseEnter, this);
+	this.previewGroup.onMouseLeave = _.bind(this.mouseLeave, this);
 
 };
 
