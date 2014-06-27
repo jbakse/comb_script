@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var Context = require('./Context.js');
 var paperUtil = require('./paperUtil.js');
+var UI = require('./UI.js');
 
 module.exports.Document = Document;
 
@@ -216,6 +217,9 @@ Region.prototype.buildChildren = function(_context) {
 Region.prototype.mouseEnter = function() {
 	this.previewGroup.selected = true;
 	$("#tool-tip").html(this.breadCrumb().join("<br />"));
+	console.log(this);
+	// todo remove dependency here. this should just report to the main/dispach controller, somewhere not sure where
+	UI.hilightEditorLine(this.editorProperties.line);
 };
 
 Region.prototype.mouseLeave = function() {
@@ -323,7 +327,7 @@ RegionGrid.prototype.constructor = RegionGrid;
 
 RegionGrid.prototype.preview = function(_parentContext) {
 	this.previewGroup = new paper.Group();
-	
+
 	var context = _parentContext.deriveContext(this.properties);
 
 	var gridContexts = this.generateContexts(context);

@@ -7,7 +7,7 @@ var UI = require('./UI.js');
 
 var file_url = "../yaml/simple.yaml";
 
-var editor;
+
 var doc;
 
 // kick
@@ -34,13 +34,17 @@ function main() {
 	buildLayer = new paper.Layer();
 
 	/* global ace */
-	editor = ace.edit("editor");
-	editor.setTheme("ace/theme/twilight");
-	editor.getSession().setMode("ace/mode/yaml");
-	// editor.getSession().selection.on('changeCursor', editorChangeCursor);
-	// editor.getSession().on('change', editorChange);
+	UI.editor = ace.edit("editor");
+	UI.editor.setTheme("ace/theme/twilight");
+	UI.editor.getSession().setMode("ace/mode/yaml");
+	UI.editor.setShowInvisibles(false);
+	UI.editor.setShowPrintMargin(false);
+	console.log("e", UI.editor);
 
-	editor.commands.addCommand({
+	// UI.editor.getSession().selection.on('changeCursor', editorChangeCursor);
+	// UI.editor.getSession().on('change', editorChange);
+
+	UI.editor.commands.addCommand({
 		name: "Reload iFrame",
 		bindKey: {
 			win: "Ctrl-B|Ctrl-R|Ctrl-S",
@@ -50,11 +54,11 @@ function main() {
 	});
 
 
-	// document.getElementById('editor').style.fontSize = '15px';
+	// document.getElementById('UI.editor').style.fontSize = '15px';
 	$('#right-side-inner > .split-pane-resize-shim').mousemove(
 		function() {
 			console.log("resize");
-			editor.resize();
+			UI.editor.resize();
 		}
 	);
 
@@ -62,9 +66,9 @@ function main() {
 	$.ajax({
 		url: file_url,
 		success: function(data) {
-			editor.setValue(data);
-			editor.clearSelection();
-			editor.scrollToLine(0);
+			UI.editor.setValue(data);
+			UI.editor.clearSelection();
+			UI.editor.scrollToLine(0);
 			updateYAML(data);
 			// updateYAML(data);
 		},
@@ -122,16 +126,17 @@ function injectYAML(_yaml) {
 
 function editorChange(e) {
 	// console.log("change");
-	// console.log(editor.getValue());
-	updateYAML(editor.getValue());
+	// console.log(UI.editor.getValue());
+	updateYAML(UI.editor.getValue());
 }
-function reloadEditor(editor){
+
+function reloadEditor(editor) {
 	updateYAML(editor.getValue());
 }
 
 function editorChangeCursor(e) {
-	console.log("change", editor.selection.getCursor());
-	var t = searchTree(doc, editor.selection.getCursor().row + 1);
+	console.log("change", UI.editor.selection.getCursor());
+	var t = searchTree(doc, UI.editor.selection.getCursor().row + 1);
 	console.log("t", t);
 	if (t !== null) {
 		t.mouseEnter();
@@ -161,23 +166,18 @@ function updateYAML(_yaml) {
 
 	_yaml = injectYAML(_yaml);
 	var yamlData;
+
 	try {
 		yamlData = jsyaml.safeLoad(_yaml);
-	} catch (e) {
-		console.log(e);
-		var parseErrorTemplate = 
-		_.template('<li class = "error">Error: Line <%= mark.line %><br /> <%= reason %></li>');
-
-		UI.appendLog(parseErrorTemplate(e));
-		return
-	} 
-
-	if (yamlData === null) return UI.appendLog("Couldn't parse YAML.");
+	}
+	catch (e) {
+		return UI.appendLog(UI.parseErrorTemplate(e));
+	}
 	if (typeof yamlData !== "object") return UI.appendLog("Couldn't parse YAML.");
-	if (yamlData.children === undefined) return UI.appendLog("Couldn't parse YAML.");
+
 
 	UI.appendLog("Success.");
-	
+
 	doc = new Region.Document(yamlData);
 
 
@@ -192,7 +192,6 @@ function updateYAML(_yaml) {
 	context.matrix.translate(previewSize * 0.5, previewSize * 0.5);
 	context.matrix.scale(doc.properties.scale || 1);
 	context.matrix.scale(doc.properties.zoom || 1);
-	
 
 
 
@@ -203,7 +202,7 @@ function updateYAML(_yaml) {
 		strokeScaling: false,
 		strokeColor: "red",
 		strokeWidth: 3,
-		fillColor: new paper.Color(0, 1, 1, .5)
+		fillColor: new paper.Color(0, 1, 1, 0.5)
 	};
 
 	previewLayer.remove();
