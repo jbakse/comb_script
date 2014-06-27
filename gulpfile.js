@@ -42,6 +42,13 @@ gulp.task('html', function() {
 });
 
 
+gulp.task('images', function() {
+	return gulp.src('./src/images/**/*.*')
+		.pipe(gulp.dest('./build/images/'))
+		.pipe(livereload())
+		;
+});
+
 
 //Watch Files For Changes
 gulp.task('watch', function() {
@@ -54,4 +61,4 @@ gulp.task('watch', function() {
 });
 
 // Default Task
-gulp.task('default', ['javascript', 'style', 'html', 'watch']);
+gulp.task('default', ['javascript', 'style', 'html', 'images', 'watch']);
