@@ -18,11 +18,12 @@ module.exports.parseErrorTemplate =
 var Range = ace.require('ace/range').Range;
 var selectedRegionMarker = null;
 
-module.exports.hilightEditorLine = function(_line) {
+module.exports.hilightEditorLine = function(_line, _class) {
+	_class = _class || "";
 
 	module.exports.editor.getSession().removeMarker(selectedRegionMarker);
 
 	selectedRegionMarker = module.exports.editor.session.addMarker(
-    	new Range(_line - 1, 0, _line - 1, 1), "selected-region", "fullLine"
+    	new Range(_line - 1, 0, _line - 1, 1), "selected-region "+_class.toLowerCase(), "fullLine"
  	);
 };

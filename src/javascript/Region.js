@@ -219,7 +219,7 @@ Region.prototype.mouseEnter = function() {
 	$("#tool-tip").html(this.breadCrumb().join("<br />"));
 	console.log(this);
 	// todo remove dependency here. this should just report to the main/dispach controller, somewhere not sure where
-	UI.hilightEditorLine(this.editorProperties.line);
+	UI.hilightEditorLine(this.editorProperties.line, this.type);
 };
 
 Region.prototype.mouseLeave = function() {

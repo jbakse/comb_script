@@ -187,7 +187,8 @@ body
 #editor {
 	font-size: 15px;
 	background-color: #171717;
-	color: white;
+	color: #E6DB74;
+	
 }
 
 
@@ -210,9 +211,21 @@ body
 
 
 .selected-region {
-	border-left: 1px solid cyan;
+	border-left: 3px solid cyan;
 	background-color: black;
 	position: absolute;
+}
+
+.selected-region.rectangle{
+	border-left: 3px solid yellow;
+}
+
+.selected-region.ellipse{
+	border-left: 3px solid pink;
+}
+
+.selected-region.regiongrid{
+	border-left: 3px solid red;
 }
 
 
