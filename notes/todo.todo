@@ -1,4 +1,5 @@
-
+.make a nice ul based UI logging system
+.get some event dispatching in there to decouple user interaction mcv style
 
 Design Decisions
 -	size never considers children, only parent context

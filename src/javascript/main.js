@@ -35,7 +35,7 @@ function main() {
 
 	/* global ace */
 	UI.editor = ace.edit("editor");
-	UI.editor.setTheme("ace/theme/twilight");
+	UI.editor.setTheme("ace/theme/monokai");
 	UI.editor.getSession().setMode("ace/mode/yaml");
 	UI.editor.setShowInvisibles(false);
 	UI.editor.setShowPrintMargin(false);
