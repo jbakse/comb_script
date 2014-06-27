@@ -16,22 +16,23 @@ $(function() {
 
 function main() {
 	console.log("Hello, Main!");
-	paper.setup($('#paper-canvas').get(0));
+	
+	// paper.setup($('#paper-canvas').get(0));
 
-	/* global ace */
-	editor = ace.edit("editor");
-	editor.setTheme("ace/theme/twilight");
-	editor.getSession().setMode("ace/mode/yaml");
-	document.getElementById('editor').style.fontSize='15px';
+	// /* global ace */
+	// editor = ace.edit("editor");
+	// editor.setTheme("ace/theme/twilight");
+	// editor.getSession().setMode("ace/mode/yaml");
+	// document.getElementById('editor').style.fontSize='15px';
 
 
-	$.ajax({
-		url: file_url,
-		success: function(data) {
-			parseYAML(data);
-		},
-		cache: false
-	});
+	// $.ajax({
+	// 	url: file_url,
+	// 	success: function(data) {
+	// 		parseYAML(data);
+	// 	},
+	// 	cache: false
+	// });
 }
 
 function injectYAML(_yaml) {

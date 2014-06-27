@@ -24,6 +24,7 @@ var booleanOperations = {
 
 
 
+
 function Region(_data) {
 	this.type = "Region";
 	this.parent = null;
@@ -145,16 +146,6 @@ Region.prototype.preview = function(_parentContext) {
 	this.previewChildren(context);
 };
 
-Region.prototype.mouseEnter = function() {
-	this.previewGroup.selected = true;
-	$("#tool-tip").html(this.breadCrumb().join("<br />"));
-};
-
-Region.prototype.mouseLeave = function() {
-	this.previewGroup.selected = false;
-	$("#tool-tip").text('');
-};
-
 
 Region.prototype.drawPreview = function(_bounds) {
 	var boundsPath = new paper.Path.Rectangle(_bounds);
@@ -171,6 +162,7 @@ Region.prototype.previewChildren = function(_context) {
 		_child.preview(_context);
 	});
 };
+
 
 
 //////////////////////////////////////////////////////////////////////
@@ -217,6 +209,22 @@ Region.prototype.buildChildren = function(_context) {
 
 
 //////////////////////////////////////////////////////////////////////
+// Events
+
+Region.prototype.mouseEnter = function() {
+	this.previewGroup.selected = true;
+	$("#tool-tip").html(this.breadCrumb().join("<br />"));
+};
+
+Region.prototype.mouseLeave = function() {
+	this.previewGroup.selected = false;
+	$("#tool-tip").text('');
+};
+
+
+
+
+//////////////////////////////////////////////////////////////////////
 // Document
 
 function Document(_data) {
@@ -227,6 +235,7 @@ function Document(_data) {
 
 Document.prototype = Object.create(Region.prototype);
 Document.prototype.constructor = Document;
+
 
 Document.prototype.mouseEnter = function() {};
 Document.prototype.mouseLeave = function() {};
