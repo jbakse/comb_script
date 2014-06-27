@@ -15,145 +15,17 @@
 
 	<script src="javascript/app.js"></script>
 
-	<style type="text/css">
-	body
-	{
-		font-family: Monaco;
-	}
 
+	<link rel="stylesheet" href="css/main.css" />
 
-	/*#paper-canvas, 
-	#paper-svg
-	{
-		border: 1px solid black;
-		display: block;
-	}
 	
-	#tool-tip
-	{
-		height: 100px;
-		width: 400px;
-		border: 1px solid black;
-	}
-
-	#editor { 
-		margin: 0;
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		right: 0;
-		left: 420px;
-	}*/
-
-
-	</style>
-
-	 <style type="text/css">
-			html, body {
-				height: 100%;
-				min-height: 100%;
-				margin: 0;
-				padding: 0;
-			}
-			.split-pane-divider {
-				background: #aaa;
-			}
-			
-			.split-pane-horizontal-divider .divider-handle
-			{
-				position: absolute;
-				top: 50%;
-				right: 0px;
-				width: 40px;
-				height: 40px;
-				margin-top: -20px;
-				
-				background-color: orange;
-			}
-
-			.split-pane-vertical-divider .divider-handle
-			{
-				position: absolute;
-				left: 50%;
-				bottom: 0px;
-				width: 40px;
-				height: 40px;
-				margin-left: -20px;
-				
-				background-color: orange;
-			}
-
-			#menu {
-				position: absolute;
-				width: 50px;
-				background-color: gray;
-				border-right: 1px solid black;
-				height: 100%;
-				box-sizing: border-box;
-			}
-			#document {
-				left: 50px;
-			}
-			
-
-			#preview {
-				min-width: 300px;
-				width: 400px;
-			}
-			
-			#preview-divider {
-				left: 400px; /* Same as left component width */
-				width: 5px;
-			}
-			
-			#right-side-outer {
-				left: 400px;  /* Same as left component width */
-				margin-left: 5px;  /* Same as divider width */
-				min-width: 300px;
-				/*background-color: pink;*/
-			}
-
-			#right-side-inner {
-				/*background-color: blue;*/
-			}
-
-
-			#editor {
-				width: 100%;
-				bottom: 200px;
-				margin-bottom: 5px;
-				background-color: #999;
-				min-height: 200px;
-			}
-			
-			#editor-divider {
-				bottom: 200px; /* Same as left component width */
-				height: 5px;
-			}
-
-			#log {
-				height: 200px;
-				background-color: #222;
-				min-height: 20px;
-				color: white;
-			}
-
-			#overflower {
-				width: 50px;
-				height: 50px;
-				background-color: pink;
-			}
-			#overflower:hover{
-				width: 300px;
-			}
-		</style>
 
 
 </head>
 <body>
 	<div id="menu">
 		menu
-		<div id="overflower">over</div>
+		<div id="overflower"></div>
 	</div>
 	<div id="document" class="split-pane fixed-left">
 		<div id="preview" class="split-pane-component">
