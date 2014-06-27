@@ -20,20 +20,29 @@ var previewSize = 1200;
 
 
 
+
 function main() {
 	console.log("Hello, Main!");
 
 	$('div.split-pane').splitPane();
 	// $('#document > .split-pane-resize-shim').mousemove(resizePreview);
 	// $('#document > .split-pane-resize-shim').mouseup(resizePreview);
+	
+
 
 	paper.setup($('#paper-canvas').get(0));
 
-	// /* global ace */
+	/* global ace */
 	editor = ace.edit("editor");
 	editor.setTheme("ace/theme/twilight");
 	editor.getSession().setMode("ace/mode/yaml");
 	document.getElementById('editor').style.fontSize = '15px';
+	$('#right-side-inner > .split-pane-resize-shim' ).mousemove(
+		function() {
+			console.log("resize");
+			editor.resize();
+		}
+	);
 
 
 	$.ajax({
