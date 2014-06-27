@@ -1,5 +1,8 @@
 properties:
     name: drawbot.yaml
+    scale: 2.83464567
+    zoom: 2
+
 
 
 library:
@@ -9,20 +12,23 @@ library:
                 name: m3Pass
                 height: 3
                 width: 3
+    - &m3tap
+        ellipse:
+            properties:
+                name: m3Tap
+                height: 2
+                width: 2
+
 
 children:
-    - region:
+    - rectangle:
         properties:
-            name: dimensions
+            name: main
             width: 53
             height: 64
             boolean: subtract
+            radius: 3
         children:
-            - rectangle:
-                properties:
-                    name: main
-                    radius: 3
-
             - region:
                 properties:
                     name: belt_attachment
@@ -79,6 +85,7 @@ children:
                     margin_left: 5
                     width: 8
                     row_height: 8
+                    registration: center
                 children:
-                    - *m3pass
+                    - *m3tap
 

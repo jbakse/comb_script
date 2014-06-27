@@ -1,0 +1,110 @@
+
+
+Design Decisions
+-	size never considers children, only parent context
+-	inspired by openscad, -illustrator, html/css, flash symbols
+-	like a text editor vs word processor for vector (minimizing styling)
+
+QUESTIONS
+-	sibling relative positioning: what are some options
+
+First Priority
+
+----	Github it
+
+OVERHAUL Context system
+=====
++-	change context to be current matrix relative always. 
++-	drop the position from context (thats part of translate)
+-	merge context into region? maybe think of context as a light version of the region, passed to children with only the information they should have access too
+-	have a "cascading" properties in the context for variables, etc.
+
++--	should preview and draw need to transform their drawing or should that be handled upstream?
++--	get preview and draw working
++-- 	should rectangles and ellipses be allowed children?
+
+--	defaults for region properties
+--	add list of supported properties, have it log warnings if you use ones it don't know
+
+UI
+=====
+---	rollover inspection 
+-	zoom/pan
+-	the svg output should be its own paper.project or paper.view probably
+
+
+Shapes
++-	rectangle
++-	ellipse
+-	vertical_line
+-	horizontal_line
+-	regular polygon (hexagon, ...)
+-	polygon as array of points
+--	import svg
+
+Transform
+--	translate
++---	rotate
+--	scale
+--	mirror
+
+Booleans
++-	union
++-	difference
++-	intersection
+-	sibling union?
+-	sibling difference?
+-	sibling interseciton?
+
+Positioning
+-	min/max width/height: 
+-	combined attributes: margin: 0 sets top/left/bottom/right
+
+
+Region (basic unit of position & transforming)
+
+Special Regions
+-	region_grid
+	- every child every squre, or once child per square, repeating
+-	auto arrange: takes children and packs them into space
+
+Manipulation
+-	offset paths: move points along normals.
+-	randomize
+
+
+Language Features
+--	units and percenteges: margin_left: 10cm, margin_right: 20%
+
+
+-	remove overlapping line segments: good for lasercut prep
+
+
+
+
+
+Features
+-	control of grouping in output
+-	draw names/labels on output?
+-	Greg Font (line / not shape) Sutton
+
+-	Mathmatic Expressions
+	-	With variables from context
+
+- 	hull
+-	minkowski
+
+-	reconsider yaml format
+-	include other yaml (user libraries, etc)
+-	look into custom yaml handlers
+
+
+
+Sketching:
+-	Openscad is awesome
+-	YAML is suprisingly powerful and awesome
+-	Illustrator is frustrating
+-	Comb Script
+	The BEST Way to Design a Comb
+
+
