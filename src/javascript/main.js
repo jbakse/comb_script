@@ -156,15 +156,27 @@ function searchTree(_node, _line) {
 
 
 function updateYAML(_yaml) {
+	UI.clearLog();
+	UI.appendLog("Parsing YAML.");
 
 	_yaml = injectYAML(_yaml);
+	var yamlData;
+	try {
+		yamlData = jsyaml.safeLoad(_yaml);
+	} catch (e) {
+		console.log(e);
+		var parseErrorTemplate = 
+		_.template('<li class = "error">Error: Line <%= mark.line %><br /> <%= reason %></li>');
 
-	var yamlData = jsyaml.load(_yaml);
-	
-	if (yamlData === null) return UI.log("Couln't parse YAML.");
-	if (typeof yamlData !== "object") return UI.log("Couln't parse YAML.");
-	if (yamlData.children === undefined) return UI.log("Couln't parse YAML.");
+		UI.appendLog(parseErrorTemplate(e));
+		return
+	} 
 
+	if (yamlData === null) return UI.appendLog("Couldn't parse YAML.");
+	if (typeof yamlData !== "object") return UI.appendLog("Couldn't parse YAML.");
+	if (yamlData.children === undefined) return UI.appendLog("Couldn't parse YAML.");
+
+	UI.appendLog("Success.");
 	
 	doc = new Region.Document(yamlData);
 

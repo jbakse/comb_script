@@ -12,7 +12,7 @@ children:
             - rectangle:
                 properties:
                     name: child
-                    margin_top: -50
+                    margin_top -50
                     width: 50
                     height: 50
                     log: true
