@@ -5,7 +5,7 @@ var Region = require('./Region.js');
 var Context = require('./Context.js');
 var UI = require('./UI.js');
 
-var file_url = "../yaml/drawbot.yaml";
+var file_url = "../yaml/simple.yaml";
 
 var editor;
 var doc;
@@ -16,9 +16,8 @@ $(function() {
 });
 
 var previewSize = 1200;
-
-
-
+var previewLayer;
+var buildLayer;
 
 
 function main() {
@@ -27,17 +26,32 @@ function main() {
 	$('div.split-pane').splitPane();
 	// $('#document > .split-pane-resize-shim').mousemove(resizePreview);
 	// $('#document > .split-pane-resize-shim').mouseup(resizePreview);
-	
+
 
 
 	paper.setup($('#paper-canvas').get(0));
+	previewLayer = new paper.Layer();
+	buildLayer = new paper.Layer();
 
 	/* global ace */
 	editor = ace.edit("editor");
 	editor.setTheme("ace/theme/twilight");
 	editor.getSession().setMode("ace/mode/yaml");
-	document.getElementById('editor').style.fontSize = '15px';
-	$('#right-side-inner > .split-pane-resize-shim' ).mousemove(
+	// editor.getSession().selection.on('changeCursor', editorChangeCursor);
+	// editor.getSession().on('change', editorChange);
+
+	editor.commands.addCommand({
+		name: "Reload iFrame",
+		bindKey: {
+			win: "Ctrl-B|Ctrl-R|Ctrl-S",
+			mac: "Command-B|Command-R|Command-S"
+		},
+		exec: reloadEditor
+	});
+
+
+	// document.getElementById('editor').style.fontSize = '15px';
+	$('#right-side-inner > .split-pane-resize-shim').mousemove(
 		function() {
 			console.log("resize");
 			editor.resize();
@@ -48,7 +62,11 @@ function main() {
 	$.ajax({
 		url: file_url,
 		success: function(data) {
-			parseYAML(data);
+			editor.setValue(data);
+			editor.clearSelection();
+			editor.scrollToLine(0);
+			updateYAML(data);
+			// updateYAML(data);
 		},
 		fail: function(data) {
 			console.log("couldn't retrieve yaml");
@@ -102,7 +120,16 @@ function injectYAML(_yaml) {
 
 }
 
-function changeCursor(e) {
+function editorChange(e) {
+	// console.log("change");
+	// console.log(editor.getValue());
+	updateYAML(editor.getValue());
+}
+function reloadEditor(editor){
+	updateYAML(editor.getValue());
+}
+
+function editorChangeCursor(e) {
 	console.log("change", editor.selection.getCursor());
 	var t = searchTree(doc, editor.selection.getCursor().row + 1);
 	console.log("t", t);
@@ -127,63 +154,50 @@ function searchTree(_node, _line) {
 
 }
 
-function parseYAML(_yaml) {
-	console.log("YAML Retrieved");
-	UI.log("YAML Retrieved");
-	editor.setValue(_yaml);
-	editor.clearSelection();
-	editor.scrollToLine(0);
 
-	editor.getSession().selection.on('changeCursor', changeCursor);
-
+function updateYAML(_yaml) {
 
 	_yaml = injectYAML(_yaml);
-	// Load Document
-	var yamlData = jsyaml.load(_yaml);
-	console.log(yamlData);
-	doc = new Region.Document(yamlData);
-	console.log("Tree");
-	console.log(doc.tree());
-	UI.log("<pre>" + doc.tree() + "</pre>");
 
-	// Preview
+	var yamlData = jsyaml.load(_yaml);
+	
+	if (yamlData === null) return UI.log("Couln't parse YAML.");
+	if (typeof yamlData !== "object") return UI.log("Couln't parse YAML.");
+	if (yamlData.children === undefined) return UI.log("Couln't parse YAML.");
+
+	
+	doc = new Region.Document(yamlData);
+
+
 	var context = new Context(
 		new paper.Rectangle(
 			new paper.Point(-200, -200), new paper.Point(200, 200)
-		), 
+		),
 
-		(new paper.Matrix()).translate(previewSize * 0.5, previewSize * 0.5).scale(doc.properties.scale || 1)
+		new paper.Matrix()
 	);
 
+	context.matrix.translate(previewSize * 0.5, previewSize * 0.5);
+	context.matrix.scale(doc.properties.scale || 1);
+	context.matrix.scale(doc.properties.zoom || 1);
+	
 
 
-	// Build Vector
-	var outputLayer = new paper.Layer();
-	var output = doc.build(context);
 
-	// _.each(output, function(path) {
-	// 	outputLayer.addChild(path);
-	// });
-
-	outputLayer.style = {
+	buildLayer.remove();
+	buildLayer = new paper.Layer();
+	doc.build(context);
+	buildLayer.style = {
 		strokeScaling: false,
 		strokeColor: "red",
-		strokeWidth: 1,
-		fillColor: "#FFFF00"
+		strokeWidth: 3,
+		fillColor: new paper.Color(0, 1, 1, .5)
 	};
 
-	// $("#paper-svg").get(0).appendChild(paper.project.exportSVG());
-	outputLayer.visible = false;
-
-	// Build Preview
-	//using scale instead of zoom until paper.js has stable build with strokescaling
-	context.matrix.scale(doc.properties.zoom || 1);
-	var previewLayer = new paper.Layer();
+	previewLayer.remove();
+	previewLayer = new paper.Layer();
 	doc.preview(context);
 
 
-
-	// paper.view.zoom = doc.properties.zoom || 1;
-	// paper.view.center = new paper.Point(200, 200);
 	paper.view.update();
 }

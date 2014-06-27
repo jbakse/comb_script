@@ -33,7 +33,7 @@ function Region(_data) {
 	this.typeProperties = {};
 	this.editorProperties = {};
 
-	this.previewGroup = new paper.Group();
+	this.previewGroup = null;
 
 	this.id = Math.floor(Math.random() * 1000);
 
@@ -133,6 +133,8 @@ Region.prototype.tree = function(_depth) {
 // Preview
 
 Region.prototype.preview = function(_parentContext) {
+	this.previewGroup = new paper.Group();
+
 	var context = _parentContext.deriveContext(this.properties);
 
 	// this.previewGroup = this.drawPreview(context.bounds);
@@ -320,6 +322,8 @@ RegionGrid.prototype = Object.create(Region.prototype);
 RegionGrid.prototype.constructor = RegionGrid;
 
 RegionGrid.prototype.preview = function(_parentContext) {
+	this.previewGroup = new paper.Group();
+	
 	var context = _parentContext.deriveContext(this.properties);
 
 	var gridContexts = this.generateContexts(context);
