@@ -27,9 +27,10 @@
 		menu
 		<div id="overflower"></div>
 	</div>
+	<div id="document-wrap">
 	<div id="document" class="split-pane fixed-left">
 		<div id="preview" class="split-pane-component">
-			This is the preview.
+			<canvas id="paper-canvas" width="1200" height="1200"></canvas>
 		</div>
 		
 		<div id="preview-divider" class="split-pane-divider split-pane-horizontal-divider">
@@ -39,32 +40,22 @@
 		<div id="right-side-outer" class="split-pane-component">
 			
 			<div id="right-side-inner" class="split-pane fixed-bottom">
-				<div id="editor" class="split-pane-component">
-					editor
-				</div>
+				<div id="editor" class="split-pane-component"></div>
 				<div id="editor-divider" class="split-pane-divider split-pane-vertical-divider">
 					<div class="divider-handle"></div>
 				</div>
-
-				<div id="log" class="split-pane-component">
-					log
-				</div>
+				<div id="log" class="split-pane-component"></div>
 			</div>
 
 			
 		</div>
 	</div>
+	</div>
 	<!-- <pre id="editor">readme</pre>
-	<canvas id="paper-canvas" width="398" height="398"></canvas>
+	
 	<div id="tool-tip">Tool</div>
 	<svg id="paper-svg" width="400" height="400"></svg> -->
 	
-	<script>
-			$(function() {
-				console.log("hello pane");
-				$('div.split-pane').splitPane();
-			});
-		</script>
 </body>
 </html>
 

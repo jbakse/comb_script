@@ -20,4 +20,15 @@ _.each(this.properties, function(value, key, object) {
 
 
 
+http://stackoverflow.com/questions/19119931/how-to-set-the-view-viewsize-of-canvas-in-paper-js-with-bootstrap
+function resizeAndRedrawCanvas()
+{
+  var desiredWidth = w; // For instance: $(window).width();
+  var desiredHeight = h; // For instance $('#canvasContainer').height();
 
+  canvas.width = desiredWidth;
+  canvas.height = desiredHeight 
+
+  view.viewSize = new Size(desiredWidth, desiredHeight);
+  view.draw();
+}
