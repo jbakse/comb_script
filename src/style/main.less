@@ -1,4 +1,7 @@
+@import (inline) "reset.css";
 @import "editor.less";
+
+// @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
 
 html, body {
 	height: 100%;
@@ -12,6 +15,7 @@ div
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
+
 
 ////////////////////////////////////////////////////////////////////
 // Split Pane Appearance
@@ -66,7 +70,7 @@ div
 ////////////////////////////////////////////////////////////////////
 // Layout
 
-@menu-width:60px;
+@menu-width: 70px;
 @preview-width: 450px;
 @preview-min-width: 300px;
 @right-side-min-width: 300px;
@@ -138,12 +142,24 @@ div
 // Appearance
 body
 {
-	font-family: Monaco;
+	font-family:  "Lucida Console", Monaco, monospace;
 }
 
 #menu {
 	background-color: #DDD;
 	border-right: 1px solid #444;
+}
+
+.button
+{
+	cursor: pointer;
+}
+.menu-text-button {
+	background-color: black;
+	color: #DDD;
+	font-size: 11px;
+	text-align: center;
+	padding: 15px 0;
 }
 
 .menu-button {
@@ -153,7 +169,7 @@ body
 	img
 	{
 		display: block;
-		opacity: .75;
+		opacity: .15;
 	}
 }
 
@@ -188,7 +204,7 @@ body
 	font-size: 15px;
 	background-color: #171717;
 	color: #E6DB74;
-	
+	font-family:  "Lucida Console", Monaco, monospace;
 }
 
 
@@ -199,15 +215,6 @@ body
 	overflow-y: scroll;
 }
 
-// ::-webkit-scrollbar {
-//   -webkit-appearance: none;
-//   width: 7px;
-// }
-// ::-webkit-scrollbar-thumb {
-//   border-radius: 4px;
-//   background-color: rgba(0, 0, 0, .5);
-//   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
-// }
 
 
 .selected-region {
@@ -227,5 +234,7 @@ body
 .selected-region.regiongrid{
 	border-left: 3px solid red;
 }
+
+
 
 

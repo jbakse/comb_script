@@ -20,6 +20,13 @@ var previewLayer;
 var buildLayer;
 
 
+function downloadDataUri(options) {
+	if (!options.url)
+		options.url = "http://download-data-uri.appspot.com/";
+	$('<form method="post" action="' + options.url + '" style="display:none"><input type="hidden" name="filename" value="' + options.filename + '"/><input type="hidden" name="data" value="' + options.data + '"/></form>').appendTo('body').submit().remove();
+}
+
+
 function main() {
 	console.log("Hello, Main!");
 
@@ -52,6 +59,45 @@ function main() {
 		},
 		exec: reloadEditor
 	});
+
+	$('#svg-export-button').click(function() {
+		UI.appendLog("export");
+		var exportSize = 400;
+
+		var context = new Context(
+			new paper.Rectangle(
+				new paper.Point(-200, -200), new paper.Point(200, 200)
+			),
+
+			new paper.Matrix()
+		);
+		context.matrix.translate(exportSize * 0.5, exportSize * 0.5);
+		context.matrix.scale(doc.properties.scale || 1);
+
+
+		var currentProject = paper.project;
+		var exportProject = new paper.Project($('<canvas width="'+exportSize+'" height="'+exportSize+'" />').get(0));
+		exportProject.activate();
+		doc.build(context);
+		exportProject.activeLayer.style = {
+			strokeColor: "blue",
+			strokeWidth: 1,
+			fillColor: null
+		};
+
+
+		var svg = exportProject.exportSVG({
+			asString: true
+		});
+
+		currentProject.activate();
+
+		downloadDataUri({
+			data: 'data:image/svg+xml;base64,' + btoa(svg),
+			filename: 'export.svg'
+		});
+	});
+
 
 
 	// document.getElementById('UI.editor').style.fontSize = '15px';

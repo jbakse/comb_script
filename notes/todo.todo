@@ -1,5 +1,36 @@
-.make a nice ul based UI logging system
-.get some event dispatching in there to decouple user interaction mcv style
+-	export svg
+-	save and load file?
+
+-	settings.js hold color paletes defaults etc.
+-	refactor UI/main
+-	get some event dispatching in there to decouple user interaction mcv style
+-	try auto building as you type (but only if it compiles okay)
+
+-	selection mirroing stuff
+
+-	build/preview modes
+-	text labels in preview
+-	ui overlays (shows info not in your code)
+
+
+-	consider how language works
+	-	mixed boolean mode
+	-	decide.. first child booelan vs parent boolean vs parent then first child (how it works now)
+
+-	pan/zoom
+
+-	make a nice ul based UI logging system
+
+-	greg font / text region
+
+-	export for lasercutter (auto layout and exporitng iwht defined style)
+
+-	import svg
+
+-	lets move away from having regions/ellipses/rects etc have their own color, and more towards having a global colorscheme that they use. also consider colorcoding booelans. 
+
+-	asign output tags to shapes (kind of like a css class) to determine how they are output in build/export (outputGroup: cut|etch)
+
 
 Design Decisions
 -	size never considers children, only parent context
@@ -7,7 +38,7 @@ Design Decisions
 -	like a text editor vs word processor for vector (minimizing styling)
 
 QUESTIONS
--	sibling relative positioning: what are some options
+-	sibling relative positioning: what are some options?
 
 First Priority
 
