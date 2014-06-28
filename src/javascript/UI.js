@@ -99,7 +99,7 @@ Preview.prototype.setDocument = function(_doc) {
 	_doc.build(context);
 	this.buildLayer.style = {
 		strokeScaling: false,
-		strokeColor: "red",
+		strokeColor: "#090",
 		strokeWidth: 3,
 		fillColor: new paper.Color(0, 1, 1, 0.5)
 	};
@@ -152,6 +152,8 @@ Inspector.prototype.showRegion = function(_region) {
 	$(this.element).append(t("Type", _region.type));
 	$(this.element).append(t("Name", _region.properties.name || "unnamed"));
 	$(this.element).append(t("Line", _region.editorProperties.line || "-"));
+	$(this.element).append(t("Bounds", _region.previewBounds.bounds || "{}"));
+	$(this.element).append(t("Center", _region.previewBounds.bounds.center || "{}"));
 	// $(this.element).append(t("Bounds", _region.previewGroup.bounds));
 	// $(this.element).append(t("Center", _region.previewGroup.bounds.center));
 	// $(this.element).append(t("Size", _region.previewGroup.bounds.size));

@@ -12,8 +12,16 @@ children:
             - rectangle:
                 properties:
                     name: child
-                    margin_top: -50
+                    margin_top: -40
                     width: 50
                     height: 50
                     log: true
                     rotation: 45
+            - region:
+                properties:
+                    name: child
+                    margin_top: -50
+                    width: 80
+                    height: 80
+                    log: true
+                    rotation: -45

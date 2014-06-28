@@ -112,7 +112,7 @@ Controller.prototype._updateYAML = function(_yaml) {
 		yamlData = jsyaml.safeLoad(_yaml);
 	}
 	catch (e) {
-		return UI.appendError(UI.parseErrorTemplate(e));
+		return UI.log.appendParseError(e);
 	}
 	if (typeof yamlData !== "object") return UI.appendError("Couldn't parse YAML.");
 
