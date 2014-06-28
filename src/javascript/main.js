@@ -18,6 +18,7 @@ function main() {
 	UI.preview.init($('#paper-canvas').get(0));
 	UI.editor.init($('#editor').get(0));
 	UI.inspector.init($('#inspector').get(0));
+	UI.menu.init($('#menu').get(0));
 
 
 	UI.log.appendMessage("Loading " + settings.fileURL);
@@ -28,8 +29,6 @@ function main() {
 $(function() {
 	main();
 });
-
-
 
 
 

@@ -117,7 +117,12 @@ Preview.prototype.setDocument = function(_doc) {
 // Menu
 
 function Menu() {
-	$('#svg-export-button').click(controller.exportSVG);
+	this.element = null;
+}
+
+Menu.prototype.init = function(_element) {
+	this.element = _element;
+	$('#svg-export-button').click(_.bind(controller.exportSVG, controller));
 }
 
 

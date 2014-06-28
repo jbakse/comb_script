@@ -11,10 +11,6 @@
 			],
 			"follow_symlinks": true,
 			"path": "."
-		},
-		{
-			"follow_symlinks": true,
-			"path": "lib/split-pane"
 		}
 	]
 }

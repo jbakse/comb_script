@@ -3,7 +3,7 @@
 var _ = require('underscore');
 var Context = require('./Context.js');
 var paperUtil = require('./paper_util.js');
-
+var util = require('./util.js');
 
 module.exports.Document = Document;
 
@@ -246,6 +246,16 @@ Region.prototype.mouseLeave = function() {
 function Document(_data) {
 	Region.call(this, _data);
 	this.type = "Document";
+
+	this.regions = util.collectTree(this, "children");
+
+
+	
+
+	console.log("Flatter?");
+	console.log(this);
+	console.log(this.regions);
+
 }
 
 Document.prototype = Object.create(Region.prototype);

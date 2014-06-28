@@ -7,13 +7,11 @@ var UI = require('./UI.js');
 module.exports = new Controller();
 
 
-
-
 function Controller() {
 	this.doc = null;
 
-	$.Topic( "region/mouseEnter" ).subscribe( function(){ UI.log.appendDebug("mouseEnter");} );
-	$.Topic( "region/mouseLeave" ).subscribe( function(){ UI.log.appendDebug("mouseLeave");} );
+	// $.Topic( "region/mouseEnter" ).subscribe( function(){ UI.log.appendDebug("mouseEnter");} );
+	// $.Topic( "region/mouseLeave" ).subscribe( function(){ UI.log.appendDebug("mouseLeave");} );
 }
 
 Controller.prototype.loadYAMLfromURL = function() {
@@ -50,6 +48,8 @@ Controller.prototype.exportSVG = function() {
 
 	var exportProject = new paper.Project($('<canvas width="' + settings.exportWidth + '" height="' + settings.exportHeight + '" />').get(0));
 	exportProject.activate();
+	
+
 	this.doc.build(context);
 	exportProject.activeLayer.style = {
 		strokeColor: "blue",

@@ -1,19 +1,26 @@
-exports.greet = function() {
+'use strict';
+var _ = require('underscore');
+
+module.exports.greet = function() {
 	console.log("Hello, Util!");
 };
 
 
-exports.downloadDataUri = function(options) {
-  var link = document.createElement("a");
-  link.download = options.filename;
-  link.href =  options.url;
-  link.click();
+module.exports.downloadDataUri = function(options) {
+	var link = document.createElement("a");
+	link.download = options.filename;
+	link.href = options.data;
+	link.click();
 };
 
 
-// function downloadDataUri(options) {
-// 	if (!options.url)
-// 		options.url = "http://download-data-uri.appspot.com/";
-// 	$('<form method="post" action="' + options.url + '" style="display:none"><input type="hidden" name="filename" value="' + options.filename + '"/><input type="hidden" name="data" value="' + options.data + '"/></form>').appendTo('body').submit().remove();
-// }
+module.exports.collectTree = function(_node, _property) {
+	var c = [_node];
+	_(_node[_property]).each(
+		function(_childNode) {
+			c = c.concat(module.exports.collectTree(_childNode, _property));
+		}
+	);
+	return c;
+};
 
