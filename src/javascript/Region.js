@@ -2,8 +2,8 @@
 
 var _ = require('underscore');
 var Context = require('./Context.js');
-var paperUtil = require('./paperUtil.js');
-var UI = require('./UI.js');
+var paperUtil = require('./paper_util.js');
+
 
 module.exports.Document = Document;
 
@@ -215,16 +215,18 @@ Region.prototype.buildChildren = function(_context) {
 // Events
 
 Region.prototype.mouseEnter = function() {
-	this.previewGroup.selected = true;
-	$("#tool-tip").html(this.breadCrumb().join("<br />"));
-	console.log(this);
-	// todo remove dependency here. this should just report to the main/dispach controller, somewhere not sure where
-	UI.hilightEditorLine(this.editorProperties.line, this.type);
+	$.Topic( "region/mouseEnter" ).publish( this );
+
+	// this.previewGroup.selected = true;
+	// $("#tool-tip").html(this.breadCrumb().join("<br />"));
+	// console.log(this);
 };
 
 Region.prototype.mouseLeave = function() {
-	this.previewGroup.selected = false;
-	$("#tool-tip").text('');
+	$.Topic( "region/mouseLeave" ).publish( this );
+
+	// this.previewGroup.selected = false;
+	// $("#tool-tip").text('');
 };
 
 

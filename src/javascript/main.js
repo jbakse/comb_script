@@ -1,13 +1,14 @@
 'use strict';
 
-
+require('./jquery_util.js');
 
 var UI = require('./UI.js');
 var controller = require('./controller.js');
 var settings = require('./settings.js');
 
+
 function main() {
-	console.log("Hello, Main!");
+	UI.log.appendDebug("Starting...");
 
 	$('div.split-pane').splitPane();
 	$('#right-side-inner > .split-pane-resize-shim').mousemove(function() {
@@ -16,6 +17,7 @@ function main() {
 
 	UI.preview.init($('#paper-canvas').get(0));
 	UI.editor.init($('#editor').get(0));
+	UI.inspector.init($('#inspector').get(0));
 
 
 	UI.log.appendMessage("Loading " + settings.fileURL);

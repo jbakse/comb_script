@@ -100,6 +100,11 @@ div
 	min-width: @preview-min-width;
 	width: @preview-width;
 }
+
+#inspector {
+	position: absolute;
+	bottom: 0;	
+}
 		
 #preview-divider {
 	left: @preview-width;	
@@ -197,6 +202,30 @@ body
 
 }
 
+#inspector {
+	padding: 10px;
+	width: 100%;
+
+	font-size: 14px;
+	line-height: 20px;
+	color: #555;
+}
+
+#inspector dt {
+	color: #888;
+	float: left;
+    clear: left;
+    margin-right: 5px;
+}
+
+dt:after {
+    content: ":";
+ }
+
+#inspector dd {
+	color: #444;
+}
+
 #right-side-outer {
 	box-shadow: -10px 0px 15px 0px rgba(0,0,0,.2);
 }
@@ -227,27 +256,36 @@ body
 	margin-bottom: 4px;
 }
 
-@yellow: #E6DB74;
-@red: #F92672;
-#log li.error
+@debug-color: #777;
+@message-color: #AAA;
+@warning-color: #E6DB74;
+@error-color: #F92672;
+@success-color: #00FF00;
+
+#log li.debug
 {
-	border-left-color: @red;
-	color: @red;
+	border-left-color: @debug-color;
+	color: @debug-color;
 }
-#log li.good
+#log li.success
 {
-	border-left-color: green;
-	color: green;
+	border-left-color: @success-color;
+	color: @success-color;
 }
 #log li.message
 {
-	border-left-color: #AAA;
-	color: #AAA;
+	border-left-color: @message-color;
+	color: @message-color;
 }
-#log li.warn
+#log li.warning
 {
-	border-left-color: @yellow;
-	color: @yellow;
+	border-left-color: @warning-color;
+	color: @warning-color;
+}
+#log li.error
+{
+	border-left-color: @error-color;
+	color: @error-color;
 }
 
 

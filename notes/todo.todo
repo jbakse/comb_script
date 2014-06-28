@@ -4,21 +4,23 @@
 +-	factor main into a class
 +-	settings.js hold color paletes defaults etc.
 
--	get some event dispatching in there to decouple user interaction mcv style
--	try auto building as you type (but only if it compiles okay)
-
--	language.js file that has the lists of regions types and their params etc. helpful in reporting issues after parse and might be tied into documentation system
-
--	revisit bindall to make event handlers not require bind on call
-
 -	selection mirroing stuff
 -	search tree buisness should be improved. keep a datastruture that makes looking up nodes by line range super easier
 
--	build/preview modes
--	text labels in preview
--	ui overlays (shows info not in your code)
+-	refactoring
+	-	maybe just make calls on controller for now, these will be turned into having controller listen for dispatched events later. get some event dispatching in there to decouple user interaction mcv style
+	-	language.js file that has the lists of regions types and their params etc. helpful in reporting issues after parse and might be tied into documentation system
+	-	revisit bindall to make event handlers not require bind on call
+	-	Log should route main appends thorugh single depend to DRY
 
--	can we switch the lib folders to npm --save-dev installs and browserify in things instead of having them at the top of the page? is that even a good idea?
+-	try auto building as you type (but only if it compiles okay)
+
+-	build/preview modes
+
+-	text labels in preview
+
+-	ui overlay/inspector (shows info not in your code)
+
 
 -	consider how language works
 	-	mixed boolean mode
@@ -39,6 +41,23 @@
 -	asign output tags to shapes (kind of like a css class) to determine how they are output in build/export (outputGroup: cut|etch)
 
 -	save and load file? cant save and load from harddrive unless an app, consider dropbox/drive integration? consider storing files on server?
+
+-	can we switch the lib folders to npm --save-dev installs and browserify in things instead of having them at the top of the page? is that even a good idea?
+
+-	Looks like Region, might just be a paper.Group could potentially rebuild main "scene graph" approach with groups. Might be much better.
+
+
+- Styles need for preview
+	Bounds
+	Shape
+	Position (registration)
+	*
+	Selected
+	Ghost
+	Hover
+	Idle
+
+	Can these cascade a bit like css?
 
 Design Decisions
 -	size never considers children, only parent context

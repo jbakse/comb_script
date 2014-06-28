@@ -10,6 +10,7 @@ var settings = require('./settings.js');
 module.exports.editor = new Editor();
 module.exports.preview = new Preview();
 module.exports.menu = new Menu();
+module.exports.inspector = new Inspector();
 module.exports.log = new Log();
 
 ////////////////////////////////////////////////////////////////////
@@ -121,20 +122,64 @@ function Menu() {
 
 
 ////////////////////////////////////////////////////////////////////
+// Inspector
+
+function Inspector() {
+	this.element = null;
+
+}
+
+Inspector.prototype.init = function(_element) {
+	this.element = _element;
+
+
+	$.Topic( "region/mouseEnter" ).subscribe( function(){ module.exports.log.appendDebug("mouseEnter");} );
+	$.Topic( "region/mouseLeave" ).subscribe( function(){ module.exports.log.appendDebug("mouseLeave");} );
+
+	$.Topic( "region/mouseEnter" ).subscribe( _.bind(this.showRegion, this) );
+	$.Topic( "region/mouseLeave" ).subscribe( _.bind(this.clear, this) );
+
+};
+
+Inspector.prototype.showRegion = function(_region) {
+	$(this.element).empty();
+	
+
+	var t = function(_term, _data) {
+		return "<dt>"+_term+"</dt><dd>"+_data+"</dd>";
+	}
+		
+	$(this.element).append(t("Type", _region.type));
+	$(this.element).append(t("Name", _region.properties.name || "unnamed"));
+	$(this.element).append(t("Line", _region.editorProperties.line || "-"));
+	// $(this.element).append(t("Bounds", _region.previewGroup.bounds));
+	// $(this.element).append(t("Center", _region.previewGroup.bounds.center));
+	// $(this.element).append(t("Size", _region.previewGroup.bounds.size));
+};
+
+Inspector.prototype.clear = function(_element) {
+	$(this.element).empty();
+};
+
+
+////////////////////////////////////////////////////////////////////
 // Log
 
 function Log() {
 	this.parseErrorTemplate =
 		_.template('<li class = "error"><span class="line">Line <%= mark.line %></span> <span class="message"><%= reason %></span></li>');
 
-	this.goodTemplate =
-		_.template('<li class = "good"><span class="message"><%= message %></span></li>');
+	this.debugTemplate =
+		_.template('<li class = "debug"><span class="message"><%= message %></span></li>');
+
+	this.successTemplate =
+		_.template('<li class = "success"><span class="message"><%= message %></span></li>');
 
 	this.messageTemplate =
 		_.template('<li class = "message"><span class="message"><%= message %></span></li>');
 
-	this.warnTemplate =
-		_.template('<li class = "warn"><span class="message"><%= message %></span></li>');
+	this.warningTemplate =
+		_.template('<li class = "warning"><span class="message"><%= message %></span></li>');
 
 	this.errorTemplate =
 		_.template('<li class = "error"><span class="message"><%= message %></span></li>');
@@ -144,28 +189,41 @@ Log.prototype.clear = function(_message) {
 	$("#log").empty();
 };
 
+function stringArguments(_arguments) {
+	var args = Array.prototype.slice.call(_arguments);
+	return args.join(" ");
+}
 
-Log.prototype.appendGood = function(_message) {
-	$("#log").append(this.goodTemplate({
-		message: _message
+Log.prototype.appendDebug = function() {
+	$("#log").append(this.debugTemplate({
+		message: stringArguments(arguments)
+	}));
+	var d = $('#log');
+	d.scrollTop(d.prop("scrollHeight"));
+
+};
+
+Log.prototype.appendSuccess = function() {
+	$("#log").append(this.successTemplate({
+		message: stringArguments(arguments) 
 	}));
 };
 
-Log.prototype.appendMessage = function(_message) {
+Log.prototype.appendMessage = function() {
 	$("#log").append(this.messageTemplate({
-		message: _message
+		message: stringArguments(arguments) 
 	}));
 };
 
-Log.prototype.appendWarning = function(_message) {
-	$("#log").append(this.warnTemplate({
-		message: _message
+Log.prototype.appendWarning = function() {
+	$("#log").append(this.warningTemplate({
+		message: stringArguments(arguments) 
 	}));
 };
 
-Log.prototype.appendError = function(_message) {
+Log.prototype.appendError = function() {
 	$("#log").append(this.errorTemplate({
-		message: _message
+		message: stringArguments(arguments) 
 	}));
 };
 

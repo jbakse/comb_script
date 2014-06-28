@@ -11,6 +11,9 @@ module.exports = new Controller();
 
 function Controller() {
 	this.doc = null;
+
+	$.Topic( "region/mouseEnter" ).subscribe( function(){ UI.log.appendDebug("mouseEnter");} );
+	$.Topic( "region/mouseLeave" ).subscribe( function(){ UI.log.appendDebug("mouseLeave");} );
 }
 
 Controller.prototype.loadYAMLfromURL = function() {
@@ -114,7 +117,7 @@ Controller.prototype._updateYAML = function(_yaml) {
 	if (typeof yamlData !== "object") return UI.appendError("Couldn't parse YAML.");
 
 
-	UI.log.appendGood("Success");
+	UI.log.appendSuccess("Success");
 
 	this.doc = new Region.Document(yamlData);
 
