@@ -3,7 +3,7 @@
 
 var _ = require('underscore');
 var Range = ace.require('ace/range').Range;
-var controller = require('./controller.js');
+// var controller = require('./controller.js');
 var settings = require('./settings.js');
 
 
@@ -27,13 +27,19 @@ Editor.prototype.init = function(_element) {
 	this.editor.getSession().setMode("ace/mode/yaml");
 	this.editor.setShowInvisibles(false);
 	this.editor.setShowPrintMargin(false);
+	this.editor.setHighlightActiveLine(false);
+	this.editor.getSession().selection.on('changeCursor', _(this.onChangeCursor).bind(this));
+ 
 	this.editor.commands.addCommand({
 		name: "Rebuild",
 		bindKey: {
 			win: "Ctrl-B|Ctrl-R",
 			mac: "Command-B|Command-R"
 		},
-		exec: _.bind(controller.rebuild, controller)
+		// exec: _.bind(controller.rebuild, controller)
+		exec: function(_e) {
+			$.Topic( "UI/rebuild" ).publish(_e);
+		}
 	});
 
 };
@@ -52,20 +58,31 @@ Editor.prototype.getText = function() {
 	return this.editor.getValue();
 };
 
-Editor.prototype.higlightLine = function(_line, _class) {
-	if (_class) {
-		_class = "highlight " + _class.toLowerCase();
-	}
-	else {
-		_class = "highlight";
-	}
+Editor.prototype.highlightLine = function(_line, _class) {
+	this.highlightLines(_line, _line, _class);
+};
+
+Editor.prototype.highlightLines = function(_firstLine, _lastLine, _class) {
+	_class = "highlight " + _class;
 
 	this.editor.getSession().removeMarker(this.highlightMarker);
 
-	this.highlightMarker = module.exports.editor.session.addMarker(
-		new Range(_line - 1, 0, _line - 1, 1), _class, "fullLine"
+	this.highlightMarker = this.editor.session.addMarker(
+		new Range(_firstLine - 1, 0, _lastLine - 1, 1), _class, "fullLine"
 	);
 };
+
+
+var oldLine = 0;
+Editor.prototype.onChangeCursor = function() {
+	var line = this.editor.selection.getCursor().row + 1;
+	if (oldLine != line) {
+		$.Topic( "UI/lineChange" ).publish(line);
+		oldLine = line;
+	}
+};
+
+
 
 
 
@@ -122,8 +139,14 @@ function Menu() {
 
 Menu.prototype.init = function(_element) {
 	this.element = _element;
-	$('#svg-export-button').click(_.bind(controller.exportSVG, controller));
-}
+	
+	$('#svg-export-button').click(
+		//_.bind(controller.exportSVG, controller)
+		function() {
+			$.Topic( "UI/exportSVG" ).publish();
+		}
+	);
+};
 
 
 ////////////////////////////////////////////////////////////////////
@@ -136,10 +159,6 @@ function Inspector() {
 
 Inspector.prototype.init = function(_element) {
 	this.element = _element;
-
-
-	$.Topic( "region/mouseEnter" ).subscribe( function(){ module.exports.log.appendDebug("mouseEnter");} );
-	$.Topic( "region/mouseLeave" ).subscribe( function(){ module.exports.log.appendDebug("mouseLeave");} );
 
 	$.Topic( "region/mouseEnter" ).subscribe( _.bind(this.showRegion, this) );
 	$.Topic( "region/mouseLeave" ).subscribe( _.bind(this.clear, this) );

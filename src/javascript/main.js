@@ -21,6 +21,9 @@ function main() {
 	UI.menu.init($('#menu').get(0));
 
 
+	controller.attachHandlers();
+
+
 	UI.log.appendMessage("Loading " + settings.fileURL);
 	controller.loadYAMLfromURL(settings.fileURL);
 }

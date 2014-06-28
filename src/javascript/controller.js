@@ -1,18 +1,34 @@
+var _ = require('underscore');
 var Region = require('./Region.js');
 var settings = require('./settings.js');
 var util = require('./util.js');
 var UI = require('./UI.js');
-
 
 module.exports = new Controller();
 
 
 function Controller() {
 	this.doc = null;
-
-	// $.Topic( "region/mouseEnter" ).subscribe( function(){ UI.log.appendDebug("mouseEnter");} );
-	// $.Topic( "region/mouseLeave" ).subscribe( function(){ UI.log.appendDebug("mouseLeave");} );
 }
+
+Controller.prototype.attachHandlers = function() {
+	$.Topic("UI/rebuild").subscribe(_.bind(this.rebuild, this));
+	$.Topic("UI/exportSVG").subscribe(_.bind(this.exportSVG, this));
+
+	$.Topic("region/mouseEnter").subscribe(
+		function(_region) {
+			UI.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
+		}
+	);
+
+	$.Topic( "UI/lineChange" ).subscribe(
+		function(_line) {
+			console.log(_line);
+		}
+	);
+
+};
+
 
 Controller.prototype.loadYAMLfromURL = function() {
 	var self = this;
@@ -33,6 +49,7 @@ Controller.prototype.loadYAMLfromURL = function() {
 };
 
 Controller.prototype.rebuild = function() {
+	console.log("hello2");
 	UI.log.clear();
 	this._updateYAML(UI.editor.getText());
 };
@@ -48,7 +65,7 @@ Controller.prototype.exportSVG = function() {
 
 	var exportProject = new paper.Project($('<canvas width="' + settings.exportWidth + '" height="' + settings.exportHeight + '" />').get(0));
 	exportProject.activate();
-	
+
 
 	this.doc.build(context);
 	exportProject.activeLayer.style = {
@@ -72,7 +89,7 @@ Controller.prototype.exportSVG = function() {
 Controller.prototype._injectYAML = function(_yaml) {
 
 	var lines = _yaml.split("\n");
-
+	var lastLine = lines.length;
 	// todo language file
 	var targets = ["region:", "rectangle:", "ellipse:", "region_grid:"];
 
@@ -88,10 +105,12 @@ Controller.prototype._injectYAML = function(_yaml) {
 		if (isTarget) {
 			var whitespace = /^(\s*)/.exec(lines[i])[1];
 			var editorProperties = {
-				line: i + 1
+				firstLine: i + 1,
+				lastLine: lastLine + 1
 			};
 			var injection = whitespace + "    " + "editor_properties: " + JSON.stringify(editorProperties);
 			lines.splice(i + 1, 0, injection);
+			lastLine = i-1;
 		}
 	}
 
@@ -102,7 +121,7 @@ Controller.prototype._injectYAML = function(_yaml) {
 };
 
 Controller.prototype._updateYAML = function(_yaml) {
-	
+
 	UI.log.appendMessage("Parsing YAML");
 
 	_yaml = this._injectYAML(_yaml);
@@ -122,8 +141,6 @@ Controller.prototype._updateYAML = function(_yaml) {
 	this.doc = new Region.Document(yamlData);
 
 	UI.preview.setDocument(this.doc);
-
-
 
 
 
