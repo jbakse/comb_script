@@ -1,17 +1,24 @@
--	export svg
--	save and load file?
++-	export svg
 
--	settings.js hold color paletes defaults etc.
--	refactor UI/main
++-	refactor UI/main
++-	factor main into a class
++-	settings.js hold color paletes defaults etc.
+
 -	get some event dispatching in there to decouple user interaction mcv style
 -	try auto building as you type (but only if it compiles okay)
 
+-	language.js file that has the lists of regions types and their params etc. helpful in reporting issues after parse and might be tied into documentation system
+
+-	revisit bindall to make event handlers not require bind on call
+
 -	selection mirroing stuff
+-	search tree buisness should be improved. keep a datastruture that makes looking up nodes by line range super easier
 
 -	build/preview modes
 -	text labels in preview
 -	ui overlays (shows info not in your code)
 
+-	can we switch the lib folders to npm --save-dev installs and browserify in things instead of having them at the top of the page? is that even a good idea?
 
 -	consider how language works
 	-	mixed boolean mode
@@ -31,6 +38,7 @@
 
 -	asign output tags to shapes (kind of like a css class) to determine how they are output in build/export (outputGroup: cut|etch)
 
+-	save and load file? cant save and load from harddrive unless an app, consider dropbox/drive integration? consider storing files on server?
 
 Design Decisions
 -	size never considers children, only parent context

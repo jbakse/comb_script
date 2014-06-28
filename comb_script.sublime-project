@@ -2,9 +2,19 @@
 	"folders":
 	[
 		{
+			"folder_exclude_patterns":
+			[
+				"node_modules",
+				"build",
+				"lib",
+				"old_scripts"
+			],
 			"follow_symlinks": true,
-			"path": ".",
-			"folder_exclude_patterns": ["node_modules", "build", "lib", "old_scripts"]
+			"path": "."
+		},
+		{
+			"follow_symlinks": true,
+			"path": "lib/split-pane"
 		}
 	]
 }

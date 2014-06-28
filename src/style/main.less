@@ -71,7 +71,7 @@ div
 // Layout
 
 @menu-width: 70px;
-@preview-width: 450px;
+@preview-width: 50%;//450px;
 @preview-min-width: 300px;
 @right-side-min-width: 300px;
 @editor-min-height: 200px;
@@ -153,6 +153,7 @@ body
 .button
 {
 	cursor: pointer;
+	text-transform: uppercase;
 }
 .menu-text-button {
 	background-color: black;
@@ -215,23 +216,56 @@ body
 	overflow-y: scroll;
 }
 
+#log li
+{
+	border-left: 3px solid yellow;
+	list-style: none;
+	font-family:  Verdana, monospace;
+	font-size: 14px;
+	line-height: 20px;
+	padding: 1px 10px;
+	margin-bottom: 4px;
+}
+
+@yellow: #E6DB74;
+@red: #F92672;
+#log li.error
+{
+	border-left-color: @red;
+	color: @red;
+}
+#log li.good
+{
+	border-left-color: green;
+	color: green;
+}
+#log li.message
+{
+	border-left-color: #AAA;
+	color: #AAA;
+}
+#log li.warn
+{
+	border-left-color: @yellow;
+	color: @yellow;
+}
 
 
-.selected-region {
+.hightlight {
 	border-left: 3px solid cyan;
 	background-color: black;
 	position: absolute;
 }
 
-.selected-region.rectangle{
+.hightlight.rectangle{
 	border-left: 3px solid yellow;
 }
 
-.selected-region.ellipse{
+.hightlight.ellipse{
 	border-left: 3px solid pink;
 }
 
-.selected-region.regiongrid{
+.hightlight.regiongrid{
 	border-left: 3px solid red;
 }
 
