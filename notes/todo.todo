@@ -5,22 +5,25 @@
 +-	settings.js hold color paletes defaults etc.
 
 -	selection mirroing stuff
--	search tree buisness should be improved. keep a datastruture that makes looking up nodes by line range super easier
+	-	make less glitch
+		-	try auto building as you type (but only if it compiles okay)
+
++-	search tree buisness should be improved. keep a datastruture that makes looking up nodes by line range super easier
 
 -	refactoring
-	-	maybe just make calls on controller for now, these will be turned into having controller listen for dispatched events later. get some event dispatching in there to decouple user interaction mcv style
+	+-	maybe just make calls on controller for now, these will be turned into having controller listen for dispatched events later. get some event dispatching in there to decouple user interaction mcv style
 	-	language.js file that has the lists of regions types and their params etc. helpful in reporting issues after parse and might be tied into documentation system
 	-	revisit bindall to make event handlers not require bind on call
+		-	naming convention for handlers (onBlahBlah)?
 	-	Log should route main appends thorugh single depend to DRY
 
--	try auto building as you type (but only if it compiles okay)
 
 -	build/preview modes
 
 -	text labels in preview
 
 -	ui overlay/inspector (shows info not in your code)
-
+	- fix zero point
 
 -	consider how language works
 	-	mixed boolean mode
@@ -28,7 +31,7 @@
 
 -	pan/zoom
 
--	make a nice ul based UI logging system
++-	make a nice ul based UI logging system
 
 -	greg font / text region
 
