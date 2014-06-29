@@ -9,36 +9,62 @@ module.exports = new Controller();
 
 function Controller() {
 	this.doc = null;
+	this.selectedRegion = null;
 }
+
+Controller.prototype.highlightRegion = function(_region) {
+	this.doc.setStyle("default", true);
+	$.Topic("UI/onActiveRegion").publish(_region);
+	if (!_region) return;
+	UI.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
+	_region.setStyle("highlight");
+	UI.preview.redraw();
+};
 
 Controller.prototype.attachHandlers = function() {
 	var self = this;
 	$.Topic("UI/rebuild").subscribe(_.bind(this.rebuild, this));
 	$.Topic("UI/exportSVG").subscribe(_.bind(this.exportSVG, this));
 
-	$.Topic("region/mouseEnter").subscribe(
+	$.Topic("region/onMouseEnter").subscribe(
 		function(_region) {
-			UI.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
+			self.highlightRegion(_region);
 		}
 	);
 
-	$.Topic("UI/lineChange").subscribe(
+	$.Topic("region/onClick").subscribe(
+		function(_region) {
+			self.selectedRegion = _region;
+			UI.editor.editor.gotoLine(_region.editorProperties.firstLine, 1000, true);
+			UI.editor.editor.focus();
+			// UI.editor.cursorLine(_region.editorProperties.firstLine - 1);
+			// UI.editor.editor.find('properties:');
+			// UI.editor.editor.selection.clearSelection();
+		}
+	);
+
+	$.Topic("region/onMouseLeave").subscribe(
+		function(_region) {
+			self.highlightRegion(self.selectedRegion);
+		}
+	);
+
+
+
+	$.Topic("UI/onLineChange").subscribe(
 		function(_line) {
 			if (!self.doc) return;
 
-			self.doc.setStyle("default", true);
+			
 
 			_region = _(self.doc.regions).find(function(_region) {
-				return _region.editorProperties.firstLine <= _line && _region.editorProperties.lastLine >= _line
+				return _region.editorProperties.firstLine <= _line && _region.editorProperties.lastLine >= _line;
 			});
 
-			if (_region) {
-				_region.setStyle("highlight");
-				UI.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
-
-			}
-
-			UI.preview.redraw();
+			self.selectedRegion = _region;
+			
+			self.highlightRegion(_region);
+			
 		}
 	);
 
@@ -64,7 +90,7 @@ Controller.prototype.loadYAMLfromURL = function() {
 };
 
 Controller.prototype.rebuild = function() {
-	console.log("hello2");
+	
 	UI.log.clear();
 	this._updateYAML(UI.editor.getText());
 };

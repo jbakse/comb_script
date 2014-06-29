@@ -143,8 +143,9 @@ Region.prototype.preview = function(_parentContext) {
 
 	this.previewGroup = new paper.Group();
 	this.previewGroup.addChildren(newChildren.children);
-	this.previewGroup.onMouseEnter = _.bind(this.mouseEnter, this);
-	this.previewGroup.onMouseLeave = _.bind(this.mouseLeave, this);
+	this.previewGroup.onMouseEnter = _.bind(this.onMouseEnter, this);
+	this.previewGroup.onMouseLeave = _.bind(this.onMouseLeave, this);
+	this.previewGroup.onClick = _.bind(this.onClick, this);
 
 	this.previewChildren(context);
 };
@@ -214,31 +215,35 @@ Region.prototype.buildChildren = function(_context) {
 //////////////////////////////////////////////////////////////////////
 // Events
 
-Region.prototype.mouseEnter = function() {
-	$.Topic("region/mouseEnter").publish(this);
-
-	this.setStyle("highlight");
+Region.prototype.onMouseEnter = function() {
+	$.Topic("region/onMouseEnter").publish(this);
 };
 
-Region.prototype.mouseLeave = function() {
-	$.Topic("region/mouseLeave").publish(this);
+Region.prototype.onClick = function() {
+	$.Topic("region/onClick").publish(this);
+};
 
-	this.setStyle("default");
+Region.prototype.onMouseLeave = function() {
+	$.Topic("region/onMouseLeave").publish(this);
 };
 
 Region.prototype.setStyle = function(_style, _recursive) {
 	if (_style == "highlight") {
-		this.previewBounds.style = {
-			strokeColor: "red",
-			strokeWidth: 3
-		};
-		this.previewPosition.style = {
-			strokeColor: "red"
-		};
+		if (this.previewBounds) {
+			this.previewBounds.style = {
+				strokeColor: "red",
+				strokeWidth: 3
+			};
+		}
+		if (this.previewPosition) {
+			this.previewPosition.style = {
+				strokeColor: "red"
+			};
+		}
 	}
 	else {
-		this.previewBounds.style = this.typeProperties.boundsStyle;
-		this.previewPosition.style = this.typeProperties.positionStyle;
+		if (this.previewBounds) this.previewBounds.style = this.typeProperties.boundsStyle;
+		if (this.previewPosition) this.previewPosition.style = this.typeProperties.positionStyle;
 	}
 
 	if (_recursive) {
@@ -257,22 +262,15 @@ function Document(_data) {
 	this.type = "Document";
 
 	this.regions = util.collectTree(this, "children");
-
-
-
-	console.log("Flatter?");
-	console.log(this);
-	console.log(this.regions);
-
 }
 
 Document.prototype = Object.create(Region.prototype);
 Document.prototype.constructor = Document;
 
 
-Document.prototype.mouseEnter = function() {};
-Document.prototype.mouseLeave = function() {};
-
+Document.prototype.onMouseEnter = function() {};
+Document.prototype.onMouseLeave = function() {};
+Document.prototype.onClick = function() {};
 
 
 //////////////////////////////////////////////////////////////////////
@@ -372,8 +370,11 @@ RegionGrid.prototype.preview = function(_parentContext) {
 
 	}, this);
 
-	this.previewGroup.onMouseEnter = _.bind(this.mouseEnter, this);
-	this.previewGroup.onMouseLeave = _.bind(this.mouseLeave, this);
+	this.previewBounds = this.previewGroup;
+
+	this.previewGroup.onMouseEnter = _.bind(this.onMouseEnter, this);
+	this.previewGroup.onClick = _.bind(this.onClick, this);
+	this.previewGroup.onMouseLeave = _.bind(this.onMouseLeave, this);
 
 };
 

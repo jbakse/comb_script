@@ -29,7 +29,7 @@ Editor.prototype.init = function(_element) {
 	this.editor.setShowPrintMargin(false);
 	this.editor.setHighlightActiveLine(false);
 	this.editor.getSession().selection.on('changeCursor', _(this.onChangeCursor).bind(this));
- 
+
 	this.editor.commands.addCommand({
 		name: "Rebuild",
 		bindKey: {
@@ -38,7 +38,7 @@ Editor.prototype.init = function(_element) {
 		},
 		// exec: _.bind(controller.rebuild, controller)
 		exec: function(_e) {
-			$.Topic( "UI/rebuild" ).publish(_e);
+			$.Topic("UI/rebuild").publish(_e);
 		}
 	});
 
@@ -72,17 +72,25 @@ Editor.prototype.highlightLines = function(_firstLine, _lastLine, _class) {
 	);
 };
 
+// Editor.prototype.cursorLine = function(_line) {
+// 	this.editor.selection.moveCursorTo(_line, 0);
+// 	this.editor.selection.moveCursorLineEnd();
+// 	this.editor.selection.clearSelection();
+
+	
+
+// 	this.editor.focus();
+// };
+
 
 var oldLine = 0;
 Editor.prototype.onChangeCursor = function() {
 	var line = this.editor.selection.getCursor().row + 1;
 	if (oldLine != line) {
-		$.Topic( "UI/lineChange" ).publish(line);
+		$.Topic("UI/onLineChange").publish(line);
 		oldLine = line;
 	}
 };
-
-
 
 
 
@@ -130,8 +138,8 @@ Preview.prototype.setDocument = function(_doc) {
 };
 
 Preview.prototype.redraw = function() {
-		paper.view.update();
-	};
+	paper.view.update();
+};
 
 
 
@@ -144,11 +152,11 @@ function Menu() {
 
 Menu.prototype.init = function(_element) {
 	this.element = _element;
-	
+
 	$('#svg-export-button').click(
 		//_.bind(controller.exportSVG, controller)
 		function() {
-			$.Topic( "UI/exportSVG" ).publish();
+			$.Topic("UI/exportSVG").publish();
 		}
 	);
 };
@@ -159,28 +167,25 @@ Menu.prototype.init = function(_element) {
 
 function Inspector() {
 	this.element = null;
-
 }
 
 Inspector.prototype.init = function(_element) {
 	this.element = _element;
-
-	$.Topic( "region/mouseEnter" ).subscribe( _.bind(this.showRegion, this) );
-	$.Topic( "region/mouseLeave" ).subscribe( _.bind(this.clear, this) );
-
+	$.Topic("UI/onActiveRegion").subscribe(_.bind(this.showRegion, this));
 };
 
 Inspector.prototype.showRegion = function(_region) {
 	$(this.element).empty();
-	
+
+	if (!_region) return;
 
 	var t = function(_term, _data) {
-		return "<dt>"+_term+"</dt><dd>"+_data+"</dd>";
-	}
-		
+		return "<dt>" + _term + "</dt><dd>" + _data + "</dd>";
+	};
+
 	$(this.element).append(t("Type", _region.type));
 	$(this.element).append(t("Name", _region.properties.name || "unnamed"));
-	$(this.element).append(t("Line", _region.editorProperties.line || "-"));
+	$(this.element).append(t("Line", _region.editorProperties.firstLine || "-"));
 	$(this.element).append(t("Bounds", _region.previewBounds.bounds || "{}"));
 	$(this.element).append(t("Center", _region.previewBounds.bounds.center || "{}"));
 	// $(this.element).append(t("Bounds", _region.previewGroup.bounds));
@@ -236,25 +241,25 @@ Log.prototype.appendDebug = function() {
 
 Log.prototype.appendSuccess = function() {
 	$("#log").append(this.successTemplate({
-		message: stringArguments(arguments) 
+		message: stringArguments(arguments)
 	}));
 };
 
 Log.prototype.appendMessage = function() {
 	$("#log").append(this.messageTemplate({
-		message: stringArguments(arguments) 
+		message: stringArguments(arguments)
 	}));
 };
 
 Log.prototype.appendWarning = function() {
 	$("#log").append(this.warningTemplate({
-		message: stringArguments(arguments) 
+		message: stringArguments(arguments)
 	}));
 };
 
 Log.prototype.appendError = function() {
 	$("#log").append(this.errorTemplate({
-		message: stringArguments(arguments) 
+		message: stringArguments(arguments)
 	}));
 };
 
