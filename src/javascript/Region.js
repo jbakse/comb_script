@@ -25,7 +25,6 @@ var booleanOperations = {
 
 
 
-
 function Region(_data) {
 	this.type = "Region";
 	this.parent = null;
@@ -216,27 +215,37 @@ Region.prototype.buildChildren = function(_context) {
 // Events
 
 Region.prototype.mouseEnter = function() {
-	$.Topic( "region/mouseEnter" ).publish( this );
+	$.Topic("region/mouseEnter").publish(this);
 
-	// this.previewGroup.selected = true;
-	this.previewBounds.style = {strokeColor: "red", strokeWidth: 3};
-	this.previewPosition.style = {strokeColor: "red"};
-
-	// $("#tool-tip").html(this.breadCrumb().join("<br />"));
-	// console.log(this);
+	this.setStyle("highlight");
 };
 
 Region.prototype.mouseLeave = function() {
-	$.Topic( "region/mouseLeave" ).publish( this );
+	$.Topic("region/mouseLeave").publish(this);
 
-	// this.previewGroup.selected = false;
-	
-	this.previewBounds.style = this.typeProperties.boundsStyle;
-	this.previewPosition.style = this.typeProperties.positionStyle;
-	
-	// $("#tool-tip").text('');
+	this.setStyle("default");
 };
 
+Region.prototype.setStyle = function(_style, _recursive) {
+	if (_style == "highlight") {
+		this.previewBounds.style = {
+			strokeColor: "red",
+			strokeWidth: 3
+		};
+		this.previewPosition.style = {
+			strokeColor: "red"
+		};
+	}
+	else {
+		this.previewBounds.style = this.typeProperties.boundsStyle;
+		this.previewPosition.style = this.typeProperties.positionStyle;
+	}
+
+	if (_recursive) {
+		_(this.children).invoke('setStyle', _style, true);
+	}
+
+};
 
 
 
@@ -250,7 +259,6 @@ function Document(_data) {
 	this.regions = util.collectTree(this, "children");
 
 
-	
 
 	console.log("Flatter?");
 	console.log(this);

@@ -129,6 +129,11 @@ Preview.prototype.setDocument = function(_doc) {
 	paper.view.update();
 };
 
+Preview.prototype.redraw = function() {
+		paper.view.update();
+	};
+
+
 
 ////////////////////////////////////////////////////////////////////
 // Menu

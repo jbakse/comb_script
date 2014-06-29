@@ -12,6 +12,7 @@ function Controller() {
 }
 
 Controller.prototype.attachHandlers = function() {
+	var self = this;
 	$.Topic("UI/rebuild").subscribe(_.bind(this.rebuild, this));
 	$.Topic("UI/exportSVG").subscribe(_.bind(this.exportSVG, this));
 
@@ -21,9 +22,23 @@ Controller.prototype.attachHandlers = function() {
 		}
 	);
 
-	$.Topic( "UI/lineChange" ).subscribe(
+	$.Topic("UI/lineChange").subscribe(
 		function(_line) {
-			console.log(_line);
+			if (!self.doc) return;
+
+			self.doc.setStyle("default", true);
+
+			_region = _(self.doc.regions).find(function(_region) {
+				return _region.editorProperties.firstLine <= _line && _region.editorProperties.lastLine >= _line
+			});
+
+			if (_region) {
+				_region.setStyle("highlight");
+				UI.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
+
+			}
+
+			UI.preview.redraw();
 		}
 	);
 
@@ -110,7 +125,7 @@ Controller.prototype._injectYAML = function(_yaml) {
 			};
 			var injection = whitespace + "    " + "editor_properties: " + JSON.stringify(editorProperties);
 			lines.splice(i + 1, 0, injection);
-			lastLine = i-1;
+			lastLine = i - 1;
 		}
 	}
 
