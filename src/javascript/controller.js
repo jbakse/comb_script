@@ -9,14 +9,16 @@ module.exports = new Controller();
 
 function Controller() {
 	this.doc = null;
-	this.selectedRegion = null;
+	this.selectedRegions = [];
 	this.hoverRegion = null;
 }
 
 Controller.prototype.redrawPreview = function(_region) {
 	this.doc.setStyle("default", true);
 
-	if (this.selectedRegion) this.selectedRegion.setStyle("highlight");
+	_(this.selectedRegions).each( function(_region) {
+		_region.setStyle("highlight");
+	});
 	if (this.hoverRegion) this.hoverRegion.setStyle("hover");
 
 	UI.preview.redraw();
@@ -38,7 +40,7 @@ Controller.prototype.attachHandlers = function() {
 			
 			self.hoverRegion = _region;
 			
-			if (settings.inspectOnHover) $.Topic("UI/updateInspector").publish(_region);
+			if (settings.inspectOnHover) $.Topic("UI/updateInspector").publish([_region]);
 
 			self.redrawPreview();
 		}
@@ -46,17 +48,16 @@ Controller.prototype.attachHandlers = function() {
 
 	$.Topic("region/onClick").subscribe(
 		function(_region) {
-			console.log("click", _region.id, _region.properties.name, _region);
+			// console.log("click", _region.id, _region.properties.name, _region);
 
-		
-			$.Topic("UI/updateInspector").publish(_region);
+			$.Topic("UI/updateInspector").publish([_region]);
 
 			UI.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
 			UI.editor.editor.gotoLine(_region.editorProperties.firstLine, 1000, true);
 			UI.editor.editor.focus();
 
 			self.hoverRegion = undefined;
-			self.selectedRegion = _region;
+			self.selectedRegions = [_region];
 			
 			self.redrawPreview();
 
@@ -67,7 +68,7 @@ Controller.prototype.attachHandlers = function() {
 		function(_region) {
 
 			self.hoverRegion = undefined;
-			if (settings.inspectOnHover) $.Topic("UI/updateInspector").publish(self.selectedRegion);
+			if (settings.inspectOnHover) $.Topic("UI/updateInspector").publish(self.selectedRegions);
 
 			self.redrawPreview();
 		}
@@ -76,21 +77,29 @@ Controller.prototype.attachHandlers = function() {
 
 Controller.prototype.onLineChange = function(_line) {
 	if (!this.doc) return;
-	console.log("line change");
-	_region = _(this.doc.regions).find(function(_region) {
+	
+
+	_regions = _(this.doc.regions).filter(function(_region) {
 		return _region.editorProperties.firstLine <= _line && _region.editorProperties.lastLine >= _line;
 	});
 
-	if (!_region) {
-		UI.editor.highlightLines(1, 1);
-		this.selectedRegion = undefined;
-	}
-	else {
-		UI.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
-		this.selectedRegion = _region;
+
+	if (this.selectedRegions.length === 1 && _(_regions).contains(this.selectedRegions[0])) {
+		// user clicked item then moved cursor within items defintion, don't expand selection
+		return;
 	}
 
-	$.Topic("UI/updateInspector").publish(_region);
+
+	if (_regions.length === 0) {
+		UI.editor.highlightLines(1, 1);
+	}
+	else {
+		UI.editor.highlightLines(_regions[0].editorProperties.firstLine, _regions[0].editorProperties.lastLine, _regions[0].type.toLowerCase());
+	}
+
+	this.selectedRegions = _regions;
+
+	$.Topic("UI/updateInspector").publish(_regions);
 	this.redrawPreview();
 
 };

@@ -179,25 +179,30 @@ Inspector.prototype.init = function(_element) {
 	$.Topic("UI/updateInspector").subscribe(_.bind(this.update, this));
 };
 
-Inspector.prototype.update = function(_region) {
+Inspector.prototype.update = function(_regions) {
 	// _region = this.controller && this.controller.hoverRegion || this.controller && this.controller.selectedRegion;
 
 	$(this.element).empty();
 
-	if (!_region) return;
+	if (_regions.length === 0) return;
+
+	if (_regions.length > 1) {
+		$(this.element).append("Multiple Selections");
+		return;
+	}
 
 	var t = function(_term, _data) {
 		return "<dt>" + _term + "</dt><dd>" + _data + "</dd>";
 	};
+
+	var _region = _regions[0];
 
 	$(this.element).append(t("Type", _region.type));
 	$(this.element).append(t("Name", _region.properties.name || "unnamed"));
 	$(this.element).append(t("Line", _region.editorProperties.firstLine || "-"));
 	$(this.element).append(t("Bounds", _region.previewBoundsGroup.bounds || "{}"));
 	$(this.element).append(t("Center", _region.previewBoundsGroup.bounds.center || "{}"));
-	// $(this.element).append(t("Bounds", _region.previewGroup.bounds));
-	// $(this.element).append(t("Center", _region.previewGroup.bounds.center));
-	// $(this.element).append(t("Size", _region.previewGroup.bounds.size));
+
 };
 
 Inspector.prototype.clear = function(_element) {
