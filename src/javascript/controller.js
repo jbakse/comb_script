@@ -86,7 +86,6 @@ Controller.prototype.onLineChange = function(_line) {
 
 
 	if (this.selectedRegions.length === 1 && _(_regions).contains(this.selectedRegions[0])) {
-		console.log("bonk");
 		// user clicked item then moved cursor within items defintion, don't expand selection
 		return;
 	}

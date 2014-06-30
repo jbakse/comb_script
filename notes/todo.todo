@@ -6,11 +6,11 @@
 
 -	selection mirroing stuff
 	+-	autobuild
-	-	in preview all instances of a "symbol" should light at once
+	+-	in preview all instances of a "symbol" should light at once
 	-	injector can't mark up "symbol" "calls"... 
 
-	-	make less glitch
-		-	hover/vs selected behavior
+	+-	make less glitch
+		+-	hover/vs selected behavior
 
 +-	search tree buisness should be improved. keep a datastruture that makes looking up nodes by line range super easier
 
@@ -20,12 +20,15 @@
 	-	revisit bindall to make event handlers not require bind on call
 		-	naming convention for handlers (onBlahBlah)?
 	-	Log should route main appends thorugh single depend to DRY
+	-	region grid should probably just generate a bunch of children, rather than one and overriding how drawing is done... except that is weird too because it will still have to override how drawing is done to tell each child where to draw. It might be that we need to just create all the preview/build shapes at construction.. ugh, how would that play with iso mode
 
 -	clickable breadcrumbs in inspector
 
 -	build/preview modes
 
 -	text labels in preview
+
+-	kind of hate the issue where selecting a shape causes line to change, line change triggers non user initiated event.
 
 -	ui overlay/inspector (shows info not in your code)
 	- fix zero point

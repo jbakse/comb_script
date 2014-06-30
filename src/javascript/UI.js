@@ -198,12 +198,31 @@ Inspector.prototype.update = function(_regions) {
 
 	var _region = _regions[0];
 
+	var _r = _region;
+	var breadCrumbs = $('<ul class="breadcrumbs">');
+	var item;
+	while (_r) {
+		item = $("<li>");
+		item.click(this.buildSelectRegionHandler(_r));
+		item.text(_r.properties.name || _r.type);
+		breadCrumbs.prepend(item);
+		_r = _r.parent;
+	}
+	console.log("bc", breadCrumbs);
+	$(this.element).append(breadCrumbs);
 	$(this.element).append(t("Type", _region.type));
 	$(this.element).append(t("Name", _region.properties.name || "unnamed"));
 	$(this.element).append(t("Line", _region.editorProperties.firstLine || "-"));
 	$(this.element).append(t("Bounds", _region.previewBoundsGroup.bounds || "{}"));
 	$(this.element).append(t("Center", _region.previewBoundsGroup.bounds.center || "{}"));
 
+};
+
+Inspector.prototype.buildSelectRegionHandler = function(_region) {
+	return function() {
+		$.Topic("region/onClick").publish(_region);
+		// console.log("click", _region);
+	};
 };
 
 Inspector.prototype.clear = function(_element) {
