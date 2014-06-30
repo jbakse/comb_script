@@ -15,19 +15,23 @@ function Controller() {
 
 Controller.prototype.redrawPreview = function(_region) {
 	this.doc.setStyle("default", true);
-	
+
 	if (this.selectedRegion) this.selectedRegion.setStyle("highlight");
 	if (this.hoverRegion) this.hoverRegion.setStyle("hover");
-	
+
 	UI.preview.redraw();
 };
 
 
-
 Controller.prototype.attachHandlers = function() {
 	var self = this;
-	$.Topic("UI/rebuild").subscribe(_.bind(this.rebuild, this));
-	$.Topic("UI/exportSVG").subscribe(_.bind(this.exportSVG, this));
+	$.Topic("UI/command/rebuild").subscribe(_.bind(this.rebuild, this));
+	$.Topic("UI/command/exportSVG").subscribe(_.bind(this.exportSVG, this));
+
+	$.Topic("UI/onContentChange").subscribe(_.bind(this.rebuild, this));
+
+	$.Topic("UI/onLineChange").subscribe(_.bind(this.onLineChange, this));
+
 
 	$.Topic("region/onMouseEnter").subscribe(
 		function(_region) {
@@ -42,7 +46,6 @@ Controller.prototype.attachHandlers = function() {
 
 	$.Topic("region/onClick").subscribe(
 		function(_region) {
-			console.log(_region);
 			self.hoverRegion = undefined;
 			self.selectedRegion = _region;
 			$.Topic("UI/updateInspector").publish(_region);
@@ -64,35 +67,28 @@ Controller.prototype.attachHandlers = function() {
 			self.redrawPreview();
 		}
 	);
-
-
-
-	$.Topic("UI/onLineChange").subscribe(
-		function(_line) {
-			if (!self.doc) return;
-
-			
-
-			_region = _(self.doc.regions).find(function(_region) {
-				return _region.editorProperties.firstLine <= _line && _region.editorProperties.lastLine >= _line;
-			});
-
-			if (! _region) {
-				UI.editor.highlightLines(1, 1);
-				self.selectedRegion = undefined;
-			} else {
-				UI.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
-				self.selectedRegion = _region;
-			}
-
-			$.Topic("UI/updateInspector").publish(_region);
-			self.redrawPreview();
-			
-		}
-	);
-
 };
 
+Controller.prototype.onLineChange = function(_line) {
+	if (!this.doc) return;
+
+	_region = _(this.doc.regions).find(function(_region) {
+		return _region.editorProperties.firstLine <= _line && _region.editorProperties.lastLine >= _line;
+	});
+
+	if (!_region) {
+		UI.editor.highlightLines(1, 1);
+		this.selectedRegion = undefined;
+	}
+	else {
+		UI.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
+		this.selectedRegion = _region;
+	}
+
+	$.Topic("UI/updateInspector").publish(_region);
+	this.redrawPreview();
+
+};
 
 Controller.prototype.loadYAMLfromURL = function() {
 	var self = this;
@@ -113,9 +109,9 @@ Controller.prototype.loadYAMLfromURL = function() {
 };
 
 Controller.prototype.rebuild = function() {
-	
 	UI.log.clear();
 	this._updateYAML(UI.editor.getText());
+	this.onLineChange(UI.editor.editor.selection.getCursor().row);
 };
 
 Controller.prototype.exportSVG = function() {
@@ -197,10 +193,11 @@ Controller.prototype._updateYAML = function(_yaml) {
 	catch (e) {
 		return UI.log.appendParseError(e);
 	}
-	if (typeof yamlData !== "object") return UI.appendError("Couldn't parse YAML.");
-
+	if (typeof yamlData !== "object") return UI.log.appendError("Couldn't parse YAML.");
 
 	UI.log.appendSuccess("Success");
+
+	if (!yamlData.properties) yamlData.properties = {};
 
 	this.doc = new Region.Document(yamlData);
 

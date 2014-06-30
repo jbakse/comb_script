@@ -28,7 +28,11 @@ Editor.prototype.init = function(_element) {
 	this.editor.setShowInvisibles(false);
 	this.editor.setShowPrintMargin(false);
 	this.editor.setHighlightActiveLine(false);
+	this.editor.getSession().on('change', function(_e) {
+		$.Topic("UI/onContentChange").publish(_e);
+	});
 	this.editor.getSession().selection.on('changeCursor', _(this.onChangeCursor).bind(this));
+
 
 	this.editor.commands.addCommand({
 		name: "Rebuild",
@@ -38,7 +42,7 @@ Editor.prototype.init = function(_element) {
 		},
 		// exec: _.bind(controller.rebuild, controller)
 		exec: function(_e) {
-			$.Topic("UI/rebuild").publish(_e);
+			$.Topic("UI/command/rebuild").publish(_e);
 		}
 	});
 
@@ -77,7 +81,7 @@ Editor.prototype.highlightLines = function(_firstLine, _lastLine, _class) {
 // 	this.editor.selection.moveCursorLineEnd();
 // 	this.editor.selection.clearSelection();
 
-	
+
 
 // 	this.editor.focus();
 // };
@@ -156,7 +160,7 @@ Menu.prototype.init = function(_element) {
 	$('#svg-export-button').click(
 		//_.bind(controller.exportSVG, controller)
 		function() {
-			$.Topic("UI/exportSVG").publish();
+			$.Topic("UI/command/exportSVG").publish();
 		}
 	);
 };
