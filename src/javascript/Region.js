@@ -228,11 +228,24 @@ Region.prototype.onMouseLeave = function() {
 };
 
 Region.prototype.setStyle = function(_style, _recursive) {
-	if (_style == "highlight") {
+	if (_style === "highlight") {
 		if (this.previewBounds) {
 			this.previewBounds.style = {
 				strokeColor: "red",
 				strokeWidth: 3
+			};
+		}
+		if (this.previewPosition) {
+			this.previewPosition.style = {
+				strokeColor: "red"
+			};
+		}
+	}
+	else if (_style === "hover") {
+		if (this.previewBounds) {
+			this.previewBounds.style = {
+				strokeColor: "red",
+				strokeWidth: 1
 			};
 		}
 		if (this.previewPosition) {

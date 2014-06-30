@@ -10,16 +10,19 @@ module.exports = new Controller();
 function Controller() {
 	this.doc = null;
 	this.selectedRegion = null;
+	this.hoverRegion = null;
 }
 
-Controller.prototype.highlightRegion = function(_region) {
+Controller.prototype.redrawPreview = function(_region) {
 	this.doc.setStyle("default", true);
-	$.Topic("UI/onActiveRegion").publish(_region);
-	if (!_region) return;
-	UI.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
-	_region.setStyle("highlight");
+	
+	if (this.selectedRegion) this.selectedRegion.setStyle("highlight");
+	if (this.hoverRegion) this.hoverRegion.setStyle("hover");
+	
 	UI.preview.redraw();
 };
+
+
 
 Controller.prototype.attachHandlers = function() {
 	var self = this;
@@ -28,24 +31,37 @@ Controller.prototype.attachHandlers = function() {
 
 	$.Topic("region/onMouseEnter").subscribe(
 		function(_region) {
-			self.highlightRegion(_region);
+
+			self.hoverRegion = _region;
+			if (settings.inspectOnHover) $.Topic("UI/updateInspector").publish(_region);
+
+			self.redrawPreview();
+
 		}
 	);
 
 	$.Topic("region/onClick").subscribe(
 		function(_region) {
+			console.log(_region);
+			self.hoverRegion = undefined;
 			self.selectedRegion = _region;
+			$.Topic("UI/updateInspector").publish(_region);
+
+			self.redrawPreview();
+
+			UI.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
 			UI.editor.editor.gotoLine(_region.editorProperties.firstLine, 1000, true);
 			UI.editor.editor.focus();
-			// UI.editor.cursorLine(_region.editorProperties.firstLine - 1);
-			// UI.editor.editor.find('properties:');
-			// UI.editor.editor.selection.clearSelection();
 		}
 	);
 
 	$.Topic("region/onMouseLeave").subscribe(
 		function(_region) {
-			self.highlightRegion(self.selectedRegion);
+
+			self.hoverRegion = undefined;
+			if (settings.inspectOnHover) $.Topic("UI/updateInspector").publish(self.selectedRegion);
+
+			self.redrawPreview();
 		}
 	);
 
@@ -61,9 +77,16 @@ Controller.prototype.attachHandlers = function() {
 				return _region.editorProperties.firstLine <= _line && _region.editorProperties.lastLine >= _line;
 			});
 
-			self.selectedRegion = _region;
-			
-			self.highlightRegion(_region);
+			if (! _region) {
+				UI.editor.highlightLines(1, 1);
+				self.selectedRegion = undefined;
+			} else {
+				UI.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
+				self.selectedRegion = _region;
+			}
+
+			$.Topic("UI/updateInspector").publish(_region);
+			self.redrawPreview();
 			
 		}
 	);

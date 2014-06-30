@@ -3,12 +3,14 @@
 
 var Context = require('./Context.js');
 
-module.exports.fileURL = "../yaml/drawbot.yaml";
+module.exports.fileURL = "../yaml/simple.yaml";
 
 module.exports.previewCanvasWidth = 1200;
 module.exports.previewCanvasHeight = 1200;
 module.exports.exportWidth = 400;
 module.exports.exportHeight = 400;
+
+module.exports.inspectOnHover = false;
 
 module.exports.getRootContext = function() {
 	return new Context(

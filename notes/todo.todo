@@ -5,8 +5,12 @@
 +-	settings.js hold color paletes defaults etc.
 
 -	selection mirroing stuff
+	-	autobuild
+	-	in preview all instances of a "symbol" should light at once
+	-	injector can't mark up "symbol" "calls"... 
+
 	-	make less glitch
-		-	try auto building as you type (but only if it compiles okay)
+		-	hover/vs selected behavior
 
 +-	search tree buisness should be improved. keep a datastruture that makes looking up nodes by line range super easier
 

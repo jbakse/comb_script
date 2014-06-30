@@ -171,10 +171,13 @@ function Inspector() {
 
 Inspector.prototype.init = function(_element) {
 	this.element = _element;
-	$.Topic("UI/onActiveRegion").subscribe(_.bind(this.showRegion, this));
+	this.clear();
+	$.Topic("UI/updateInspector").subscribe(_.bind(this.update, this));
 };
 
-Inspector.prototype.showRegion = function(_region) {
+Inspector.prototype.update = function(_region) {
+	// _region = this.controller && this.controller.hoverRegion || this.controller && this.controller.selectedRegion;
+
 	$(this.element).empty();
 
 	if (!_region) return;
