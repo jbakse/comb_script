@@ -35,26 +35,31 @@ Controller.prototype.attachHandlers = function() {
 
 	$.Topic("region/onMouseEnter").subscribe(
 		function(_region) {
-
+			
 			self.hoverRegion = _region;
+			
 			if (settings.inspectOnHover) $.Topic("UI/updateInspector").publish(_region);
 
 			self.redrawPreview();
-
 		}
 	);
 
 	$.Topic("region/onClick").subscribe(
 		function(_region) {
-			self.hoverRegion = undefined;
-			self.selectedRegion = _region;
-			$.Topic("UI/updateInspector").publish(_region);
+			console.log("click", _region.id, _region.properties.name, _region);
 
-			self.redrawPreview();
+		
+			$.Topic("UI/updateInspector").publish(_region);
 
 			UI.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
 			UI.editor.editor.gotoLine(_region.editorProperties.firstLine, 1000, true);
 			UI.editor.editor.focus();
+
+			self.hoverRegion = undefined;
+			self.selectedRegion = _region;
+			
+			self.redrawPreview();
+
 		}
 	);
 
@@ -71,7 +76,7 @@ Controller.prototype.attachHandlers = function() {
 
 Controller.prototype.onLineChange = function(_line) {
 	if (!this.doc) return;
-
+	console.log("line change");
 	_region = _(this.doc.regions).find(function(_region) {
 		return _region.editorProperties.firstLine <= _line && _region.editorProperties.lastLine >= _line;
 	});
@@ -162,6 +167,8 @@ Controller.prototype._injectYAML = function(_yaml) {
 			}
 		}
 
+		var isLibraryCall = lines[i].indexOf("- *") >= 0;
+
 		if (isTarget) {
 			var whitespace = /^(\s*)/.exec(lines[i])[1];
 			var editorProperties = {
@@ -171,7 +178,11 @@ Controller.prototype._injectYAML = function(_yaml) {
 			var injection = whitespace + "    " + "editor_properties: " + JSON.stringify(editorProperties);
 			lines.splice(i + 1, 0, injection);
 			lastLine = i - 1;
+		} else if (isLibraryCall) {
+			lastLine = i - 1;
 		}
+
+
 	}
 
 
@@ -193,7 +204,7 @@ Controller.prototype._updateYAML = function(_yaml) {
 	catch (e) {
 		return UI.log.appendParseError(e);
 	}
-	if (typeof yamlData !== "object") return UI.log.appendError("Couldn't parse YAML.");
+	if (yamlData === null || typeof yamlData !== "object") return UI.log.appendError("Couldn't parse YAML.");
 
 	UI.log.appendSuccess("Success");
 

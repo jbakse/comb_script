@@ -1,27 +1,29 @@
 properties:
     name: simple.yaml
 children:
-    - rectangle:
+    - region:
         properties:
             name: dimensions
             width: 200
             height: 200
-            boolean: subtract
-
         children:
-            - rectangle:
+            - region_grid:
                 properties:
                     name: child
-                    margin_top: -40
                     width: 50
                     height: 50
-                    log: true
-                    rotation: 45
-            - region:
+                    rows: 2
+                    cols: 2
+                    margin_left: 0
+                children:
+                    - ellipse:
+                        properties:
+                            width: 10
+
+
+            - ellipse:
                 properties:
                     name: child
-                    margin_top: -50
-                    width: 80
-                    height: 80
-                    log: true
-                    rotation: -45
+                    width: 50
+                    height: 50
+                    margin_right: 0

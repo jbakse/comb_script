@@ -33,9 +33,13 @@ function Region(_data) {
 	this.typeProperties = {};
 	this.editorProperties = {};
 
-	this.previewGroup = null;
-	this.previewBounds = null;
-	this.previewPosition = null;
+
+	this.previewBoundsGroup = new paper.Group();
+	this.previewBoundsGroup.onMouseEnter = _.bind(this.onMouseEnter, this);
+	this.previewBoundsGroup.onMouseLeave = _.bind(this.onMouseLeave, this);
+	this.previewBoundsGroup.onClick = _.bind(this.onClick, this);
+
+	this.previewPositionGroup = new paper.Group();
 
 	this.id = Math.floor(Math.random() * 1000);
 
@@ -47,7 +51,7 @@ function Region(_data) {
 
 	this.typeProperties.positionStyle = {
 		strokeWidth: 1,
-		strokeColor: '#99CCEE',
+		strokeColor: undefined,
 		fillColor: '#AA8800'
 	};
 
@@ -135,37 +139,43 @@ Region.prototype.tree = function(_depth) {
 // Preview
 
 Region.prototype.preview = function(_parentContext) {
-
 	var context = _parentContext.deriveContext(this.properties);
 
-	var newChildren = this.drawPreview(context.bounds);
-	newChildren.transform(context.matrix);
+	// move this preview to the active layer
+	paper.project.activeLayer.addChild(this.previewBoundsGroup);
+	paper.project.activeLayer.addChild(this.previewPositionGroup);
 
-	this.previewGroup = new paper.Group();
-	this.previewGroup.addChildren(newChildren.children);
-	this.previewGroup.onMouseEnter = _.bind(this.onMouseEnter, this);
-	this.previewGroup.onMouseLeave = _.bind(this.onMouseLeave, this);
-	this.previewGroup.onClick = _.bind(this.onClick, this);
+	// bounds
+	var bounds = this.drawBounds(context.bounds);
+	bounds.transform(context.matrix);
+	bounds.style = this.typeProperties.boundsStyle;
+	this.previewBoundsGroup.addChild(bounds);
 
+	// pos
+	var position = this.drawPosition(context.position);
+	position.transform(context.matrix);
+	position.style = this.typeProperties.positionStyle;
+	this.previewPositionGroup.addChild(position);
+
+	// children
 	this.previewChildren(context);
 };
 
-
-Region.prototype.drawPreview = function(_bounds) {
-	this.previewBounds = new paper.Path.Rectangle(_bounds);
-	this.previewBounds.style = this.typeProperties.boundsStyle;
-
-	this.previewPosition = new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
-	this.previewPosition.style = this.typeProperties.positionStyle;
-
-	return new paper.Group([this.previewBounds, this.previewPosition]);
-};
 
 Region.prototype.previewChildren = function(_context) {
 	_.each(this.children, function(_child) {
 		_child.preview(_context);
 	});
 };
+
+Region.prototype.drawBounds = function(_bounds) {
+	return new paper.Path.Rectangle(_bounds);
+};
+
+Region.prototype.drawPosition = function(_bounds) {
+	return new paper.Path.Ellipse(new paper.Rectangle(-.5, -.5, 1, 1));
+};
+
 
 
 
@@ -229,34 +239,34 @@ Region.prototype.onMouseLeave = function() {
 
 Region.prototype.setStyle = function(_style, _recursive) {
 	if (_style === "highlight") {
-		if (this.previewBounds) {
-			this.previewBounds.style = {
+		if (this.previewBoundsGroup) {
+			this.previewBoundsGroup.style = {
 				strokeColor: "red",
 				strokeWidth: 3
 			};
 		}
-		if (this.previewPosition) {
-			this.previewPosition.style = {
+		if (this.previewPositionGroup) {
+			this.previewPositionGroup.style = {
 				strokeColor: "red"
 			};
 		}
 	}
 	else if (_style === "hover") {
-		if (this.previewBounds) {
-			this.previewBounds.style = {
+		if (this.previewBoundsGroup) {
+			this.previewBoundsGroup.style = {
 				strokeColor: "red",
 				strokeWidth: 1
 			};
 		}
-		if (this.previewPosition) {
-			this.previewPosition.style = {
+		if (this.previewPositionGroup) {
+			this.previewPositionGroup.style = {
 				strokeColor: "red"
 			};
 		}
 	}
 	else {
-		if (this.previewBounds) this.previewBounds.style = this.typeProperties.boundsStyle;
-		if (this.previewPosition) this.previewPosition.style = this.typeProperties.positionStyle;
+		if (this.previewBoundsGroup) this.previewBoundsGroup.style = this.typeProperties.boundsStyle;
+		if (this.previewPositionGroup) this.previewPositionGroup.style = this.typeProperties.positionStyle;
 	}
 
 	if (_recursive) {
@@ -274,6 +284,9 @@ function Document(_data) {
 	Region.call(this, _data);
 	this.type = "Document";
 
+
+	this.typeProperties.boundsStyle.strokeColor = '#999999';
+	
 	this.regions = util.collectTree(this, "children");
 }
 
@@ -305,17 +318,15 @@ Rectangle.prototype.drawBuild = function(_bounds) {
 	return boundsPath;
 };
 
-Rectangle.prototype.drawPreview = function(_bounds) {
-	this.previewBounds = new paper.Path.Rectangle(_bounds, this.properties.radius || 0);
-	this.previewBounds.style = this.typeProperties.boundsStyle;
 
-	this.previewPosition = new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
-	this.previewPosition.style = this.typeProperties.positionStyle;
 
-	return new paper.Group([this.previewBounds, this.previewPosition]);
+Rectangle.prototype.drawBounds = function(_bounds) {
+	return new paper.Path.Rectangle(_bounds, this.properties.radius || 0);
 };
 
-
+Rectangle.prototype.drawPosition = function(_bounds) {
+	return new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
+};
 
 //////////////////////////////////////////////////////////////////////
 // Ellipse
@@ -337,15 +348,14 @@ Ellipse.prototype.drawBuild = function(_bounds) {
 };
 
 
-Ellipse.prototype.drawPreview = function(_bounds) {
-	this.previewBounds = new paper.Path.Ellipse(_bounds);
-	this.previewBounds.style = this.typeProperties.boundsStyle;
-
-	this.previewPosition = new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
-	this.previewPosition.style = this.typeProperties.positionStyle;
-
-	return new paper.Group([this.previewBounds, this.previewPosition]);
+Ellipse.prototype.drawBounds = function(_bounds) {
+	return new paper.Path.Ellipse(_bounds);
 };
+
+Ellipse.prototype.drawPosition = function(_bounds) {
+	return new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
+};
+
 
 
 
@@ -366,7 +376,8 @@ RegionGrid.prototype.constructor = RegionGrid;
 RegionGrid.prototype.preview = function(_parentContext) {
 	var context = _parentContext.deriveContext(this.properties);
 
-	this.previewGroup = new paper.Group();
+	paper.project.activeLayer.addChild(this.previewBoundsGroup);
+	
 	var gridContexts = this.generateContexts(context);
 
 	_.each(gridContexts, function(gridContext) {
@@ -374,20 +385,12 @@ RegionGrid.prototype.preview = function(_parentContext) {
 		var gridPath = new paper.Path.Rectangle(gridContext.bounds);
 		gridPath.style = this.typeProperties.boundsStyle;
 		gridPath.transform(gridContext.matrix);
-
-
-		this.previewGroup.addChild(gridPath);
+		this.previewBoundsGroup.addChild(gridPath);
 
 
 		this.previewChildren(gridContext);
 
 	}, this);
-
-	this.previewBounds = this.previewGroup;
-
-	this.previewGroup.onMouseEnter = _.bind(this.onMouseEnter, this);
-	this.previewGroup.onClick = _.bind(this.onClick, this);
-	this.previewGroup.onMouseLeave = _.bind(this.onMouseLeave, this);
 
 };
 

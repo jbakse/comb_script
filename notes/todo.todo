@@ -5,7 +5,7 @@
 +-	settings.js hold color paletes defaults etc.
 
 -	selection mirroing stuff
-	-	autobuild
+	+-	autobuild
 	-	in preview all instances of a "symbol" should light at once
 	-	injector can't mark up "symbol" "calls"... 
 
@@ -21,6 +21,7 @@
 		-	naming convention for handlers (onBlahBlah)?
 	-	Log should route main appends thorugh single depend to DRY
 
+-	clickable breadcrumbs in inspector
 
 -	build/preview modes
 
