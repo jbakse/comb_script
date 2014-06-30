@@ -178,6 +178,7 @@ Controller.prototype._injectYAML = function(_yaml) {
 		}
 
 		var isLibraryCall = lines[i].indexOf("- *") >= 0;
+		var isLibraryDef = lines[i].indexOf("- &") >= 0;
 
 		if (isTarget) {
 			var whitespace = /^(\s*)/.exec(lines[i])[1];
@@ -188,7 +189,7 @@ Controller.prototype._injectYAML = function(_yaml) {
 			var injection = whitespace + "    " + "editor_properties: " + JSON.stringify(editorProperties);
 			lines.splice(i + 1, 0, injection);
 			lastLine = i - 1;
-		} else if (isLibraryCall) {
+		} else if (isLibraryCall || isLibraryDef) {
 			lastLine = i - 1;
 		}
 

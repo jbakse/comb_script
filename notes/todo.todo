@@ -4,15 +4,23 @@
 +-	factor main into a class
 +-	settings.js hold color paletes defaults etc.
 
--	selection mirroing stuff
++-	selection mirroing stuff
 	+-	autobuild
 	+-	in preview all instances of a "symbol" should light at once
-	-	injector can't mark up "symbol" "calls"... 
+	+-	injector can't mark up "symbol" "calls"... at least skip em
 
 	+-	make less glitch
 		+-	hover/vs selected behavior
 
 +-	search tree buisness should be improved. keep a datastruture that makes looking up nodes by line range super easier
+
+
+
+-	consider how language works
+	-	mixed boolean mode
+	-	decide.. first child booelan vs parent boolean vs parent then first child (how it works now)
+
+
 
 -	refactoring
 	+-	maybe just make calls on controller for now, these will be turned into having controller listen for dispatched events later. get some event dispatching in there to decouple user interaction mcv style
@@ -21,21 +29,28 @@
 		-	naming convention for handlers (onBlahBlah)?
 	-	Log should route main appends thorugh single depend to DRY
 	-	region grid should probably just generate a bunch of children, rather than one and overriding how drawing is done... except that is weird too because it will still have to override how drawing is done to tell each child where to draw. It might be that we need to just create all the preview/build shapes at construction.. ugh, how would that play with iso mode
+	-	kind of hate the issue where selecting a shape causes line to change, line change triggers non user initiated event.
+	-	injector
+		-	use indentation to find end of region lines
+	-	lets move away from having regions/ellipses/rects etc have their own color, and more towards having a global colorscheme that they use. also consider colorcoding booelans. 
+	-	can we switch the lib folders to npm --save-dev installs and browserify in things instead of having them at the top of the page? is that even a good idea?
 
--	clickable breadcrumbs in inspector
++-	clickable breadcrumbs in inspector
 
--	build/preview modes
+	
 
--	text labels in preview
+-	toggle visual build/preview modes
 
--	kind of hate the issue where selecting a shape causes line to change, line change triggers non user initiated event.
+-	text labels in preview? this even worth doing/
 
--	ui overlay/inspector (shows info not in your code)
+
+-	ui overlay/inspector
+	+- clickable bread crumb
+	+- show useful info
 	- fix zero point
+	- fix dimension units
 
--	consider how language works
-	-	mixed boolean mode
-	-	decide.. first child booelan vs parent boolean vs parent then first child (how it works now)
+-       iso mode?
 
 -	pan/zoom
 
@@ -43,19 +58,17 @@
 
 -	greg font / text region
 
--	export for lasercutter (auto layout and exporitng iwht defined style)
+-	export for lasercutter (auto layout and exporitng with defined style)
 
 -	import svg
 
--	lets move away from having regions/ellipses/rects etc have their own color, and more towards having a global colorscheme that they use. also consider colorcoding booelans. 
 
--	asign output tags to shapes (kind of like a css class) to determine how they are output in build/export (outputGroup: cut|etch)
+-	asign output tags to shapes (kind of like a css class) to determine how they are output in build/export (outputGroup: cut | etch)
 
 -	save and load file? cant save and load from harddrive unless an app, consider dropbox/drive integration? consider storing files on server?
 
--	can we switch the lib folders to npm --save-dev installs and browserify in things instead of having them at the top of the page? is that even a good idea?
 
--	Looks like Region, might just be a paper.Group could potentially rebuild main "scene graph" approach with groups. Might be much better.
+-	Looks like Region, might just be a paper.Group could potentially rebuild main "scene graph" approach with groups. Might be much better. (i'm thinking that there are reasons this wouldn't actually work, and anyway would be too major to be worth it)
 
 
 - Styles need for preview
