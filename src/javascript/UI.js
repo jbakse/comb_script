@@ -202,9 +202,8 @@ Inspector.prototype.update = function(_regions) {
 	var breadCrumbs = $('<ul class="breadcrumbs">');
 	var item;
 	while (_r) {
-		item = $("<li>");
+		item = $("<li>").text(_r.properties.name || _r.type);
 		item.click(this.buildSelectRegionHandler(_r));
-		item.text(_r.properties.name || _r.type);
 		breadCrumbs.prepend(item);
 		_r = _r.parent;
 	}
