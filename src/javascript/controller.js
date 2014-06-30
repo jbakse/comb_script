@@ -50,7 +50,7 @@ Controller.prototype.attachHandlers = function() {
 		function(_region) {
 			// console.log("click", _region.id, _region.properties.name, _region);
 
-			$.Topic("UI/updateInspector").publish([_region]);
+			
 
 			UI.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
 			UI.editor.editor.gotoLine(_region.editorProperties.firstLine, 1000, true);
@@ -61,6 +61,7 @@ Controller.prototype.attachHandlers = function() {
 			
 			self.redrawPreview();
 
+			$.Topic("UI/updateInspector").publish([_region]);
 		}
 	);
 
@@ -85,6 +86,7 @@ Controller.prototype.onLineChange = function(_line) {
 
 
 	if (this.selectedRegions.length === 1 && _(_regions).contains(this.selectedRegions[0])) {
+		console.log("bonk");
 		// user clicked item then moved cursor within items defintion, don't expand selection
 		return;
 	}

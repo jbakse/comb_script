@@ -181,12 +181,13 @@ Inspector.prototype.init = function(_element) {
 
 Inspector.prototype.update = function(_regions) {
 	// _region = this.controller && this.controller.hoverRegion || this.controller && this.controller.selectedRegion;
-
+	console.log("update", _regions);
 	$(this.element).empty();
 
 	if (_regions.length === 0) return;
 
 	if (_regions.length > 1) {
+		console.log(_regions);
 		$(this.element).append("Multiple Selections");
 		return;
 	}
