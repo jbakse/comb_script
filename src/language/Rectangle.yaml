@@ -1,0 +1,9 @@
+-   keyword: rectangle
+    class: Rectangle
+    description: |
+        Rectangle
+
+    properties:
+        -   keyword: radius
+            description: The corner radius for a rounded rectangle
+            type: number

@@ -1,0 +1,45 @@
+-   keyword: region
+    class: Region
+    description: |
+        !Generic, non-drawing node. <b>This is bold</b>
+        <pre>
+        - region:
+            properties:
+                name: dimensions
+                width: 200
+                height: 200
+        </pre>
+
+    properties:
+        -   keyword: top
+            description: The top of the bounds relative to the parent's registration point.
+            type: number
+
+        -   keyword: bottom
+            description: The bottom of the bounds relative to the parent's registration point.
+            type: number
+
+        -   keyword: left
+            description: The left of the bounds relative to the parent's registration point.
+            type: number
+
+        -   keyword: right
+            description: The right of the bounds relative to the parent's registration point.
+            type: number
+
+        -   keyword: margin_top
+            description: The top of the bounds relative to parent's bounds.
+            type: number
+
+        -   keyword: margin_bottom
+            description: The bottom of the bounds relative to parent's bounds.
+            type: number
+
+        -   keyword: margin_left
+            description: The left of the bounds relative to parent's bounds.
+            type: number
+
+        -   keyword: margin_right
+            description: The right of the bounds relative to parent's bounds.
+            type: number
+

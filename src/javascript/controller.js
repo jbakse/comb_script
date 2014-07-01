@@ -11,7 +11,7 @@ function Controller() {
 	this.doc = null;
 	this.selectedRegions = [];
 	this.hoverRegion = null;
-	
+	console.log(language);
 }
 
 Controller.prototype.redrawPreview = function(_region) {
@@ -222,7 +222,8 @@ Controller.prototype._updateYAML = function(_yaml) {
 	UI.log.appendSuccess("Success");
 
 	if (!yamlData.properties) yamlData.properties = {};
-	this.doc = new Region.Document(yamlData);
+	this.doc = new Region.Document();
+	this.doc.loadData(yamlData);
 
 	self = this;
 

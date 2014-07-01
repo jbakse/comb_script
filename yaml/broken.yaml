@@ -1,11 +1,12 @@
 properties:
     name: simple.yaml
 children:
-    - region:
+    - rectangle:
         properties:
             name: dimensions
             width: 200
-            height: 200
+            height: Two Hundred
+
 
 
 

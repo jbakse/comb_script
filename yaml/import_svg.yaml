@@ -1,0 +1,15 @@
+properties:
+    name: simple.yaml
+children:
+    - region:
+        properties:
+            name: dimensions
+            width: 200
+            height: 200
+        children:
+            - svg:
+                properties:
+                    source: ../svg/star2.svg
+                    rotation: 90
+                children:
+                    - rectangle:

@@ -50,15 +50,40 @@ gulp.task('images', function() {
 });
 
 
+var yaml    = require('gulp-yml');
+var concat = require('gulp-concat');
+var insert = require('gulp-insert');
+var rename = require("gulp-rename")
+
+gulp.task('language', function() {
+	console.log("try yamling");
+	return gulp.src('./src/language/*.yaml')
+		.pipe(plumber())
+		.pipe(concat('language.yaml'))
+		.pipe( yaml() )
+		.pipe( insert.prepend('language = '))
+		.pipe(rename("language.js"))
+		.pipe(gulp.dest('./build/javascript/'))
+		.pipe(livereload())
+		;
+
+});
+
+
+
 //Watch Files For Changes
 gulp.task('watch', function() {
 
 	gulp.watch('./src/javascript/*.js', ['javascript']);
+	gulp.watch('./src/language/*.yaml', ['language']);
 	gulp.watch('./src/style/*.less', ['style']);
 	gulp.watch('./src/*.html', ['html']);
 	gulp.watch('yaml/*.*').on('change', function(file) {livereload().changed(file.path);});
 
 });
 
+
+
 // Default Task
-gulp.task('default', ['javascript', 'style', 'html', 'images', 'watch']);
+gulp.task('default', ['javascript', 'language', 'style', 'html', 'images', 'watch']);
+

@@ -1,0 +1,31 @@
+regionTypes:
+    - rectangle:
+        keyword: rectangle
+        class: Rectangle
+        description: Draws a rectangle or rounded rectangle.
+        properties:
+            radius:
+                default: 0 (no default implies required)
+                description: Controls the corner radius for a rounded rectangle.
+                min:
+                max:
+                type: string | number | dimension
+
+        drawBuild: !!js/function >
+            function(_bounds) {
+                var boundsPath = new paper.Path.Rectangle(_bounds, this.properties.radius || 0);
+                return boundsPath;
+            };
+
+
+keyword: rectangle
+class: Rectangle
+description: >
+    Draws a rectangle or rounded rectangle. Draws a rectangle or rounded rectangle.Draws a rectangle or rounded rectangle.Draws a rectangle or rounded rectangle.Draws a rectangle or rounded rectangle.Draws a rectangle or rounded rectangle.Draws a rectangle or rounded rectangle.
+properties:
+    radius:
+        default: 0 (no default implies required)
+        description: Controls the corner radius for a rounded rectangle.
+        min:
+        max:
+        type: string | number | dimension

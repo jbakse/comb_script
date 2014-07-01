@@ -27,7 +27,7 @@ var booleanOperations = {
 
 
 
-function Region(_data, _parent) {
+function Region(_parent) {
 	this.type = "Region";
 	this.parent = _parent || null;
 	this.root = this.parent && this.parent.root || this;
@@ -59,25 +59,29 @@ function Region(_data, _parent) {
 		fillColor: '#AA8800'
 	};
 
-	this.loadData(_data);
+	console.log(this, this.type);
 }
+
+
 
 
 //////////////////////////////////////////////////////////////////////
 // Loading
 
 Region.prototype.loadData = function(_data) {
-	if ('editor_properties' in _data) {
+	if (typeof _data.editor_properties === "object" && _data.editor_properties !== null) {
 		this.editorProperties = _.clone(_data.editor_properties);
 	}
 
-	if ('properties' in _data && _data.properties != null && typeof _data.properties === "object") {
+	if (typeof _data.properties === "object" && _data.properties !== null) {
 		this.properties = _.clone(_data.properties);
 	}
 
-	if ('children' in _data) {
+	if (typeof _data.children === "object" && _data.children !== null) {
 		this.loadChildren(_data.children);
 	}
+
+	return this;
 };
 
 Region.prototype.loadChildren = function(_childrenData) {
@@ -87,8 +91,8 @@ Region.prototype.loadChildren = function(_childrenData) {
 		var childData = _.extend({}, _.values(_childData)[0]);
 
 		if (childKey in regionTypes) {
-			var child = new(regionTypes[childKey])(childData, this);
-			// child.parent = this;
+			var child = new(regionTypes[childKey])(this);
+			child.loadData(childData);
 			this.children.push(child);
 		}
 		else {
@@ -310,8 +314,8 @@ Document.prototype.onClick = function() {};
 // Rectangle
 
 function Rectangle(_data, _parent) {
-	Region.call(this, _data, _parent);
 	this.type = "Rectangle";
+	Region.call(this, _data, _parent);
 	_.extend(this.typeProperties.boundsStyle, {
 		strokeColor: '#888'
 	});
