@@ -1,11 +1,13 @@
 properties:
-    name: simple.yaml
+    name: broken.yaml
 children:
     - rectangle:
         properties:
-            name: dimensions
+            name: Dimensions
+            source: ../svg/star.svg
             width: 200
-            height: Two Hundred
+            height: 100
+            bottom: 200
 
 
 

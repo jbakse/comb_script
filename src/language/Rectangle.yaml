@@ -1,5 +1,8 @@
--   keyword: rectangle
+Rectangle:
+    keyword: rectangle
     class: Rectangle
+    extends: Region
+
     description: |
         Rectangle
 

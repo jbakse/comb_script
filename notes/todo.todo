@@ -15,10 +15,15 @@
 +-	search tree buisness should be improved. keep a datastruture that makes looking up nodes by line range super easier
 
 
+---	Finish Laguange Files for implemented classes.
+--	Write some general docs.
+--	Check to see if code can be cleaned up with use of default values.
 
 --	consider how language works
 	-	mixed boolean mode
 	--	decide.. first child booelan vs parent boolean vs parent then first child (how it works now)
+	-	auto registration center? registration top, topleft, ect.
+	-	transforms: scaleX, scaleY, translateX, translateY, rotation
 
 
 

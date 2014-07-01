@@ -228,7 +228,7 @@ Controller.prototype._updateYAML = function(_yaml) {
 	self = this;
 
 	$.whenAll.apply($, this.doc.waitList).always( function () { 
-		UI.log.appendSuccess("Subdocuments Loaded");
+		if (self.doc.waitList.length) UI.log.appendSuccess("Subdocuments Loaded");
 		UI.preview.setDocument(self.doc);
 	} );
 

@@ -1,4 +1,5 @@
--   keyword: region
+Region:
+    keyword: region
     class: Region
     description: |
         !Generic, non-drawing node. <b>This is bold</b>
@@ -11,6 +12,12 @@
         </pre>
 
     properties:
+
+        -   keyword: name
+            description: "The name for this region. Names are not required, but are very helpful."
+            type: string
+            default: unnamed default!
+
         -   keyword: top
             description: The top of the bounds relative to the parent's registration point.
             type: number
@@ -42,4 +49,13 @@
         -   keyword: margin_right
             description: The right of the bounds relative to parent's bounds.
             type: number
+
+        -   keyword: width
+            description: The width of the bounds.
+            type: number
+
+        -   keyword: height
+            description: The height of the bounds.
+            type: number
+
 

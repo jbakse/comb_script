@@ -6,16 +6,16 @@ var paperUtil = require('./paper_util.js');
 var util = require('./util.js');
 var UI = require('./UI.js');
 
+/* global language */
+
 module.exports.Document = Document;
 
 // maps the allowed yaml name to the region type
-var regionTypes = {
-	"region": Region,
-	"region_grid": RegionGrid,
-	"rectangle": Rectangle,
-	"ellipse": Ellipse,
-	"svg": SVG
-};
+var regionTypes = {};
+
+
+
+
 
 
 // maps the allowed yaml name to the coresponding paperjs function
@@ -26,7 +26,7 @@ var booleanOperations = {
 };
 
 
-
+regionTypes.region = Region;
 function Region(_parent) {
 	this.type = "Region";
 	this.parent = _parent || null;
@@ -59,9 +59,7 @@ function Region(_parent) {
 		fillColor: '#AA8800'
 	};
 
-	console.log(this, this.type);
 }
-
 
 
 
@@ -69,12 +67,19 @@ function Region(_parent) {
 // Loading
 
 Region.prototype.loadData = function(_data) {
+
 	if (typeof _data.editor_properties === "object" && _data.editor_properties !== null) {
 		this.editorProperties = _.clone(_data.editor_properties);
 	}
 
 	if (typeof _data.properties === "object" && _data.properties !== null) {
-		this.properties = _.clone(_data.properties);
+
+		if (language[this.type]) {
+			this.loadProperties(_data.properties);
+		}
+		else {
+			this.properties = _.clone(_data.properties);
+		}
 	}
 
 	if (typeof _data.children === "object" && _data.children !== null) {
@@ -82,6 +87,80 @@ Region.prototype.loadData = function(_data) {
 	}
 
 	return this;
+};
+
+function mergeObjectArraysOnKey(_base, _new) {
+	
+	_base = _(_base).filter(function(_baseObject){
+		var overridden = _(_new).find( function(_newObject) {
+			return _newObject.keyword === _baseObject.keyword;
+		});
+		return !overridden;
+	});
+
+	return _base.concat(_new);
+}
+
+
+Region.prototype.loadProperties = function(_properties) {
+	var definitions = language[this.type].properties;
+	var superClass = language[this.type].extends;
+	if (superClass) {
+		definitions = mergeObjectArraysOnKey(language[superClass].properties, definitions, "keyword");
+	}
+
+	var self = this;
+
+
+	// Build message prefix
+	var messagePrefix = self.type + ": ";
+	if (self.editorProperties.firstLine) {
+		messagePrefix = "[Line " + self.editorProperties.firstLine + " " + self.type + "] ";
+	}
+
+	// Validate and import provided properties.
+	_(_properties).each(function(pValue, pKey) {
+		var def = _(definitions).find(function(_def) {
+			return _def.keyword === pKey;
+		});
+
+		if (!def) {
+			UI.log.appendWarning(messagePrefix + "Unknown property: " + pKey);
+			return;
+		}
+
+		if (typeof pValue !== def.type) {
+			UI.log.appendWarning(messagePrefix + "Incorrect type: " + pKey + " (received " + typeof pValue + ", expected " + def.type + ")");
+			return;
+		}
+
+		self.properties[pKey] = pValue;
+	});
+
+
+	// Populate defaults
+	_(definitions).chain()
+		.filter(function(_def) {
+			return _def.default;
+		})
+		.each(function(_def) {
+			self.properties[_def.keyword] = _def.default;
+		});
+
+
+	// Enforce required
+	_(definitions).chain()
+		.filter(function(_def) {
+			return _def.required === true;
+		})
+		.each(function(_def) {
+			if (self.properties[_def.keyword] === undefined) {
+				UI.log.appendWarning(
+					messagePrefix + "Missing required property: " + _def.keyword
+				);
+			}
+		});
+
 };
 
 Region.prototype.loadChildren = function(_childrenData) {
@@ -313,9 +392,10 @@ Document.prototype.onClick = function() {};
 //////////////////////////////////////////////////////////////////////
 // Rectangle
 
+regionTypes.rectangle = Rectangle;
 function Rectangle(_data, _parent) {
-	this.type = "Rectangle";
 	Region.call(this, _data, _parent);
+	this.type = "Rectangle";
 	_.extend(this.typeProperties.boundsStyle, {
 		strokeColor: '#888'
 	});
@@ -466,24 +546,29 @@ RegionGrid.prototype.generateContexts = function(_gridContext) {
 
 function SVG(_data, _parent) {
 	Region.call(this, _data, _parent);
+	
 	this.type = "SVG";
-
 	this.svgMarkup = undefined;
 
 	_.extend(this.typeProperties.boundsStyle, {
 		strokeColor: '#888'
 	});
 
+	
+}
+
+SVG.prototype = Object.create(Region.prototype);
+SVG.prototype.constructor = SVG;
+
+SVG.prototype.loadData = function(_data) {
+	Region.prototype.loadData.call(this, _data);
 	var self = this;
-
-
 	if (this.properties.source) {
 		UI.log.appendMessage("Loading SVG " + this.properties.source);
 		var jqXHR = $.ajax({
 			url: this.properties.source,
 			dataType: "text",
 			success: function(_data) {
-				console.log("x", _data);
 				UI.log.appendSuccess("Loaded SVG Markup" + self.properties.source);
 				self.svgMarkup = _data;
 			},
@@ -498,8 +583,6 @@ function SVG(_data, _parent) {
 	}
 }
 
-SVG.prototype = Object.create(Region.prototype);
-SVG.prototype.constructor = SVG;
 
 SVG.prototype.drawBuild = function(_bounds) {
 	if (!this.svgMarkup) {
