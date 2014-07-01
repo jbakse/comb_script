@@ -182,12 +182,10 @@ Region.prototype.drawPosition = function(_bounds) {
 
 
 
-
 //////////////////////////////////////////////////////////////////////
 // Build
 
 Region.prototype.build = function(_parentContext) {
-
 	var context = _parentContext.deriveContext(this.properties);
 
 	var ownPaths = [].concat(this.drawBuild(context.bounds));
@@ -288,11 +286,11 @@ function Document(_data, _parent) {
 	this.waitList = [];
 	Region.call(this, _data, _parent);
 	this.type = "Document";
-	
-	
+
+
 
 	this.typeProperties.boundsStyle.strokeColor = '#999999';
-	
+
 	this.regions = util.collectTree(this, "children");
 
 
@@ -369,7 +367,6 @@ Ellipse.prototype.drawPosition = function(_bounds) {
 
 
 
-
 //////////////////////////////////////////////////////////////////////
 // RegionGrid
 
@@ -388,7 +385,7 @@ RegionGrid.prototype.preview = function(_parentContext) {
 	var context = _parentContext.deriveContext(this.properties);
 
 	paper.project.activeLayer.addChild(this.previewBoundsGroup);
-	
+
 	var gridContexts = this.generateContexts(context);
 
 	_.each(gridContexts, function(gridContext) {
@@ -460,7 +457,6 @@ RegionGrid.prototype.generateContexts = function(_gridContext) {
 
 
 
-
 //////////////////////////////////////////////////////////////////////
 // SVG
 
@@ -475,37 +471,52 @@ function SVG(_data, _parent) {
 	});
 
 	var self = this;
-	UI.log.appendMessage("Loading SVG " + this.properties.source);
-	var jqXHR = $.ajax({
-		url: this.properties.source,
-		dataType: "text",
-		success: function(_data) {
-			console.log("x",  _data);
-			UI.log.appendSuccess("Loaded SVG Markup" + self.properties.source);
-			self.svgMarkup = _data;
-		},
 
-		error: function(_data) {
-			UI.log.appendError("Couldn't retrieve SVG " + self.properties.source);
-		},
 
-		cache: false
-	});
-	this.root.waitList.push(jqXHR);
+	if (this.properties.source) {
+		UI.log.appendMessage("Loading SVG " + this.properties.source);
+		var jqXHR = $.ajax({
+			url: this.properties.source,
+			dataType: "text",
+			success: function(_data) {
+				console.log("x", _data);
+				UI.log.appendSuccess("Loaded SVG Markup" + self.properties.source);
+				self.svgMarkup = _data;
+			},
+
+			error: function(_data) {
+				UI.log.appendError("Couldn't retrieve SVG " + self.properties.source);
+			},
+
+			cache: false
+		});
+		this.root.waitList.push(jqXHR);
+	}
 }
 
 SVG.prototype = Object.create(Region.prototype);
 SVG.prototype.constructor = SVG;
 
 SVG.prototype.drawBuild = function(_bounds) {
-	var p = new paper.Group().importSVG(this.svgMarkup, { expandShapes: true });
+	if (!this.svgMarkup) {
+		return [];
+	}
+	var p = new paper.Group().importSVG(this.svgMarkup, {
+		expandShapes: true
+	});
 	return p.children;
 };
 
 SVG.prototype.drawBounds = function(_bounds) {
 	var g = new paper.Group();
+	if (!this.svgMarkup) {
+		return g;
+	}
+
 	// var boundsPath = new paper.Path.Rectangle(_bounds, this.properties.radius || 0);
-	var svg = new paper.Group().importSVG(this.svgMarkup, { expandShapes: true });
+	var svg = new paper.Group().importSVG(this.svgMarkup, {
+		expandShapes: true
+	});
 	// svg.translate(boundsPath.position.subtract(svg.position));
 	// svg.scale(boundsPath.bounds.size.divide(svg.bounds.size));
 
@@ -518,4 +529,3 @@ SVG.prototype.drawBounds = function(_bounds) {
 SVG.prototype.drawPosition = function(_bounds) {
 	return new paper.Path.Rectangle(new paper.Rectangle(-0.5, -0.5, 1, 1));
 };
-

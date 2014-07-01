@@ -6,14 +6,18 @@ children:
             name: dimensions
             width: 200
             height: 200
-            boolean: subtract
         children:
             - svg:
-                properties: 
-                    source: ../svg/star.svg
-                    rotation: 80
+                properties:
+                    source: ../svg/star2!.svg
             - svg:
-                properties: 
+                properties:
                     source: ../svg/star2.svg
+                    rotation: 90
+
+
+
+
+
 
 
