@@ -113,11 +113,11 @@ Controller.prototype.loadYAMLfromURL = function() {
 
 		success: function(_data) {
 			UI.editor.setText(_data);
-			self._updateYAML(_data);
+			// self._updateYAML(_data);
 		},
 
 		fail: function(_data) {
-			UI.appendError("Couldn't retrieve YAML");
+			UI.log.appendError("Couldn't retrieve YAML");
 		},
 
 		cache: false
@@ -205,6 +205,7 @@ Controller.prototype._injectYAML = function(_yaml) {
 
 Controller.prototype._updateYAML = function(_yaml) {
 
+	console.log("parsing yaml");
 	UI.log.appendMessage("Parsing YAML");
 
 	_yaml = this._injectYAML(_yaml);
@@ -221,10 +222,17 @@ Controller.prototype._updateYAML = function(_yaml) {
 	UI.log.appendSuccess("Success");
 
 	if (!yamlData.properties) yamlData.properties = {};
-
 	this.doc = new Region.Document(yamlData);
 
-	UI.preview.setDocument(this.doc);
+	self = this;
+
+	$.when.apply($, this.doc.waitList).always( function () { 
+		// console.log("blahhhh"); 
+		UI.log.appendSuccess("Subdocuments Loaded");
+		UI.preview.setDocument(self.doc);
+	} );
+
+	
 
 
 

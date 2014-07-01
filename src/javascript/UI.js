@@ -145,6 +145,7 @@ Preview.prototype.setDocument = function(_doc) {
 Preview.prototype._generate = function() {
 	var context = settings.getRootContext();
 
+	module.exports.log.appendMessage("generate");
 
 	context.matrix.translate(settings.previewCanvasWidth * 0.5, settings.previewCanvasHeight * 0.5);
 	context.matrix.scale(this.doc.properties.scale || 1);
@@ -228,7 +229,7 @@ Inspector.prototype.init = function(_element) {
 
 Inspector.prototype.update = function(_regions) {
 	// _region = this.controller && this.controller.hoverRegion || this.controller && this.controller.selectedRegion;
-	console.log("update", _regions);
+
 	$(this.element).empty();
 
 	if (_regions.length === 0) return;
@@ -254,7 +255,7 @@ Inspector.prototype.update = function(_regions) {
 		breadCrumbs.prepend(item);
 		_r = _r.parent;
 	}
-	console.log("bc", breadCrumbs);
+
 	$(this.element).append(breadCrumbs);
 	$(this.element).append(t("Type", _region.type));
 	$(this.element).append(t("Name", _region.properties.name || "unnamed"));

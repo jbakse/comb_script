@@ -55,6 +55,8 @@
 
 
 --	import svg
+	+-	basic
+	-	scale doc to bounds, scale art to bounds
 	-	greg font / text region
 
 

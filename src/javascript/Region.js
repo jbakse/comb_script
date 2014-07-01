@@ -4,6 +4,7 @@ var _ = require('underscore');
 var Context = require('./Context.js');
 var paperUtil = require('./paper_util.js');
 var util = require('./util.js');
+var UI = require('./UI.js');
 
 module.exports.Document = Document;
 
@@ -12,7 +13,8 @@ var regionTypes = {
 	"region": Region,
 	"region_grid": RegionGrid,
 	"rectangle": Rectangle,
-	"ellipse": Ellipse
+	"ellipse": Ellipse,
+	"svg": SVG
 };
 
 
@@ -25,9 +27,11 @@ var booleanOperations = {
 
 
 
-function Region(_data) {
+function Region(_data, _parent) {
 	this.type = "Region";
-	this.parent = null;
+	this.parent = _parent || null;
+	this.root = this.parent && this.parent.root || this;
+
 	this.children = [];
 	this.properties = {};
 	this.typeProperties = {};
@@ -83,8 +87,8 @@ Region.prototype.loadChildren = function(_childrenData) {
 		var childData = _.extend({}, _.values(_childData)[0]);
 
 		if (childKey in regionTypes) {
-			var child = new(regionTypes[childKey])(childData);
-			child.parent = this;
+			var child = new(regionTypes[childKey])(childData, this);
+			// child.parent = this;
 			this.children.push(child);
 		}
 		else {
@@ -280,14 +284,18 @@ Region.prototype.setStyle = function(_style, _recursive) {
 //////////////////////////////////////////////////////////////////////
 // Document
 
-function Document(_data) {
-	Region.call(this, _data);
+function Document(_data, _parent) {
+	this.waitList = [];
+	Region.call(this, _data, _parent);
 	this.type = "Document";
-
+	
+	
 
 	this.typeProperties.boundsStyle.strokeColor = '#999999';
 	
 	this.regions = util.collectTree(this, "children");
+
+
 }
 
 Document.prototype = Object.create(Region.prototype);
@@ -299,11 +307,12 @@ Document.prototype.onMouseLeave = function() {};
 Document.prototype.onClick = function() {};
 
 
+
 //////////////////////////////////////////////////////////////////////
 // Rectangle
 
-function Rectangle(_data) {
-	Region.call(this, _data);
+function Rectangle(_data, _parent) {
+	Region.call(this, _data, _parent);
 	this.type = "Rectangle";
 	_.extend(this.typeProperties.boundsStyle, {
 		strokeColor: '#888'
@@ -328,11 +337,13 @@ Rectangle.prototype.drawPosition = function(_bounds) {
 	return new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
 };
 
+
+
 //////////////////////////////////////////////////////////////////////
 // Ellipse
 
-function Ellipse(_data) {
-	Region.call(this, _data);
+function Ellipse(_data, _parent) {
+	Region.call(this, _data, _parent);
 	this.type = "Ellipse";
 	_.extend(this.typeProperties.boundsStyle, {
 		strokeColor: '#888'
@@ -362,8 +373,8 @@ Ellipse.prototype.drawPosition = function(_bounds) {
 //////////////////////////////////////////////////////////////////////
 // RegionGrid
 
-function RegionGrid(_data) {
-	Region.call(this, _data);
+function RegionGrid(_data, _parent) {
+	Region.call(this, _data, _parent);
 	this.type = "RegionGrid";
 	_.extend(this.typeProperties, {
 		strokeColor: '#BBBBBB'
@@ -446,3 +457,65 @@ RegionGrid.prototype.generateContexts = function(_gridContext) {
 	return generatedContexts;
 
 };
+
+
+
+
+//////////////////////////////////////////////////////////////////////
+// SVG
+
+function SVG(_data, _parent) {
+	Region.call(this, _data, _parent);
+	this.type = "SVG";
+
+	this.svgMarkup = undefined;
+
+	_.extend(this.typeProperties.boundsStyle, {
+		strokeColor: '#888'
+	});
+
+	var self = this;
+	UI.log.appendMessage("Loading SVG " + this.properties.source);
+	var jqXHR = $.ajax({
+		url: this.properties.source,
+		dataType: "text",
+		success: function(_data) {
+			console.log("x",  _data);
+			UI.log.appendSuccess("Loaded SVG Markup" + self.properties.source);
+			self.svgMarkup = _data;
+		},
+
+		error: function(_data) {
+			UI.log.appendError("Couldn't retrieve SVG " + self.properties.source);
+		},
+
+		cache: false
+	});
+	this.root.waitList.push(jqXHR);
+}
+
+SVG.prototype = Object.create(Region.prototype);
+SVG.prototype.constructor = SVG;
+
+SVG.prototype.drawBuild = function(_bounds) {
+	var p = new paper.Group().importSVG(this.svgMarkup, { expandShapes: true });
+	return p.children;
+};
+
+SVG.prototype.drawBounds = function(_bounds) {
+	var g = new paper.Group();
+	// var boundsPath = new paper.Path.Rectangle(_bounds, this.properties.radius || 0);
+	var svg = new paper.Group().importSVG(this.svgMarkup, { expandShapes: true });
+	// svg.translate(boundsPath.position.subtract(svg.position));
+	// svg.scale(boundsPath.bounds.size.divide(svg.bounds.size));
+
+	// g.addChild(boundsPath);
+	g.addChild(svg);
+
+	return g;
+};
+
+SVG.prototype.drawPosition = function(_bounds) {
+	return new paper.Path.Rectangle(new paper.Rectangle(-0.5, -0.5, 1, 1));
+};
+
