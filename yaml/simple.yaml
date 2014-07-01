@@ -9,11 +9,10 @@ children:
         children:
             - svg:
                 properties:
-                    source: ../svg/star2!.svg
-            - svg:
-                properties:
                     source: ../svg/star2.svg
                     rotation: 90
+                children:
+                    - rectangle:
 
 
 

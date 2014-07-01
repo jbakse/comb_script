@@ -71,7 +71,7 @@ Region.prototype.loadData = function(_data) {
 		this.editorProperties = _.clone(_data.editor_properties);
 	}
 
-	if ('properties' in _data) {
+	if ('properties' in _data && _data.properties != null && typeof _data.properties === "object") {
 		this.properties = _.clone(_data.properties);
 	}
 
@@ -177,7 +177,7 @@ Region.prototype.drawBounds = function(_bounds) {
 };
 
 Region.prototype.drawPosition = function(_bounds) {
-	return new paper.Path.Ellipse(new paper.Rectangle(-.5, -.5, 1, 1));
+	return new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
 };
 
 
