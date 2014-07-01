@@ -104,6 +104,30 @@ Editor.prototype.onChangeCursor = function() {
 function Preview() {
 	this.previewLayer = null;
 	this.buildLayer = null;
+	this.doc = null;
+
+	
+
+	var self = this;
+	$.Topic("UI/command/toggleViewPreview").subscribe(
+		function(_state) {
+			if (_state === undefined) {
+				_state = !self.previewLayer.visible;
+			}
+			self.previewLayer.visible = _state;
+			paper.view.update();
+		}
+	);
+	$.Topic("UI/command/toggleViewBuild").subscribe(
+		function(_state) {
+			if (_state === undefined) {
+				_state = !self.buildLayer.visible;
+			}
+			self.buildLayer.visible = _state;
+			paper.view.update();
+		}
+	);
+	
 
 }
 
@@ -114,18 +138,21 @@ Preview.prototype.init = function(_element) {
 };
 
 Preview.prototype.setDocument = function(_doc) {
+	this.doc = _doc;
+	this._generate();
+};
+
+Preview.prototype._generate = function() {
 	var context = settings.getRootContext();
 
 
 	context.matrix.translate(settings.previewCanvasWidth * 0.5, settings.previewCanvasHeight * 0.5);
-	context.matrix.scale(_doc.properties.scale || 1);
-	context.matrix.scale(_doc.properties.zoom || 1);
-
-
+	context.matrix.scale(this.doc.properties.scale || 1);
+	context.matrix.scale(this.doc.properties.zoom || 1);
 
 	this.buildLayer.remove();
 	this.buildLayer = new paper.Layer();
-	_doc.build(context);
+	this.doc.build(context);
 	this.buildLayer.style = {
 		strokeScaling: false,
 		strokeColor: "#090",
@@ -133,9 +160,11 @@ Preview.prototype.setDocument = function(_doc) {
 		fillColor: new paper.Color(0, 1, 1, 0.5)
 	};
 
+
 	this.previewLayer.remove();
 	this.previewLayer = new paper.Layer();
-	_doc.preview(context);
+	
+	this.doc.preview(context);
 
 
 	paper.view.update();
@@ -156,14 +185,32 @@ function Menu() {
 
 Menu.prototype.init = function(_element) {
 	this.element = _element;
+	this.addClickCommand("#button-svg-export", "UI/command/exportSVG");
+	this.addToggleCommand("#button-view-frame", "UI/command/toggleViewPreview");
+	this.addToggleCommand("#button-view-build", "UI/command/toggleViewBuild");
+	this.addToggleCommand("#button-view-export", "UI/command/toggleViewExport");
+};
 
-	$('#svg-export-button').click(
-		//_.bind(controller.exportSVG, controller)
+Menu.prototype.addClickCommand = function(_element, _command){
+	$(_element).click(
 		function() {
-			$.Topic("UI/command/exportSVG").publish();
+			$.Topic(_command).publish();
 		}
 	);
 };
+
+Menu.prototype.addToggleCommand = function(_element, _command){
+	var state = true;
+	$(_element).append('<img class="strike-through" src="images/menu_icons/icon_off.svg">');
+	$(_element).click(
+		function() {
+			state = !state;
+			$(_element).toggleClass("off", state === false);
+			$.Topic(_command).publish(state);
+		}
+	);
+};
+
 
 
 ////////////////////////////////////////////////////////////////////

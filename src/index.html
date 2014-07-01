@@ -25,27 +25,50 @@
 </head>
 <body>
 	<div id="menu">
-		<div id="svg-export-button" class = "menu-text-button button">Export</div>
+		<div id="button-svg-export" class = "menu-text-button button">Export</div>
 
-		<div class = "menu-button button">
-			<img src="images/menu_icons/icon_prefs.svg"/>
+		<div class = "menu-button button disabled">
+			<div class="icon">
+				<img src="images/menu_icons/icon_prefs.svg"/>
+			</div>
 		</div>
-		<div class = "menu-button button">
-			<img src="images/menu_icons/icon_zoom_plus.svg"/>
+		<div class = "menu-button button disabled">
+			<div class="icon">
+				<img src="images/menu_icons/icon_zoom_plus.svg"/>
+
 			<img src="images/menu_icons/icon_zoom_magnify.svg"/>
 			<img src="images/menu_icons/icon_zoom_minus.svg"/>
+			</div>
+		</div>
+		<div class = "menu-button button disabled">
+			<div class="icon">
+				<img src="images/menu_icons/icon_ruler.svg"/>
+			</div>
+		</div>
+		<div class = "menu-button button disabled">
+			<div class="icon">
+				<span class="label">Grid</span>
+				<img src="images/menu_icons/icon_grid.svg"/>
+			</div>
+		</div>
+		<div class = "menu-button button disabled">
+			<div class="icon">
+				<span class="label">Center</span>
+				<img src="images/menu_icons/icon_registration.svg"/>
+			</div>
 		</div>
 		<div class = "menu-button button">
-			<img src="images/menu_icons/icon_ruler.svg"/>
-		</div>
-		<div class = "menu-button button">
-			<img src="images/menu_icons/icon_grid.svg"/>
-		</div>
-		<div class = "menu-button button">
-			<img src="images/menu_icons/icon_registration.svg"/>
-		</div>
-		<div class = "menu-button button">
-			<img src="images/menu_icons/icon_view.svg"/>
+			<div class="icon">
+				<span class="label">View</span>
+				<img src="images/menu_icons/icon_view.svg"/>
+			</div>
+			<div class = "menu-popup" style="width: 245px;">
+				<ul>
+					<li id="button-view-frame" class="icon"><span class="label">Frame</span><img src="images/menu_icons/icon_view_frame.svg"/></li>
+					<li id="button-view-build" class="icon"><span class="label">Build</span><img src="images/menu_icons/icon_view_build.svg"/></li>
+					<li id="button-view-export" class="icon disabled"><span class="label">Export</span><img src="images/menu_icons/icon_view_export.svg"/></li>
+				</ul>
+			</div>
 		</div>
 		
 

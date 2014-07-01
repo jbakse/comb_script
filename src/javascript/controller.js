@@ -11,6 +11,7 @@ function Controller() {
 	this.doc = null;
 	this.selectedRegions = [];
 	this.hoverRegion = null;
+	
 }
 
 Controller.prototype.redrawPreview = function(_region) {

@@ -17,6 +17,20 @@ div
 }
 
 
+
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Micro ClearFix Mixin */
+.clearfix{
+  zoom:1;
+  &:before, &:after{ content:""; display:table; }
+  &:after{ clear: both; }
+}
+
 ////////////////////////////////////////////////////////////////////
 // Split Pane Appearance
 
@@ -169,14 +183,78 @@ body
 }
 
 .menu-button {
-	width: 44px;
-	margin: 10px auto;
+	position: relative;
+	
+	// background-color: red;
+}
 
-	img
+#menu .disabled {
+	opacity: .15;
+}
+
+#menu .icon
+{
+	width: 44px;
+	margin: auto;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	position: relative;
+	.label {
+		text-transform: none;
+		font-size: 12px;
+		display: block;
+		margin-bottom: 5px;
+	}
+	> img
+	{
+		display: block;	
+	}
+	.strike-through
+	{
+		display: none;
+		position: absolute;
+		bottom: 12px;
+	}
+	&.off .strike-through
 	{
 		display: block;
-		opacity: .15;
 	}
+}
+
+.menu-popup
+{
+	display: none;
+	position: absolute;
+	
+	top: 0px;
+
+	padding-left: @menu-width - 1;	
+
+	
+	// background-color: rgba(0,0,0,.2);
+
+	
+	ul {
+		padding-left: 10px;
+		background-color: #ddd;
+		display: inline-block;
+		border: 1px solid black;
+		border-left: none;
+
+	}
+
+	li {
+		list-style: none;
+		display: block;
+		float: left;
+		padding-right: 10px;
+	}
+
+}
+
+.menu-button:hover .menu-popup
+{
+	display: block;
 }
 
 
