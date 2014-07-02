@@ -1,5 +1,5 @@
 var _ = require('underscore');
-var Region = require('./Region.js');
+var regionTypes = require('./region/regionTypes.js');
 var settings = require('./settings.js');
 var util = require('./util.js');
 var UI = require('./UI.js');
@@ -222,7 +222,9 @@ Controller.prototype._updateYAML = function(_yaml) {
 	UI.log.appendSuccess("Success");
 
 	if (!yamlData.properties) yamlData.properties = {};
-	this.doc = new Region.Document();
+	
+	console.log(regionTypes);
+	this.doc = new regionTypes.Document();
 	this.doc.loadData(yamlData);
 
 	self = this;
