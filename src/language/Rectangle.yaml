@@ -1,10 +1,10 @@
 Rectangle:
-    keyword: Rectangle
+    keyword: rectangle
     class: Rectangle
     extends: Region
 
     description: |
-        Rectangle
+        Rectangle draws a rectangle.
         <pre>
         - rectangle:
             properties:

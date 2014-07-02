@@ -1,4 +1,4 @@
-Ellipse:
+SVG:
     keyword: svg
     class: SVG
     extends: Region

@@ -1,6 +1,13 @@
+@doc-property: #ff2259;
+@link-color: #228fff;
+@light-text-color: rgb(121, 121, 121);
+
+@menu-color: rgb(38, 40, 33);
+@bg-color: rgb(247, 247, 247);
+
 body{
 	font-family: 'Lucida Console', Monaco, monospace;
-	background-color: rgb(238, 238, 238);
+	background-color: @bg-color;
 	font-size: 12px;
 	margin: 0px;
 }
@@ -10,6 +17,18 @@ body{
 }
 .clear{
 	clear:both;
+}
+
+a, a:visited{
+	color: @link-color;
+	text-decoration: none;
+	padding: 2px;
+}
+
+a:hover{
+	background-color: @link-color;
+	color: white;
+
 }
 
 h1{
@@ -26,25 +45,58 @@ ul{
 }
 
 #menu-container{
-	float: left;
-	background-color: rgb(221, 221, 221);
+	//float: left;
+	background-color: @menu-color;
 	width: 200px;
 	padding: 10px;
-	height: 800px;
+	height: 900px;
+
+	position: fixed;
+	top:0px;
+	left:0px;
+	li{
+		margin-bottom: 5px;
+	}
+	color:white;
 }
 
 #detail-container{
-	float: left;
 	width: 550px;
-	padding: 10px;
+	margin-left: 220px;
 
 	#regionTypes{
 		li{
 			margin-bottom: 50px;
+			//background-color: white;
+			padding: 10px;
 		}
 
 		.properties{
-			background-color: red;
+			li{
+				.property-name{
+					color: @doc-property;
+					font-weight: bold;
+					margin-bottom: 15px;
+					display: block;
+				}
+				.description{
+					display: block;
+				}
+				margin-bottom: 15px;
+				padding: 0px;
+				dl{
+					margin-top: 5px;
+				}
+				dt{
+					display:block;
+					float: left;
+					clear: left;
+				}
+				dd{
+					margin-left: 70px;
+					color: @light-text-color;
+				}
+			}
 		}
 	}
 }
@@ -54,4 +106,9 @@ pre{
 	color: white;
 	padding: 10px;
 	//width: 100%;
+	white-space: pre-wrap;       /* css-3 */
+	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }

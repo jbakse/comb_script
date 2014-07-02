@@ -15,7 +15,7 @@
 			<h1>Classes</h1>
 			<ul id="menu">
 				{{#regionTypes}}
-				<li>{{class}}</li>
+				<li><a href="#{{class}}">{{class}}</a></li>
 				{{/regionTypes}}
 			</ul>
 			<h1>Examples</h1>
@@ -31,27 +31,38 @@
 			<ul id="regionTypes">
 				{{#regionTypes}}
 				<li>
-					<h1>{{class}}</h1>
+					<h1>{{class}}</h1><a id="{{class}}"></a>
+					<span>extends: <a href="#{{extends}}">{{extends}}{{^extends}}DansMom{{/extends}}</a></span>
 					<p>{{{description}}}</p>
 					<h2>Properties</h2>
-					<hr></hr>
-					<dl class="properties">
+					<ul class="properties">
 					{{#properties}}
-					<dt>{{keyword}}</dt>
-					<dd>
-						{{{description}}}
-						<dl>
-							<dt>type</dt>
-							<dd>{{type}}</dd>
-							<dt>default</dt>
-							<dd>{{default}}{{^default}}undefined{{/default}}</dd>
-						</dl>
-					</dd>
+						<li>
+							<span class="property-name">{{keyword}}</span>
+							<span class="description">{{{description}}}</span>
+							<dl>
+								<dt>type:</dt>
+								<dd>{{type}}</dd>
+								<dt>default:</dt>
+								<dd>{{default}}{{^default}}undefined{{/default}}</dd>
+								{{#required}}
+									<dt>required:</dt>
+									<dd>{{required}}</dd>
+								{{/required}}
+								<dt>values:</dt>
+								<dd>{{values}}{{^values}}none{{/values}}</dd>
+							</dl>
+
+						</li>
 					{{/properties}}
-					</dl>
+					</ul>
+					<h2>Required Properties</h2>
+					<ul class="required-properties">
+					</ul>
 					<h2>Inherited Properties</h2>
-					<hr></hr>
+
 				</li>
+				<hr></hr>
 				{{/regionTypes}}
 			</ul>
 		</div>

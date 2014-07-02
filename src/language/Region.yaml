@@ -23,7 +23,7 @@ Region:
         -   keyword: name
             description: "The name for this region. Names are not required, but are very helpful."
             type: string
-            default: unnamed default!
+            default: unnamed
 
         -   keyword: top
             description: The top of the bounds relative to the parent's registration point.
