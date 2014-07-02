@@ -10,33 +10,52 @@
 
 </head>
 <body>
-	<ul id="menu">
-		{{#regionTypes}}
-		<li>{{keyword}}</li>
-		{{/regionTypes}}
-	</ul>
-	<ul id="regionTypes">
-		{{#regionTypes}}
-		<li>
-			<h1>{{keyword}}</h1>
-			<p>{{{description}}}</p>
-			<dl class="properties">
-			{{#properties}}
-			<dt>{{keyword}}</dt>
-			<dd>
-				{{{description}}}
-				<dl>
-					<dt>type</dt>
-					<dd>{{type}}</dd>
-					<dt>default</dt>
-					<dd>{{default}}{{^default}}undefined{{/default}}</dd>
-				</dl>
-			</dd>
-			{{/properties}}
-			</dl>	
-		</li>
-		{{/regionTypes}}
-	</ul>
+	<div id="content">
+		<div id="menu-container">
+			<h1>Classes</h1>
+			<ul id="menu">
+				{{#regionTypes}}
+				<li>{{class}}</li>
+				{{/regionTypes}}
+			</ul>
+			<h1>Examples</h1>
+			<ul>
+				<li>Basics</li>
+				<li>Booleans</li>
+				<li>Children</li>
+				<li>SVGs</li>
+				<li>Exporting</li>
+			</ul>
+		</div>
+		<div id="detail-container">
+			<ul id="regionTypes">
+				{{#regionTypes}}
+				<li>
+					<h1>{{class}}</h1>
+					<p>{{{description}}}</p>
+					<h2>Properties</h2>
+					<hr></hr>
+					<dl class="properties">
+					{{#properties}}
+					<dt>{{keyword}}</dt>
+					<dd>
+						{{{description}}}
+						<dl>
+							<dt>type</dt>
+							<dd>{{type}}</dd>
+							<dt>default</dt>
+							<dd>{{default}}{{^default}}undefined{{/default}}</dd>
+						</dl>
+					</dd>
+					{{/properties}}
+					</dl>
+					<h2>Inherited Properties</h2>
+					<hr></hr>
+				</li>
+				{{/regionTypes}}
+			</ul>
+		</div>
+	</div>
 </body>
 </html>
 

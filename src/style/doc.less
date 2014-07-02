@@ -2,11 +2,11 @@ body{
 	font-family: 'Lucida Console', Monaco, monospace;
 	background-color: rgb(238, 238, 238);
 	font-size: 12px;
+	margin: 0px;
 }
 
 #content{
 	width: 800px;
-
 }
 .clear{
 	clear:both;
@@ -15,23 +15,38 @@ body{
 h1{
 	font-size: 18px;
 }
+h2{
+	font-size: 14px;
+}
 
 ul{
 	list-style: none;
 	padding: 0px;
+	margin: 0px;
 }
 
-#doc_list{
+#menu-container{
 	float: left;
 	background-color: rgb(221, 221, 221);
 	width: 200px;
 	padding: 10px;
+	height: 800px;
 }
 
-#doc_detail{
+#detail-container{
 	float: left;
-	padding: 10px;
 	width: 550px;
+	padding: 10px;
+
+	#regionTypes{
+		li{
+			margin-bottom: 50px;
+		}
+
+		.properties{
+			background-color: red;
+		}
+	}
 }
 
 pre{
