@@ -6,7 +6,7 @@ children:
             name: dimensions
             width: 200
             height: 200
-            
+
         children:
             - region:
                 properties:

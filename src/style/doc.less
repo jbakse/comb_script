@@ -1,3 +1,5 @@
+@import "code.less";
+
 @doc-property: #ff2259;
 @link-color: #228fff;
 @light-text-color: rgb(121, 121, 121);
@@ -5,6 +7,14 @@
 @menu-color: rgb(221, 221, 221);
 @bg-color: rgb(247, 247, 247);
 @code-color: rgb(235, 235, 235);
+
+/* Micro ClearFix Mixin */
+.clearfix{
+  zoom:1;
+  &:before, &:after{ content:""; display:table; }
+  &:after{ clear: both; }
+}
+
 
 body{
 	font-family: 'Arvo', serif;
@@ -73,49 +83,61 @@ ul{
 
 	#regionTypes{
 		.region-type{
-			padding: 10px;
-			padding-bottom: 50px;
-			border-bottom: 1px dashed @light-text-color;
-		}
+				padding: 10px;
+				padding-bottom: 50px;
+				border-bottom: 1px dashed @light-text-color;
 
-		.properties{
-			li{
-				margin-bottom: 15px;
-				padding: 0px;
-				border-bottom: 1px solid @code-color;
-				.property-name{
-					color: @doc-property;
+			.properties{
+				li{
+					
+
 					margin-bottom: 15px;
-					display: block;
-				}
-				.description{
-					display: block;
-				}
-				
-				dl{
-					margin-top: 5px;
-				}
-				dt{
-					display:block;
-					float: left;
-					clear: left;
-				}
-				dd{
-					margin-left: 70px;
-					color: @light-text-color;
+					padding: 0px;
+					border-bottom: 1px solid @code-color;
+					.property-name{
+						color: @doc-property;
+						margin-bottom: 15px;
+						display: block;
+					}
+					.description{
+						display: block;
+					}
+
+
 				}
 			}
 		}
 	}
 }
 
-pre{
-	background-color: @code-color;
-	color: @light-text-color;
-	padding: 10px;
-	white-space: pre-wrap;       /* css-3 */
-	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-	white-space: -pre-wrap;      /* Opera 4-6 */
-	white-space: -o-pre-wrap;    /* Opera 7 */
-	word-wrap: break-word;       /* Internet Explorer 5.5+ */
+dl{
+	margin-top: 5px;
+	.clearfix();
 }
+dt{
+	display:block;
+	float: left;
+	clear: left;
+	width:75px;
+}
+dd{
+	margin-left: 0px;
+	color: @light-text-color;
+	float:left;
+	margin-right: 15px;
+}
+
+	pre{
+		font-family: Monaco, monospace;
+		background-color: @code-color;
+		color: @light-text-color;
+		padding: 10px;
+
+		border-left: 3px solid #C00;
+		padding-left: 10px;
+		white-space: pre-wrap;       /* css-3 */
+		white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+		white-space: -pre-wrap;      /* Opera 4-6 */
+		white-space: -o-pre-wrap;    /* Opera 7 */
+		word-wrap: break-word;       /* Internet Explorer 5.5+ */
+	}
