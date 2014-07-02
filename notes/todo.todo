@@ -32,6 +32,7 @@
 	-	language.js file that has the lists of regions types and their params etc. helpful in reporting issues after parse and might be tied into documentation system
 		-	having default objects could be useful in many places. for example a default document could have properties for most settings which could be overridden by a user document/ An empty children property that gets overridden would eliminate the need to check if children exists. in general if decended from defaults, checks for existing properties would be handled. region defaults etc.
 
+	-	lets make a language class, and maybe consider the language yaml-json data private to that class
 
 	-	region grid should probably just generate a bunch of children, rather than one and overriding how drawing is done... except that is weird too because it will still have to override how drawing is done to tell each child where to draw. It might be that we need to just create all the preview/build shapes at construction.. ugh, how would that play with iso mode, maybe it would be best to generate the contexts and store in children at build, but not generate the vectors until preview/build is called
 

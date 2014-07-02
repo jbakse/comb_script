@@ -1,5 +1,5 @@
 Rectangle:
-    keyword: rectangle
+    keyword: Rectangle
     class: Rectangle
     extends: Region
 
