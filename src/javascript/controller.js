@@ -11,7 +11,6 @@ function Controller() {
 	this.doc = null;
 	this.selectedRegions = [];
 	this.hoverRegion = null;
-	console.log(language);
 }
 
 Controller.prototype.redrawPreview = function(_region) {
@@ -49,7 +48,6 @@ Controller.prototype.attachHandlers = function() {
 
 	$.Topic("region/onClick").subscribe(
 		function(_region) {
-			// console.log("click", _region.id, _region.properties.name, _region);
 
 			
 
@@ -79,11 +77,12 @@ Controller.prototype.attachHandlers = function() {
 
 Controller.prototype.onLineChange = function(_line) {
 	if (!this.doc) return;
-	
 
-	_regions = _(this.doc.regions).filter(function(_region) {
+	_regions = _(this.doc.getDecendants()).filter(function(_region) {
 		return _region.editorProperties.firstLine <= _line && _region.editorProperties.lastLine >= _line;
 	});
+
+	console.log(this.doc.getDecendants(), _regions);
 
 
 	if (this.selectedRegions.length === 1 && _(_regions).contains(this.selectedRegions[0])) {
@@ -155,10 +154,7 @@ Controller.prototype.exportSVG = function() {
 
 	currentProject.activate();
 
-	util.downloadDataUri({
-		data: 'data:image/svg+xml;base64,' + btoa(svg),
-		filename: 'export.svg'
-	});
+	util.downloadDataUri('export.svg', 'data:image/svg+xml;base64,' + btoa(svg));
 };
 
 
@@ -166,8 +162,9 @@ Controller.prototype._injectYAML = function(_yaml) {
 
 	var lines = _yaml.split("\n");
 	var lastLine = lines.length;
+	
 	// todo language file
-	var targets = ["region:", "rectangle:", "ellipse:", "region_grid:"];
+	var targets = ["Region:", "Rectangle:", "Ellipse:", "Region_grid:"];
 
 	for (var i = lines.length - 1; i >= 0; i--) {
 		var isTarget = false;
@@ -196,7 +193,7 @@ Controller.prototype._injectYAML = function(_yaml) {
 
 
 	}
-
+	console.log(lines.join("\n"));
 
 	return lines.join("\n");
 
@@ -205,7 +202,6 @@ Controller.prototype._injectYAML = function(_yaml) {
 
 Controller.prototype._updateYAML = function(_yaml) {
 
-	console.log("parsing yaml");
 	UI.log.appendMessage("Parsing YAML");
 
 	_yaml = this._injectYAML(_yaml);
@@ -219,11 +215,12 @@ Controller.prototype._updateYAML = function(_yaml) {
 	}
 	if (yamlData === null || typeof yamlData !== "object") return UI.log.appendError("Couldn't parse YAML.");
 
-	UI.log.appendSuccess("Success");
+	
 
 	if (!yamlData.properties) yamlData.properties = {};
 	
-	console.log(regionTypes);
+	console.log("yd", yamlData);
+
 	this.doc = new regionTypes.Document();
 	this.doc.loadData(yamlData);
 
@@ -234,7 +231,7 @@ Controller.prototype._updateYAML = function(_yaml) {
 		UI.preview.setDocument(self.doc);
 	} );
 
-	
+	UI.log.appendSuccess("Success");
 
 
 

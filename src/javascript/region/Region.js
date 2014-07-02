@@ -2,14 +2,15 @@
 
 /* global language */
 var _ = require('underscore');
-var Context = require('../Context.js');
 var paperUtil = require('../paper_util.js');
 var util = require('../util.js');
-var UI = require('../UI.js');
+
 var regionTypes = require('./regionTypes.js');
+var Context = require('../Context.js');
+
+var UI = require('../UI.js'); //todo remove UI dependency
 
 module.exports = Region;
-
 
 
 
@@ -21,6 +22,8 @@ var booleanOperations = {
 	"intersect": "intersect"
 };
 
+
+
 function Region(_parent) {
 	this.type = "Region";
 	this.parent = _parent || null;
@@ -31,7 +34,6 @@ function Region(_parent) {
 	this.typeProperties = {};
 	this.editorProperties = {};
 
-
 	this.previewBoundsGroup = new paper.Group();
 	this.previewBoundsGroup.onMouseEnter = _.bind(this.onMouseEnter, this);
 	this.previewBoundsGroup.onMouseLeave = _.bind(this.onMouseLeave, this);
@@ -39,7 +41,7 @@ function Region(_parent) {
 
 	this.previewPositionGroup = new paper.Group();
 
-	this.id = Math.floor(Math.random() * 1000);
+
 
 	this.typeProperties.boundsStyle = {
 		strokeWidth: 1,
@@ -52,8 +54,7 @@ function Region(_parent) {
 		strokeColor: undefined,
 		fillColor: '#AA8800'
 	};
-
-};
+}
 
 
 
@@ -67,13 +68,7 @@ Region.prototype.loadData = function(_data) {
 	}
 
 	if (typeof _data.properties === "object" && _data.properties !== null) {
-
-		if (language[this.type]) {
-			this.loadProperties(_data.properties);
-		}
-		else {
-			this.properties = _.clone(_data.properties);
-		}
+		this.loadProperties(_data.properties);
 	}
 
 	if (typeof _data.children === "object" && _data.children !== null) {
@@ -83,33 +78,23 @@ Region.prototype.loadData = function(_data) {
 	return this;
 };
 
-function mergeObjectArraysOnKey(_base, _new) {
-	
-	_base = _(_base).filter(function(_baseObject){
-		var overridden = _(_new).find( function(_newObject) {
-			return _newObject.keyword === _baseObject.keyword;
-		});
-		return !overridden;
-	});
-
-	return _base.concat(_new);
-}
-
 
 Region.prototype.loadProperties = function(_properties) {
-	var definitions = language[this.type].properties;
-	var superClass = language[this.type].extends;
-	if (superClass) {
-		definitions = mergeObjectArraysOnKey(language[superClass].properties, definitions, "keyword");
-	}
 
 	var self = this;
 
+	//todo recurse?
+	var definitions = language[this.type].properties;
+	var superClass = language[this.type].extends;
+	if (superClass) {
+		definitions = util.mergeObjectArraysOnKey(language[superClass].properties, definitions, "keyword");
+	}
+
 
 	// Build message prefix
-	var messagePrefix = self.type + ": ";
-	if (self.editorProperties.firstLine) {
-		messagePrefix = "[Line " + self.editorProperties.firstLine + " " + self.type + "] ";
+	var messagePrefix = this.type + ": ";
+	if (this.editorProperties.firstLine) {
+		messagePrefix = "[Line " + this.editorProperties.firstLine + " " + this.type + "] ";
 	}
 
 	// Validate and import provided properties.
@@ -161,16 +146,27 @@ Region.prototype.loadChildren = function(_childrenData) {
 
 	_.each(_childrenData, function(_childData) {
 		var childKey = _.keys(_childData)[0];
-		var childData = _.extend({}, _.values(_childData)[0]);
+		var childData = _.values(_childData)[0];
 
-		if (childKey in regionTypes) {
-			var child = new(regionTypes[childKey])(this);
+
+		var def = _(language).find(function(_def) {
+			return _def.keyword === childKey;
+		});
+		var targetClass = def && def.class;
+
+
+		if (targetClass && targetClass in regionTypes) {
+			var child = new(regionTypes[targetClass])(this);
 			child.loadData(childData);
 			this.children.push(child);
 		}
 		else {
-			console.log("c", _childData);
-			UI.log.appendWarning("[Line " + childData.editor_properties.firstLine + "] Unknown Region Type: " + childKey);
+			if (childData.editor_properties) {
+				UI.log.appendWarning("[Line " + childData.editor_properties.firstLine + "] Unknown Region Type: " + childKey);
+			}
+			else {
+				UI.log.appendWarning("Unknown Region Type: " + childKey);
+			}
 		}
 
 	}, this);
@@ -354,7 +350,3 @@ Region.prototype.setStyle = function(_style, _recursive) {
 	}
 
 };
-
-
-
-
