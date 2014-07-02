@@ -286,6 +286,13 @@ Region.prototype.buildChildren = function(_context) {
 	return childPaths;
 };
 
+////////////////////////////////////////////////////////////////////
+// Handy
+
+Region.prototype.getDecendants = function() {
+	return util.collectTree(this, "children");
+};
+
 
 //////////////////////////////////////////////////////////////////////
 // Events

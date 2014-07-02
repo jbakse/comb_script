@@ -72,7 +72,7 @@ Editor.prototype.highlightLines = function(_firstLine, _lastLine, _class) {
 	this.editor.getSession().removeMarker(this.highlightMarker);
 
 	this.highlightMarker = this.editor.session.addMarker(
-		new Range(_firstLine - 1, 0, _lastLine - 1, 1), _class, "fullLine"
+		new Range(_firstLine, 0, _lastLine, 1), _class, "fullLine"
 	);
 };
 
@@ -235,7 +235,6 @@ Inspector.prototype.update = function(_regions) {
 	if (_regions.length === 0) return;
 
 	if (_regions.length > 1) {
-		console.log(_regions);
 		$(this.element).append("Multiple Selections");
 		return;
 	}
@@ -343,6 +342,7 @@ Log.prototype.appendError = function() {
 };
 
 Log.prototype.appendParseError = function(_YAMLException) {
+	console.log(_YAMLException);
 	$("#log").append(this.parseErrorTemplate(_YAMLException));
 	//todo add click to this
 };

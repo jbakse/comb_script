@@ -19,9 +19,7 @@ function Document(_data, _parent) {
 Document.prototype = Object.create(Region.prototype);
 Document.prototype.constructor = Document;
 
-Document.prototype.getDecendants = function() {
-	return util.collectTree(this, "children");
-};
+
 
 // Document.prototype.onMouseEnter = function() {};
 // Document.prototype.onMouseLeave = function() {};

@@ -3,6 +3,7 @@ var regionTypes = require('./region/regionTypes.js');
 var settings = require('./settings.js');
 var util = require('./util.js');
 var UI = require('./UI.js');
+var Parser = require('./Parser.js');
 
 module.exports = new Controller();
 
@@ -49,11 +50,12 @@ Controller.prototype.attachHandlers = function() {
 	$.Topic("region/onClick").subscribe(
 		function(_region) {
 
-			
+			console.log(_region);
 
+			console.log(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
 			UI.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
-			UI.editor.editor.gotoLine(_region.editorProperties.firstLine, 1000, true);
 			UI.editor.editor.focus();
+			UI.editor.editor.gotoLine(_region.editorProperties.firstLine, 1000, true);
 
 			self.hoverRegion = undefined;
 			self.selectedRegions = [_region];
@@ -78,29 +80,33 @@ Controller.prototype.attachHandlers = function() {
 Controller.prototype.onLineChange = function(_line) {
 	if (!this.doc) return;
 
-	_regions = _(this.doc.getDecendants()).filter(function(_region) {
+	var regions = _(this.doc.getDecendants()).filter(function(_region) {
 		return _region.editorProperties.firstLine <= _line && _region.editorProperties.lastLine >= _line;
 	});
 
-	console.log(this.doc.getDecendants(), _regions);
+	var parents = _(regions).map(function(r) { return r.parent });
+
+	regions = _(regions).difference(parents);
+	console.log(regions, parents);
 
 
-	if (this.selectedRegions.length === 1 && _(_regions).contains(this.selectedRegions[0])) {
-		// user clicked item then moved cursor within items defintion, don't expand selection
-		return;
+	// if (this.selectedRegions.length === 1 && _(regions).contains(this.selectedRegions[0])) {
+	// 	// user clicked item then moved cursor within items defintion, don't expand selection
+	// 	return;
+	// }
+
+
+	if (!regions || regions.length == 0){
+		console.log("couldn't find the region");
 	}
 
+	var r = regions[regions.length - 1];
+	UI.editor.highlightLines( r.editorProperties.firstLine,  r.editorProperties.lastLine,  r.type.toLowerCase());
 
-	if (_regions.length === 0) {
-		UI.editor.highlightLines(1, 1);
-	}
-	else {
-		UI.editor.highlightLines(_regions[0].editorProperties.firstLine, _regions[0].editorProperties.lastLine, _regions[0].type.toLowerCase());
-	}
 
-	this.selectedRegions = _regions;
+	this.selectedRegions = regions;
 
-	$.Topic("UI/updateInspector").publish(_regions);
+	$.Topic("UI/updateInspector").publish(regions);
 	this.redrawPreview();
 
 };
@@ -112,7 +118,6 @@ Controller.prototype.loadYAMLfromURL = function() {
 
 		success: function(_data) {
 			UI.editor.setText(_data);
-			// self._updateYAML(_data);
 		},
 
 		fail: function(_data) {
@@ -158,71 +163,16 @@ Controller.prototype.exportSVG = function() {
 };
 
 
-Controller.prototype._injectYAML = function(_yaml) {
-
-	var lines = _yaml.split("\n");
-	var lastLine = lines.length;
-	
-	// todo language file
-	var targets = ["Region:", "Rectangle:", "Ellipse:", "Region_grid:"];
-
-	for (var i = lines.length - 1; i >= 0; i--) {
-		var isTarget = false;
-		for (var t = 0; t < targets.length; t++) {
-			if (lines[i].indexOf(targets[t]) >= 0) {
-				isTarget = true;
-				break;
-			}
-		}
-
-		var isLibraryCall = lines[i].indexOf("- *") >= 0;
-		var isLibraryDef = lines[i].indexOf("- &") >= 0;
-
-		if (isTarget) {
-			var whitespace = /^(\s*)/.exec(lines[i])[1];
-			var editorProperties = {
-				firstLine: i + 1,
-				lastLine: lastLine + 1
-			};
-			var injection = whitespace + "    " + "editor_properties: " + JSON.stringify(editorProperties);
-			lines.splice(i + 1, 0, injection);
-			lastLine = i - 1;
-		} else if (isLibraryCall || isLibraryDef) {
-			lastLine = i - 1;
-		}
-
-
-	}
-	console.log(lines.join("\n"));
-
-	return lines.join("\n");
-
-
-};
-
 Controller.prototype._updateYAML = function(_yaml) {
 
-	UI.log.appendMessage("Parsing YAML");
-
-	_yaml = this._injectYAML(_yaml);
-	var yamlData;
-
-	try {
-		yamlData = jsyaml.safeLoad(_yaml);
-	}
-	catch (e) {
-		return UI.log.appendParseError(e);
-	}
-	if (yamlData === null || typeof yamlData !== "object") return UI.log.appendError("Couldn't parse YAML.");
-
 	
+	data = Parser.parse(_yaml);
+	if (!data) return;
 
-	if (!yamlData.properties) yamlData.properties = {};
-	
-	console.log("yd", yamlData);
+	// console.log("yd", data);
 
 	this.doc = new regionTypes.Document();
-	this.doc.loadData(yamlData);
+	this.doc.loadData(data);
 
 	self = this;
 

@@ -86,7 +86,8 @@ gulp.task('language', function() {
 //Watch Files For Changes
 gulp.task('watch', function() {
 
-	gulp.watch('./src/javascript/**/*.js', ['javascript', 'javascript-doc']);
+	gulp.watch('./src/javascript/**/*.js', ['javascript']);
+	// gulp.watch('./src/javascript/**/*.js', ['javascript-doc']);
 	gulp.watch('./src/language/*.yaml', ['language']);
 	gulp.watch('./src/style/*.less', ['style']);
 	gulp.watch('./src/*.html', ['html']);
