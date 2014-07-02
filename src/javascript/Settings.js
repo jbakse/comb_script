@@ -3,7 +3,7 @@
 
 var Context = require('./Context.js');
 
-module.exports.fileURL = "../yaml/simple.yaml";
+module.exports.fileURL = "../yaml/symbol.yaml";
 
 module.exports.previewCanvasWidth = 1200;
 module.exports.previewCanvasHeight = 1200;

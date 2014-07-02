@@ -37,7 +37,11 @@ function parse(_yaml) {
 function injectEditorProperties(_yaml) {
 
 	var lines = _yaml.split("\n");
-	var mapPattern = /-\s+\w*:\s*$/;
+
+	var regionKeywords = _(language).pluck("keyword");
+
+	regionKeywords = "(?:" + regionKeywords.join("|") + ")";
+	var mapPattern = new RegExp(regionKeywords+":\\s*$");
 
 	var firstLine;
 	var lastLine;
@@ -96,47 +100,3 @@ function injectEditorProperties(_yaml) {
 
 }
 
-
-
-var oldInjectEditorProperties = function(_yaml) {
-
-	var lines = _yaml.split("\n");
-	var lastLine = lines.length;
-
-	// todo language file
-	var targets = ["Region:", "Rectangle:", "Ellipse:", "Region_grid:"];
-
-	for (var i = lines.length - 1; i >= 0; i--) {
-		var isTarget = false;
-		for (var t = 0; t < targets.length; t++) {
-			if (lines[i].indexOf(targets[t]) >= 0) {
-				isTarget = true;
-				break;
-			}
-		}
-
-		var isLibraryCall = lines[i].indexOf("- *") >= 0;
-		var isLibraryDef = lines[i].indexOf("- &") >= 0;
-
-		if (isTarget) {
-			var whitespace = /^(\s*)/.exec(lines[i])[1];
-			var editorProperties = {
-				firstLine: i + 1,
-				lastLine: lastLine + 1
-			};
-			var injection = whitespace + "    " + "editor_properties: " + JSON.stringify(editorProperties);
-			lines.splice(i + 1, 0, injection);
-			lastLine = i - 1;
-		}
-		else if (isLibraryCall || isLibraryDef) {
-			lastLine = i - 1;
-		}
-
-
-	}
-	console.log(lines.join("\n"));
-
-	return lines.join("\n");
-
-
-};

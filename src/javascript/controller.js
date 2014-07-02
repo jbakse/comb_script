@@ -84,10 +84,11 @@ Controller.prototype.onLineChange = function(_line) {
 		return _region.editorProperties.firstLine <= _line && _region.editorProperties.lastLine >= _line;
 	});
 
-	var parents = _(regions).map(function(r) { return r.parent });
+	var ancestors = _(regions).map(function(r) { return r.getAncestors(); });
+	ancestors = _(ancestors).flatten();
 
-	regions = _(regions).difference(parents);
-	console.log(regions, parents);
+	regions = _(regions).difference(ancestors);
+	// console.log(regions, ancestors);
 
 
 	// if (this.selectedRegions.length === 1 && _(regions).contains(this.selectedRegions[0])) {
@@ -96,8 +97,9 @@ Controller.prototype.onLineChange = function(_line) {
 	// }
 
 
-	if (!regions || regions.length == 0){
+	if (!regions || regions.length === 0){
 		console.log("couldn't find the region");
+		return;
 	}
 
 	var r = regions[regions.length - 1];

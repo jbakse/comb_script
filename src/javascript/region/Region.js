@@ -262,6 +262,7 @@ Region.prototype.build = function(_parentContext) {
 
 	var childPaths = ownPaths.concat(this.buildChildren(context));
 
+	console.log(this.properties);
 
 	if (!('boolean' in this.properties)) {
 		return childPaths;
@@ -292,6 +293,15 @@ Region.prototype.buildChildren = function(_context) {
 Region.prototype.getDecendants = function() {
 	return util.collectTree(this, "children");
 };
+
+Region.prototype.getAncestors = function() {
+	var a = [];
+	if (this.parent) {
+		return [this.parent].concat(this.parent.getAncestors());
+	}
+	return [];
+};
+
 
 
 //////////////////////////////////////////////////////////////////////

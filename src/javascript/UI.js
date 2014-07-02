@@ -342,7 +342,7 @@ Log.prototype.appendError = function() {
 };
 
 Log.prototype.appendParseError = function(_YAMLException) {
-	console.log(_YAMLException);
+	// console.log(_YAMLException);
 	$("#log").append(this.parseErrorTemplate(_YAMLException));
 	//todo add click to this
 };

@@ -73,13 +73,11 @@ Region:
         -   keyword: registration
             description: The location of the regions registration point.
             type: string
-            default: parent
             values: [center, parent]
 
         -   keyword: boolean
             description: The location of the regions registration point.
             type: string
-            default: parent
             values: [add, subtract, intersect, none]
 
 
