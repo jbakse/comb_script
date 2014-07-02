@@ -3,38 +3,38 @@ properties:
 
 library:
     - &insetBox
-	rectangle:
-	    properties:
-		name: box
-		margin_top: 10
-		margin_right: 10
-		margin_bottom: 10
-		margin_left: 10
+        rectangle:
+            properties:
+            name: box
+            margin_top: 10
+            margin_right: 10
+            margin_bottom: 10
+            margin_left: 10
 
 children:
     - region:
-	properties:
-	    name: dimensions
-	    width: 200
-	    height: 200
+        properties:
+            name: dimensions
+            width: 200
+            height: 200
 
-	children:
-	    - region:
-		properties:
-		    name: left
-		    margin_left: 10
-		    height: 50
-		    width: 50
+        children:
+            - region:
+                properties:
+                    name: left
+                    margin_left: 10
+                    height: 50
+                    width: 50
 
-		children:
-		    - *insetBox
+                children:
+                    - *insetBox
 
-	    - region:
-		properties:
-		    name: right
-		    margin_right: 10
-		    height: 50
-		    width: 50
+            - region:
+                properties:
+                    name: right
+                    margin_right: 10
+                    height: 50
+                    width: 50
 
-		children:
-		    - *insetBox
+                children:
+                    - *insetBox

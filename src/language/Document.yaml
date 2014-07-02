@@ -23,6 +23,7 @@ Document:
             description: "The name for the document. Names are not required, but will be used when exporting."
             type: string
             default: document.yaml
+            required: true
 
         -   keyword: width
             description: The width of the document bounds.

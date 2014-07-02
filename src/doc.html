@@ -16,7 +16,7 @@
 	<div id="content">
 		<div id="menu-container">
 			<h1>Classes</h1>
-			<ul id="menu">
+			<ul id="template-menu">
 				{{#regionTypes}}
 				<li><a href="#{{class}}">{{class}}</a></li>
 				{{/regionTypes}}
@@ -31,49 +31,71 @@
 			</ul>
 		</div>
 		<div id="detail-container">
-			<ul id="regionTypes">
+			<ul id="template-regionTypes">
 				{{#regionTypes}}
-				<a class="anchortag" id="{{class}}">
+				<a class="anchortag" id="{{class}}"></a>
 				<li class="region-type">
 					</a><h1>{{class}}</h1>
 					{{#extends}}
 					<span>extends: <a href="#{{extends}}">{{extends}}</a></span>
 					{{/extends}}
 					<p>{{{description}}}</p>
-					<h2>Properties</h2>
-					<ul class="properties">
-					{{#properties}}
-						<li>
-							<span class="property-name">{{keyword}}</span>
-							<span class="description">{{{description}}}</span>
-							<dl>
-								<dt>type:</dt>
-								<dd>{{type}}</dd>
-								<dt>default:</dt>
-								<dd>{{default}}{{^default}}undefined{{/default}}</dd>
-								{{#required}}
-									<dt>required:</dt>
-									<dd>{{required}}</dd>
-								{{/required}}
-								{{#values.length}}
-									<dt>values:</dt>
-									{{#values}}
-									<dd>{{.}}</dd>
-									{{/values}}
-								{{/values.length}}
-							</dl>
+					
+					{{#required_properties.length}}
+						<h2>Required Properties</h2>
+						<ul class="properties required-properties">
+						{{#required_properties}}
+							{{>prop}}
+						{{/required_properties}}
+						</ul>
+					{{/required_properties.length}}
 
-						</li>
-					{{/properties}}
-					</ul>
-					<h2>Required Properties</h2>
-					<ul class="required-properties">
-					</ul>
-					<h2>Inherited Properties</h2>
+					{{#properties.length}}
+						<h2>Properties</h2>
+						<ul class="properties">
+						{{#properties}}
+							{{>prop}}
+						{{/properties}}
+						</ul>
+					{{/properties.length}}
+					
+					{{#inherited_properties.length}}
+						<h2>Inherited Properties</h2>
+						<ul class="properties inherited-properties">
+						{{#inherited_properties}}
+							{{>prop}}
+						{{/inherited_properties}}
+						</ul>
+					{{/inherited_properties.length}}
+					
 				</li>
 				{{/regionTypes}}
 			</ul>
 		</div>
+	</div>
+
+	<div id = "template-property">
+		<li>
+			<span class="property-name">{{keyword}}</span>
+			<span class="description">{{{description}}}</span>
+			<dl>
+				<dt>type:</dt>
+				<dd>{{type}}</dd>
+				<dt>default:</dt>
+				<dd>{{default}}{{^default}}undefined{{/default}}</dd>
+				{{#required}}
+					<dt>required:</dt>
+					<dd>{{required}}</dd>
+				{{/required}}
+				{{#values.length}}
+					<dt>values:</dt>
+					{{#values}}
+					<dd>{{.}}</dd>
+					{{/values}}
+				{{/values.length}}
+			</dl>
+
+		</li>
 	</div>
 </body>
 </html>
