@@ -6,7 +6,6 @@ Document:
         Parent region of the entire document.
         There can only be 1 document. If no document is specified one will be created automatically.
         <pre>
-        #when no document is specified one is created automatically and the properties are applied
         properties:
             name: drawbot.yaml
             #scale pixels to mm

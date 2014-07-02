@@ -19,5 +19,8 @@ $(function() {
 	var rendered = Mustache.render(template, data);
 	$('#menu').html(rendered);
 
+	console.log("pp");
+	$('pre').addClass('prettyprint');
+	prettyPrint();
 
 });
