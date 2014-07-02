@@ -1,30 +1,27 @@
 properties:
     name: simple.yaml
-
-
 children:
     - region:
         properties:
             name: dimensions
             width: 200
             height: 200
+            
+        children:
+            - region:
+                properties:
+                    name: dimensions
+                    width: 50
+                    height: 50
+                    margin_right: 10
 
-	children:
 
-	    - region:
-		properties:
-		    name: dimensions
-		    width: 50
-		    height: 50
-		    margin_right: 10
-
-
-	    - region:
-		properties:
-		    name: dimensions
-		    width: 50
-		    height: 50
-		    margin_left: 10
+            - region:
+                properties:
+                    name: dimensions
+                    width: 50
+                    height: 50
+                    margin_left: 10
 
 
 
