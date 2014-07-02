@@ -22,7 +22,8 @@
     "gulp-yml": "^0.1.1",
     "event-stream": "^3.1.5",
     "gulp-insert": "^0.4.0",
-    "gulp-util": "^2.2.19"
+    "gulp-util": "^2.2.19",
+    "mustache": "^0.8.2"
   },
   "dependencies": {
     "underscore": "^1.6.0"

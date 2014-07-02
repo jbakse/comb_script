@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Comb Script Docs</title>
+
+	<script src="../lib/jquery-2.1.1.min.js"></script>
+	<script src="javascript/language.js"></script>
+	<script src="javascript/doc.js"></script>
+
+</head>
+<body>
+	Doc
+	<div id="regionTypes">
+		{{#regionTypes}}
+		<div>
+			<h1>{{keyword}}</h1>
+			<p>{{{description}}}</p>
+			<dl>
+			{{#properties}}
+			<dt>{{keyword}}</dt>
+			<dd>
+				{{{description}}}
+				<dl>
+					<dt>type</dt>
+					<dd>{{type}}</dd>
+					<dt>default</dt>
+					<dd>{{default}}{{^default}}undefined{{/default}}</dd>
+				</dl>
+			</dd>
+			{{/properties}}
+			</dl>	
+		</div>
+		{{/regionTypes}}
+	</div>
+</body>
+</html>
+
+
