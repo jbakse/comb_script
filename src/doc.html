@@ -7,7 +7,7 @@
 	<script src="../lib/jquery-2.1.1.min.js"></script>
 	<script src="javascript/language.js"></script>
 	<script src="javascript/doc.js"></script>
-
+	<link href='http://fonts.googleapis.com/css?family=Arvo:400,700,400italic' rel='stylesheet' type='text/css'>
 </head>
 <body>
 	<div id="content">
@@ -30,9 +30,12 @@
 		<div id="detail-container">
 			<ul id="regionTypes">
 				{{#regionTypes}}
-				<li>
-					<h1>{{class}}</h1><a id="{{class}}"></a>
-					<span>extends: <a href="#{{extends}}">{{extends}}{{^extends}}DansMom{{/extends}}</a></span>
+				<a class="anchortag" id="{{class}}">
+				<li class="region-type">
+					</a><h1>{{class}}</h1>
+					{{#extends}}
+					<span>extends: <a href="#{{extends}}">{{extends}}</a></span>
+					{{/extends}}
 					<p>{{{description}}}</p>
 					<h2>Properties</h2>
 					<ul class="properties">
@@ -49,8 +52,10 @@
 									<dt>required:</dt>
 									<dd>{{required}}</dd>
 								{{/required}}
-								<dt>values:</dt>
-								<dd>{{values}}{{^values}}none{{/values}}</dd>
+								{{#values}}
+									<dt>values:</dt>
+									<dd>{{values}}</dd>
+								{{/values}}
 							</dl>
 
 						</li>
@@ -60,9 +65,7 @@
 					<ul class="required-properties">
 					</ul>
 					<h2>Inherited Properties</h2>
-
 				</li>
-				<hr></hr>
 				{{/regionTypes}}
 			</ul>
 		</div>

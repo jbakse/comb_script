@@ -2,13 +2,14 @@
 @link-color: #228fff;
 @light-text-color: rgb(121, 121, 121);
 
-@menu-color: rgb(38, 40, 33);
+@menu-color: rgb(221, 221, 221);
 @bg-color: rgb(247, 247, 247);
+@code-color: rgb(235, 235, 235);
 
 body{
-	font-family: 'Lucida Console', Monaco, monospace;
+	font-family: 'Arvo', serif;
 	background-color: @bg-color;
-	font-size: 12px;
+	font-size: 14px;
 	margin: 0px;
 }
 
@@ -31,11 +32,17 @@ a:hover{
 
 }
 
+.anchortag{
+	position:absolute;
+}
+
 h1{
-	font-size: 18px;
+	font-size: 20px;
+
 }
 h2{
-	font-size: 14px;
+	font-size: 16px;
+	font-weight: normal;
 }
 
 ul{
@@ -57,7 +64,7 @@ ul{
 	li{
 		margin-bottom: 5px;
 	}
-	color:white;
+	//color:white;
 }
 
 #detail-container{
@@ -65,25 +72,26 @@ ul{
 	margin-left: 220px;
 
 	#regionTypes{
-		li{
-			margin-bottom: 50px;
-			//background-color: white;
+		.region-type{
 			padding: 10px;
+			padding-bottom: 50px;
+			border-bottom: 1px dashed @light-text-color;
 		}
 
 		.properties{
 			li{
+				margin-bottom: 15px;
+				padding: 0px;
+				border-bottom: 1px solid @code-color;
 				.property-name{
 					color: @doc-property;
-					font-weight: bold;
 					margin-bottom: 15px;
 					display: block;
 				}
 				.description{
 					display: block;
 				}
-				margin-bottom: 15px;
-				padding: 0px;
+				
 				dl{
 					margin-top: 5px;
 				}
@@ -102,10 +110,9 @@ ul{
 }
 
 pre{
-	background-color: #262821;
-	color: white;
+	background-color: @code-color;
+	color: @light-text-color;
 	padding: 10px;
-	//width: 100%;
 	white-space: pre-wrap;       /* css-3 */
 	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
 	white-space: -pre-wrap;      /* Opera 4-6 */
