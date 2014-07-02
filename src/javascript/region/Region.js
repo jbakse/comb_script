@@ -92,6 +92,7 @@ Region.prototype.loadProperties = function(_properties) {
 
 
 	// Build message prefix
+	// todo factor this out
 	var messagePrefix = this.type + ": ";
 	if (this.editorProperties.firstLine) {
 		messagePrefix = "[Line " + this.editorProperties.firstLine + " " + this.type + "] ";
@@ -246,14 +247,6 @@ Region.prototype.previewChildren = function(_context) {
 	});
 };
 
-Region.prototype.drawBounds = function(_bounds) {
-	return new paper.Path.Rectangle(_bounds);
-};
-
-Region.prototype.drawPosition = function(_bounds) {
-	return new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
-};
-
 
 
 //////////////////////////////////////////////////////////////////////
@@ -281,10 +274,6 @@ Region.prototype.build = function(_parentContext) {
 	return childPaths;
 };
 
-
-Region.prototype.drawBuild = function(_bounds) {
-	return [];
-};
 
 Region.prototype.buildChildren = function(_context) {
 	var childPaths = [];
@@ -349,4 +338,22 @@ Region.prototype.setStyle = function(_style, _recursive) {
 		_(this.children).invoke('setStyle', _style, true);
 	}
 
+};
+
+
+
+////////////////////////////////////////////////////////////////////
+// Functions to Override
+
+
+Region.prototype.drawBounds = function(_bounds) {
+	return new paper.Path.Rectangle(_bounds);
+};
+
+Region.prototype.drawPosition = function(_bounds) {
+	return new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
+};
+
+Region.prototype.drawBuild = function(_bounds) {
+	return [];
 };

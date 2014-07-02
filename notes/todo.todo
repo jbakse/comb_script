@@ -43,7 +43,8 @@
 	-	kind of hate the issue where selecting a shape causes line to change, line change triggers non user initiated event.
 
 	-	lets move away from having regions/ellipses/rects etc have their own color, and more towards having a global colorscheme that they use. also consider colorcoding booelans. 
-
+		-	yeah the set style funciton is a mess
+		
 	-	can we switch the lib folders to npm --save-dev installs and browserify in things instead of having them at the top of the page? is that even a good idea?
 
 	-	Log should route main appends thorugh single depend to DRY
