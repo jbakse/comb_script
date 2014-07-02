@@ -3,20 +3,24 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Comb Script Docs</title>
-
+	<link rel="stylesheet" href="css/doc.css">
 	<script src="../lib/jquery-2.1.1.min.js"></script>
 	<script src="javascript/language.js"></script>
 	<script src="javascript/doc.js"></script>
 
 </head>
 <body>
-	Doc
-	<div id="regionTypes">
+	<ul id="menu">
 		{{#regionTypes}}
-		<div>
+		<li>{{keyword}}</li>
+		{{/regionTypes}}
+	</ul>
+	<ul id="regionTypes">
+		{{#regionTypes}}
+		<li>
 			<h1>{{keyword}}</h1>
 			<p>{{{description}}}</p>
-			<dl>
+			<dl class="properties">
 			{{#properties}}
 			<dt>{{keyword}}</dt>
 			<dd>
@@ -30,9 +34,9 @@
 			</dd>
 			{{/properties}}
 			</dl>	
-		</div>
+		</li>
 		{{/regionTypes}}
-	</div>
+	</ul>
 </body>
 </html>
 
