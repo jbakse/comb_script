@@ -1,0 +1,17 @@
+Ellipse:
+    keyword: ellipse
+    class: Ellipse
+    extends: Region
+
+    description: |
+        Ellipse
+        <pre>
+        - ellipse:
+            properties:
+                name: simple_ellipse
+                width: 200
+                height: 200
+        </pre>
+
+    properties:
+        # do we want diameter or radius in here?

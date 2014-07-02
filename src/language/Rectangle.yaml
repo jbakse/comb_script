@@ -5,6 +5,13 @@ Rectangle:
 
     description: |
         Rectangle
+        <pre>
+        - rectangle:
+            properties:
+                name: simple_rectangle
+                width: 200
+                height: 200
+        </pre>
 
     properties:
         -   keyword: radius

@@ -1,0 +1,44 @@
+Document:
+    keyword: document
+    class: Document
+
+    description: |
+        Parent region of the entire document.
+        There can only be 1 document. If no document is specified one will be created automatically.
+        <pre>
+        #when no document is specified one is created automatically and the properties are applied
+        properties:
+            name: drawbot.yaml
+            #scale pixels to mm
+            scale: 2.83464567
+            zoom: .5
+        children:
+            - Region:
+                properties:
+                    width: 100
+                    height: 100
+        </pre>
+
+    properties:
+        -   keyword: name
+            description: "The name for the document. Names are not required, but will be used when exporting."
+            type: string
+            default: document.yaml
+
+        -   keyword: width
+            description: The width of the document bounds.
+            type: number
+            default: 400
+
+        -   keyword: height
+            description: The height of the document bounds.
+            type: number
+            default: 400
+
+        -   keyword: scale
+            description: Amount to scale the entire document. A value of 2 will make the document twice as big.
+            type: number
+
+        -   keyword: zoom
+            description: Amount of zoom applied to the document. A value of 0.5 would zoom out on the document.
+            type: number

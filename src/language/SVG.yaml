@@ -1,0 +1,29 @@
+Ellipse:
+    keyword: svg
+    class: SVG
+    extends: Region
+
+    description: |
+        Load an svg file into the document.
+        <pre>
+        - svg:
+            properties:
+                name: loaded_svg
+                source: ../svg/star.svg
+        </pre>
+
+    properties:
+        -   keyword: source
+            description: The file path to the svg. Path can be relative or absolute.
+            type: string
+            required: true
+
+        #not sure we would want any of these
+        # -   keyword: embed
+        #     description: Inlined source of an svg.
+        #     type: string
+
+        # -   keyword: mode
+        #     description: How to draw the svg in it's parent.
+        #     type: string
+        #     values: [scale_to_fill, aspect_fill, top_left]
