@@ -1,3 +1,5 @@
+'use strict';
+
 var _ = require('underscore');
 var regionTypes = require('./region/regionTypes.js');
 var settings = require('./settings.js');
@@ -138,37 +140,28 @@ Controller.prototype.rebuild = function() {
 Controller.prototype.exportSVG = function() {
 	UI.log.appendMessage("Exporting SVG");
 
-	exportWidth = this.doc.properties.width;
-	exportHeight = this.doc.properties.height;
-
+	var exportWidth = this.doc.properties.width;
+	var exportHeight = this.doc.properties.height;
 	var context = settings.getRootContext();
-	// context.matrix.translate(exportWidth * 0.5, exportHeight * 0.5);
-	// context.matrix.scale(this.doc.properties.scale || 1);
-
 	var currentProject = paper.project;
 
 	var exportProject = new paper.Project($('<canvas width="' + exportWidth + '" height="' + exportHeight + '" />').get(0));
 	exportProject.activate();
-
-
 	this.doc.build(context);
 	exportProject.activeLayer.style = settings.exportStyle;
 	exportProject.activeLayer.translate(exportWidth * 0.5, exportHeight * 0.5);
-
-	var svg = exportProject.exportSVG({
-		asString: true
-	});
-
-	currentProject.activate();
+	var svg = exportProject.exportSVG({ asString: true});
 
 	util.downloadDataUri('export.svg', 'data:image/svg+xml;base64,' + btoa(svg));
+	
+	currentProject.activate();
 };
 
 
 Controller.prototype._updateYAML = function(_yaml) {
 	console.log("update yaml");
 	
-	data = Parser.parse(_yaml);
+	var data = Parser.parse(_yaml);
 	if (!data) return;
 
 
@@ -176,7 +169,7 @@ Controller.prototype._updateYAML = function(_yaml) {
 	this.doc.loadData(data);
 	console.log(this.doc);
 
-	self = this;
+	var self = this;
 
 	$.whenAll.apply($, this.doc.waitList).always( function () { 
 		if (self.doc.waitList.length) UI.log.appendSuccess("Subdocuments Loaded");

@@ -1,6 +1,7 @@
 properties:
     name: symbol.yaml
-    width: 200
+    width: 400
+    height: 300
 library:
     - &insetBox
         rectangle:
