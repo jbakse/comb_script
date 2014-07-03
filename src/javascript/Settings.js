@@ -42,7 +42,11 @@ defaultStyles.ghost = _(defaultStyle).clone();
 defaultStyles.hover = _(defaultStyle).clone();
 
 var buildStyle = module.exports.buildStyle = _(defaultStyle).clone();
-_(buildStyle).extend({});
+_(buildStyle).extend({
+	strokeColor: undefined,
+	strokeWidth: 0,
+	fillColor: new paper.Color(0,0,0,0.2)
+});
 
 var exportStyle = module.exports.exportStyle = _(defaultStyle).clone();
 _(exportStyle).extend({});

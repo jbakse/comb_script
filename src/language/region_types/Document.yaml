@@ -4,7 +4,7 @@ Document:
 
     description: |
         Parent region of the entire document.
-        There can only be 1 document. If no document is specified one will be created automatically.
+        There can only be one document. If no document is specified one will be created automatically.
         <pre>
         properties:
             name: drawbot.yaml
