@@ -14,6 +14,7 @@ function SVG(_data, _parent) {
 	Region.call(this, _data, _parent);
 	
 	this.type = "SVG";
+	this.isShape = true;
 	this.svgMarkup = undefined;
 
 	_.extend(this.typeProperties.boundsStyle, {
