@@ -20,6 +20,7 @@ function Editor() {
 	this.highlightMarker = null;
 	this.editor = null;
 	this.sendChangeEvents = true;
+	this.sendChangeCursorEvents = true;
 }
 
 Editor.prototype.init = function(_element) {
@@ -53,6 +54,7 @@ Editor.prototype.resize = function() {
 
 Editor.prototype.setText = function(_text) {
 	this.sendChangeEvents = false;
+
 	this.editor.setValue(_text);
 	this.editor.clearSelection();
 	this.editor.scrollToLine(0);
@@ -65,9 +67,8 @@ Editor.prototype.getText = function() {
 };
 
 Editor.prototype.onChange = function(_e) {
-	if (this.sendChangeEvents) {
-		$.Topic("UI/onContentChange").publish(_e);
-	}
+	if (!this.sendChangeEvents) return;
+	$.Topic("UI/onContentChange").publish(_e);
 };
 
 
@@ -86,19 +87,22 @@ Editor.prototype.highlightLines = function(_firstLine, _lastLine, _class) {
 	);
 };
 
-// Editor.prototype.cursorLine = function(_line) {
-// 	this.editor.selection.moveCursorTo(_line, 0);
-// 	this.editor.selection.moveCursorLineEnd();
-// 	this.editor.selection.clearSelection();
+Editor.prototype.gotoLine = function(line, focus)
+{
 
+	this.sendChangeCursorEvents = false;
+	this.editor.gotoLine(line, 1000, true);
+	this.sendChangeCursorEvents = true;
 
+	$.Topic("UI/onLineChange").publish(line);
 
-// 	this.editor.focus();
-// };
+	if (focus) this.editor.focus();
+};
 
 
 var oldLine = 0;
 Editor.prototype.onChangeCursor = function() {
+	if (!this.sendChangeCursorEvents) return;
 	var line = this.editor.selection.getCursor().row + 1;
 	if (oldLine != line) {
 		$.Topic("UI/onLineChange").publish(line);
@@ -175,15 +179,15 @@ Preview.prototype._generate = function() {
 	this.doc.build(context);
 	this.buildLayer.style = {
 		strokeScaling: false,
-		strokeColor: "#090",
-		strokeWidth: 3,
+		// strokeColor: "#090",
+		// strokeWidth: 1,
 		fillColor: new paper.Color(0, 1, 1, 0.5)
 	};
 
 
 	paper.project.activeLayer = this.previewLayer;
 	this.doc.preview(context);
-
+ 
 
 	paper.view.update();
 
@@ -254,6 +258,7 @@ Inspector.prototype.update = function(_regions) {
 	$(this.element).empty();
 
 	if (_regions.length === 0) return;
+	if (_regions[0] === null) return;
 
 	if (_regions.length > 1) {
 		$(this.element).append("Multiple Selections");

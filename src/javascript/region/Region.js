@@ -313,7 +313,6 @@ Region.prototype.onMouseEnter = function() {
 };
 
 Region.prototype.onClick = function() {
-	console.log("click");
 	$.Topic("region/onClick").publish(this);
 };
 
@@ -322,11 +321,11 @@ Region.prototype.onMouseLeave = function() {
 };
 
 Region.prototype.setStyle = function(_style, _recursive) {
-	if (_style === "highlight") {
+	if (_style === "selected") {
 		if (this.previewBoundsGroup) {
 			this.previewBoundsGroup.style = {
 				strokeColor: "red",
-				strokeWidth: 3
+				strokeWidth: 1
 			};
 		}
 		if (this.previewPositionGroup) {
@@ -338,8 +337,21 @@ Region.prototype.setStyle = function(_style, _recursive) {
 	else if (_style === "hover") {
 		if (this.previewBoundsGroup) {
 			this.previewBoundsGroup.style = {
-				strokeColor: "red",
+				strokeColor: "black",
 				strokeWidth: 1
+			};
+		}
+		if (this.previewPositionGroup) {
+			this.previewPositionGroup.style = {
+				strokeColor: "red"
+			};
+		}
+	}
+	else if (_style === "key") {
+		if (this.previewBoundsGroup) {
+			this.previewBoundsGroup.style = {
+				strokeColor: "red",
+				strokeWidth: 3
 			};
 		}
 		if (this.previewPositionGroup) {

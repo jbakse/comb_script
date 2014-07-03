@@ -28,8 +28,8 @@
 		+-	use indentation and child navigation to find end of region lines, get better data stored in editor properties to make selection code and display clearer
 	
 	--	symmetry
-		-	kind of hate the issue where selecting a shape causes line to change, line change triggers non user initiated event.
-		-	might be improved by having idle, selected, and selected-key (the one you actualy clicked)
+		+-	kind of hate the issue where selecting a shape causes line to change, line change triggers non user initiated event.
+		+-	might be improved by having idle, selected, and selected-key (the one you actualy clicked)
 
 	-	drawing
 		-	lets move away from having regions/ellipses/rects etc have their own color, and more 	towards having a global colorscheme that they use. also consider colorcoding booelans. 

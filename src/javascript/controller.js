@@ -11,16 +11,20 @@ module.exports = new Controller();
 function Controller() {
 	this.doc = null;
 	this.selectedRegions = [];
+	this.keySelection = null; 
 	this.hoverRegion = null;
 }
 
 Controller.prototype.redrawPreview = function(_region) {
+
 	this.doc.setStyle("default", true);
 
 	_(this.selectedRegions).each( function(_region) {
-		_region.setStyle("highlight");
+		_region.setStyle("selected");
 	});
+	
 	if (this.hoverRegion) this.hoverRegion.setStyle("hover");
+	if (this.keySelection) this.keySelection.setStyle("key");
 
 	UI.preview.redraw();
 };
@@ -30,9 +34,7 @@ Controller.prototype.attachHandlers = function() {
 	var self = this;
 	$.Topic("UI/command/rebuild").subscribe(_.bind(this.rebuild, this));
 	$.Topic("UI/command/exportSVG").subscribe(_.bind(this.exportSVG, this));
-
 	$.Topic("UI/onContentChange").subscribe(_.bind(this.rebuild, this));
-
 	$.Topic("UI/onLineChange").subscribe(_.bind(this.onLineChange, this));
 
 
@@ -50,17 +52,13 @@ Controller.prototype.attachHandlers = function() {
 	$.Topic("region/onClick").subscribe(
 		function(_region) {
 
+			self.hoverRegion = null;
+			self.keySelection = _region;
+
+			// $.Topic("UI/updateInspector").publish([_region]);
 
 			UI.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
-			UI.editor.editor.focus();
-			UI.editor.editor.gotoLine(_region.editorProperties.firstLine, 1000, true);
-
-			self.hoverRegion = undefined;
-			self.selectedRegions = [_region];
-			
-			self.redrawPreview();
-
-			$.Topic("UI/updateInspector").publish([_region]);
+			UI.editor.gotoLine(_region.editorProperties.firstLine + 1, true);
 		}
 	);
 
@@ -84,28 +82,28 @@ Controller.prototype.onLineChange = function(_line) {
 
 	var ancestors = _(regions).map(function(r) { return r.getAncestors(); });
 	ancestors = _(ancestors).flatten();
-
 	regions = _(regions).difference(ancestors);
-
-
-	// if (this.selectedRegions.length === 1 && _(regions).contains(this.selectedRegions[0])) {
-	// 	// user clicked item then moved cursor within items defintion, don't expand selection
-	// 	return;
-	// }
-
 
 	if (!regions || regions.length === 0){
 		console.error("couldn't find the region");
 		return;
 	}
 
-	var r = regions[regions.length - 1];
-	UI.editor.highlightLines( r.editorProperties.firstLine,  r.editorProperties.lastLine,  r.type.toLowerCase());
-
+	// if (this.selectedRegions.length === 1 && _(regions).contains(this.selectedRegions[0])) {
+	// 	// user clicked item then moved cursor within items defintion, don't expand selection
+	// 	return;
+	// }
 
 	this.selectedRegions = regions;
+	if (! _(regions).contains(this.keySelection) ) {
+		this.keySelection = null;
+	}
 
-	$.Topic("UI/updateInspector").publish(regions);
+	var r = regions[0];
+	UI.editor.highlightLines( r.editorProperties.firstLine,  r.editorProperties.lastLine,  r.type.toLowerCase());
+
+	$.Topic("UI/updateInspector").publish([this.keySelection]);
+
 	this.redrawPreview();
 
 };
@@ -117,6 +115,7 @@ Controller.prototype.loadYAMLfromURL = function() {
 
 		success: function(_data) {
 			UI.editor.setText(_data);
+			UI.editor.gotoLine(1, true);
 		},
 
 		fail: function(_data) {
