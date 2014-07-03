@@ -12,9 +12,6 @@ function Ellipse(_data, _parent) {
 	Region.call(this, _data, _parent);
 	this.type = "Ellipse";
 	this.isShape = true;
-	_.extend(this.typeProperties.boundsStyle, {
-		strokeColor: '#888'
-	});
 }
 
 Ellipse.prototype = Object.create(Region.prototype);

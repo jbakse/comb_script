@@ -106,9 +106,10 @@ Region.prototype.loadProperties = function(_properties) {
 
 
 	// Populate defaults
+	console.log(definitions);
 	_(definitions).chain()
 		.filter(function(_def) {
-			return _def.default;
+			return _def && _def.default;
 		})
 		.each(function(_def) {
 			console.log(_def);
@@ -119,7 +120,7 @@ Region.prototype.loadProperties = function(_properties) {
 	// Enforce required
 	_(definitions).chain()
 		.filter(function(_def) {
-			return _def.required === true;
+			return _def && _def.required === true;
 		})
 		.each(function(_def) {
 			if (self.properties[_def.keyword] === undefined) {

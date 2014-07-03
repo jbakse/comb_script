@@ -26,10 +26,11 @@ module.exports.getRootContext = function() {
 };
 
 //colors
-var shapeFillColor = new paper.Color("#d0f06e");
+var shapeFillColor = new paper.Color("#99f927");
 shapeFillColor.alpha=.5;
+var shapeStrokeColor = new paper.Color("#738343");
 
-var boundsOutlineColor = new paper.Color("#3ee1ff");
+var boundsStrokeColor = new paper.Color("#3ee1ff");
 var highlightColor = new paper.Color("#f92772");
 
 
@@ -50,7 +51,8 @@ defaultStyles.hover = _(defaultStyle).clone();
 
 var buildStyle = module.exports.buildStyle = _(defaultStyle).clone();
 _(buildStyle).extend({
-	fillColor: shapeFillColor
+	fillColor: shapeFillColor,
+	strokeColor: undefined
 });
 
 var exportStyle = module.exports.exportStyle = _(defaultStyle).clone();
@@ -59,11 +61,11 @@ _(exportStyle).extend({});
 
 styles.bounds = $.extend(true, {}, defaultStyles);
 _(styles.bounds.default).extend({
-	strokeColor: boundsOutlineColor
+	strokeColor: boundsStrokeColor
 });
 _(styles.bounds.selected).extend({
 	strokeColor: highlightColor,
-	strokeWidth: 1
+	strokeWidth: 2
 });
 
 _(styles.bounds.key).extend({
@@ -72,13 +74,13 @@ _(styles.bounds.key).extend({
 });
 _(styles.bounds.ghost).extend({});
 _(styles.bounds.hover).extend({
-	strokeColor: boundsOutlineColor,
+	strokeColor: boundsStrokeColor,
 	strokeWidth: 3
 });
 
 styles.shape = $.extend(true, {}, styles.bounds);
 _(styles.shape.default).extend({
-	strokeColor: "black",
+	strokeColor: shapeStrokeColor,
 });
 _(styles.shape.selected).extend({});
 _(styles.shape.key).extend({});

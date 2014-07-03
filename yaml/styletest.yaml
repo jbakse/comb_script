@@ -14,22 +14,35 @@ library:
 children:
     - region:
         properties:
-            name: dimensions
-            width: 300
-            height: 300
-
+            boolean: add
         children:
+            - rectangle:
+                properties:
+                    name: corner
+                    margin_left: 0
+                    margin_top: 0
+                    width: 200
+                    height: 200
             - region:
                 properties:
+                    margin_left: 20
                     width: 200
-                    height: 120
+                    height: 200
                 children:
                     - ellipse:
                         properties:
                             name: ellipse
                             margin_top: 10
                             margin_bottom: 20
-
+                            margin_left: 10
+                            margin_right: 20
+    
+    - region:
+        properties:
+            name: dimensions
+            width: 300
+            height: 300
+        children:
             - region:
                 properties:
                     name: left
