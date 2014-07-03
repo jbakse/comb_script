@@ -3,7 +3,7 @@
 var _ = require('underscore');
 var jsYAML = require('js-yaml');
 var UI = require('./UI.js');
-
+var language = require('./language.js');
 
 module.exports.parse = parse;
 
@@ -38,7 +38,7 @@ function injectEditorProperties(_yaml) {
 
 	var lines = _yaml.split("\n");
 
-	var regionKeywords = _(language).pluck("keyword");
+	var regionKeywords = _(language.regionTypes).pluck("keyword");
 
 	regionKeywords = "(?:" + regionKeywords.join("|") + ")";
 	var mapPattern = new RegExp(regionKeywords+":\\s*$");

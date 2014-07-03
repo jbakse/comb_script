@@ -1,10 +1,12 @@
 var _ = require('underscore');
 var Mustache = require('mustache');
+var language = require('./language.js');
 
-console.log(Mustache);
+
+
 $(function() {
 
-	var regionTypes = _(language).values();
+	var regionTypes = _(language.regionTypes).values();
 
 	_(regionTypes).each(function(type){
 		type.required_properties = _(type.properties).filter( function(prop) {
@@ -13,8 +15,8 @@ $(function() {
 		
 		type.properties = _(type.properties).difference(type.required_properties);
 		
-		if (type.extends && language[type.extends]) {
-			type.inherited_properties = language[type.extends].properties;
+		if (type.extends && language.regionTypes[type.extends]) {
+			type.inherited_properties = language.regionTypes[type.extends].properties;
 		}
 	});
 

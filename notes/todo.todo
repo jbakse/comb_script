@@ -14,7 +14,7 @@
 
 -	refactoring
 	+-	maybe just make calls on controller for now, these will be turned into having controller listen for dispatched events later. get some event dispatching in there to decouple user interaction mcv style
-	-	language
+	--	language
 		+-	language.js file that has the lists of regions types and their params etc. helpful in reporting issues after parse and might be tied into documentation system
 		+-	having default objects could be useful in many places. for example a default document could have properties for most settings which could be overridden by a user document/ An empty children property that gets overridden would eliminate the need to check if children exists. in general if decended from defaults, checks for existing properties would be handled. region defaults etc.
 		-	lets make a language class, and maybe consider the language yaml-json data private to that class
@@ -27,7 +27,7 @@
 	-	injector
 		+-	use indentation and child navigation to find end of region lines, get better data stored in editor properties to make selection code and display clearer
 	
-	-	symmetry
+	--	symmetry
 		-	kind of hate the issue where selecting a shape causes line to change, line change triggers non user initiated event.
 		-	might be improved by having idle, selected, and selected-key (the one you actualy clicked)
 

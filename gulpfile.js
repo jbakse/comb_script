@@ -58,12 +58,11 @@ gulp.task('images', function() {
 
 
 gulp.task('language', function() {
-	console.log("try yamling");
-	return gulp.src('./src/language/*.yaml')
+	return gulp.src('./src/language/region_types/*.yaml')
 		.pipe(plumber())
 		.pipe(concat('language.yaml'))
 		.pipe(yaml())
-		.pipe(insert.prepend('language = '))
+		.pipe(insert.prepend('regionTypes = '))
 		.pipe(rename("language.js"))
 		.pipe(gulp.dest('./build/javascript/'))
 		.pipe(livereload())

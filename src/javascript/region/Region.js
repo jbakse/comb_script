@@ -1,6 +1,6 @@
 'use strict';
 
-/* global language */
+
 var _ = require('underscore');
 var paperUtil = require('../paper_util.js');
 var util = require('../util.js');
@@ -9,6 +9,8 @@ var regionTypes = require('./regionTypes.js');
 var Context = require('../Context.js');
 
 var UI = require('../UI.js'); //todo remove UI dependency
+var language = require('../language.js');
+
 
 module.exports = Region;
 
@@ -84,10 +86,10 @@ Region.prototype.loadProperties = function(_properties) {
 	var self = this;
 
 	//todo recurse?
-	var definitions = language[this.type].properties;
-	var superClass = language[this.type].extends;
+	var definitions = language.regionTypes[this.type].properties;
+	var superClass = language.regionTypes[this.type].extends;
 	if (superClass) {
-		definitions = util.mergeObjectArraysOnKey(language[superClass].properties, definitions, "keyword");
+		definitions = util.mergeObjectArraysOnKey(language.regionTypes[superClass].properties, definitions, "keyword");
 	}
 
 
@@ -150,7 +152,7 @@ Region.prototype.loadChildren = function(_childrenData) {
 		var childData = _.values(_childData)[0];
 
 
-		var def = _(language).find(function(_def) {
+		var def = _(language.regionTypes).find(function(_def) {
 			return _def.keyword === childKey;
 		});
 		var targetClass = def && def.class;
