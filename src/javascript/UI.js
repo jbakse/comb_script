@@ -65,7 +65,6 @@ Editor.prototype.getText = function() {
 };
 
 Editor.prototype.onChange = function(_e) {
-	console.log("content change");
 	if (this.sendChangeEvents) {
 		$.Topic("UI/onContentChange").publish(_e);
 	}
@@ -144,8 +143,8 @@ function Preview() {
 
 Preview.prototype.init = function(_element) {
 	paper.setup(_element);
-	this.previewLayer = new paper.Layer();
 	this.buildLayer = new paper.Layer();
+	this.previewLayer = new paper.Layer();
 };
 
 Preview.prototype.setDocument = function(_doc) {
@@ -154,16 +153,25 @@ Preview.prototype.setDocument = function(_doc) {
 };
 
 Preview.prototype._generate = function() {
-	var context = settings.getRootContext();
 
 	module.exports.log.appendMessage("generate");
 
+	// set up default position
+	var context = settings.getRootContext();
 	context.matrix.translate(settings.previewCanvasWidth * 0.5, settings.previewCanvasHeight * 0.5);
 	context.matrix.scale(this.doc.properties.scale || 1);
 	context.matrix.scale(this.doc.properties.zoom || 1);
 
+
+
+
 	this.buildLayer.remove();
 	this.buildLayer = new paper.Layer();
+
+	this.previewLayer.remove();
+	this.previewLayer = new paper.Layer();
+
+	paper.project.activeLayer = this.buildLayer;
 	this.doc.build(context);
 	this.buildLayer.style = {
 		strokeScaling: false,
@@ -173,13 +181,15 @@ Preview.prototype._generate = function() {
 	};
 
 
-	this.previewLayer.remove();
-	this.previewLayer = new paper.Layer();
-	
+	paper.project.activeLayer = this.previewLayer;
 	this.doc.preview(context);
 
 
 	paper.view.update();
+
+
+
+
 };
 
 Preview.prototype.redraw = function() {
@@ -278,7 +288,6 @@ Inspector.prototype.update = function(_regions) {
 Inspector.prototype.buildSelectRegionHandler = function(_region) {
 	return function() {
 		$.Topic("region/onClick").publish(_region);
-		// console.log("click", _region);
 	};
 };
 

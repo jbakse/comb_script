@@ -36,12 +36,8 @@ function Region(_parent) {
 	this.typeProperties = {};
 	this.editorProperties = {};
 
-	this.previewBoundsGroup = new paper.Group();
-	this.previewBoundsGroup.onMouseEnter = _.bind(this.onMouseEnter, this);
-	this.previewBoundsGroup.onMouseLeave = _.bind(this.onMouseLeave, this);
-	this.previewBoundsGroup.onClick = _.bind(this.onClick, this);
-
-	this.previewPositionGroup = new paper.Group();
+	this.previewBoundsGroup = null;
+	this.previewPositionGroup = null;
 
 
 
@@ -223,8 +219,12 @@ Region.prototype.preview = function(_parentContext) {
 	var context = _parentContext.deriveContext(this.properties);
 
 	// move this preview to the active layer
-	paper.project.activeLayer.addChild(this.previewBoundsGroup);
-	paper.project.activeLayer.addChild(this.previewPositionGroup);
+	this.previewBoundsGroup = new paper.Group();
+	this.previewPositionGroup = new paper.Group();
+
+	this.previewBoundsGroup.onMouseEnter = _.bind(this.onMouseEnter, this);
+	this.previewBoundsGroup.onMouseLeave = _.bind(this.onMouseLeave, this);
+	this.previewBoundsGroup.onClick = _.bind(this.onClick, this);
 
 	// bounds
 	var bounds = this.drawBounds(context.bounds);
@@ -313,6 +313,7 @@ Region.prototype.onMouseEnter = function() {
 };
 
 Region.prototype.onClick = function() {
+	console.log("click");
 	$.Topic("region/onClick").publish(this);
 };
 
