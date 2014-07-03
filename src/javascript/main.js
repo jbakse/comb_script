@@ -6,7 +6,6 @@ var UI = require('./UI.js');
 var controller = require('./controller.js');
 var settings = require('./settings.js');
 
-console.log("hello!");
 function main() {
 	UI.log.appendDebug("Starting...");
 

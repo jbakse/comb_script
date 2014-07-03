@@ -1,76 +1,46 @@
 'use strict';
 
 // Include Gulp
-var gulp = require('gulp'); 
+var gulp = require('gulp');
 
 var rename = require('gulp-rename');
 var plumber = require('gulp-plumber');
 var livereload = require('gulp-livereload');
 var less = require('gulp-less');
-var yaml    = require('gulp-yml');
+var yaml = require('gulp-yml');
 var concat = require('gulp-concat');
 var insert = require('gulp-insert');
-var rename = require("gulp-rename");
-
-
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-
-gulp.task('browserify', function() {
-	browserify('./src/javascript/main.js').bundle({debug: true})
-		.pipe(source('main.js'))
-		.pipe(gulp.dest('./build/javascript/'))
-		.pipe(livereload())
-		;
-
-	// browserify('./src/javascript/doc.js').bundle({debug: true})
-	// 	.pipe(source('doc.js'))
-	// 	.pipe(gulp.dest('./build/javascript/'))
-	// 	.pipe(livereload())
-	// 	;
-});
-
+var browserify = require('gulp-browserify');
+// var watch = require('gulp-watch');
+var wait = require('gulp-wait');
 
 gulp.task('javascript', function() {
 	return gulp
-		.src('./src/javascript/main.js', {read: false})
+		.src(['./src/javascript/main.js', './src/javascript/doc.js'], {
+			read: false
+		})
 		.pipe(plumber())
-		.pipe( browserify({debug: true	}))
-		.pipe(rename('app.js'))
+		.pipe(browserify({
+			debug: true
+		}))
 		.pipe(gulp.dest('./build/javascript/'))
+		
 		.pipe(livereload())
 		;
 });
 
 
-gulp.task('javascript-doc', function() {
-	return gulp
-		.src('./src/javascript/doc.js', {read: false})
-		.pipe(plumber())
-		.pipe( browserify({debug: true}))
-		.pipe(rename('doc.js'))
-		.pipe(gulp.dest('./build/javascript/'))
-		.pipe(livereload())
-		;
-});
 
-gulp.task('style', function() {
-	return gulp.src('./src/style/main.less')
+gulp.task('less', function() {
+	return gulp.src(['./src/style/doc.less', './src/style/main.less'])
 		.pipe(plumber())
 		.pipe(less())
 		.pipe(gulp.dest('./build/css/'))
+		.pipe(wait(1000))
 		.pipe(livereload())
 		;
 });
 
-gulp.task('styledocs', function() {
-	return gulp.src('./src/style/doc.less')
-		.pipe(plumber())
-		.pipe(less())
-		.pipe(gulp.dest('./build/css/'))
-		.pipe(livereload())
-		;
-});
 
 gulp.task('html', function() {
 	return gulp.src('./src/*.html')
@@ -89,14 +59,13 @@ gulp.task('images', function() {
 
 
 
-
 gulp.task('language', function() {
 	console.log("try yamling");
 	return gulp.src('./src/language/*.yaml')
 		.pipe(plumber())
 		.pipe(concat('language.yaml'))
-		.pipe( yaml() )
-		.pipe( insert.prepend('language = '))
+		.pipe(yaml())
+		.pipe(insert.prepend('language = '))
 		.pipe(rename("language.js"))
 		.pipe(gulp.dest('./build/javascript/'))
 		.pipe(livereload())
@@ -109,17 +78,23 @@ gulp.task('language', function() {
 //Watch Files For Changes
 gulp.task('watch', function() {
 
-	gulp.watch('./src/javascript/**/*.js', ['browserify']);
-	// gulp.watch('./src/javascript/**/*.js', ['javascript-doc']);
+	gulp.watch('./src/javascript/**/*.js', ['javascript']);
+	gulp.watch('./src/style/*.less', ['less']);
 	gulp.watch('./src/language/*.yaml', ['language']);
-	gulp.watch('./src/style/*.less', ['style', 'styledocs']);
 	gulp.watch('./src/*.html', ['html']);
-	gulp.watch('yaml/*.*').on('change', function(file) {livereload().changed(file.path);});
+
+	gulp.watch('yaml/*.*').on('change', function(file) {
+		livereload().changed(file.path);
+	});
+
+
+	// livereload.listen();
+ //  	gulp.watch('build/**').on('change', livereload.changed);
 
 });
 
 
 
 // Default Task
-gulp.task('default', ['browserify', 'language', 'style', 'styledocs', 'html', 'images', 'watch']);
+gulp.task('default', ['javascript', 'less', 'language', 'html', 'images', 'watch']);
 
