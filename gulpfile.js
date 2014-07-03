@@ -77,7 +77,7 @@ gulp.task('watch', function() {
 
 	gulp.watch('./src/javascript/**/*.js', ['javascript']);
 	gulp.watch('./src/style/*.less', ['less']);
-	gulp.watch('./src/language/*.yaml', ['language']);
+	gulp.watch('./src/language/**/*.yaml', ['language']);
 	gulp.watch('./src/*.html', ['html']);
 
 	gulp.watch('yaml/*.*').on('change', function(file) {

@@ -173,6 +173,7 @@ Controller.prototype._updateYAML = function(_yaml) {
 
 	this.doc = new regionTypes.Document();
 	this.doc.loadData(data);
+	console.log(this.doc);
 
 	self = this;
 

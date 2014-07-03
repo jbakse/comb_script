@@ -12,9 +12,6 @@ function Rectangle(_data, _parent) {
 	Region.call(this, _data, _parent);
 	this.type = "Rectangle";
 	this.isShape = true;
-	_.extend(this.typeProperties.boundsStyle, {
-		strokeColor: '#888'
-	});
 }
 
 Rectangle.prototype = Object.create(Region.prototype);
@@ -24,8 +21,6 @@ Rectangle.prototype.drawBuild = function(_bounds) {
 	var boundsPath = new paper.Path.Rectangle(_bounds, this.properties.radius || 0);
 	return boundsPath;
 };
-
-
 
 Rectangle.prototype.drawBounds = function(_bounds) {
 	return new paper.Path.Rectangle(_bounds, this.properties.radius || 0);

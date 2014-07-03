@@ -19,7 +19,7 @@ var styles = module.exports.styles = {};
 module.exports.getRootContext = function() {
 	return new Context(
 		new paper.Rectangle(
-			new paper.Point(-200, -200), new paper.Point(200, 200)
+			new paper.Point(0, 0), new paper.Point(0, 0)
 		),
 		new paper.Matrix()
 	);

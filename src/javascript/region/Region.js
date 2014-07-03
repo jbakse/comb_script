@@ -33,25 +33,13 @@ function Region(_parent) {
 
 	this.children = [];
 	this.properties = {};
-	this.typeProperties = {};
+	
 	this.editorProperties = {};
 
 	this.previewBoundsGroup = null;
 	this.previewPositionGroup = null;
 
 	this.isShape = false;
-
-	this.typeProperties.boundsStyle = {
-		strokeWidth: 1,
-		strokeColor: '#99AAEE',
-		fillColor: new paper.Color(0, 0, 0, 0)
-	};
-
-	this.typeProperties.positionStyle = {
-		strokeWidth: 1,
-		strokeColor: undefined,
-		fillColor: '#AA8800'
-	};
 }
 
 
@@ -88,6 +76,7 @@ Region.prototype.loadProperties = function(_properties) {
 		definitions = util.mergeObjectArraysOnKey(language.regionTypes[superClass].properties, definitions, "keyword");
 	}
 
+	console.log(this.type);
 
 	// Build message prefix
 	// todo factor this out
@@ -122,7 +111,8 @@ Region.prototype.loadProperties = function(_properties) {
 			return _def.default;
 		})
 		.each(function(_def) {
-			self.properties[_def.keyword] = _def.default;
+			console.log(_def);
+			self.properties[_def.keyword] = self.properties[_def.keyword] || _def.default;
 		});
 
 
@@ -229,13 +219,11 @@ Region.prototype.preview = function(_parentContext) {
 	// bounds
 	var bounds = this.drawBounds(context.bounds);
 	bounds.transform(context.matrix);
-	// bounds.style = this.typeProperties.boundsStyle;
 	this.previewBoundsGroup.addChild(bounds);
 
 	// pos
 	var position = this.drawPosition(context.position);
 	position.transform(context.matrix);
-	// position.style = this.typeProperties.positionStyle;
 	this.previewPositionGroup.addChild(position);
 
 	this.setStyle("default");
@@ -336,54 +324,6 @@ Region.prototype.setStyle = function(_style, _recursive) {
 	if (_recursive) {
 		_(this.children).invoke('setStyle', _style, true);
 	}
-
-
-	// if (_style === "selected") {
-	// 	if (this.previewBoundsGroup) {
-	// 		this.previewBoundsGroup.style = {
-	// 			strokeColor: "red",
-	// 			strokeWidth: 1
-	// 		};
-	// 	}
-	// 	if (this.previewPositionGroup) {
-	// 		this.previewPositionGroup.style = {
-	// 			strokeColor: "red"
-	// 		};
-	// 	}
-	// }
-	// else if (_style === "hover") {
-	// 	if (this.previewBoundsGroup) {
-	// 		this.previewBoundsGroup.style = {
-	// 			strokeColor: "black",
-	// 			strokeWidth: 1
-	// 		};
-	// 	}
-	// 	if (this.previewPositionGroup) {
-	// 		this.previewPositionGroup.style = {
-	// 			strokeColor: "red"
-	// 		};
-	// 	}
-	// }
-	// else if (_style === "key") {
-	// 	if (this.previewBoundsGroup) {
-	// 		this.previewBoundsGroup.style = {
-	// 			strokeColor: "red",
-	// 			strokeWidth: 3
-	// 		};
-	// 	}
-	// 	if (this.previewPositionGroup) {
-	// 		this.previewPositionGroup.style = {
-	// 			strokeColor: "red"
-	// 		};
-	// 	}
-	// }
-	// else {
-	// 	if (this.previewBoundsGroup) this.previewBoundsGroup.style = this.typeProperties.boundsStyle;
-	// 	if (this.previewPositionGroup) this.previewPositionGroup.style = this.typeProperties.positionStyle;
-	// }
-
-
-
 };
 
 

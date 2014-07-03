@@ -199,23 +199,6 @@ Preview.prototype._generate = function() {
 	// set up default position
 	var context = settings.getRootContext();
 
-	var visible;
-
-	// visible = this.buildLayer.visible;
-	// this.buildLayer.remove();
-	// this.buildLayer = new paper.Layer();
-	// this.buildLayer.visible = visible;
-
-	// visible = this.exportLayer.visible;
-	// this.exportLayer.remove();
-	// this.exportLayer = new paper.Layer();
-	// this.exportLayer.visible = visible;
-
-	// visible = this.previewLayer.visible;
-	// this.previewLayer.remove();
-	// this.previewLayer = new paper.Layer();
-	// this.previewLayer.visible = visible;
-
 	this.buildLayer.removeChildren();
 	this.exportLayer.removeChildren();
 	this.previewLayer.removeChildren();

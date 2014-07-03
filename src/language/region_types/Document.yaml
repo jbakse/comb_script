@@ -23,7 +23,6 @@ Document:
             description: "The name for the document. Names are not required, but will be used when exporting."
             type: string
             default: document.yaml
-            required: true
 
         -   keyword: width
             description: The width of the document bounds.
@@ -35,10 +34,10 @@ Document:
             type: number
             default: 400
 
-        -   keyword: scale
-            description: Amount to scale the entire document. A value of 2 will make the document twice as big.
-            type: number
+        # -   keyword: scale
+        #     description: Amount to scale the entire document. A value of 2 will make the document twice as big.
+        #     type: number
 
-        -   keyword: zoom
-            description: Amount of zoom applied to the document. A value of 0.5 would zoom out on the document.
-            type: number
+        # -   keyword: zoom
+        #     description: Amount of zoom applied to the document. A value of 0.5 would zoom out on the document.
+        #     type: number
