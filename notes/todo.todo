@@ -19,26 +19,27 @@
 		+-	having default objects could be useful in many places. for example a default document could have properties for most settings which could be overridden by a user document/ An empty children property that gets overridden would eliminate the need to check if children exists. in general if decended from defaults, checks for existing properties would be handled. region defaults etc.
 		+-	lets make a language class, and maybe consider the language yaml-json data private to that class
 
+
 	-	Region Grid
 		-	region grid should probably just generate a bunch of children, rather than one and overriding how drawing is done... except that is weird too because it will still have to override how drawing is done to tell each child where to draw. It might be that we need to just create all the preview/build shapes at construction.. ugh, how would that play with iso mode, 
 		
 
 
-	-	injector
+	+-	injector
 		+-	use indentation and child navigation to find end of region lines, get better data stored in editor properties to make selection code and display clearer
 	
-	--	symmetry
+	+--	symmetry
 		+-	kind of hate the issue where selecting a shape causes line to change, line change triggers non user initiated event.
 		+-	might be improved by having idle, selected, and selected-key (the one you actualy clicked)
 
 	-	drawing
 		-	lets move away from having regions/ellipses/rects etc have their own color, and more 	towards having a global colorscheme that they use. also consider colorcoding booelans. 
 		-	yeah the set style function is a mess
-		-	always draw the frame/build/export allow viewing in window
+		+-	always draw the frame/build/export allow viewing in window
 		-	Looks like Region, might just be a `paper.Group` could potentially rebuild main "scene graph" approach with groups. Might be much better. (i'm thinking that there are reasons this wouldn't actually work, and anyway would be too major to be worth it)
 		-	Might at least be worth looking at having the tree represented in groups so they export nested?
-		-- maybe it would be best to generate the contexts and store in children at build, but not generate the vectors until preview/build is called
-		-- but actually? maybe we can call preview just once and not ever draw again (we are redrawing now for export, but that might not be needed with new layer system, also we could create a whole new document if we need to redraw to a different target for export)
+		-- 	maybe it would be best to generate the contexts and store in children at build, but not generate the vectors until preview/build is called
+		-- 	but actually? maybe we can call preview just once and not ever draw again (we are redrawing now for export, but that might not be needed with new layer system, also we could create a whole new document if we need to redraw to a different target for export)
 
 		- Styles need for preview
 			Shape
@@ -69,6 +70,8 @@
 
 
 	-	pan/zoom
+		+-	pan
+		-	zoom
 
 
 	-	ui overlay/inspector

@@ -98,6 +98,9 @@ Controller.prototype.onLineChange = function(_line) {
 	if (! _(regions).contains(this.keySelection) ) {
 		this.keySelection = null;
 	}
+	if (this.selectedRegions.length === 1) {
+		this.keySelection = this.selectedRegions[0];
+	}
 
 	var r = regions[0];
 	UI.editor.highlightLines( r.editorProperties.firstLine,  r.editorProperties.lastLine,  r.type.toLowerCase());

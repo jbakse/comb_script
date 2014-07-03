@@ -118,6 +118,8 @@ Editor.prototype.onChangeCursor = function() {
 function Preview() {
 	this.previewLayer = null;
 	this.buildLayer = null;
+	this.exportLayer = null;
+
 	this.doc = null;
 
 	
@@ -141,6 +143,16 @@ function Preview() {
 			paper.view.update();
 		}
 	);
+	$.Topic("UI/command/toggleViewExport").subscribe(
+		function(_state) {
+			if (_state === undefined) {
+				_state = !self.exportLayer.visible;
+			}
+			self.exportLayer.visible = _state;
+			paper.view.update();
+		}
+	);
+
 	
 
 }
@@ -149,6 +161,30 @@ Preview.prototype.init = function(_element) {
 	paper.setup(_element);
 	this.buildLayer = new paper.Layer();
 	this.previewLayer = new paper.Layer();
+	this.exportLayer = new paper.Layer();
+
+	var drag = false;
+	var lastMouse;
+
+	$(paper.view.element).mousedown( function(_e) {
+		drag = true;
+		lastMouse = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);
+	});
+
+	$(paper.view.element).mouseup( function(_e) {
+		drag = false;
+	});
+
+
+	$(paper.view.element).mousemove( function(_e) {
+		if (!drag) return;
+		var thisMouse = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);
+		paper.view.scrollBy(lastMouse.subtract(thisMouse));
+		lastMouse = thisMouse;
+	});
+
+
+
 };
 
 Preview.prototype.setDocument = function(_doc) {
@@ -162,37 +198,41 @@ Preview.prototype._generate = function() {
 
 	// set up default position
 	var context = settings.getRootContext();
-	context.matrix.translate(settings.previewCanvasWidth * 0.5, settings.previewCanvasHeight * 0.5);
-	context.matrix.scale(this.doc.properties.scale || 1);
-	context.matrix.scale(this.doc.properties.zoom || 1);
-
-
-
 
 	this.buildLayer.remove();
 	this.buildLayer = new paper.Layer();
 
+	this.exportLayer.remove();
+	this.exportLayer = new paper.Layer();
+
 	this.previewLayer.remove();
 	this.previewLayer = new paper.Layer();
+
 
 	paper.project.activeLayer = this.buildLayer;
 	this.doc.build(context);
 	this.buildLayer.style = {
 		strokeScaling: false,
-		// strokeColor: "#090",
-		// strokeWidth: 1,
 		fillColor: new paper.Color(0, 1, 1, 0.5)
+	};
+
+	paper.project.activeLayer = this.exportLayer;
+	this.doc.build(context);
+	this.exportLayer.style = {
+		strokeScaling: false,
+		strokeColor: new paper.Color(0, 0, 1),
+		strokeWidth: .5
 	};
 
 
 	paper.project.activeLayer = this.previewLayer;
 	this.doc.preview(context);
- 
 
+	// this.previewLayer.position.x = settings.previewCanvasWidth * 0.5;
+	// this.previewLayer.position.y = settings.previewCanvasHeight * 0.5;
+
+	paper.view.center = new paper.Point(0,0);
 	paper.view.update();
-
-
-
 
 };
 
