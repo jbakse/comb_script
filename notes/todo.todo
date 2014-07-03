@@ -36,11 +36,11 @@
 		.-	Looks like Region, might just be a `paper.Group` could potentially rebuild main "scene graph" approach with groups. Might be much better. (i'm thinking that there are reasons this wouldn't actually work, and anyway would be too major to be worth it)
 		-	Might at least be worth looking at having the tree represented in groups so they export nested?
 
-		-- 	maybe it would be best to generate the contexts and store in children at build, but not generate the vectors until preview/build is called
-		-- 	but actually? maybe we can call preview just once and not ever draw again (we are redrawing now for export, but that might not be needed with new layer system, also we could create a whole new document if we need to redraw to a different target for export)
+		.-- 	maybe it would be best to generate the contexts and store in children at build, but not generate the vectors until preview/build is called
+		.-- 	but actually? maybe we can call preview just once and not ever draw again (we are redrawing now for export, but that might not be needed with new layer system, also we could create a whole new document if we need to redraw to a different target for export)
 
 	-	export
-		-	 (export should respect document dimensions)
+		+-	 (export should respect document dimensions)
 
 		+- Styles need for preview
 			Shape

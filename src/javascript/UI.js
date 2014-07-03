@@ -158,23 +158,21 @@ function Preview() {
 Preview.prototype.init = function(_element) {
 	paper.setup(_element);
 	this.buildLayer = new paper.Layer();
-	this.previewLayer = new paper.Layer();
 	this.exportLayer = new paper.Layer();
+	this.previewLayer = new paper.Layer();
 
 	var drag = false;
 	var lastMouse;
 
+	// handle dragging/panning
 	$(paper.view.element).mousedown(function(_e) {
 		drag = true;
 		lastMouse = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);
 	});
 
-
-
 	$(window).mouseup(function(_e) {
 		drag = false;
 	});
-
 
 	$(window).mousemove(function(_e) {
 		if (!drag) return;
@@ -183,37 +181,30 @@ Preview.prototype.init = function(_element) {
 		lastMouse = thisMouse;
 	});
 
-
-
 };
 
 Preview.prototype.setDocument = function(_doc) {
 	this.doc = _doc;
-	this._generate();
-};
 
-Preview.prototype._generate = function() {
-
-	module.exports.log.appendMessage("generate");
-
-	// set up default position
 	var context = settings.getRootContext();
 
-	this.buildLayer.removeChildren();
-	this.exportLayer.removeChildren();
+	// draw preview/frame
 	this.previewLayer.removeChildren();
+	paper.project.activeLayer = this.previewLayer;
+	this.doc.preview(context);
 
+	// draw build
+	this.buildLayer.removeChildren();
 	paper.project.activeLayer = this.buildLayer;
 	this.doc.build(context);
 	this.buildLayer.style = settings.buildStyle;
 
-
+	// draw export
+	this.exportLayer.removeChildren();
 	paper.project.activeLayer = this.exportLayer;
 	this.doc.build(context);
 	this.exportLayer.style = settings.exportStyle;
 
-	paper.project.activeLayer = this.previewLayer;
-	this.doc.preview(context);
 
 	paper.view.center = new paper.Point(0, 0);
 	paper.view.update();
