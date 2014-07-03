@@ -264,7 +264,6 @@ Region.prototype.build = function(_parentContext) {
 
 	var childPaths = ownPaths.concat(this.buildChildren(context));
 
-	console.log(this.properties);
 
 	if (!('boolean' in this.properties)) {
 		return childPaths;

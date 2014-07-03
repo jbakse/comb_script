@@ -50,9 +50,7 @@ Controller.prototype.attachHandlers = function() {
 	$.Topic("region/onClick").subscribe(
 		function(_region) {
 
-			console.log(_region);
 
-			console.log(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
 			UI.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
 			UI.editor.editor.focus();
 			UI.editor.editor.gotoLine(_region.editorProperties.firstLine, 1000, true);
@@ -88,7 +86,6 @@ Controller.prototype.onLineChange = function(_line) {
 	ancestors = _(ancestors).flatten();
 
 	regions = _(regions).difference(ancestors);
-	// console.log(regions, ancestors);
 
 
 	// if (this.selectedRegions.length === 1 && _(regions).contains(this.selectedRegions[0])) {
@@ -98,7 +95,7 @@ Controller.prototype.onLineChange = function(_line) {
 
 
 	if (!regions || regions.length === 0){
-		console.log("couldn't find the region");
+		console.error("couldn't find the region");
 		return;
 	}
 
@@ -166,12 +163,11 @@ Controller.prototype.exportSVG = function() {
 
 
 Controller.prototype._updateYAML = function(_yaml) {
-
+	console.log("update yaml");
 	
 	data = Parser.parse(_yaml);
 	if (!data) return;
 
-	// console.log("yd", data);
 
 	this.doc = new regionTypes.Document();
 	this.doc.loadData(data);

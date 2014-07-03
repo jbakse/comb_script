@@ -19,6 +19,7 @@ module.exports.log = new Log();
 function Editor() {
 	this.highlightMarker = null;
 	this.editor = null;
+	this.sendChangeEvents = true;
 }
 
 Editor.prototype.init = function(_element) {
@@ -28,9 +29,7 @@ Editor.prototype.init = function(_element) {
 	this.editor.setShowInvisibles(false);
 	this.editor.setShowPrintMargin(false);
 	this.editor.setHighlightActiveLine(false);
-	this.editor.getSession().on('change', function(_e) {
-		$.Topic("UI/onContentChange").publish(_e);
-	});
+	this.editor.getSession().on('change', _(this.onChange).bind(this));
 	this.editor.getSession().selection.on('changeCursor', _(this.onChangeCursor).bind(this));
 
 
@@ -53,14 +52,26 @@ Editor.prototype.resize = function() {
 };
 
 Editor.prototype.setText = function(_text) {
+	this.sendChangeEvents = false;
 	this.editor.setValue(_text);
 	this.editor.clearSelection();
 	this.editor.scrollToLine(0);
+	this.sendChangeEvents = true;
+	this.onChange();
 };
 
 Editor.prototype.getText = function() {
 	return this.editor.getValue();
 };
+
+Editor.prototype.onChange = function(_e) {
+	console.log("content change");
+	if (this.sendChangeEvents) {
+		$.Topic("UI/onContentChange").publish(_e);
+	}
+};
+
+
 
 Editor.prototype.highlightLine = function(_line, _class) {
 	this.highlightLines(_line, _line, _class);
