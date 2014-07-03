@@ -30,8 +30,8 @@
 		+-	might be improved by having idle, selected, and selected-key (the one you actualy clicked)
 
 	-	drawing
-		-	lets move away from having regions/ellipses/rects etc have their own color, and more 	towards having a global colorscheme that they use. also consider colorcoding booelans. 
-		-	yeah the set style function is a mess
+		+-	lets move away from having regions/ellipses/rects etc have their own color, and more 	towards having a global colorscheme that they use. also consider colorcoding booelans. 
+		+-	yeah the set style function is a mess
 		+-	always draw the frame/build/export allow viewing in window
 		.-	Looks like Region, might just be a `paper.Group` could potentially rebuild main "scene graph" approach with groups. Might be much better. (i'm thinking that there are reasons this wouldn't actually work, and anyway would be too major to be worth it)
 		-	Might at least be worth looking at having the tree represented in groups so they export nested?
@@ -42,7 +42,7 @@
 	-	export
 		-	 (export should respect document dimensions)
 
-		- Styles need for preview
+		+- Styles need for preview
 			Shape
 			Position (registration)
 			Bounds (frame)
