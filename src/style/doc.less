@@ -11,27 +11,34 @@
 @monospace-font: Monaco, monospace;
 
 /* Micro ClearFix Mixin */
-.clearfix{
+.clearfix
+{
   zoom:1;
   &:before, &:after{ content:""; display:table; }
   &:after{ clear: both; }
 }
 
-.link(@baseColor){
-	&:hover{
-		background-color: @baseColor;
-		color:white;
-		//padding-bottom: 2px;
-	}
-	color: @baseColor;
-	border-bottom: 1px solid @baseColor;
+.hidden
+{
+	display:none;
+}
+
+
+.link(@color)
+{
+	&:hover{ background-color: @color; color:white; }
+	&:visited{ color: @color; }
+
+	color: @color;
+	border-bottom: 1px solid @color;
 	text-decoration: none;
 	padding: 2px;
 	padding-bottom: 0px;
 	font-weight: bold;
 }
 
-body{
+body
+{
 	font-family: @body-font;
 	background-color: @bg-color;
 	font-size: 16px;
@@ -39,36 +46,34 @@ body{
 	margin: 0px;
 }
 
-
-a, a:visited{
+a
+{
 	.link(@link-color);
 }
 
-.anchortag{
-	position:absolute;
-	border-bottom: none;
-}
 
-h1{
+h1
+{
 	font-size: 20px;
 	font-family: @header-font;
 }
 
-h2{
+h2
+{
 	font-size: 14px;
 	font-family: @header-font;
 }
 
-ul{
+ul
+{
 	list-style: none;
 	padding: 0px;
 	margin: 0px;
+	margin-bottom: 2em;
 }
 
 //hide mustache templates
-.template{
-	display:none;
-}
+
 
 #menu-container{
 	padding: 10px;

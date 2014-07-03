@@ -15,7 +15,7 @@ function parse(_yaml) {
 
 	UI.log.appendMessage("Parsing YAML");
 	_yaml = injectEditorProperties(_yaml);
-
+	console.log(_yaml);
 
 	try {
 		data = jsYAML.safeLoad(_yaml);
@@ -41,6 +41,7 @@ function injectEditorProperties(_yaml) {
 	var regionKeywords = _(language.regionTypes).pluck("keyword");
 
 	regionKeywords = "(?:" + regionKeywords.join("|") + ")";
+	console.log(regionKeywords);
 	var mapPattern = new RegExp(regionKeywords+":\\s*$");
 
 	var firstLine;

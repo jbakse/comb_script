@@ -18,14 +18,7 @@
 
 	<div id="content">
 		<div id="menu-container">
-			<h1>Classes</h1>
-			<ul id="template-menu">
-				{{#regionTypes}}
-				<li><a href="#{{class}}">{{class}}</a></li>
-				{{/regionTypes}}
-			</ul>
-			<br/>
-			<h1>Examples?</h1>
+			<h1>Examples</h1>
 			<ul>
 				<li><a href="#">Basics</a></li>
 				<li><a href="#">Booleans</a></li>
@@ -33,16 +26,24 @@
 				<li><a href="#">SVGs</a></li>
 				<li><a href="#">Exporting</a></li>
 			</ul>
+
+			<h1>Classes</h1>
+			<ul id="template-menu">
+				{{#regionTypes}}
+				<li><a href="#{{class}}">{{class}}</a></li>
+				{{/regionTypes}}
+			</ul>
 		</div>
+
+
 		<div id="detail-container">
 			<ul id="template-regionTypes">
 				{{#regionTypes}}
-				<a class="anchortag" id="{{class}}"></a>
-				<li class="region-type">
+				<li class="region-type" id="{{class}}">
 					<h1>{{class}}</h1>
-					{{#extends}}
-					<div class="region-extends">extends: <a href="#{{extends}}">{{extends}}</a></div>
-					{{/extends}}
+
+					{{#keyword}}<div class="region-keyword">keyword: {{keyword}}</div>{{/keyword}}
+					{{#extends}}<div class="region-extends">extends: <a href="#{{extends}}">{{extends}}</a></div>{{/extends}}
 					<div class="region-description">{{{description}}}</div>
 					
 					{{#required_properties.length}}
@@ -78,7 +79,7 @@
 		</div>
 	</div>
 
-	<div id = "template-property" class="template">
+	<div id = "template-property" class="hidden">
 		<li>
 			<div class="property-name">{{keyword}}</div>
 			<div class="description">{{{description}}}</div>
