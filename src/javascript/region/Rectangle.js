@@ -11,6 +11,7 @@ module.exports = Rectangle;
 function Rectangle(_data, _parent) {
 	Region.call(this, _data, _parent);
 	this.type = "Rectangle";
+	this.isShape = true;
 	_.extend(this.typeProperties.boundsStyle, {
 		strokeColor: '#888'
 	});

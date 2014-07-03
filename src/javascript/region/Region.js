@@ -4,7 +4,7 @@
 var _ = require('underscore');
 var paperUtil = require('../paper_util.js');
 var util = require('../util.js');
-
+var settings = require('../settings.js');
 var regionTypes = require('./regionTypes.js');
 var Context = require('../Context.js');
 
@@ -39,7 +39,7 @@ function Region(_parent) {
 	this.previewBoundsGroup = null;
 	this.previewPositionGroup = null;
 
-
+	this.isShape = false;
 
 	this.typeProperties.boundsStyle = {
 		strokeWidth: 1,
@@ -229,14 +229,16 @@ Region.prototype.preview = function(_parentContext) {
 	// bounds
 	var bounds = this.drawBounds(context.bounds);
 	bounds.transform(context.matrix);
-	bounds.style = this.typeProperties.boundsStyle;
+	// bounds.style = this.typeProperties.boundsStyle;
 	this.previewBoundsGroup.addChild(bounds);
 
 	// pos
 	var position = this.drawPosition(context.position);
 	position.transform(context.matrix);
-	position.style = this.typeProperties.positionStyle;
+	// position.style = this.typeProperties.positionStyle;
 	this.previewPositionGroup.addChild(position);
+
+	this.setStyle("default");
 
 	// children
 	this.previewChildren(context);
@@ -321,53 +323,67 @@ Region.prototype.onMouseLeave = function() {
 };
 
 Region.prototype.setStyle = function(_style, _recursive) {
-	if (_style === "selected") {
-		if (this.previewBoundsGroup) {
-			this.previewBoundsGroup.style = {
-				strokeColor: "red",
-				strokeWidth: 1
-			};
-		}
-		if (this.previewPositionGroup) {
-			this.previewPositionGroup.style = {
-				strokeColor: "red"
-			};
-		}
+	_style = _style || "default";
+	console.log(_style);
+	if (!settings.styles.bounds[_style]) return;
+
+	if (this.isShape) {
+		this.previewBoundsGroup.style = settings.styles.shape[_style];
+	} else {
+		this.previewBoundsGroup.style = settings.styles.bounds[_style];
 	}
-	else if (_style === "hover") {
-		if (this.previewBoundsGroup) {
-			this.previewBoundsGroup.style = {
-				strokeColor: "black",
-				strokeWidth: 1
-			};
-		}
-		if (this.previewPositionGroup) {
-			this.previewPositionGroup.style = {
-				strokeColor: "red"
-			};
-		}
-	}
-	else if (_style === "key") {
-		if (this.previewBoundsGroup) {
-			this.previewBoundsGroup.style = {
-				strokeColor: "red",
-				strokeWidth: 3
-			};
-		}
-		if (this.previewPositionGroup) {
-			this.previewPositionGroup.style = {
-				strokeColor: "red"
-			};
-		}
-	}
-	else {
-		if (this.previewBoundsGroup) this.previewBoundsGroup.style = this.typeProperties.boundsStyle;
-		if (this.previewPositionGroup) this.previewPositionGroup.style = this.typeProperties.positionStyle;
-	}
+	this.previewPositionGroup.style = settings.styles.position[_style];
 
 	if (_recursive) {
 		_(this.children).invoke('setStyle', _style, true);
 	}
+
+
+	// if (_style === "selected") {
+	// 	if (this.previewBoundsGroup) {
+	// 		this.previewBoundsGroup.style = {
+	// 			strokeColor: "red",
+	// 			strokeWidth: 1
+	// 		};
+	// 	}
+	// 	if (this.previewPositionGroup) {
+	// 		this.previewPositionGroup.style = {
+	// 			strokeColor: "red"
+	// 		};
+	// 	}
+	// }
+	// else if (_style === "hover") {
+	// 	if (this.previewBoundsGroup) {
+	// 		this.previewBoundsGroup.style = {
+	// 			strokeColor: "black",
+	// 			strokeWidth: 1
+	// 		};
+	// 	}
+	// 	if (this.previewPositionGroup) {
+	// 		this.previewPositionGroup.style = {
+	// 			strokeColor: "red"
+	// 		};
+	// 	}
+	// }
+	// else if (_style === "key") {
+	// 	if (this.previewBoundsGroup) {
+	// 		this.previewBoundsGroup.style = {
+	// 			strokeColor: "red",
+	// 			strokeWidth: 3
+	// 		};
+	// 	}
+	// 	if (this.previewPositionGroup) {
+	// 		this.previewPositionGroup.style = {
+	// 			strokeColor: "red"
+	// 		};
+	// 	}
+	// }
+	// else {
+	// 	if (this.previewBoundsGroup) this.previewBoundsGroup.style = this.typeProperties.boundsStyle;
+	// 	if (this.previewPositionGroup) this.previewPositionGroup.style = this.typeProperties.positionStyle;
+	// }
+
+
 
 };
 

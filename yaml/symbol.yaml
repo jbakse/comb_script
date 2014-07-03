@@ -1,5 +1,5 @@
 properties:
-    name: simple.yaml
+    name: symbol.yaml
 
 library:
     - &insetBox

@@ -123,7 +123,6 @@ function Preview() {
 	this.doc = null;
 
 	
-
 	var self = this;
 	$.Topic("UI/command/toggleViewPreview").subscribe(
 		function(_state) {
@@ -201,30 +200,34 @@ Preview.prototype._generate = function() {
 	// set up default position
 	var context = settings.getRootContext();
 
-	this.buildLayer.remove();
-	this.buildLayer = new paper.Layer();
+	// this.buildLayer.remove();
+	// this.buildLayer = new paper.Layer();
 
-	this.exportLayer.remove();
-	this.exportLayer = new paper.Layer();
+	// this.exportLayer.remove();
+	// this.exportLayer = new paper.Layer();
 
-	this.previewLayer.remove();
-	this.previewLayer = new paper.Layer();
+	// this.previewLayer.remove();
+	// this.previewLayer = new paper.Layer();
 
-
+	console.log("bs", settings.buildStyle);
 	paper.project.activeLayer = this.buildLayer;
 	this.doc.build(context);
-	this.buildLayer.style = {
-		strokeScaling: false,
-		fillColor: new paper.Color(0, 1, 1, 0.5)
-	};
+	this.buildLayer.style = settings.buildStyle;
+	// this.buildLayer.style = {
+	// 	strokeScaling: false,
+	// 	fillColor: new paper.Color(0, 1, 1, 0.5)
+	// };
 
 	paper.project.activeLayer = this.exportLayer;
 	this.doc.build(context);
-	this.exportLayer.style = {
-		strokeScaling: false,
-		strokeColor: new paper.Color(0, 0, 1),
-		strokeWidth: .5
-	};
+	this.exportLayer.style = settings.exportStyle;
+
+
+	// this.exportLayer.style = {
+	// 	strokeScaling: false,
+	// 	strokeColor: new paper.Color(0, 0, 1),
+	// 	strokeWidth: .5
+	// };
 
 
 	paper.project.activeLayer = this.previewLayer;
@@ -277,6 +280,7 @@ Menu.prototype.addToggleCommand = function(_element, _command){
 			$.Topic(_command).publish(state);
 		}
 	);
+	$.Topic(_command).publish(!$(_element).hasClass("off"));
 };
 
 
@@ -409,7 +413,6 @@ Log.prototype.appendError = function() {
 };
 
 Log.prototype.appendParseError = function(_YAMLException) {
-	// console.log(_YAMLException);
 	$("#log").append(this.parseErrorTemplate(_YAMLException));
 	//todo add click to this
 };
