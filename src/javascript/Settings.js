@@ -4,7 +4,7 @@ var _ = require('underscore');
 
 var Context = require('./Context.js');
 
-module.exports.fileURL = "../yaml/symbol.yaml";
+module.exports.fileURL = "../yaml/styletest.yaml";
 
 module.exports.previewCanvasWidth = 1200;
 module.exports.previewCanvasHeight = 1200;
@@ -25,6 +25,13 @@ module.exports.getRootContext = function() {
 	);
 };
 
+//colors
+var shapeFillColor = new paper.Color("#d0f06e");
+shapeFillColor.alpha=.5;
+
+var boundsOutlineColor = new paper.Color("#3ee1ff");
+var highlightColor = new paper.Color("#f92772");
+
 
 var defaultStyle = {
 	strokeScaling: false,
@@ -42,7 +49,9 @@ defaultStyles.ghost = _(defaultStyle).clone();
 defaultStyles.hover = _(defaultStyle).clone();
 
 var buildStyle = module.exports.buildStyle = _(defaultStyle).clone();
-_(buildStyle).extend({});
+_(buildStyle).extend({
+	fillColor: shapeFillColor
+});
 
 var exportStyle = module.exports.exportStyle = _(defaultStyle).clone();
 _(exportStyle).extend({});
@@ -50,25 +59,26 @@ _(exportStyle).extend({});
 
 styles.bounds = $.extend(true, {}, defaultStyles);
 _(styles.bounds.default).extend({
-	strokeColor: "cyan"
+	strokeColor: boundsOutlineColor
 });
 _(styles.bounds.selected).extend({
-	strokeColor: "red",
+	strokeColor: highlightColor,
 	strokeWidth: 1
 });
+
 _(styles.bounds.key).extend({
-	strokeColor: "red",
+	strokeColor: highlightColor,
 	strokeWidth: 3
 });
 _(styles.bounds.ghost).extend({});
 _(styles.bounds.hover).extend({
-	strokeColor: "red"
+	strokeColor: boundsOutlineColor,
+	strokeWidth: 3
 });
 
 styles.shape = $.extend(true, {}, styles.bounds);
 _(styles.shape.default).extend({
 	strokeColor: "black",
-	dashArray: undefined
 });
 _(styles.shape.selected).extend({});
 _(styles.shape.key).extend({});
