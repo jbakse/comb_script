@@ -324,7 +324,6 @@ Region.prototype.onMouseLeave = function() {
 
 Region.prototype.setStyle = function(_style, _recursive) {
 	_style = _style || "default";
-	console.log(_style);
 	if (!settings.styles.bounds[_style]) return;
 
 	if (this.isShape) {

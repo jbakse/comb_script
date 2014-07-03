@@ -82,4 +82,3 @@ styles.position.key = _(_(defaultStyle).clone()).extend({});
 styles.position.ghost = _(_(defaultStyle).clone()).extend({});
 styles.position.hover = _(_(defaultStyle).clone()).extend({});
 
-console.log(styles);

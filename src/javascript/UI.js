@@ -87,8 +87,7 @@ Editor.prototype.highlightLines = function(_firstLine, _lastLine, _class) {
 	);
 };
 
-Editor.prototype.gotoLine = function(line, focus)
-{
+Editor.prototype.gotoLine = function(line, focus) {
 
 	this.sendChangeCursorEvents = false;
 	this.editor.gotoLine(line, 1000, true);
@@ -122,7 +121,7 @@ function Preview() {
 
 	this.doc = null;
 
-	
+
 	var self = this;
 	$.Topic("UI/command/toggleViewPreview").subscribe(
 		function(_state) {
@@ -152,7 +151,7 @@ function Preview() {
 		}
 	);
 
-	
+
 
 }
 
@@ -165,19 +164,19 @@ Preview.prototype.init = function(_element) {
 	var drag = false;
 	var lastMouse;
 
-	$(paper.view.element).mousedown( function(_e) {
+	$(paper.view.element).mousedown(function(_e) {
 		drag = true;
 		lastMouse = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);
 	});
 
 
 
-	$(window).mouseup( function(_e) {
+	$(window).mouseup(function(_e) {
 		drag = false;
 	});
 
 
-	$(window).mousemove( function(_e) {
+	$(window).mousemove(function(_e) {
 		if (!drag) return;
 		var thisMouse = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);
 		paper.view.scrollBy(lastMouse.subtract(thisMouse));
@@ -200,43 +199,40 @@ Preview.prototype._generate = function() {
 	// set up default position
 	var context = settings.getRootContext();
 
+	var visible;
+
+	// visible = this.buildLayer.visible;
 	// this.buildLayer.remove();
 	// this.buildLayer = new paper.Layer();
+	// this.buildLayer.visible = visible;
 
+	// visible = this.exportLayer.visible;
 	// this.exportLayer.remove();
 	// this.exportLayer = new paper.Layer();
+	// this.exportLayer.visible = visible;
 
+	// visible = this.previewLayer.visible;
 	// this.previewLayer.remove();
 	// this.previewLayer = new paper.Layer();
+	// this.previewLayer.visible = visible;
 
-	console.log("bs", settings.buildStyle);
+	this.buildLayer.removeChildren();
+	this.exportLayer.removeChildren();
+	this.previewLayer.removeChildren();
+
 	paper.project.activeLayer = this.buildLayer;
 	this.doc.build(context);
 	this.buildLayer.style = settings.buildStyle;
-	// this.buildLayer.style = {
-	// 	strokeScaling: false,
-	// 	fillColor: new paper.Color(0, 1, 1, 0.5)
-	// };
+
 
 	paper.project.activeLayer = this.exportLayer;
 	this.doc.build(context);
 	this.exportLayer.style = settings.exportStyle;
 
-
-	// this.exportLayer.style = {
-	// 	strokeScaling: false,
-	// 	strokeColor: new paper.Color(0, 0, 1),
-	// 	strokeWidth: .5
-	// };
-
-
 	paper.project.activeLayer = this.previewLayer;
 	this.doc.preview(context);
 
-	// this.previewLayer.position.x = settings.previewCanvasWidth * 0.5;
-	// this.previewLayer.position.y = settings.previewCanvasHeight * 0.5;
-
-	paper.view.center = new paper.Point(0,0);
+	paper.view.center = new paper.Point(0, 0);
 	paper.view.update();
 
 };
@@ -262,7 +258,7 @@ Menu.prototype.init = function(_element) {
 	this.addToggleCommand("#button-view-export", "UI/command/toggleViewExport");
 };
 
-Menu.prototype.addClickCommand = function(_element, _command){
+Menu.prototype.addClickCommand = function(_element, _command) {
 	$(_element).click(
 		function() {
 			$.Topic(_command).publish();
@@ -270,17 +266,18 @@ Menu.prototype.addClickCommand = function(_element, _command){
 	);
 };
 
-Menu.prototype.addToggleCommand = function(_element, _command){
-	var state = true;
+Menu.prototype.addToggleCommand = function(_element, _command) {
+	var state = !$(_element).hasClass("off");
 	$(_element).append('<img class="strike-through" src="images/menu_icons/icon_off.svg">');
 	$(_element).click(
 		function() {
 			state = !state;
-			$(_element).toggleClass("off", state === false);
+			$(_element).toggleClass("off", !state);
 			$.Topic(_command).publish(state);
 		}
 	);
-	$.Topic(_command).publish(!$(_element).hasClass("off"));
+
+	$.Topic(_command).publish(state);
 };
 
 
