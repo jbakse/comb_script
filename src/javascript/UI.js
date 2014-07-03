@@ -171,12 +171,14 @@ Preview.prototype.init = function(_element) {
 		lastMouse = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);
 	});
 
-	$(paper.view.element).mouseup( function(_e) {
+
+
+	$(window).mouseup( function(_e) {
 		drag = false;
 	});
 
 
-	$(paper.view.element).mousemove( function(_e) {
+	$(window).mousemove( function(_e) {
 		if (!drag) return;
 		var thisMouse = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);
 		paper.view.scrollBy(lastMouse.subtract(thisMouse));
