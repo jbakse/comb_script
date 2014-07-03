@@ -1,31 +1,29 @@
 {
-  "name": "svgTest",
+  "name": "Comb_Script",
   "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "-",
+  "description": "The BEST Way to Design a Comb.",
+  "main": "dist/main.js",
+  "author": "Justin Bakse",
   "devDependencies": {
-    "gulp-watch": "^0.6.6-1",
     "gulp-livereload": "^2.1.0",
-    "gulp-browserify": "^0.5.0",
     "coffeeify": "^0.6.0",
     "gulp-plumber": "~0.5.6",
-    "gulp-rename": "^1.2.0",
     "gulp": "^3.8.1",
+    "gulp-rename": "^1.2.0",
     "gulp-less": "^1.2.4",
-    "js-yaml": "^3.0.2",
     "gulp-concat": "^2.2.0",
     "gulp-yml": "^0.1.1",
-    "event-stream": "^3.1.5",
     "gulp-insert": "^0.4.0",
-    "gulp-util": "^2.2.19",
-    "mustache": "^0.8.2"
+    "mustache": "^0.8.2",
+    "underscore": "^1.6.0",
+    "browserify": "^4.2.0",
+    "vinyl-source-stream": "^0.1.1",
+    "js-yaml": "^3.0.2",
+    "gulp-util": "^2.2.19"
   },
-  "dependencies": {
-    "underscore": "^1.6.0"
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jbakse/comb_script.git"
   }
 }

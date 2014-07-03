@@ -1,24 +1,41 @@
+'use strict';
+
 // Include Gulp
 var gulp = require('gulp'); 
 
-// Include Plugins
-// var plumber = require('gulp-plumber');
-var watch = require('gulp-watch');
 var rename = require('gulp-rename');
 var plumber = require('gulp-plumber');
 var livereload = require('gulp-livereload');
-var browserify = require('gulp-browserify');
 var less = require('gulp-less');
+var yaml    = require('gulp-yml');
+var concat = require('gulp-concat');
+var insert = require('gulp-insert');
+var rename = require("gulp-rename");
+
+
+var browserify = require('browserify');
+var source = require('vinyl-source-stream');
+
+gulp.task('browserify', function() {
+	browserify('./src/javascript/main.js').bundle({debug: true})
+		.pipe(source('main.js'))
+		.pipe(gulp.dest('./build/javascript/'))
+		.pipe(livereload())
+		;
+
+	// browserify('./src/javascript/doc.js').bundle({debug: true})
+	// 	.pipe(source('doc.js'))
+	// 	.pipe(gulp.dest('./build/javascript/'))
+	// 	.pipe(livereload())
+	// 	;
+});
+
 
 gulp.task('javascript', function() {
 	return gulp
 		.src('./src/javascript/main.js', {read: false})
 		.pipe(plumber())
-		.pipe( browserify({
-			debug: true,
-			// transform: ['coffeeify'],
-			// extensions: ['.js']
-		}))
+		.pipe( browserify({debug: true	}))
 		.pipe(rename('app.js'))
 		.pipe(gulp.dest('./build/javascript/'))
 		.pipe(livereload())
@@ -71,10 +88,7 @@ gulp.task('images', function() {
 });
 
 
-var yaml    = require('gulp-yml');
-var concat = require('gulp-concat');
-var insert = require('gulp-insert');
-var rename = require("gulp-rename")
+
 
 gulp.task('language', function() {
 	console.log("try yamling");
@@ -95,8 +109,8 @@ gulp.task('language', function() {
 //Watch Files For Changes
 gulp.task('watch', function() {
 
-	// gulp.watch('./src/javascript/**/*.js', ['javascript']);
-	gulp.watch('./src/javascript/**/*.js', ['javascript-doc']);
+	gulp.watch('./src/javascript/**/*.js', ['browserify']);
+	// gulp.watch('./src/javascript/**/*.js', ['javascript-doc']);
 	gulp.watch('./src/language/*.yaml', ['language']);
 	gulp.watch('./src/style/*.less', ['style', 'styledocs']);
 	gulp.watch('./src/*.html', ['html']);
@@ -107,5 +121,5 @@ gulp.task('watch', function() {
 
 
 // Default Task
-gulp.task('default', ['javascript', 'javascript-doc', 'language', 'style', 'styledocs', 'html', 'images', 'watch']);
+gulp.task('default', ['browserify', 'language', 'style', 'styledocs', 'html', 'images', 'watch']);
 

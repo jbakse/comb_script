@@ -1,23 +1,8 @@
-+-	export svg
-
-+-	refactor UI/main
-+-	factor main into a class
-+-	settings.js hold color paletes defaults etc.
-
-+-	selection mirroing stuff
-	+-	autobuild
-	+-	in preview all instances of a "symbol" should light at once
-	+-	injector can't mark up "symbol" "calls"... at least skip em
-
-	+-	make less glitch
-		+-	hover/vs selected behavior
-
-+-	search tree buisness should be improved. keep a datastruture that makes looking up nodes by line range super easier
-
-
 @---	Finish Laguange Files for implemented classes.
 @--	Write some general docs.
 +--	Check to see if code can be cleaned up with use of default values.
+
+----- Kill Greg's junk in version control?
 
 --	consider how language works
 	-	write the context derive / how regions work section of the docs
@@ -33,78 +18,96 @@
 	-	language
 		+-	language.js file that has the lists of regions types and their params etc. helpful in reporting issues after parse and might be tied into documentation system
 		+-	having default objects could be useful in many places. for example a default document could have properties for most settings which could be overridden by a user document/ An empty children property that gets overridden would eliminate the need to check if children exists. in general if decended from defaults, checks for existing properties would be handled. region defaults etc.
+		-	lets make a language class, and maybe consider the language yaml-json data private to that class
 
-	-	lets make a language class, and maybe consider the language yaml-json data private to that class
-
-	-	region grid should probably just generate a bunch of children, rather than one and overriding how drawing is done... except that is weird too because it will still have to override how drawing is done to tell each child where to draw. It might be that we need to just create all the preview/build shapes at construction.. ugh, how would that play with iso mode, maybe it would be best to generate the contexts and store in children at build, but not generate the vectors until preview/build is called
+	-	Region Grid
+		-	region grid should probably just generate a bunch of children, rather than one and overriding how drawing is done... except that is weird too because it will still have to override how drawing is done to tell each child where to draw. It might be that we need to just create all the preview/build shapes at construction.. ugh, how would that play with iso mode, 
+		
 
 
 	-	injector
-		-	use indentation and child navigation to find end of region lines, get better data stored in editor properties to make selection code and display clearer
+		+-	use indentation and child navigation to find end of region lines, get better data stored in editor properties to make selection code and display clearer
 	
-	-	kind of hate the issue where selecting a shape causes line to change, line change triggers non user initiated event.
+	-	symmetry
+		-	kind of hate the issue where selecting a shape causes line to change, line change triggers non user initiated event.
+		-	might be improved by having idle, selected, and selected-key (the one you actualy clicked)
 
-	-	lets move away from having regions/ellipses/rects etc have their own color, and more towards having a global colorscheme that they use. also consider colorcoding booelans. 
-		-	yeah the set style funciton is a mess
-		
+	-	drawing
+		-	lets move away from having regions/ellipses/rects etc have their own color, and more 	towards having a global colorscheme that they use. also consider colorcoding booelans. 
+		-	yeah the set style function is a mess
+		-	always draw the frame/build/export allow viewing in window
+		-	Looks like Region, might just be a `paper.Group` could potentially rebuild main "scene graph" approach with groups. Might be much better. (i'm thinking that there are reasons this wouldn't actually work, and anyway would be too major to be worth it)
+		-	Might at least be worth looking at having the tree represented in groups so they export nested?
+		-- maybe it would be best to generate the contexts and store in children at build, but not generate the vectors until preview/build is called
+		-- but actually? maybe we can call preview just once and not ever draw again (we are redrawing now for export, but that might not be needed with new layer system, also we could create a whole new document if we need to redraw to a different target for export)
+
+		- Styles need for preview
+			Shape
+			Position (registration)
+			Bounds (frame)
+			*
+			Selected (the instances the editor is on)
+			Selected Key (the one that was clicked)
+			Ghost (shapes outside the selected tree)
+			Hover	(mouse is over)
+			Idle (normal)
+
+			Can these cascade a bit like css?
+
+
+
+@	Features
+	-	ghost unselected regions
+	
+	-	Document
+		-	Implement settings/prefs as properties (different key for not regionlike things?) on document (maybe using load on top of default document)
+
+	-	import svg
+		+-	basic
+		-	scale doc to bounds, scale art to bounds
+		-	greg font / text region
+
+
+
+	-	pan/zoom
+
+
+	-	ui overlay/inspector
+		+- clickable bread crumb
+		+- show useful info
+		- fix zero point
+		- fix dimension units
+
+	-       iso mode?
+
+	- 	laser export
+		-	export for lasercutter (auto layout and exporitng with defined style)
+		-	asign output tags to shapes (kind of like a css class) to determine how they are output in build/export (outputGroup: cut | etch)
+
+
+
+@	Low Priority Features
+	-	Documentation Integration
 	-	can we switch the lib folders to npm --save-dev installs and browserify in things instead of having them at the top of the page? is that even a good idea?
 
 	-	Log should route main appends thorugh single depend to DRY
 	-	revisit bindall to make event handlers not require bind on call
 		-	naming convention for handlers (onBlahBlah)?
 
-+-	clickable breadcrumbs in inspector
 
-+---	toggle visual build/preview modes
--	ghost unselected regions
+	-	text labels in preview? this even worth doing/ cool auto docmentation illustration generation
 
-
---	import svg
-	+-	basic
-	-	scale doc to bounds, scale art to bounds
-	-	greg font / text region
+	-	save and load file? cant save and load from harddrive unless an app, consider dropbox/drive integration? consider storing files on server? **COPY PASTE WORKS FOR NOW, SADLY**
 
 
-
--	pan/zoom
-
-
--	ui overlay/inspector
-	+- clickable bread crumb
-	+- show useful info
-	- fix zero point
-	- fix dimension units
-
--       iso mode?
-
-
-+-	make a nice ul based UI logging system
+	-	expressions in attributes
+		- units: 2in, 2cm
+		- percents: 30%
+		- math: 2+2in
+		- access exiting variables: bounds.left + 20
 
 
 
--	export for lasercutter (auto layout and exporitng with defined style)
-
--	text labels in preview? this even worth doing/ cool auto docmentation illustration generation
-
--	asign output tags to shapes (kind of like a css class) to determine how they are output in build/export (outputGroup: cut | etch)
-
--	save and load file? cant save and load from harddrive unless an app, consider dropbox/drive integration? consider storing files on server?
-
-
--	Looks like Region, might just be a paper.Group could potentially rebuild main "scene graph" approach with groups. Might be much better. (i'm thinking that there are reasons this wouldn't actually work, and anyway would be too major to be worth it)
-
-
-- Styles need for preview
-	Bounds
-	Shape
-	Position (registration)
-	*
-	Selected
-	Ghost
-	Hover
-	Idle
-
-	Can these cascade a bit like css?
 
 Design Decisions
 -	size never considers children, only parent context
@@ -122,8 +125,7 @@ OVERHAUL Context system
 =====
 +-	change context to be current matrix relative always. 
 +-	drop the position from context (thats part of translate)
--	merge context into region? maybe think of context as a light version of the region, passed to children with only the information they should have access too
--	have a "cascading" properties in the context for variables, etc.
++-	merge context into region? maybe think of context as a light version of the region, passed to children with only the information they should have access too
 
 +--	should preview and draw need to transform their drawing or should that be handled upstream?
 +--	get preview and draw working
@@ -134,9 +136,9 @@ OVERHAUL Context system
 
 UI
 =====
----	rollover inspection 
--	zoom/pan
--	the svg output should be its own paper.project or paper.view probably
++---	rollover inspection 
++-	zoom/pan
++-	the svg output should be its own paper.project or paper.view probably
 
 
 Shapes
