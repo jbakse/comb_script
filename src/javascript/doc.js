@@ -41,4 +41,17 @@ $(function() {
 	$('pre').addClass('prettyprint');
 	prettyPrint();
 
+
+	//enable property clicking
+
+	//close inheretid properties
+	$(".properties.inherited-properties li").addClass("closed");
+
+	//make properties clickable
+	$(".property-name").css("cursor", "pointer");
+	$(".property-name").click(
+		function() {
+			$(this).parent().toggleClass("closed");
+		}
+	);
 });

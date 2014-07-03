@@ -3,10 +3,12 @@
 @doc-property: #ff2259;
 @link-color: #228fff;
 @light-text-color: rgb(121, 121, 121);
-
-@menu-color: rgb(221, 221, 221);
 @bg-color: rgb(247, 247, 247);
 @code-color: rgb(235, 235, 235);
+
+@header-font: 'Arvo', serif;
+@body-font: 'Oxygen', sans-serif;
+@monospace-font: Monaco, monospace;
 
 /* Micro ClearFix Mixin */
 .clearfix{
@@ -15,41 +17,46 @@
   &:after{ clear: both; }
 }
 
-
-body{
-	font-family: 'Arvo', serif;
-	background-color: @bg-color;
-	font-size: 14px;
-	margin: 0px;
+.link(@baseColor){
+	&:hover{
+		background-color: @baseColor;
+		color:white;
+		//padding-bottom: 2px;
+	}
+	color: @baseColor;
+	border-bottom: 1px solid @baseColor;
+	text-decoration: none;
+	padding: 2px;
+	padding-bottom: 0px;
+	font-weight: bold;
 }
 
-#content{
-	width: 800px;
+body{
+	font-family: @body-font;
+	background-color: @bg-color;
+	font-size: 16px;
+	line-height: 25px;
+	margin: 0px;
 }
 
 
 a, a:visited{
-	color: @link-color;
-	text-decoration: none;
-	padding: 2px;
-}
-
-a:hover{
-	background-color: @link-color;
-	color: white;
-
+	.link(@link-color);
 }
 
 .anchortag{
 	position:absolute;
+	border-bottom: none;
 }
 
 h1{
 	font-size: 20px;
+	font-family: @header-font;
 }
+
 h2{
-	font-size: 16px;
-	font-weight: normal;
+	font-size: 14px;
+	font-family: @header-font;
 }
 
 ul{
@@ -58,49 +65,56 @@ ul{
 	margin: 0px;
 }
 
-#menu-container{
-	//float: left;
-	// background-color: @menu-color;
-	width: 200px;
-	padding: 10px;
-	height: 900px;
+//hide mustache templates
+.template{
+	display:none;
+}
 
+#menu-container{
+	padding: 10px;
 	position: fixed;
 	top:0px;
 	left:0px;
 	li{
 		margin-bottom: 5px;
 	}
-	//color:white;
 }
 
 #detail-container{
 	width: 550px;
-	margin-left: 220px;
-
+	margin-left: 190px;
 	#template-regionTypes{
 		.region-type{
-				padding: 10px;
-				padding-bottom: 50px;
-				border-bottom: 1px dashed @light-text-color;
+			padding-bottom: 30px;
+			padding-top: 10px;
 
+			.region-extends{
+				margin-bottom: 10px;
+			}
+			.region-description{
+				margin-bottom: 40px;
+			}
 			.properties{
+				margin-bottom: 50px;
 				li{
-					
-
 					margin-bottom: 15px;
 					padding: 0px;
 					border-bottom: 1px solid @code-color;
 					.property-name{
-						color: @doc-property;
-						margin-bottom: 15px;
-						display: block;
+						margin-bottom: 10px;
+						//padding-bottom: 30px;
+						.link(@doc-property);
+						margin-left: -2px;
+						display: inline-block;
 					}
+				}
+				.closed{
 					.description{
-						display: block;
+						display:none;
 					}
-
-
+					dl{
+						display:none;
+					}
 				}
 			}
 		}
@@ -122,19 +136,22 @@ dd{
 	color: @light-text-color;
 	float:left;
 	margin-right: 15px;
+	font-weight: bold;
+	font-size: 14px;
 }
 
-	pre{
-		font-family: Monaco, monospace;
-		background-color: @code-color;
-		color: @light-text-color;
-		padding: 10px;
+pre{
+	font-family: @monospace-font;
+	font-size: 14px;
+	background-color: @code-color;
+	color: @light-text-color;
+	padding: 10px;
 
-		border-left: 3px solid #C00;
-		padding-left: 10px;
-		white-space: pre-wrap;       /* css-3 */
-		white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-		white-space: -pre-wrap;      /* Opera 4-6 */
-		white-space: -o-pre-wrap;    /* Opera 7 */
-		word-wrap: break-word;       /* Internet Explorer 5.5+ */
-	}
+	 border-left: 3px solid darken(@code-color, 30);
+	padding-left: 10px;
+	white-space: pre-wrap;       /* css-3 */
+	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}

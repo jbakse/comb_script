@@ -10,6 +10,7 @@
 	<script src="javascript/doc.js"></script>
 
 	<link href='http://fonts.googleapis.com/css?family=Arvo:400,700,400italic' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="css/doc.css">
 
 </head>
@@ -23,13 +24,14 @@
 				<li><a href="#{{class}}">{{class}}</a></li>
 				{{/regionTypes}}
 			</ul>
-			<h1>Examples</h1>
+			<br/>
+			<h1>Examples?</h1>
 			<ul>
-				<li>Basics</li>
-				<li>Booleans</li>
-				<li>Children</li>
-				<li>SVGs</li>
-				<li>Exporting</li>
+				<li><a href="#">Basics</a></li>
+				<li><a href="#">Booleans</a></li>
+				<li><a href="#">Children</a></li>
+				<li><a href="#">SVGs</a></li>
+				<li><a href="#">Exporting</a></li>
 			</ul>
 		</div>
 		<div id="detail-container">
@@ -37,11 +39,11 @@
 				{{#regionTypes}}
 				<a class="anchortag" id="{{class}}"></a>
 				<li class="region-type">
-					</a><h1>{{class}}</h1>
+					<h1>{{class}}</h1>
 					{{#extends}}
-					<span>extends: <a href="#{{extends}}">{{extends}}</a></span>
+					<div class="region-extends">extends: <a href="#{{extends}}">{{extends}}</a></div>
 					{{/extends}}
-					<p>{{{description}}}</p>
+					<div class="region-description">{{{description}}}</div>
 					
 					{{#required_properties.length}}
 						<h2>Required Properties</h2>
@@ -76,10 +78,10 @@
 		</div>
 	</div>
 
-	<div id = "template-property">
+	<div id = "template-property" class="template">
 		<li>
-			<span class="property-name">{{keyword}}</span>
-			<span class="description">{{{description}}}</span>
+			<div class="property-name">{{keyword}}</div>
+			<div class="description">{{{description}}}</div>
 			<dl>
 				<dt>type:</dt>
 				<dd>{{type}}</dd>
