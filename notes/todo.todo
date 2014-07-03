@@ -2,7 +2,6 @@
 @--	Write some general docs.
 +--	Check to see if code can be cleaned up with use of default values.
 
------ Kill Greg's junk in version control?
 
 --	consider how language works
 	-	write the context derive / how regions work section of the docs

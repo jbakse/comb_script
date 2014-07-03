@@ -11,8 +11,7 @@ var yaml = require('gulp-yml');
 var concat = require('gulp-concat');
 var insert = require('gulp-insert');
 var browserify = require('gulp-browserify');
-// var watch = require('gulp-watch');
-var wait = require('gulp-wait');
+
 
 gulp.task('javascript', function() {
 	return gulp
@@ -36,7 +35,6 @@ gulp.task('less', function() {
 		.pipe(plumber())
 		.pipe(less())
 		.pipe(gulp.dest('./build/css/'))
-		.pipe(wait(1000))
 		.pipe(livereload())
 		;
 });

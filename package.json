@@ -18,9 +18,7 @@
     "underscore": "^1.6.0",
     "js-yaml": "^3.0.2",
     "gulp-util": "^2.2.19",
-    "gulp-browserify": "^0.5.0",
-    "gulp-watch": "^0.6.8",
-    "gulp-wait": "0.0.2"
+    "gulp-browserify": "^0.5.0"
   },
   "dependencies": {},
   "repository": {
