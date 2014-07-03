@@ -138,22 +138,23 @@ Controller.prototype.rebuild = function() {
 Controller.prototype.exportSVG = function() {
 	UI.log.appendMessage("Exporting SVG");
 
+	exportWidth = this.doc.properties.width;
+	exportHeight = this.doc.properties.height;
+
 	var context = settings.getRootContext();
-	context.matrix.translate(settings.exportWidth * 0.5, settings.exportHeight * 0.5);
-	context.matrix.scale(this.doc.properties.scale || 1);
+	// context.matrix.translate(exportWidth * 0.5, exportHeight * 0.5);
+	// context.matrix.scale(this.doc.properties.scale || 1);
 
 	var currentProject = paper.project;
 
-	var exportProject = new paper.Project($('<canvas width="' + settings.exportWidth + '" height="' + settings.exportHeight + '" />').get(0));
+	var exportProject = new paper.Project($('<canvas width="' + exportWidth + '" height="' + exportHeight + '" />').get(0));
 	exportProject.activate();
 
 
 	this.doc.build(context);
-	exportProject.activeLayer.style = {
-		strokeColor: "blue",
-		strokeWidth: 1,
-		fillColor: null
-	};
+	exportProject.activeLayer.style = settings.exportStyle;
+	exportProject.activeLayer.translate(exportWidth * 0.5, exportHeight * 0.5);
+
 	var svg = exportProject.exportSVG({
 		asString: true
 	});

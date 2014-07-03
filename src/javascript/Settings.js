@@ -8,8 +8,8 @@ module.exports.fileURL = "../yaml/symbol.yaml";
 
 module.exports.previewCanvasWidth = 1200;
 module.exports.previewCanvasHeight = 1200;
-module.exports.exportWidth = 400;
-module.exports.exportHeight = 400;
+// module.exports.exportWidth = 400;
+// module.exports.exportHeight = 400;
 
 module.exports.inspectOnHover = false;
 
