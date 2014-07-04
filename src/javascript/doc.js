@@ -38,7 +38,7 @@ $(function() {
 	$('#template-menu').html(menuRendered);
 
 
-	$('pre').addClass('prettyprint');
+	$('code, pre').addClass('prettyprint');
 	prettyPrint();
 
 

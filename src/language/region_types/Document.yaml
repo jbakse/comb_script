@@ -5,6 +5,7 @@ Document:
     description: |
         Parent region of the entire document.
         There can only be one document. If no document is specified one will be created automatically.
+
         <pre>
         properties:
             name: drawbot.yaml
@@ -20,9 +21,9 @@ Document:
 
     properties:
         -   keyword: name
-            description: "The name for the document. Names are not required, but will be used when exporting."
+            description: The name for the document. Names are not required, but will be used when exporting.
             type: string
-            default: document.yaml
+            default: document
 
         -   keyword: width
             description: The width of the document bounds.

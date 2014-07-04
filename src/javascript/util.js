@@ -8,6 +8,7 @@ module.exports.downloadDataUri = function(_filename, _data) {
 	var link = document.createElement("a");
 	link.download = _filename;
 	link.href = _data;
+	console.log(link);
 	link.click();
 };
 

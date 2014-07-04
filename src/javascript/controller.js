@@ -152,7 +152,9 @@ Controller.prototype.exportSVG = function() {
 	exportProject.activeLayer.translate(exportWidth * 0.5, exportHeight * 0.5);
 	var svg = exportProject.exportSVG({ asString: true});
 
-	util.downloadDataUri('export.svg', 'data:image/svg+xml;base64,' + btoa(svg));
+	var blob = new Blob([svg], {type: 'image/svg+xml'});
+	var svgURL = URL.createObjectURL(blob);
+	util.downloadDataUri(this.doc.properties.name+'.svg', svgURL);
 	
 	currentProject.activate();
 };

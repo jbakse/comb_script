@@ -153,7 +153,10 @@ dd
 	color: @light-text-color;
 }
 
-pre{
+pre
+{
+	display: block;
+
 	color: @light-text-color;
 	font-size: 14px;
 	font-family: @monospace-font;
@@ -168,4 +171,16 @@ pre{
 	white-space: -pre-wrap;      /* Opera 4-6 */
 	white-space: -o-pre-wrap;    /* Opera 7 */
 	word-wrap: break-word;       /* Internet Explorer 5.5+ */
+
+	white-space: pre;
+}
+
+code 
+{
+	color: @light-text-color;
+	padding: 2px 6px;
+	font-size: 14px;
+	font-family: @monospace-font;
+	background-color: @code-bg-color;
+	border: 1px solid darken(@code-bg-color, 10);
 }
