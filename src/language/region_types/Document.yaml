@@ -1,5 +1,5 @@
 Document:
-    keyword: document
+    # keyword: document
     class: Document
 
     description: |

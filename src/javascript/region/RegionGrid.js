@@ -45,7 +45,6 @@ RegionGrid.prototype.preview = function(_parentContext) {
 		_(this.specifiedChildren).each( function(_child) {
 			var proxy = _child.proxy();
 			proxy.parent = gridChild;
-			console.log(proxy);
 			gridChild.children.push(proxy);
 		}, this);
 
@@ -95,7 +94,6 @@ RegionGrid.prototype.generateContexts = function(_gridContext) {
 	cols = this.properties.columns || cols;
 	cols = (_gridContext.bounds.height / this.properties.column_width) || cols;
 
-	console.log(this.properties.column_width, cols);
 	var generatedContexts = [];
 
 	for (var row = 0; row < rows; row++) {

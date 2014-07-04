@@ -49,7 +49,9 @@ function injectEditorProperties(_yaml) {
 	var lines = _yaml.split("\n");
 
 	var regionKeywords = _(language.regionTypes).pluck("keyword");
-
+	regionKeywords = _(regionKeywords).filter( function(_value) {
+		return _value; // remove untruthy values
+	});
 	regionKeywords = "(?:" + regionKeywords.join("|") + ")";
 	console.log(regionKeywords);
 	var mapPattern = new RegExp(regionKeywords+":\\s*$");
