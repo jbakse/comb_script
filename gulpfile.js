@@ -31,7 +31,7 @@ gulp.task('javascript', function() {
 
 
 gulp.task('less', function() {
-	return gulp.src(['./src/style/doc.less', './src/style/main.less'])
+	return gulp.src(['./src/style/doc.less']) //, './src/style/main.less'
 		.pipe(plumber())
 		.pipe(less())
 		.pipe(gulp.dest('./build/css/'))
