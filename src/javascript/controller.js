@@ -6,6 +6,7 @@ var settings = require('./settings.js');
 var util = require('./util.js');
 var UI = require('./UI.js');
 var Parser = require('./Parser.js');
+var Context = require('./Context.js');
 
 module.exports = new Controller();
 
@@ -142,7 +143,7 @@ Controller.prototype.exportSVG = function() {
 
 	var exportWidth = this.doc.properties.width;
 	var exportHeight = this.doc.properties.height;
-	var context = settings.getRootContext();
+	var context = new Context();
 	var currentProject = paper.project;
 
 	var exportProject = new paper.Project($('<canvas width="' + exportWidth + '" height="' + exportHeight + '" />').get(0));

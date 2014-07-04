@@ -15,7 +15,7 @@ function parse(_yaml) {
 
 	UI.log.appendMessage("Parsing YAML");
 	_yaml = injectEditorProperties(_yaml);
-	console.log(_yaml);
+
 
 	try {
 		data = jsYAML.safeLoad(_yaml);

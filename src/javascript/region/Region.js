@@ -76,7 +76,7 @@ Region.prototype.loadProperties = function(_properties) {
 		definitions = util.mergeObjectArraysOnKey(language.regionTypes[superClass].properties, definitions, "keyword");
 	}
 
-	console.log(this.type);
+	
 
 	// Build message prefix
 	// todo factor this out
@@ -106,13 +106,12 @@ Region.prototype.loadProperties = function(_properties) {
 
 
 	// Populate defaults
-	console.log(definitions);
+	
 	_(definitions).chain()
 		.filter(function(_def) {
 			return _def && _def.default;
 		})
 		.each(function(_def) {
-			console.log(_def);
 			self.properties[_def.keyword] = self.properties[_def.keyword] || _def.default;
 		});
 

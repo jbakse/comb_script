@@ -4,6 +4,9 @@
 module.exports = Context;
 
 
+
+
+
 function Context(_bounds, _matrix) {
 	this.bounds = _bounds ? _bounds.clone() : new paper.Rectangle(0, 0, 0, 0);
 	this.matrix = _matrix ? _matrix.clone() : new paper.Matrix();

@@ -3,7 +3,7 @@
 
 var _ = require('underscore');
 var Range = ace.require('ace/range').Range;
-// var controller = require('./controller.js');
+var Context = require('./Context.js');
 var settings = require('./settings.js');
 
 
@@ -186,8 +186,8 @@ Preview.prototype.init = function(_element) {
 Preview.prototype.setDocument = function(_doc) {
 	this.doc = _doc;
 
-	var context = settings.getRootContext();
-
+	var context = new Context();
+	
 	// draw preview/frame
 	this.previewLayer.removeChildren();
 	paper.project.activeLayer = this.previewLayer;
