@@ -14,9 +14,19 @@ function parse(_yaml) {
 	var data;
 
 	UI.log.appendMessage("Parsing YAML");
+	
+	// try first without injections, so that errors will have correct line numbers
+	try {
+		data = jsYAML.safeLoad(_yaml);
+	}
+	catch (e) {
+		return UI.log.appendParseError(e);
+	}
+
+
 	_yaml = injectEditorProperties(_yaml);
 
-
+	// parse again, for real this time
 	try {
 		data = jsYAML.safeLoad(_yaml);
 	}

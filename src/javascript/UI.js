@@ -367,7 +367,7 @@ Inspector.prototype.clear = function(_element) {
 
 function Log() {
 	this.parseErrorTemplate =
-		_.template('<li class = "error"><span class="line">Line <%= mark.line %></span> <span class="message"><%= reason %></span></li>');
+		_.template('<li class = "error"><span class="line">Line <%= mark.line + 1 %></span> <span class="message"><%= reason %></span></li>');
 
 	this.debugTemplate =
 		_.template('<li class = "debug"><span class="message"><%= message %></span></li>');

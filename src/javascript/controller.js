@@ -27,7 +27,7 @@ Controller.prototype.redrawPreview = function(_region) {
 	});
 	
 	if (this.keySelection) this.keySelection.setStyle("key");
-	if (this.hoverRegion) this.hoverRegion.setStyle("hover");
+	if (this.hoverRegion) this.hoverRegion.setSty0le("hover");
 
 	UI.preview.redraw();
 };
