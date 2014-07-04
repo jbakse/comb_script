@@ -4,7 +4,7 @@ var _ = require('underscore');
 
 var Context = require('./Context.js');
 
-module.exports.fileURL = "../yaml/styletest.yaml";
+module.exports.fileURL = "../yaml/symbol.yaml";
 
 module.exports.previewCanvasWidth = 1200;
 module.exports.previewCanvasHeight = 1200;

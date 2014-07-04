@@ -21,7 +21,7 @@ Document:
 
     properties:
         -   keyword: name
-            description: The name for the document. Names are not required, but will be used when exporting.
+            description: Names the document in the interface, and is used as the filename for SVG downloads.
             type: string
             default: document
 
