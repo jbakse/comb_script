@@ -59,13 +59,14 @@
 
 @	Features
 	---	Region
-		--- registration: Parent | Center | Top | Top_Left | etc.
+		+--- registration: Parent | Center | Top | Top_Left | etc.
 		--         #do we want to have a registrationX and registrationY? if we're going to have a top_left it might make things easier
 
 
 	---	Context System
-		---	Determine Bounds (relative to parent bounds and position)
-		---	Determine Regsitration (move registration point, but preserves position of bounds relative to parent)
+		+---	Determine Bounds (relative to parent bounds and position)
+			--	might want a way to set center and width for bounds (best way for drill holes) (can be done with a single nest to transform for now.
+		+---	Determine Regsitration (move registration point, but preserves position of bounds relative to parent)
 		---	Apply Transforms
 			-	translate_x, translate_y
 			-	rotation
