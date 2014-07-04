@@ -347,7 +347,8 @@ Inspector.prototype.formatDimensionObject = function(_o) {
 };
 
 Inspector.prototype.formatDimension = function(_v) {
-	return (_v / language.unitScales[this.unit] || 1) + " " + this.unit;
+	var value = +(_v / language.unitScales[this.unit] || 1).toFixed(3);
+	return value + " " + this.unit;
 };
 
 Inspector.prototype.buildSelectRegionHandler = function(_region) {

@@ -1,0 +1,26 @@
+RegionGrid:
+    keyword: region_grid
+    class: RegionGrid
+    extends: Region
+
+    description: |
+        Repeatedly draws its children in a grid.
+
+    properties:
+        -   keyword: columns
+            description: The number of columns in the grid.
+            type: number
+            default: 1
+
+        -   keyword: rows
+            description: The number of rows in the grid.
+            type: number
+            default: 1
+
+        -   keyword: row_height
+            description: The height of rows in the grid.
+            type: number
+
+        -   keyword: column_width
+            description: The width of columns in the grid.
+            type: number

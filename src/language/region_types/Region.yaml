@@ -20,6 +20,8 @@ Region:
 
     properties:
 
+        # BOUNDS
+
         -   keyword: name
             description: "The name for this region. Names are not required, but are very helpful."
             type: string
@@ -65,15 +67,37 @@ Region:
             description: The height of the bounds.
             type: number
 
-        -   keyword: rotation
-            description: Rotation to apply to the object.
-            type: number
+        # REGISTRATION
 
         -   keyword: registration
             description: The location of the regions registration point.
             type: string
             default: parent
             values: [parent, center, top, left, bottom, right, top_left, top_right, bottom_left, bottom_right]
+
+        # TRANSFORM
+
+        -   keyword: translate_x
+            description: Horizontal translation.
+            type: number 
+
+        -   keyword: translate_y
+            description: Vertical translation.
+            type: number 
+
+        -   keyword: rotation
+            description: Rotation in degrees.
+            type: number
+
+        -   keyword: scale_x
+            description: Horizontal scale.
+            type: number 
+
+        -   keyword: scale_y
+            description: Vertical scale.
+            type: number 
+
+        # MODIFICATION
 
         -   keyword: boolean
             description: The location of the regions registration point.

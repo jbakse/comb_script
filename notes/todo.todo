@@ -2,6 +2,7 @@
 @--	Write some general docs.
 +--	Check to see if code can be cleaned up with use of default values.
 
+----- Might be able to fix yaml parse error line numbers by parsing without injection first to log errors.
 
 --	consider how language works
 	-	write the context derive / how regions work section of the docs
@@ -58,20 +59,19 @@
 
 
 @	Features
-	---	Region
+	--	Region
 		+--- registration: Parent | Center | Top | Top_Left | etc.
 		--         #do we want to have a registrationX and registrationY? if we're going to have a top_left it might make things easier
 
 
-	---	Context System
-		+---	Determine Bounds (relative to parent bounds and position)
+	--	Context System
+		--	Bounds
 			--	might want a way to set center and width for bounds (best way for drill holes) (can be done with a single nest to transform for now.
 		+---	Determine Regsitration (move registration point, but preserves position of bounds relative to parent)
-		---	Apply Transforms
-			-	translate_x, translate_y
-			-	rotation
-			-	scale, scale_x, scale_y
-
+		+---	Apply Transforms
+			+-	translate_x, translate_y
+			+-	rotation
+			+-	scale, scale_x, scale_y
 
 	---	Region Grid
 		---	region grid should probably just generate a bunch of children, rather than one and overriding how drawing is done... except that is weird too because it will still have to override how drawing is done to tell each child where to draw. It might be that we need to just create all the preview/build shapes at construction.. ugh, how would that play with iso mode,

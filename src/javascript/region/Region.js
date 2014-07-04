@@ -156,10 +156,10 @@ Region.prototype.loadChildren = function(_childrenData) {
 		}
 		else {
 			if (childData.editor_properties) {
-				UI.log.appendWarning("[Line " + childData.editor_properties.firstLine + "] Unknown Region Type: " + childKey);
+				UI.log.appendWarning("[Line " + childData.editor_properties.firstLine + "] Unknown region type: " + childKey);
 			}
 			else {
-				UI.log.appendWarning("Unknown Region Type: " + childKey);
+				UI.log.appendWarning("Unknown region type: " + childKey);
 			}
 		}
 
@@ -349,6 +349,6 @@ Region.prototype.drawBuild = function(_bounds) {
 
 Region.prototype.drawPosition = function(_bounds, _matrix) {
 	var scaling = _matrix.scaling;
-	var rect = new paper.Rectangle(-0.5, -0.5, 1, 1);
+	var rect = new paper.Rectangle(-0.5, -0.5, 1, 1); //.scale(1/scaling.x, 1/scaling.y)
 	return new paper.Path.Ellipse(rect.scale(1/scaling.x, 1/scaling.y));
 };

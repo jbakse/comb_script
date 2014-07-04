@@ -74,11 +74,18 @@ Context.prototype.deriveContext = function(_properties) {
 		derivedContext.moveRegistration(derivedContext.bounds.right, derivedContext.bounds.bottom);
 	}
 	
-
+	if (_properties.translate_x || _properties.translate_y) {
+		derivedContext.matrix.translate(_properties.translate_x || 0, _properties.translate_y || 0);
+	}
 
 	if (_properties.rotation) {
 		derivedContext.matrix.rotate(_properties.rotation);
 	}
+
+	if (_properties.scale_x || _properties.scale_y) {
+		derivedContext.matrix.scale(_properties.scale_x || 1, _properties.scale_y || 1);
+	}
+
 
 	return derivedContext;
 };

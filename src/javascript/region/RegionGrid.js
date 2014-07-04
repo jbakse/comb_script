@@ -4,7 +4,7 @@ var _ = require('underscore');
 var Context = require('../Context.js');
 var Region = require('./Region.js');
 
-module.exports.RegionGrid = RegionGrid;
+module.exports = RegionGrid;
 
 //////////////////////////////////////////////////////////////////////
 // RegionGrid
@@ -12,9 +12,6 @@ module.exports.RegionGrid = RegionGrid;
 function RegionGrid(_data, _parent) {
 	Region.call(this, _data, _parent);
 	this.type = "RegionGrid";
-	_.extend(this.typeProperties, {
-		strokeColor: '#BBBBBB'
-	});
 }
 
 RegionGrid.prototype = Object.create(Region.prototype);
@@ -23,14 +20,19 @@ RegionGrid.prototype.constructor = RegionGrid;
 RegionGrid.prototype.preview = function(_parentContext) {
 	var context = _parentContext.deriveContext(this.properties);
 
-	paper.project.activeLayer.addChild(this.previewBoundsGroup);
+	this.previewBoundsGroup = new paper.Group();
+	this.previewPositionGroup = new paper.Group();
+
+	this.previewBoundsGroup.onMouseEnter = _.bind(this.onMouseEnter, this);
+	this.previewBoundsGroup.onMouseLeave = _.bind(this.onMouseLeave, this);
+	this.previewBoundsGroup.onClick = _.bind(this.onClick, this);
+
 
 	var gridContexts = this.generateContexts(context);
 
 	_.each(gridContexts, function(gridContext) {
-		// draw preview bounds
+		
 		var gridPath = new paper.Path.Rectangle(gridContext.bounds);
-		gridPath.style = this.typeProperties.boundsStyle;
 		gridPath.transform(gridContext.matrix);
 		this.previewBoundsGroup.addChild(gridPath);
 
@@ -39,6 +41,7 @@ RegionGrid.prototype.preview = function(_parentContext) {
 
 	}, this);
 
+	this.setStyle("default");
 };
 
 RegionGrid.prototype.build = function(_parentContext) {
@@ -62,7 +65,7 @@ RegionGrid.prototype.generateContexts = function(_gridContext) {
 
 	var cols = 1;
 	cols = (_gridContext.bounds.height / this.properties.column_width) || cols;
-	cols = this.properties.cols || cols;
+	cols = this.properties.columns || cols;
 
 	var generatedContexts = [];
 

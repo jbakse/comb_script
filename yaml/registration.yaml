@@ -11,7 +11,7 @@ children:
             margin_top: 1
             height: 4
             width: 8
-            registration: center
+            registration: top_left
 
         children:
             - rectangle:
@@ -21,3 +21,6 @@ children:
                     left: 0
                     width: 2
                     height: 2
+                    rotation: 10
+                    scale_x: 2
+                    translate_y: 2
