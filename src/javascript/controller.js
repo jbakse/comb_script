@@ -14,7 +14,7 @@ module.exports = new Controller();
 function Controller() {
 	this.doc = null;
 	this.selectedRegions = [];
-	this.keySelection = null; 
+	this.keySelection = null;
 	this.hoverRegion = null;
 }
 
@@ -22,10 +22,10 @@ Controller.prototype.redrawPreview = function(_region) {
 
 	this.doc.setStyle("default", true);
 
-	_(this.selectedRegions).each( function(_region) {
+	_(this.selectedRegions).each(function(_region) {
 		_region.setStyle("selected");
 	});
-	
+
 	if (this.keySelection) this.keySelection.setStyle("key");
 	if (this.hoverRegion) this.hoverRegion.setSty0le("hover");
 
@@ -43,9 +43,9 @@ Controller.prototype.attachHandlers = function() {
 
 	$.Topic("region/onMouseEnter").subscribe(
 		function(_region) {
-			
+
 			self.hoverRegion = _region;
-			
+
 			if (settings.inspectOnHover) $.Topic("UI/updateInspector").publish([_region]);
 
 			self.redrawPreview();
@@ -83,12 +83,14 @@ Controller.prototype.onLineChange = function(_line) {
 		return _region.editorProperties.firstLine <= _line && _region.editorProperties.lastLine >= _line;
 	});
 
-	var ancestors = _(regions).map(function(r) { return r.getAncestors(); });
+	var ancestors = _(regions).map(function(r) {
+		return r.getAncestors();
+	});
 	ancestors = _(ancestors).flatten();
 	regions = _(regions).difference(ancestors);
 
-	if (!regions || regions.length === 0){
-		console.error("Couldn't find the region for line "+_line);
+	if (!regions || regions.length === 0) {
+		console.error("Couldn't find the region for line " + _line);
 		return;
 	}
 
@@ -98,7 +100,7 @@ Controller.prototype.onLineChange = function(_line) {
 	// }
 
 	this.selectedRegions = regions;
-	if (! _(regions).contains(this.keySelection) ) {
+	if (!_(regions).contains(this.keySelection)) {
 		this.keySelection = null;
 	}
 	if (this.selectedRegions.length === 1) {
@@ -106,7 +108,7 @@ Controller.prototype.onLineChange = function(_line) {
 	}
 
 	var r = regions[0];
-	UI.editor.highlightLines( r.editorProperties.firstLine,  r.editorProperties.lastLine,  r.type.toLowerCase());
+	UI.editor.highlightLines(r.editorProperties.firstLine, r.editorProperties.lastLine, r.type.toLowerCase());
 
 	$.Topic("UI/updateInspector").publish([this.keySelection]);
 
@@ -151,36 +153,44 @@ Controller.prototype.exportSVG = function() {
 	this.doc.build(context);
 	exportProject.activeLayer.style = settings.exportStyle;
 	exportProject.activeLayer.translate(exportWidth * 0.5, exportHeight * 0.5);
-	var svg = exportProject.exportSVG({ asString: true});
+	var svg = exportProject.exportSVG({
+		asString: true
+	});
 
-	var blob = new Blob([svg], {type: 'image/svg+xml'});
+	var blob = new Blob([svg], {
+		type: 'image/svg+xml'
+	});
 	var svgURL = URL.createObjectURL(blob);
-	util.downloadDataUri(this.doc.properties.name+'.svg', svgURL);
-	
+	util.downloadDataUri(this.doc.properties.name + '.svg', svgURL);
+
 	currentProject.activate();
 };
 
 
 Controller.prototype._updateYAML = function(_yaml) {
 	console.log("update yaml");
-	
-	var data = Parser.parse(_yaml);
-	if (!data) return;
 
+	try {
+		var data = Parser.parse(_yaml);
+		if (!data) return;
 
-	this.doc = new regionTypes.Document();
-	this.doc.loadData(data);
-	console.log(this.doc);
+		this.doc = new regionTypes.Document();
+		this.doc.loadData(data);
+		console.log(this.doc);
 
-	var self = this;
+		var self = this;
 
-	$.whenAll.apply($, this.doc.waitList).always( function () { 
-		if (self.doc.waitList.length) UI.log.appendSuccess("Subdocuments Loaded");
-		UI.preview.setDocument(self.doc);
-	} );
+		$.whenAll.apply($, this.doc.waitList).always(function() {
+			if (self.doc.waitList.length) UI.log.appendSuccess("Subdocuments Loaded");
+			UI.preview.setDocument(self.doc);
+		});
 
-	UI.log.appendSuccess("Success");
-
+		UI.log.appendSuccess("Success");
+	}
+	catch (_e) {
+		UI.log.appendException(_e, "Unable to parse or render this script.");
+		throw(_e);
+	}
 
 
 };

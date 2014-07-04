@@ -80,6 +80,9 @@ Region.prototype.loadProperties = function(_properties) {
 
 	//todo recurse?
 	var definitions = language.regionTypes[this.type].properties;
+	if (!Array.isArray(definitions)) {
+		definitions = [];
+	}
 	var superClass = language.regionTypes[this.type].extends;
 	if (superClass) {
 		definitions = util.mergeObjectArraysOnKey(language.regionTypes[superClass].properties, definitions, "keyword");
@@ -94,6 +97,7 @@ Region.prototype.loadProperties = function(_properties) {
 		messagePrefix = "[Line " + this.editorProperties.firstLine + " " + this.type + "] ";
 	}
 
+	console.log(this.type, definitions);
 	// Validate and import provided properties.
 	_(_properties).each(function(pValue, pKey) {
 		var def = _(definitions).find(function(_def) {

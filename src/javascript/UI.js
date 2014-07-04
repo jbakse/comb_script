@@ -34,17 +34,17 @@ Editor.prototype.init = function(_element) {
 	this.editor.getSession().selection.on('changeCursor', _(this.onChangeCursor).bind(this));
 
 
-	this.editor.commands.addCommand({
-		name: "Rebuild",
-		bindKey: {
-			win: "Ctrl-B|Ctrl-R",
-			mac: "Command-B|Command-R"
-		},
-		// exec: _.bind(controller.rebuild, controller)
-		exec: function(_e) {
-			$.Topic("UI/command/rebuild").publish(_e);
-		}
-	});
+	// this.editor.commands.addCommand({
+	// 	name: "Rebuild",
+	// 	bindKey: {
+	// 		win: "Ctrl-B|Ctrl-R",
+	// 		mac: "Command-B|Command-R"
+	// 	},
+	// 	// exec: _.bind(controller.rebuild, controller)
+	// 	exec: function(_e) {
+	// 		$.Topic("UI/command/rebuild").publish(_e);
+	// 	}
+	// });
 
 };
 
@@ -366,8 +366,6 @@ Inspector.prototype.clear = function(_element) {
 // Log
 
 function Log() {
-	this.parseErrorTemplate =
-		_.template('<li class = "error"><span class="line">Line <%= mark.line + 1 %></span> <span class="message"><%= reason %></span></li>');
 
 	this.debugTemplate =
 		_.template('<li class = "debug"><span class="message"><%= message %></span></li>');
@@ -383,6 +381,14 @@ function Log() {
 
 	this.errorTemplate =
 		_.template('<li class = "error"><span class="message"><%= message %></span></li>');
+
+	this.parseErrorTemplate =
+		_.template('<li class = "error"><span class="line">Line <%= mark.line + 1 %></span> <span class="message"><%= reason %></span></li>');
+
+	this.exceptionTemplate =
+		_.template('<li class = "error"><span class="message"><%= message %><br />Exception occurred:  <%= e.message %></span></li>');
+
+
 }
 
 Log.prototype.clear = function(_message) {
@@ -431,3 +437,10 @@ Log.prototype.appendParseError = function(_YAMLException) {
 	$("#log").append(this.parseErrorTemplate(_YAMLException));
 	//todo add click to this
 };
+
+Log.prototype.appendException = function(_e, _message) {
+
+	$("#log").append(this.exceptionTemplate({e: _e, message: _message}));
+	//todo add click to this
+};
+

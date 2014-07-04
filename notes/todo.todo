@@ -2,7 +2,7 @@
 @--	Write some general docs.
 +--	Check to see if code can be cleaned up with use of default values.
 
------ Might be able to fix yaml parse error line numbers by parsing without injection first to log errors.
++----- Might be able to fix yaml parse error line numbers by parsing without injection first to log errors.
 
 --	consider how language works
 	-	write the context derive / how regions work section of the docs
@@ -89,7 +89,7 @@
 		---	Language Reference
 		---	Examples
 
-	--	Greg Font
+	---	Greg Font
 
 	--	Per Child Boolean
 		-- Add some tabs, remove some notches
