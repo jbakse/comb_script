@@ -339,7 +339,6 @@ Inspector.prototype.formatDimensionObject = function(_o) {
 	var self = this;
 	var props = [];
 	_(_o).each( function(_value, _key) {
-		console.log(self.formatDimension(_value));
 		props.push ( _key + ": " + self.formatDimension(_value) );
 	});
 	var s = "{ " + props.join(", ") + " }";

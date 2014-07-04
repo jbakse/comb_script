@@ -1,0 +1,23 @@
+properties:
+    name: dimensions
+    width: 10
+    height: 10
+    unit: cm
+
+children:
+    - region:
+        properties:
+            name: dimensions
+            margin_top: 1
+            height: 4
+            width: 8
+            registration: center
+
+        children:
+            - rectangle:
+                properties:
+                    name: dimensions
+                    top: 0
+                    left: 0
+                    width: 2
+                    height: 2

@@ -29,6 +29,7 @@ Document:
             description: The dimension unit to use. 
             type: string
             default: mm
+            values: [px, in, ft, mm, cm, m]
 
         -   keyword: width
             description: The width of the document bounds.

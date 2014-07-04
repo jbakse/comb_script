@@ -59,17 +59,9 @@
 
 @	Features
 	---	Region
-		--- Register: Parent | Center | Top | Top_Left | etc.
+		--- registration: Parent | Center | Top | Top_Left | etc.
+		--         #do we want to have a registrationX and registrationY? if we're going to have a top_left it might make things easier
 
-	---	Region Grid
-		---	region grid should probably just generate a bunch of children, rather than one and overriding how drawing is done... except that is weird too because it will still have to override how drawing is done to tell each child where to draw. It might be that we need to just create all the preview/build shapes at construction.. ugh, how would that play with iso mode,
-
-	---	Dimension Units
-		+--- LVP document settings includes a `unit` and scales the drawing to achieve (like how drawbot.yaml did it)
-		+--- inspector
-		-- mixed demensions
-			-- Allow Dimensions units in dimensional properties
-			-- Allow default unit (used for numbers without units, used in inspector)
 
 	---	Context System
 		---	Determine Bounds (relative to parent bounds and position)
@@ -78,6 +70,18 @@
 			-	translate_x, translate_y
 			-	rotation
 			-	scale, scale_x, scale_y
+
+
+	---	Region Grid
+		---	region grid should probably just generate a bunch of children, rather than one and overriding how drawing is done... except that is weird too because it will still have to override how drawing is done to tell each child where to draw. It might be that we need to just create all the preview/build shapes at construction.. ugh, how would that play with iso mode,
+
+	--	Dimension Units
+		+--- LVP document settings includes a `unit` and scales the drawing to achieve (like how drawbot.yaml did it)
+		+--- inspector
+		-- mixed demensions
+			-- Allow Dimensions units in dimensional properties
+			-- Allow default unit (used for numbers without units, used in inspector)
+
 
 	---	Documentation
 		---	General Conceptual Docs

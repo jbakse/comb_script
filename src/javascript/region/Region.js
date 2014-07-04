@@ -97,7 +97,12 @@ Region.prototype.loadProperties = function(_properties) {
 		}
 
 		if (typeof pValue !== def.type) {
-			UI.log.appendWarning(messagePrefix + "Incorrect type: " + pKey + " (received " + typeof pValue + ", expected " + def.type + ")");
+			UI.log.appendWarning(messagePrefix + "Incorrect type: " + pKey + "<br />Received " + typeof pValue + ". Expected " + def.type + ".");
+			return;
+		}
+
+		if (def.values && !_(def.values).contains(pValue)) {
+			UI.log.appendWarning(messagePrefix + "Unrecognized value for property: " + pKey + "<br />Received \"" + pValue + "\". Expected " + def.values.join(", ") + ".");
 			return;
 		}
 

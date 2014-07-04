@@ -5,8 +5,6 @@ module.exports = Context;
 
 
 
-
-
 function Context(_bounds, _matrix) {
 	this.bounds = _bounds ? _bounds.clone() : new paper.Rectangle(0, 0, 0, 0);
 	this.matrix = _matrix ? _matrix.clone() : new paper.Matrix();
@@ -49,8 +47,34 @@ Context.prototype.deriveContext = function(_properties) {
 	var derivedContext = new Context(derivedBounds, derivedMatrix);
 
 	if (_properties.registration === "center") {
-		derivedContext.centerRegistration();
+		derivedContext.moveRegistration(derivedContext.bounds.center.x, derivedContext.bounds.center.y);
 	}
+	if (_properties.registration === "top") {
+		derivedContext.moveRegistration(derivedContext.bounds.center.x, derivedContext.bounds.top);
+	}
+	if (_properties.registration === "bottom") {
+		derivedContext.moveRegistration(derivedContext.bounds.center.x, derivedContext.bounds.bottom);
+	}
+	if (_properties.registration === "left") {
+		derivedContext.moveRegistration(derivedContext.bounds.left, derivedContext.bounds.center.y);
+	}
+	if (_properties.registration === "right") {
+		derivedContext.moveRegistration(derivedContext.bounds.right, derivedContext.bounds.center.y);
+	}
+	if (_properties.registration === "top_left") {
+		derivedContext.moveRegistration(derivedContext.bounds.left, derivedContext.bounds.top);
+	}
+	if (_properties.registration === "top_right") {
+		derivedContext.moveRegistration(derivedContext.bounds.right, derivedContext.bounds.top);
+	}
+	if (_properties.registration === "bottom_left") {
+		derivedContext.moveRegistration(derivedContext.bounds.left, derivedContext.bounds.bottom);
+	}
+	if (_properties.registration === "bottom_right") {
+		derivedContext.moveRegistration(derivedContext.bounds.right, derivedContext.bounds.bottom);
+	}
+	
+
 
 	if (_properties.rotation) {
 		derivedContext.matrix.rotate(_properties.rotation);
@@ -59,11 +83,18 @@ Context.prototype.deriveContext = function(_properties) {
 	return derivedContext;
 };
 
+
+Context.prototype.moveRegistration = function(_x, _y) {
+	this.bounds.x -= _x;
+	this.bounds.y -= _y;
+	this.matrix.translate(_x, _y);
+};
+
 Context.prototype.centerRegistration = function() {
-		var oldCenter = this.bounds.center;
-		this.bounds.x -= oldCenter.x;
-		this.bounds.y -= oldCenter.y;
-		this.matrix.translate(oldCenter);
+	var oldCenter = this.bounds.center;
+	this.bounds.x -= oldCenter.x;
+	this.bounds.y -= oldCenter.y;
+	this.matrix.translate(oldCenter);
 };
 
 
@@ -98,7 +129,3 @@ function deriveBound(parentBound, parentOppositeBound, positionRelative, boundRe
 		return parentBound;
 	}
 }
-
-
-
-

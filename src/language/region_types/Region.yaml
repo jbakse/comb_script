@@ -29,12 +29,12 @@ Region:
             description: The top of the bounds relative to the parent's registration point.
             type: number
 
-        -   keyword: bottom
-            description: The bottom of the bounds relative to the parent's registration point.
-            type: number
-
         -   keyword: left
             description: The left of the bounds relative to the parent's registration point.
+            type: number
+
+        -   keyword: bottom
+            description: The bottom of the bounds relative to the parent's registration point.
             type: number
 
         -   keyword: right
@@ -45,12 +45,12 @@ Region:
             description: The top of the bounds relative to parent's bounds.
             type: number
 
-        -   keyword: margin_bottom
-            description: The bottom of the bounds relative to parent's bounds.
-            type: number
-
         -   keyword: margin_left
             description: The left of the bounds relative to parent's bounds.
+            type: number
+
+        -   keyword: margin_bottom
+            description: The bottom of the bounds relative to parent's bounds.
             type: number
 
         -   keyword: margin_right
@@ -69,11 +69,11 @@ Region:
             description: Rotation to apply to the object.
             type: number
 
-        #do we want to have a registrationX and registrationY? if we're going to have a top_left it might make things easier
         -   keyword: registration
             description: The location of the regions registration point.
             type: string
-            values: [center, parent]
+            default: parent
+            values: [parent, center, top, left, bottom, right, top_left, top_right, bottom_left, bottom_right]
 
         -   keyword: boolean
             description: The location of the regions registration point.
