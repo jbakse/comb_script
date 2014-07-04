@@ -51,7 +51,7 @@ _(styles.bounds.default).extend({
 });
 _(styles.bounds.selected).extend({
 	strokeColor: highlightColor,
-	strokeWidth: 2
+	strokeWidth: 1
 });
 _(styles.bounds.key).extend({
 	strokeColor: highlightColor,

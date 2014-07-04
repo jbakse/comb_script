@@ -88,13 +88,14 @@ RegionGrid.prototype.build = function(_parentContext) {
 RegionGrid.prototype.generateContexts = function(_gridContext) {
 	// calculate rows/cols to draw
 	var rows = 1;
-	rows = (_gridContext.bounds.height / this.properties.row_height) || rows;
 	rows = this.properties.rows || rows;
+	rows = (_gridContext.bounds.height / this.properties.row_height) || rows;
 
 	var cols = 1;
-	cols = (_gridContext.bounds.height / this.properties.column_width) || cols;
 	cols = this.properties.columns || cols;
+	cols = (_gridContext.bounds.height / this.properties.column_width) || cols;
 
+	console.log(this.properties.column_width, cols);
 	var generatedContexts = [];
 
 	for (var row = 0; row < rows; row++) {
