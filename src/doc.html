@@ -16,91 +16,89 @@
 </head>
 <body>
 
-	<div id="content">
-		<div id="menu">
-			<h1>Examples</h1>
-			<ul>
-				<li><a href="#">Basics</a></li>
-				<li><a href="#">Booleans</a></li>
-				<li><a href="#">Children</a></li>
-				<li><a href="#">SVGs</a></li>
-				<li><a href="#">Exporting</a></li>
-			</ul>
+	<nav id="menu">
+		<h1>Examples</h1>
+		<ul>
+			<li><a href="#">Basics</a></li>
+			<li><a href="#">Booleans</a></li>
+			<li><a href="#">Children</a></li>
+			<li><a href="#">SVGs</a></li>
+			<li><a href="#">Exporting</a></li>
+		</ul>
 
-			<h1>Classes</h1>
-			<ul id="template-menu">
-				{{#regionTypes}}
-				<li><a href="#{{class}}">{{class}}</a></li>
-				{{/regionTypes}}
-			</ul>
+		<h1>Classes</h1>
+		<ul id="template-menu">
+			{{#regionTypes}}
+			<li><a href="#{{class}}">{{class}}</a></li>
+			{{/regionTypes}}
+		</ul>
+	</nav>
+
+
+	<main id="content">
+		<div id="template-regionTypes">
+			{{#regionTypes}}
+			<section class="region-type" id="{{class}}">
+				<h1>{{class}}</h1>
+
+				<dl>
+					{{#keyword}}<dt>keyword:</dt><dd>{{keyword}}</dd>{{/keyword}}
+					{{#extends}}<dt>extends:</dt><dd><a href="#{{extends}}">{{extends}}</a></dd>{{/extends}}
+				</dl>
+				
+				<div class="region-description">{{{description}}}</div>
+				
+				{{#required_properties.length}}
+					<h2>Required Properties</h2>
+					<ul class="properties required-properties">
+					{{#required_properties}}
+						<li>{{>prop}}</li>
+					{{/required_properties}}
+					</ul>
+				{{/required_properties.length}}
+
+				{{#properties.length}}
+					<h2>Properties</h2>
+					<ul class="properties">
+					{{#properties}}
+						<li>{{>prop}}</li>
+					{{/properties}}
+					</ul>
+				{{/properties.length}}
+				
+				{{#inherited_properties.length}}
+					<h2>Inherited Properties</h2>
+					<ul class="properties inherited-properties">
+					{{#inherited_properties}}
+						<li>{{>prop}}</li>
+					{{/inherited_properties}}
+					</ul>
+				{{/inherited_properties.length}}
+				
+			</section>
+			{{/regionTypes}}
 		</div>
-
-
-		<div id="detail-container">
-			<ul id="template-regionTypes">
-				{{#regionTypes}}
-				<li class="region-type" id="{{class}}">
-					<h1>{{class}}</h1>
-
-					{{#keyword}}<div class="region-keyword">keyword: {{keyword}}</div>{{/keyword}}
-					{{#extends}}<div class="region-extends">extends: <a href="#{{extends}}">{{extends}}</a></div>{{/extends}}
-					<div class="region-description">{{{description}}}</div>
-					
-					{{#required_properties.length}}
-						<h2>Required Properties</h2>
-						<ul class="properties required-properties">
-						{{#required_properties}}
-							{{>prop}}
-						{{/required_properties}}
-						</ul>
-					{{/required_properties.length}}
-
-					{{#properties.length}}
-						<h2>Properties</h2>
-						<ul class="properties">
-						{{#properties}}
-							{{>prop}}
-						{{/properties}}
-						</ul>
-					{{/properties.length}}
-					
-					{{#inherited_properties.length}}
-						<h2>Inherited Properties</h2>
-						<ul class="properties inherited-properties">
-						{{#inherited_properties}}
-							{{>prop}}
-						{{/inherited_properties}}
-						</ul>
-					{{/inherited_properties.length}}
-					
-				</li>
-				{{/regionTypes}}
-			</ul>
-		</div>
-	</div>
+	</main>
 
 	<div id = "template-property" class="hidden">
-		<li>
-			<div class="property-name">{{keyword}}</div>
-			<div class="description">{{{description}}}</div>
-			<dl>
-				<dt>type:</dt>
-				<dd>{{type}}</dd>
-				<dt>default:</dt>
-				<dd>{{default}}{{^default}}undefined{{/default}}</dd>
-				{{#required}}
-					<dt>required:</dt>
-					<dd>{{required}}</dd>
-				{{/required}}
-				{{#values.length}}
-					<dt>values:</dt>
-					{{#values}}
-					<dd>{{.}}</dd>
-					{{/values}}
-				{{/values.length}}
-			</dl>
-
-		</li>
+		<div class="property-name">{{keyword}}</div>
+		<div class="description">{{{description}}}</div>
+		<dl>
+			<dt>type:</dt>
+			<dd>{{type}}</dd>
+			<dt>default:</dt>
+			<dd>{{default}}{{^default}}undefined{{/default}}</dd>
+			{{#required}}
+				<dt>required:</dt>
+				<dd>{{required}}</dd>
+			{{/required}}
+			{{#values.length}}
+				<dt>values:</dt>
+				{{#values}}
+				<dd>{{.}}</dd>
+				{{/values}}
+			{{/values.length}}
+		</dl>
 	</div>
 </body>
 </html>
