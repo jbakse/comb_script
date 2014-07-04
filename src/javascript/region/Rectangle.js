@@ -26,6 +26,3 @@ Rectangle.prototype.drawBounds = function(_bounds) {
 	return new paper.Path.Rectangle(_bounds, this.properties.radius || 0);
 };
 
-Rectangle.prototype.drawPosition = function(_bounds) {
-	return new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
-};

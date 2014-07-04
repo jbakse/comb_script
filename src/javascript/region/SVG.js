@@ -78,6 +78,3 @@ SVG.prototype.drawBounds = function(_bounds) {
 	return g;
 };
 
-SVG.prototype.drawPosition = function(_bounds) {
-	return new paper.Path.Rectangle(new paper.Rectangle(-0.5, -0.5, 1, 1));
-};

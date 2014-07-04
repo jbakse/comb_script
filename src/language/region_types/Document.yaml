@@ -25,6 +25,11 @@ Document:
             type: string
             default: document
 
+        -   keyword: unit
+            description: The dimension unit to use. 
+            type: string
+            default: mm
+
         -   keyword: width
             description: The width of the document bounds.
             type: number

@@ -5,7 +5,7 @@ var _ = require('underscore');
 var Range = ace.require('ace/range').Range;
 var Context = require('./Context.js');
 var settings = require('./settings.js');
-
+var language = require('./language.js');
 
 module.exports.editor = new Editor();
 module.exports.preview = new Preview();
@@ -187,7 +187,9 @@ Preview.prototype.setDocument = function(_doc) {
 	this.doc = _doc;
 
 	var context = new Context();
-	
+	context.matrix.scale(language.unitScales[this.doc.properties.unit] || 1);
+	module.exports.inspector.setUnit(this.doc.properties.unit);
+
 	// draw preview/frame
 	this.previewLayer.removeChildren();
 	paper.project.activeLayer = this.previewLayer;
@@ -261,12 +263,18 @@ Menu.prototype.addToggleCommand = function(_element, _command) {
 
 function Inspector() {
 	this.element = null;
+	this.unit = "px";
 }
 
 Inspector.prototype.init = function(_element) {
 	this.element = _element;
 	this.clear();
 	$.Topic("UI/updateInspector").subscribe(_.bind(this.update, this));
+};
+
+
+Inspector.prototype.setUnit = function(_unit) {
+	this.unit = _unit;
 };
 
 Inspector.prototype.update = function(_regions) {
@@ -302,9 +310,45 @@ Inspector.prototype.update = function(_regions) {
 	$(this.element).append(t("Type", _region.type));
 	$(this.element).append(t("Name", _region.properties.name || "unnamed"));
 	$(this.element).append(t("Line", _region.editorProperties.firstLine || "-"));
-	$(this.element).append(t("Bounds", _region.previewBoundsGroup.bounds || "{}"));
-	$(this.element).append(t("Center", _region.previewBoundsGroup.bounds.center || "{}"));
+	
+	var center = {
+		x: _region.previewBoundsGroup.bounds.center.x,
+		y: _region.previewBoundsGroup.bounds.center.y,
+	};
+	$(this.element).append(t("Center", this.formatDimensionObject(center) || "{}"));
 
+	var size = {
+		width: _region.previewBoundsGroup.bounds.width,
+		height: _region.previewBoundsGroup.bounds.height,
+	};
+	$(this.element).append(t("Height", this.formatDimensionObject(size) || "{}"));
+
+
+	var bounds = {
+		left: _region.previewBoundsGroup.bounds.left,
+		top: _region.previewBoundsGroup.bounds.top,
+		bottom: _region.previewBoundsGroup.bounds.bottom,
+		right: _region.previewBoundsGroup.bounds.right,
+	};
+	$(this.element).append(t("Bounds", this.formatDimensionObject(bounds)));
+
+
+};
+
+Inspector.prototype.formatDimensionObject = function(_o) {
+	var self = this;
+	var props = [];
+	_(_o).each( function(_value, _key) {
+		console.log(self.formatDimension(_value));
+		props.push ( _key + ": " + self.formatDimension(_value) );
+	});
+	var s = "{ " + props.join(", ") + " }";
+	
+	return s;
+};
+
+Inspector.prototype.formatDimension = function(_v) {
+	return (_v / language.unitScales[this.unit] || 1) + " " + this.unit;
 };
 
 Inspector.prototype.buildSelectRegionHandler = function(_region) {

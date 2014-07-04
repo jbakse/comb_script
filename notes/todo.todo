@@ -58,36 +58,58 @@
 
 
 @	Features
-	-	Region Grid
-		-	region grid should probably just generate a bunch of children, rather than one and overriding how drawing is done... except that is weird too because it will still have to override how drawing is done to tell each child where to draw. It might be that we need to just create all the preview/build shapes at construction.. ugh, how would that play with iso mode,
+	---	Region
+		--- Register: Parent | Center | Top | Top_Left | etc.
 
+	---	Region Grid
+		---	region grid should probably just generate a bunch of children, rather than one and overriding how drawing is done... except that is weird too because it will still have to override how drawing is done to tell each child where to draw. It might be that we need to just create all the preview/build shapes at construction.. ugh, how would that play with iso mode,
 
-	-	ghost unselected regions
-	
-	-	Document
-		-	Implement settings/prefs as properties (different key for not regionlike things?) on document (maybe using load on top of default document)
+	---	Dimension Units
+		+--- LVP document settings includes a `unit` and scales the drawing to achieve (like how drawbot.yaml did it)
+		+--- inspector
+		-- mixed demensions
+			-- Allow Dimensions units in dimensional properties
+			-- Allow default unit (used for numbers without units, used in inspector)
+
+	---	Context System
+		---	Determine Bounds (relative to parent bounds and position)
+		---	Determine Regsitration (move registration point, but preserves position of bounds relative to parent)
+		---	Apply Transforms
+			-	translate_x, translate_y
+			-	rotation
+			-	scale, scale_x, scale_y
+
+	---	Documentation
+		---	General Conceptual Docs
+		---	Language Reference
+		---	Examples
+
+	--	Greg Font
+
+	--	Per Child Boolean
+		-- Add some tabs, remove some notches
 
 	-	import svg
 		+-	basic
 		-	scale doc to bounds, scale art to bounds
 		-	greg font / text region
 
-
-
 	-	pan/zoom
 		+-	pan
 		-	zoom
 
+	-	ghost unselected regions
+	
+	-	Document
+		-	Implement settings/prefs as properties (different key `settings` for not regionlike things?) on document (maybe using load on top of default document)
 
 	-	ui overlay/inspector
-		+- clickable bread crumb
-		+- show useful info
-		- fix zero point
 		- fix dimension units
 
 	-       iso mode?
 
 	- 	laser export
+		---	define style in Document properties
 		-	export for lasercutter (auto layout and exporitng with defined style)
 		-	asign output tags to shapes (kind of like a css class) to determine how they are output in build/export (outputGroup: cut | etch)
 
@@ -117,16 +139,14 @@
 
 
 Design Decisions
--	size never considers children, only parent context
--	inspired by openscad, -illustrator, html/css, flash symbols
--	like a text editor vs word processor for vector (minimizing styling)
+	-	size never considers children, only parent context
+	-	inspired by openscad, -illustrator, html/css, flash symbols
+	-	like a text editor vs word processor for vector (minimizing styling)
 
 QUESTIONS
--	sibling relative positioning: what are some options?
+	-	sibling relative positioning: what are some options?
 
-First Priority
 
-+----	Github it
 
 OVERHAUL Context system
 =====
@@ -138,8 +158,8 @@ OVERHAUL Context system
 +--	get preview and draw working
 +-- 	should rectangles and ellipses be allowed children?
 
---	defaults for region properties
---	add list of supported properties, have it log warnings if you use ones it don't know
++--	defaults for region properties
++--	add list of supported properties, have it log warnings if you use ones it don't know
 
 UI
 =====

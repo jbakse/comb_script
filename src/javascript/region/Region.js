@@ -222,7 +222,7 @@ Region.prototype.preview = function(_parentContext) {
 	this.previewBoundsGroup.addChild(bounds);
 
 	// pos
-	var position = this.drawPosition(context.position);
+	var position = this.drawPosition(context.position, context.matrix);
 	position.transform(context.matrix);
 	this.previewPositionGroup.addChild(position);
 
@@ -336,10 +336,14 @@ Region.prototype.drawBounds = function(_bounds) {
 	return new paper.Path.Rectangle(_bounds);
 };
 
-Region.prototype.drawPosition = function(_bounds) {
-	return new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
-};
 
 Region.prototype.drawBuild = function(_bounds) {
 	return [];
+};
+
+
+Region.prototype.drawPosition = function(_bounds, _matrix) {
+	var scaling = _matrix.scaling;
+	var rect = new paper.Rectangle(-0.5, -0.5, 1, 1);
+	return new paper.Path.Ellipse(rect.scale(1/scaling.x, 1/scaling.y));
 };

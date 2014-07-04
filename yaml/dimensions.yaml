@@ -1,0 +1,12 @@
+properties:
+    name: symbol
+    width: 4
+    height: 4
+    unit: in
+
+children:
+    - region:
+        properties:
+            name: dimensions
+            width: 2
+            height: 2

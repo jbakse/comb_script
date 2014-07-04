@@ -27,6 +27,4 @@ Ellipse.prototype.drawBounds = function(_bounds) {
 	return new paper.Path.Ellipse(_bounds);
 };
 
-Ellipse.prototype.drawPosition = function(_bounds) {
-	return new paper.Path.Ellipse(new paper.Rectangle(-0.5, -0.5, 1, 1));
-};
+
