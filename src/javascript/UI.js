@@ -309,7 +309,7 @@ Inspector.prototype.update = function(_regions) {
 	$(this.element).append(breadCrumbs);
 	$(this.element).append(t("Type", _region.type));
 	$(this.element).append(t("Name", _region.properties.name || "unnamed"));
-	$(this.element).append(t("Line", _region.editorProperties.firstLine || "-"));
+	$(this.element).append(t("Line", _region.editorProperties.firstLine + 1));
 	
 	var center = {
 		x: _region.previewBoundsGroup.bounds.center.x,

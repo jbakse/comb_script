@@ -42,6 +42,15 @@ function Region(_parent) {
 	this.isShape = false;
 }
 
+Region.prototype.proxy = function() {
+	// var proxy = new this.constructor();
+	// proxy.parent = this.parent;
+	// proxy.root = this.root;
+	// proxy.
+	var proxy = Object.create(this);
+	// proxy.previewBoundsGroup = null;
+	return proxy;
+};
 
 
 //////////////////////////////////////////////////////////////////////
@@ -213,7 +222,6 @@ Region.prototype.tree = function(_depth) {
 Region.prototype.preview = function(_parentContext) {
 	var context = _parentContext.deriveContext(this.properties);
 
-	// move this preview to the active layer
 	this.previewBoundsGroup = new paper.Group();
 	this.previewPositionGroup = new paper.Group();
 

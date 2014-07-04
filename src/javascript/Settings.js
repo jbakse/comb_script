@@ -59,7 +59,7 @@ _(styles.bounds.key).extend({
 });
 _(styles.bounds.ghost).extend({});
 _(styles.bounds.hover).extend({
-	strokeColor: boundsStrokeColor,
+	strokeColor: "black",
 	strokeWidth: 3
 });
 

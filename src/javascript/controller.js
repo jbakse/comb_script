@@ -88,7 +88,7 @@ Controller.prototype.onLineChange = function(_line) {
 	regions = _(regions).difference(ancestors);
 
 	if (!regions || regions.length === 0){
-		console.error("couldn't find the region");
+		console.error("Couldn't find the region for line "+_line);
 		return;
 	}
 

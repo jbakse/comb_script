@@ -28,7 +28,7 @@ Document:
         -   keyword: unit
             description: The dimension unit to use. 
             type: string
-            default: mm
+            default: px
             values: [px, in, ft, mm, cm, m]
 
         -   keyword: width

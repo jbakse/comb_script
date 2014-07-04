@@ -12,10 +12,13 @@ module.exports = RegionGrid;
 function RegionGrid(_data, _parent) {
 	Region.call(this, _data, _parent);
 	this.type = "RegionGrid";
+	this.specifiedChildren = [];
 }
 
 RegionGrid.prototype = Object.create(Region.prototype);
 RegionGrid.prototype.constructor = RegionGrid;
+
+
 
 RegionGrid.prototype.preview = function(_parentContext) {
 	var context = _parentContext.deriveContext(this.properties);
@@ -28,18 +31,43 @@ RegionGrid.prototype.preview = function(_parentContext) {
 	this.previewBoundsGroup.onClick = _.bind(this.onClick, this);
 
 
+	this.specifiedChildren = this.children;
+	this.children = [];
+
 	var gridContexts = this.generateContexts(context);
 
+	var i = 0;
 	_.each(gridContexts, function(gridContext) {
-		
-		var gridPath = new paper.Path.Rectangle(gridContext.bounds);
-		gridPath.transform(gridContext.matrix);
-		this.previewBoundsGroup.addChild(gridPath);
+		var gridChild = new Region();
+		gridChild.parent = this;
+		gridChild.editorProperties = this.editorProperties;
+		gridChild.properties.name = this.properties.name + "_" + i++;
+		_(this.specifiedChildren).each( function(_child) {
+			var proxy = _child.proxy();
+			proxy.parent = gridChild;
+			console.log(proxy);
+			gridChild.children.push(proxy);
+		}, this);
 
-
-		this.previewChildren(gridContext);
-
+		// gridChild.children = this.specifiedChildren;
+		this.children.push(gridChild);
+		gridChild.preview(gridContext);
 	}, this);
+
+	// var gridContexts = this.generateContexts(context);
+
+	// _.each(gridContexts, function(gridContext) {
+		
+	// 	var gridPath = new paper.Path.Rectangle(gridContext.bounds);
+	// 	gridPath.transform(gridContext.matrix);
+	// 	this.previewBoundsGroup.addChild(gridPath);
+
+
+	// 	this.previewChildren(gridContext);
+
+	// }, this);
+
+	// this.previewChildren(gridContext);
 
 	this.setStyle("default");
 };
