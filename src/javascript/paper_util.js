@@ -4,6 +4,8 @@
 module.exports.combinePaths = function(_paths, _operation) {
 	if (_paths.length < 1) return [];
 
+	console.log("cp", _paths, _operation);
+	
 	var newPath = _paths[0];
 	for (var i = 1; i < _paths.length; i++) {
 		newPath.remove();

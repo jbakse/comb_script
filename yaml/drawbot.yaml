@@ -1,8 +1,8 @@
 properties:
     name: drawbot.yaml
-    scale: 2.83464567
-    zoom: 2
-
+    unit: mm
+    width: 100
+    height: 100
 
 
 library:

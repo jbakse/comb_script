@@ -1,5 +1,9 @@
 properties:
-    name: boolean.yaml
+    name: boolean
+    width: 150
+    height: 150
+    unit: mm
+    
 children:
     - region:
         properties:

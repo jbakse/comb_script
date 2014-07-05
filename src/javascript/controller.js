@@ -27,7 +27,7 @@ Controller.prototype.redrawPreview = function(_region) {
 	});
 
 	if (this.keySelection) this.keySelection.setStyle("key");
-	if (this.hoverRegion) this.hoverRegion.setSty0le("hover");
+	if (this.hoverRegion) this.hoverRegion.setStyle("hover");
 
 	UI.preview.redraw();
 };
@@ -176,6 +176,10 @@ Controller.prototype._updateYAML = function(_yaml) {
 
 		this.doc = new regionTypes.Document();
 		this.doc.loadData(data);
+		this.doc.properties.left = 0;
+		this.doc.properties.top = 0;
+		this.doc.properties.registration = "center";
+		
 		console.log(this.doc);
 
 		var self = this;

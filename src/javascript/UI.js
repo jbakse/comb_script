@@ -187,7 +187,8 @@ Preview.prototype.setDocument = function(_doc) {
 	this.doc = _doc;
 
 	var context = new Context();
-	context.matrix.scale(language.unitScales[this.doc.properties.unit] || 1);
+	var unit = language.unitScales[this.doc.properties.unit] || 1;
+	context.matrix.scale(unit);
 	module.exports.inspector.setUnit(this.doc.properties.unit);
 
 	// draw preview/frame
@@ -208,7 +209,7 @@ Preview.prototype.setDocument = function(_doc) {
 	this.exportLayer.style = settings.exportStyle;
 
 
-	paper.view.center = new paper.Point(0, 0);
+	paper.view.center = new paper.Point(_doc.properties.width * 0.5 * unit, _doc.properties.height * 0.5 * unit);
 	paper.view.update();
 
 };

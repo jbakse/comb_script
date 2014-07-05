@@ -53,7 +53,7 @@ function injectEditorProperties(_yaml) {
 		return _value; // remove untruthy values
 	});
 	regionKeywords = "(?:" + regionKeywords.join("|") + ")";
-	console.log(regionKeywords);
+	// console.log(regionKeywords);
 	var mapPattern = new RegExp(regionKeywords+":\\s*$");
 
 	var firstLine;

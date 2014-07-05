@@ -12,7 +12,7 @@ module.exports = RegionGrid;
 function RegionGrid(_data, _parent) {
 	Region.call(this, _data, _parent);
 	this.type = "RegionGrid";
-	this.specifiedChildren = [];
+	this.specifiedChildren = undefined;
 }
 
 RegionGrid.prototype = Object.create(Region.prototype);
@@ -31,42 +31,12 @@ RegionGrid.prototype.preview = function(_parentContext) {
 	this.previewBoundsGroup.onClick = _.bind(this.onClick, this);
 
 
-	this.specifiedChildren = this.children;
-	this.children = [];
-
-	var gridContexts = this.generateContexts(context);
-
-	var i = 0;
-	_.each(gridContexts, function(gridContext) {
-		var gridChild = new Region();
-		gridChild.parent = this;
-		gridChild.editorProperties = this.editorProperties;
-		gridChild.properties.name = this.properties.name + "_" + i++;
-		_(this.specifiedChildren).each( function(_child) {
-			var proxy = _child.proxy();
-			proxy.parent = gridChild;
-			gridChild.children.push(proxy);
-		}, this);
-
-		// gridChild.children = this.specifiedChildren;
-		this.children.push(gridChild);
-		gridChild.preview(gridContext);
+	if (!this.specifiedChildren) {
+		this.generateChildren(context);
+	}
+	_.each(this.children, function(child) {
+		child.preview(child.context);
 	}, this);
-
-	// var gridContexts = this.generateContexts(context);
-
-	// _.each(gridContexts, function(gridContext) {
-		
-	// 	var gridPath = new paper.Path.Rectangle(gridContext.bounds);
-	// 	gridPath.transform(gridContext.matrix);
-	// 	this.previewBoundsGroup.addChild(gridPath);
-
-
-	// 	this.previewChildren(gridContext);
-
-	// }, this);
-
-	// this.previewChildren(gridContext);
 
 	this.setStyle("default");
 };
@@ -74,14 +44,50 @@ RegionGrid.prototype.preview = function(_parentContext) {
 RegionGrid.prototype.build = function(_parentContext) {
 	var context = _parentContext.deriveContext(this.properties);
 
-	var gridContexts = this.generateContexts(context);
+
+
+	if (!this.specifiedChildren) {
+		this.generateChildren(context);
+	}
 
 	var childPaths = [];
-	_.each(gridContexts, function(gridContext) {
-		childPaths = childPaths.concat(this.buildChildren(gridContext));
+	_.each(this.children, function(child) {
+		childPaths = childPaths.concat(child.buildChildren(child.context));
 	}, this);
 
+
+
+	// var gridContexts = this.generateContexts(context);
+	// var childPaths = [];
+	// _.each(gridContexts, function(gridContext) {
+	// 	childPaths = childPaths.concat(this.buildChildren(gridContext));
+	// }, this);
+
 	return childPaths;
+};
+
+RegionGrid.prototype.generateChildren = function(_context) {
+	this.specifiedChildren = this.children;
+	this.children = [];
+
+	var gridContexts = this.generateContexts(_context);
+
+	var i = 0;
+	_.each(gridContexts, function(gridContext) {
+		var gridChild = new Region();
+		gridChild.parent = this;
+		gridChild.editorProperties = this.editorProperties;
+		gridChild.properties.name = this.properties.name + "_" + i++;
+		_(this.specifiedChildren).each(function(_child) {
+			var proxy = _child.proxy();
+			proxy.parent = gridChild;
+			gridChild.children.push(proxy);
+		}, this);
+
+		gridChild.context = gridContext;
+		this.children.push(gridChild);
+		// gridChild.preview(gridContext);
+	}, this);
 };
 
 RegionGrid.prototype.generateContexts = function(_gridContext) {

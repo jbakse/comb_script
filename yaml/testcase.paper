@@ -1,0 +1,44 @@
+
+
+// test case showing incositent boolean subtract result
+// usually results in correct shape, sometimes results intersection of last shape
+
+
+view.center = new Point(0,0);
+view.zoom = 3;
+var x = 0, y = 0;
+
+// including the next two lines prevents the issue from appearing
+// maybe it has to do with the sign of points in the shape?
+// x = 100;
+// y = 100;
+
+
+var rectangle = new Rectangle(new Point(53 * -0.5 + x, 64 * -0.5 + y), new Size(53, 64));
+var path = new Path.Rectangle(rectangle);
+path.strokeColor = '#ff0000';
+
+var rectangle2 = new Rectangle(new Point(4.5 + x, 64 * -0.5 - 1 + y), new Size(3, 9));
+var path2 = new Path.Rectangle(rectangle2);
+path2.strokeColor = '#00ff00';
+
+var rectangle3 = new Rectangle(new Point(4.5 + x, 64 * 0.5 - 8 + y), new Size(3, 9));
+var path3 = new Path.Rectangle(rectangle3);
+path3.strokeColor = '#00ff00';
+
+var rectangle4 = new Rectangle(new Point(4.5 + x, -1.5 + y), new Size(3, 3));
+var path4 = new Path.Ellipse(rectangle4);
+path4.strokeColor = '#00ff00';
+
+var boolPath = path;
+
+boolPath = boolPath.subtract(path2);
+boolPath.remove();
+
+boolPath = boolPath.subtract(path3);
+boolPath.remove();
+
+boolPath = boolPath.subtract(path4);
+
+
+boolPath.fillColor = '#0000ff';

@@ -97,7 +97,6 @@ Region.prototype.loadProperties = function(_properties) {
 		messagePrefix = "[Line " + this.editorProperties.firstLine + " " + this.type + "] ";
 	}
 
-	console.log(this.type, definitions);
 	// Validate and import provided properties.
 	_(_properties).each(function(pValue, pKey) {
 		var def = _(definitions).find(function(_def) {
@@ -272,6 +271,7 @@ Region.prototype.build = function(_parentContext) {
 	var childPaths = ownPaths.concat(this.buildChildren(context));
 
 
+	
 	if (!('boolean' in this.properties)) {
 		return childPaths;
 	}
