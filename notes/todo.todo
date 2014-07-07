@@ -56,6 +56,33 @@
 
 			Can these cascade a bit like css?
 
+Introduciton
+	Overview
+	What is it? What is it for?
+	YAML, Paperjs, 
+	Declaritive vs Imparative
+	Philosophy of not just describing what, but why.
+
+Document Structure
+	YAML, Nested, Properties, Children
+
+How regions work. 
+	 boundries/registration/etc work
+	 most things are regions
+
+Combining Shapes
+	How booleans work.
+
+Document all properties on all region types.
+	Document and Example
+
+YAML functions (Symbols)
+	
+
+Exporting
+	Export Styles
+	
+
 
 
 @	Features

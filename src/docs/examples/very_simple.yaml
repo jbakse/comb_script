@@ -1,0 +1,6 @@
+#a very simple comb-script
+children:
+    - region:
+        properties:
+            width: 200
+            height: 150

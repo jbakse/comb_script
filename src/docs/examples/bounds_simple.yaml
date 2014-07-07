@@ -1,0 +1,8 @@
+children:
+    - region:
+        #this region is 200x200 units
+        properties:
+            top: -100
+            left: -100
+            bottom: 100
+            right: 100

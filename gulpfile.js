@@ -41,7 +41,7 @@ gulp.task('less', function() {
 
 
 gulp.task('html', function() {
-	return gulp.src('./src/*.html')
+	return gulp.src('./src/**/*.html')
 		.pipe(gulp.dest('./build/'))
 		.pipe(livereload())
 		;
@@ -78,7 +78,7 @@ gulp.task('watch', function() {
 	gulp.watch('./src/javascript/**/*.js', ['javascript']);
 	gulp.watch('./src/style/*.less', ['less']);
 	gulp.watch('./src/language/**/*.yaml', ['language']);
-	gulp.watch('./src/*.html', ['html']);
+	gulp.watch('./src/**/*.html', ['html']);
 
 	gulp.watch('yaml/*.*').on('change', function(file) {
 		livereload().changed(file.path);
