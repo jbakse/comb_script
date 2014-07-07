@@ -1,0 +1,22 @@
+children:
+    - region:
+        properties:
+            name: parent_region
+            width: 400
+            height: 400
+            #generic regions apply boolean operations to their first child
+            boolean: subtract
+        children:
+            #all subtractions happen to the first child 'base_rectangle'
+            - rectangle:
+                properties:
+                    name: base_rectangle
+                    height: 200
+                    width: 200
+            - ellipse:
+                properties:
+                    name: subtract_ellipse
+                    height: 200
+                    width: 200
+                    margin_left: 0
+                    margin_top: 0

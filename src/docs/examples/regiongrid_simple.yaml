@@ -1,0 +1,17 @@
+children:
+    #creates a grid of regions populated with the region_grid's children
+    - region_grid:
+        properties:
+            width: 300
+            height: 200
+            #columns and rows will fit to the region grid's bounds
+            columns: 4
+            rows: 4
+            #setting the registration will apply to the region grid generated regions
+            registration: center
+        children:
+            #use a reference
+            - ellipse:
+                properties:
+                    width: 30
+                    height: 30

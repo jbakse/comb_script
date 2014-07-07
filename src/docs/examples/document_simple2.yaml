@@ -1,0 +1,15 @@
+#properties defined at the root level are applied to the document
+properties:
+    #the name property is used during export
+    name: simple_document
+    #units are used in exporting and previewing
+    unit: cm
+    #width and height define the document bounds
+    width: 10
+    height: 10
+
+children:
+    - region:
+        properties:
+            width: 4
+            height: 4

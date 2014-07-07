@@ -247,7 +247,8 @@ Language Features
 -	remove overlapping line segments: good for lasercut prep
 
 
-
+BUGS:
+-	region_grid registration: top_left, top_right, etc is bugged and using the registration top_left, etc of the parent, not the individual region cells
 
 
 Features

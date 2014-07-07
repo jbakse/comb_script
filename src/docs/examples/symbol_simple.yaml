@@ -1,0 +1,32 @@
+#If you want to use yaml references put them in a library node
+library:
+    #references can be entire regions with properties and children
+    #define a reference
+    - &inner_circle
+        ellipse:
+            properties:
+                name: margin_circle
+                margin_top: 10
+                margin_left: 10
+                margin_bottom: 10
+                margin_right: 10
+
+children:
+    - region:
+        properties:
+            margin_top: 10
+            margin_left: 10
+            width: 60
+            height: 60
+        children:
+            #use a reference
+            - *inner_circle
+    - region:
+        properties:
+            margin_top: 10
+            margin_left: 80
+            width: 200
+            height: 200
+        children:
+            #use references multiple times
+            - *inner_circle
