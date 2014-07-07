@@ -11,7 +11,7 @@ var yaml = require('gulp-yml');
 var concat = require('gulp-concat');
 var insert = require('gulp-insert');
 var browserify = require('gulp-browserify');
-
+var jade = require('gulp-jade');
 
 gulp.task('javascript', function() {
 	return gulp
@@ -28,6 +28,14 @@ gulp.task('javascript', function() {
 		;
 });
 
+gulp.task('jade', function() {
+	return gulp.src(['./src/docs/**/*.jade', '!./src/docs/**/_*.jade']) //, './src/style/main.less'
+		.pipe(plumber())
+		.pipe(jade())
+		.pipe(gulp.dest('./build/docs/'))
+		.pipe(livereload())
+		;
+});
 
 
 gulp.task('less', function() {
@@ -79,6 +87,8 @@ gulp.task('watch', function() {
 	gulp.watch('./src/style/*.less', ['less']);
 	gulp.watch('./src/language/**/*.yaml', ['language']);
 	gulp.watch('./src/**/*.html', ['html']);
+	gulp.watch('./src/docs/**/*.jade', ['jade']);
+
 
 	gulp.watch('yaml/*.*').on('change', function(file) {
 		livereload().changed(file.path);
@@ -93,5 +103,5 @@ gulp.task('watch', function() {
 
 
 // Default Task
-gulp.task('default', ['javascript', 'less', 'language', 'html', 'images', 'watch']);
+gulp.task('default', ['javascript', 'less', 'language', 'html', 'jade', 'images', 'watch']);
 

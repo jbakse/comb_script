@@ -1,0 +1,32 @@
+html
+	head
+		meta(charset='UTF-8')
+		title Comb Script Docs
+		script(src='../../lib/jquery-2.1.1.min.js')
+		script(src='../../lib/google-code-prettify/prettify.js')
+		script(src="../javascript/language.js")
+		script(src="../javascript/doc.js")
+
+		link(href='http://fonts.googleapis.com/css?family=Arvo:400,700,400italic', rel='stylesheet', type='text/css')
+		link(href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700', rel='stylesheet', type='text/css')
+		link(rel='stylesheet', href='../css/doc.css')
+
+	body
+		nav#menu
+			h1 Information
+			ul
+				li
+					a(href='#') Basics
+				li
+					a(href='#') Booleans
+				li
+					a(href='#') Children
+				li
+					a(href='#') SVGs
+				li
+					a(href='#') Exporting
+		main#content
+			section#introduction
+				include _intro
+			section#documents
+				include _documents

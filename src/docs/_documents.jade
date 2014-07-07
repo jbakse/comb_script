@@ -1,0 +1,43 @@
+:markdown
+    # Writing Comb Script
+    Comb Script documents are written in YAML [link], a common and human-readable data-file format. Comb Script recognizes predefined keywords to describe regions, shapes, and their properties.
+
+    ## Regions
+    The core element of a Comb Script document is a `region`. A region describes a rectangular area in the drawing and and can contain child regions. The basic `region` type is primarily organizational and will not generate a vector shape in the exported SVG. To create a exported shape, you can use a specialized region-type such as `rectangle` or `ellipse`.
+
+
+    ## Region Bounds
+    Every region has a set of boundaries that describe a rectangular area in the drawing. These boundaries can specified using the current coordinate system using the `top`, `left`, `bottom`, and `right` properties.
+
+    A region's bounds can also be specified relative to the parent's bounds using `margin-top`, `margin-left`, `margin-bottom`, and `margin-right` properties.
+
+    You can specify the dimensions of the bounds with the `width` and `height` properties.
+
+    You can mix these properties any way you wish, as long as they don't conflict.
+
+    ```
+    children:
+	- region:
+	    properties:
+		top: -100
+		left: -100
+		bottom: 100
+		right: 100
+    ```
+
+    ## Registration
+    Regions can optionally set position of the origin (position 0, 0) of the coordinate system with the `registration` property. The new origin will apply to the regions children. The default value of `registration` is `parent` which will keep the location of the origin set by the region's parent. Other values, such as 'top_left' and 'center' move the origin relative to the Region's bounds.
+
+    ```
+    children:
+	- region:
+	    properties:
+		width: 100
+		height: 100
+		registration: top_left
+	    children:
+		- ellipse:
+		    properties:
+			width: 100
+			height: 100
+    ```
