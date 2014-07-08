@@ -1,0 +1,8 @@
+children:
+    - rectangle:
+        properties:
+            width: 200
+            height: 200
+            #transforms take effect after the regions bounds have been generated
+            #transforms are applied based on the regions registration point
+            rotation: 45

@@ -1,0 +1,9 @@
+children:
+    - rectangle:
+        properties:
+            width: 200
+            height: 200
+            #transforms take effect after the regions bounds have been generated
+            #transforms are applied based on the regions registration point
+            scale_x: 0.5
+            scale_y: 2

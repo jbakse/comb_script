@@ -1,0 +1,15 @@
+children:
+    - region:
+        properties:
+            width: 200
+            height: 200
+            #set the registration point to the lop left corner of the regions bounds
+            registration: top_left
+        children:
+            #by default this rectangle will use the coordinate system of it's parent
+            - rectangle:
+                properties:
+                    top: 0
+                    left: 0
+                    width: 100
+                    height: 100
