@@ -1,0 +1,6 @@
+children:
+    #this is a simple region
+    - region:
+        properties:
+            width: 200
+            height: 200

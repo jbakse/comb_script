@@ -1,0 +1,13 @@
+#SVG is broken / not implemented
+
+children:
+    #this is a simple rectangle with rounded corners
+    - region:
+        properties:
+            width: 200
+            height: 200
+        children:
+            # - svg:
+            #     properties:
+            #         #defining a redius will give the rectangle rounded corners
+            #         source: ../../svg/star.svg

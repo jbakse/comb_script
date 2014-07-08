@@ -1,0 +1,8 @@
+children:
+    #this is a simple rectangle with rounded corners
+    - rectangle:
+        properties:
+            width: 200
+            height: 200
+            #defining a redius will give the rectangle rounded corners
+            radius: 20
