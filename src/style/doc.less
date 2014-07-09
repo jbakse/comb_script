@@ -43,7 +43,7 @@ body
 	font-family: @body-font;
 	background-color: @bg-color;
 	font-size: 16px;
-	line-height: 25px;
+	line-height: 2;
 	margin: 0;
 }
 
@@ -59,18 +59,27 @@ a
 }
 
 
+h1, h2, h3
+{
+	margin: 2em 0 0 0;
+	font-family: @header-font;
+	line-height: 1;
+}
 h1
 {
-	font-size: 20px;
-	font-family: @header-font;
+	font-size: 1.4em;
+	
 }
 
 h2
 {
-	font-size: 14px;
-	font-family: @header-font;
+	font-size: 1.1em;
 }
 
+h3
+{
+	font-size: 1.0em;
+}
 ul
 {
 	list-style: none;
@@ -179,7 +188,7 @@ pre
 p code
 {
 	color: @light-text-color;
-	padding: 2px 4px;
+	padding: 1px 2px;
 	font-size: 14px;
 	font-family: @monospace-font;
 	background-color: @code-bg-color;
@@ -189,7 +198,7 @@ p code
 
 canvas
 {
-	border: 1px solid gray;
+	border: 1px solid @light-text-color;
 	position: absolute;
 	left: 570px;
 	@media (max-width: 1000px) {

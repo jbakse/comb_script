@@ -50,15 +50,15 @@ $(function() {
 		doc.loadData(data);
 		doc.properties.left = 0;
 		doc.properties.top = 0;
-		doc.properties.width = 500;
-		doc.properties.height = 200;
-		doc.properties.registration = "top_left";
+		doc.properties.width = doc.properties.width || 525;
+		doc.properties.height = doc.properties.height || 225;
+		doc.properties.registration = "center";
 
 
 		var canvas = $("<canvas>")
 			.attr("id", "example-"+_index)
-			.attr("width", "550")
-			.attr("height", "250");
+			.attr("width", doc.properties.width + 25)
+			.attr("height", doc.properties.height + 25);
 
 
 		var preview = new Preview();
@@ -71,7 +71,7 @@ $(function() {
 		canvas.insertBefore(_element);
 	});
 
-	$('pre').addClass('prettyprint');
+	$('pre').addClass('prettyprint ');
 
 	prettyPrint();
 

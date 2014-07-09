@@ -1,5 +1,8 @@
+properties:
+    width: 525
+    height: 225
+
 children:
-    #this is a simple ellipse
     - ellipse:
         properties:
             width: 200

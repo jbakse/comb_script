@@ -1,11 +1,24 @@
 :markdown
     # Writing Comb Script
-    Comb Script documents are written in [YAML](http://en.wikipedia.org/wiki/YAML), a common and human-readable data-file format. Comb Script recognizes predefined keywords to describe regions, shapes, and their properties. Here is an example of a simple Comb Script document that draws an ellipse.
+    Comb Script documents are written in [YAML](http://en.wikipedia.org/wiki/YAML), a common and human-readable data-file format. Comb Script recognizes predefined keywords to describe regions, shapes, and their properties. 
+
+    Here is an example of a simple Comb Script document that draws an ellipse:
 
 pre.display
-    include examples/
+    include examples/ellipse_simple.yaml
 
-    ## Regions
+:markdown
+
+    This example begins by defining two document properties, `width` and `height` that describe the dimensions of the document. If these properties are not defined, defaults will be used. Document properties are defined using the `properties:` key followed by a set of indented **key: value** pairs.
+
+    After the document properties, this example defines an `ellipse` as a child. There are several types of children in Comb Script including regions, rectangles, and ellipses. Document children are defined using the `children:` key. The children are indented one level and prefixed with a `-` to indicate a YAML array.
+
+    Like the document, the ellipse defines `width` and `height` properties to set its dimensions.
+
+
+:markdown
+
+    # Regions
     The core element of a Comb Script document is a `region`. A region describes a rectangular area in the drawing and and can contain child regions. The basic `region` type is primarily organizational and will not generate a vector shape in the exported SVG. To create a exported shape, you can use a specialized region-type such as `rectangle` or `ellipse`.
 
 
@@ -21,11 +34,11 @@ pre.display
     ```
     children:
     - region:
-	properties:
-	top: -100
-	left: -100
-	bottom: 100
-	right: 100
+    properties:
+    top: -100
+    left: -100
+    bottom: 100
+    right: 100
     ```
 
     ## Registration
@@ -34,15 +47,15 @@ pre.display
     ```
     children:
     - region:
-	properties:
-	width: 100
-	height: 100
-	registration: top_left
-	children:
-	- ellipse:
-	    properties:
-	    width: 100
-	    height: 100
+    properties:
+    width: 100
+    height: 100
+    registration: top_left
+    children:
+    - ellipse:
+        properties:
+        width: 100
+        height: 100
     ```
 
 
