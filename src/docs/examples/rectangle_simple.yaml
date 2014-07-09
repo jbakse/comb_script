@@ -4,5 +4,5 @@ children:
         properties:
             width: 200
             height: 200
-            #defining a redius will give the rectangle rounded corners
+            #defining a radius will give the rectangle rounded corners
             radius: 20

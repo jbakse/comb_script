@@ -1,0 +1,7 @@
+children:
+    - rectangle:
+        properties:
+            width: 200
+            height: 200
+            translate_x: -75
+            translate_y: 75
