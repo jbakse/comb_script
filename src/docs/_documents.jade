@@ -1,6 +1,9 @@
 :markdown
     # Writing Comb Script
-    Comb Script documents are written in YAML [link], a common and human-readable data-file format. Comb Script recognizes predefined keywords to describe regions, shapes, and their properties.
+    Comb Script documents are written in [YAML](http://en.wikipedia.org/wiki/YAML), a common and human-readable data-file format. Comb Script recognizes predefined keywords to describe regions, shapes, and their properties. Here is an example of a simple Comb Script document that draws an ellipse.
+
+pre.display
+    include examples/
 
     ## Regions
     The core element of a Comb Script document is a `region`. A region describes a rectangular area in the drawing and and can contain child regions. The basic `region` type is primarily organizational and will not generate a vector shape in the exported SVG. To create a exported shape, you can use a specialized region-type such as `rectangle` or `ellipse`.
@@ -17,12 +20,12 @@
 
     ```
     children:
-	- region:
-	    properties:
-		top: -100
-		left: -100
-		bottom: 100
-		right: 100
+    - region:
+	properties:
+	top: -100
+	left: -100
+	bottom: 100
+	right: 100
     ```
 
     ## Registration
@@ -30,14 +33,29 @@
 
     ```
     children:
-	- region:
+    - region:
+	properties:
+	width: 100
+	height: 100
+	registration: top_left
+	children:
+	- ellipse:
 	    properties:
-		width: 100
-		height: 100
-		registration: top_left
-	    children:
-		- ellipse:
-		    properties:
-			width: 100
-			height: 100
+	    width: 100
+	    height: 100
     ```
+
+
+    ## Nesting
+
+    You can nest.
+
+pre.display
+    include examples/nesting_simple.yaml
+
+:markdown
+    Like this.
+
+    # Building
+
+    You can build.

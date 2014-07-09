@@ -90,6 +90,7 @@ ul
 
 #content
 {
+	position: relative;
 	width: 550px;
 	margin-left: 190px;
 }
@@ -183,4 +184,16 @@ p code
 	font-family: @monospace-font;
 	background-color: @code-bg-color;
 	border: 1px solid darken(@code-bg-color, 10);
+}
+
+
+canvas
+{
+	border: 1px solid gray;
+	position: absolute;
+	left: 570px;
+	@media (max-width: 1000px) {
+		position: relative;
+		left: 0;
+	}
 }

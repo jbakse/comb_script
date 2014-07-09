@@ -4,6 +4,10 @@ html
 		title Comb Script Docs
 		script(src='../../lib/jquery-2.1.1.min.js')
 		script(src='../../lib/google-code-prettify/prettify.js')
+		script(src="../../lib/paperjs-v0.9.18/dist/paper-full.js")
+		script(src="../../lib/ace/ace.js")
+
+
 		script(src="../javascript/language.js")
 		script(src="../javascript/doc.js")
 
@@ -25,7 +29,9 @@ html
 					a(href='#') SVGs
 				li
 					a(href='#') Exporting
+
 		main#content
+
 			section#introduction
 				include _intro
 			section#documents

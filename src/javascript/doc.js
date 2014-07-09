@@ -1,11 +1,14 @@
+require('./jquery_util.js');
 var _ = require('underscore');
 var Mustache = require('mustache');
 var language = require('./language.js');
-
+var Preview = require('./Preview.js');
+var regionTypes = require('./region/regionTypes.js');
+var Parser = require('./Parser.js');
 
 
 $(function() {
-	console.log("oi");
+
 	// var regionTypes = _(language.regionTypes).values();
 
 	// _(regionTypes).each(function(type){
@@ -37,8 +40,39 @@ $(function() {
 	// var menuRendered = Mustache.render(menuTemplate, data);
 	// $('#template-menu').html(menuRendered);
 
+	$('pre.display').each( function(_index, _element) {
+		var source = $(_element).text();
+
+		var data = Parser.parse(source);
+		if (!data) return;
+
+		var doc = new regionTypes.Document();
+		doc.loadData(data);
+		doc.properties.left = 0;
+		doc.properties.top = 0;
+		doc.properties.width = 500;
+		doc.properties.height = 200;
+		doc.properties.registration = "top_left";
+
+
+		var canvas = $("<canvas>")
+			.attr("id", "example-"+_index)
+			.attr("width", "550")
+			.attr("height", "250");
+
+
+		var preview = new Preview();
+		preview.init(canvas.get(0));
+
+		// UI.preview.init($('#paper-canvas').get(0));
+		preview.setDocument(doc);
+
+
+		canvas.insertBefore(_element);
+	});
 
 	$('pre').addClass('prettyprint');
+
 	prettyPrint();
 
 
