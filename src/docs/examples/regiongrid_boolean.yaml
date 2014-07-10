@@ -6,8 +6,9 @@ children:
             column_width: 50
             rows: 4
             registration: center
+            boolean: add
         children:
             - ellipse:
                 properties:
-                    width: 30
-                    height: 30
+                    width: 50
+                    height: 50

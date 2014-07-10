@@ -98,7 +98,7 @@ RegionGrid.prototype.generateContexts = function(_gridContext) {
 
 	var cols = 1;
 	cols = this.properties.columns || cols;
-	cols = (_gridContext.bounds.height / this.properties.column_width) || cols;
+	cols = (_gridContext.bounds.width / this.properties.column_width) || cols;
 
 	var generatedContexts = [];
 

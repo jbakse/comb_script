@@ -1,0 +1,13 @@
+children:
+    - rectangle:
+        properties:
+            margin_left: 10
+            width: 200
+            height: 200
+            radius: 10
+    - ellipse:
+        properties:
+            margin_right: 10
+            width: 200
+            height: 200
+            radius: 20

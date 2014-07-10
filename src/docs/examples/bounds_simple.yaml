@@ -1,8 +1,7 @@
 children:
     - region:
-        #this region is 200x200 units
         properties:
             top: -100
-            left: -100
-            bottom: 100
-            right: 100
+            bottom: 0
+            margin_left: 10
+            width: 100

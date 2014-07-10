@@ -1,15 +1,16 @@
 children:
-    #this region is a child of the 'document'
     - region:
         properties:
-            width: 300
-            height: 300
-        #and also has a child of it's own
+            width: 400
+            height: 200
         children:
-            #children are defined in an array
-            - region:
+            - ellipse:
                 properties:
-                    name: only_child
                     height: 100
                     width: 100
                     margin_left: 30
+            - ellipse:
+                properties:
+                    height: 100
+                    width: 100
+                    margin_right: 30

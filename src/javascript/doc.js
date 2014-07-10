@@ -48,10 +48,11 @@ $(function() {
 
 		var doc = new regionTypes.Document();
 		doc.loadData(data);
+		console.log("doc", data, doc.properties);
 		doc.properties.left = 0;
 		doc.properties.top = 0;
-		doc.properties.width = doc.properties.width || 525;
-		doc.properties.height = doc.properties.height || 225;
+		doc.properties.width = data.properties.width || 525;
+		doc.properties.height = data.properties.height || 225;
 		doc.properties.registration = "center";
 
 

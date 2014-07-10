@@ -1,0 +1,133 @@
+:markdown
+    # Writing Comb Script
+    Comb Script documents are written in [YAML](http://en.wikipedia.org/wiki/YAML), a common and human-readable data-file format. Comb Script recognizes predefined keywords to describe regions, shapes, and their properties. 
+
+    Here is an example of a simple Comb Script document that draws an ellipse:
+
+pre.display
+    include examples/ellipse_simple.yaml
+
+:markdown
+
+    This example begins by defining two document properties, `width` and `height` that describe the dimensions of the document. If these properties are not defined, defaults will be used. Document properties are defined using the `properties:` key followed by a set of indented **key: value** pairs.
+
+    Next, the example defines its children under the `children:` key. The children are indented one level and each is prefixed with a `-` to indicate a YAML array item. There are several types of children in Comb Script including regions, rectangles, and ellipses. 
+
+    This document has one child, an `ellipse`. The ellipse defines `width` and `height` properties to set its dimensions.
+
+
+
+//-//////////////////////////////////////////////////////////////////
+//- REGIONS
+
+
+:markdown
+
+    # Regions
+    The basic building-blocks in Comb Script are called **regions**. A region describes a rectangular bounds in the drawing and and can contain child regions. Child regions are laid out in relation to the bounds of their parent.
+
+    There are several types of regions in Comb Script. The basic `region` type is primarily organizational. It is used to define a new part of the drawing and to group its children. The basic `region` will not generate a vector shape in the exported SVG. 
+
+    The `rectangle` or `ellipse` region types have all the same properties of the basic `region` but also draw a shape in the export.
+
+
+
+    ## Region Bounds
+    Every region has a set of bounds that describe a rectangular area in the drawing. These bounds can be set using the `top`, `left`, `bottom`, and `right` properties. These values are relative to the registration position of the region's parent.
+
+    A region's bounds can also be specified relative to the parent's bounds using `margin_top`, `margin_left`, `margin_bottom`, and `margin_right` properties.
+
+    You can specify the dimensions of the bounds with the `width` and `height` properties.
+
+    These properties can be mixed any way you wish, as long as they don't conflict.
+
+pre.display
+    include examples/bounds_simple.yaml
+
+
+
+:markdown
+    ## Registration
+    Regions can optionally set their registration position with the `registration` property. The new registration position will be used by the region's children when laying out their bounds. It will also be used for the pivot point for rotations and scales applied to the region.
+
+    The default value of `registration` is `parent` which will keep the registration position set by the region's parent. Other values, such as 'top_left' and 'center' move it to a position determined by the region's bounds.
+
+pre.display
+    include examples/registration_simple.yaml
+
+
+
+:markdown
+    ## Transformations
+    You can transform the coordinate system used by a region and its children using the `rotation`, `scale_x`, and `scale_y` properties.
+
+pre.display
+    include examples/rotation_simple.yaml
+
+
+
+:markdown
+    ## Children
+
+    Regions can have any number of child regions. A region's bounds, registration, and transform are used by when positioning its children. Using nesting, you can describe the positional relationships of your shapes making parts of your design parametric. 
+
+    In the following example the position of the two ellipses is determined by the width of their parent.
+
+
+
+pre.display
+    include examples/nesting_simple.yaml
+
+
+
+
+//-//////////////////////////////////////////////////////////////////
+//- SHAPES
+
+
+
+:markdown
+    # Shapes
+    The `rectangle` and `ellipse` region-types will generate a shape in the export. In these examples, exported shapes are filled in.
+
+pre.display
+    include examples/shapes_simple.yaml
+
+:markdown
+
+    ## Combining Shapes
+    Shapes can be combined using the `boolean` property. The possible values are `add`, `subtract`, and `intersect`. 
+
+    If you set the `boolean` property on a region-type that generates a shape, its shape will be the base for the operation.
+
+pre.display
+    include examples/boolean_simple_subtract1.yaml
+
+
+:markdown
+
+    If you set the `boolean` property on a region-type that does not generate a shape, the shape of its first child will be the base.
+
+pre.display
+    include examples/boolean_simple_subtract2.yaml
+
+
+
+//-//////////////////////////////////////////////////////////////////
+//- SHAPES
+
+:markdown
+    # Region Grid
+    Comb Script provides a special region-type called a `region_grid`. Region grids can be used to draw a region repeatedly in a regular grid. 
+
+    The `rows` and `columns` properties will set the number of rows and columns in the grid directly. You can set `row_height` and `column_width` instead to create as many rows or columns as needed to fill the region grid.
+
+    Each cell in the generated grid will contain a clone of the children of the region grid.
+
+pre.display
+    include examples/regiongrid_simple.yaml
+
+
+:markdown
+    # Library Items
+
