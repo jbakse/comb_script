@@ -3,13 +3,14 @@ library:
     #references can be entire regions with properties and children
     #define a reference
     - &inner_circle
-        ellipse:
+        rect:
             properties:
                 name: margin_circle
                 margin_top: 10
                 margin_left: 10
                 margin_bottom: 10
                 margin_right: 10
+                radius: 4
 
 children:
     - region:

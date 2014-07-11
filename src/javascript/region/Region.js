@@ -108,6 +108,12 @@ Region.prototype.loadProperties = function(_properties) {
 			return;
 		}
 
+		if (typeof pValue == "string" && def.type == "number" && !isNaN(pValue) && pValue !== '') {
+			// try casting strings to numbers
+			pValue = Number(pValue);
+
+		}
+
 		if (typeof pValue !== def.type) {
 			UI.log.appendWarning(messagePrefix + "Incorrect type: " + pKey + "<br />Received " + typeof pValue + ". Expected " + def.type + ".");
 			return;

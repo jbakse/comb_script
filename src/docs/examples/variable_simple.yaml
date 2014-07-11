@@ -1,0 +1,8 @@
+library:
+    - &size 200
+
+children:
+    - ellipse:
+        properties:
+            width:  *size
+            height: *size

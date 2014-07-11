@@ -1,14 +1,28 @@
-children:
-    - region_grid:
+children: 
+    - region:
         properties:
-            width: 400
-            height: 200
-            column_width: 50
-            rows: 4
-            registration: center
             boolean: add
+            
         children:
-            - ellipse:
+            - region_grid:
                 properties:
-                    width: 50
-                    height: 50
+                    width: 400
+                    height: 200
+                    column_width: 50
+                    rows: 4
+                    registration: center
+                    
+                children:
+                    - region:
+                        properties:
+                            boolean: subtract
+                        children:
+                            
+                            - ellipse:
+                                properties:
+                                    width: 60
+                                    height: 60
+                            - ellipse:
+                                properties:
+                                    width: 30
+                                    height: 30
