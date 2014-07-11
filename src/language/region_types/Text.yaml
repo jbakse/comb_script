@@ -4,35 +4,36 @@ Text:
     extends: Region
 
     description: |
-	<p>
-	Draws a bit of text using the Sutton line font.
-	</p>
-	<pre>
-	children:
-	    - text:
-		properties:
-		    text: "Hello, Comb Script!"
-	</pre>
+        <p>
+        Draws a bit of text using the Comb Scrips built-in line font, Sutton. Sutton's letters are built using lines instead of filled shapes and is well suited to plotted lettering. 
+        </p>
+        <pre>
+        children:
+            - text:
+                properties:
+                    text: "Hello, Comb Script!"
+        </pre>
 
     properties:
-	-   keyword: text
-	    description: The text to draw
-	    type: string
+    -   keyword: text
+        description: The text to draw
+        type: string
 
-	-   keyword: align
-	    description: The horizontal alignment of the text.
-	    type: string
-	    default: left
-	    values: [left, center, right]
+    -   keyword: size
+        description: The size to draw the text. Measured from the base line to the top of a capital.
+        type: number
 
-	-   keyword: vertical_align
-	    description: The vertical alignment of the text.
-	    type: string
-	    default: top
-	    values: [top, center, bottom]
+    -   keyword: align
+        description: The horizontal alignment of the text relative to the text region's registration.
+        type: string
+        default: left
+        values: [left, center, right]
+
+    -   keyword: vertical_align
+        description: The vertical alignment of the text relative to the text region's registration.
+        type: string
+        default: top
+        values: [top, center, bottom]
 
 
 
-	-   keyword: size
-	    description: The size to draw the text. Measured from the base line to the top of a capital.
-	    type: number

@@ -53,13 +53,13 @@ function populateTemplates() {
 function renderExamples() {
 	$('pre').each( function(_index, _element) {
 		var source = $(_element).text();
-		console.log("source", source);
+		// console.log("source", source);
 		var data = Parser.parse(source);
 		if (!data) return;
 
 		var doc = new regionTypes.Document();
 		doc.loadData(data);
-		console.log("doc", data, doc.properties);
+		// console.log("doc", data, doc.properties);
 		doc.properties.left = 0;
 		doc.properties.top = 0;
 		doc.properties.width = data.properties.width || 525;
