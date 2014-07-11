@@ -1,3 +1,17 @@
+BUGS:
+-	region_grid registration: top_left, top_right, etc is bugged and using the registration top_left, etc of the parent, not the individual region cells
+
+
+For Sketching:
+-	Drawbot Example
+-	T-Slot Box Example
+-	Greg Font/Sutton
+-	Finish Docs
+-	SVG Import
+
+
+
+
 @---	Finish Laguange Files for implemented classes.
 @--	Write some general docs.
 +--	Check to see if code can be cleaned up with use of default values.
@@ -247,8 +261,6 @@ Language Features
 -	remove overlapping line segments: good for lasercut prep
 
 
-BUGS:
--	region_grid registration: top_left, top_right, etc is bugged and using the registration top_left, etc of the parent, not the individual region cells
 
 
 Features
