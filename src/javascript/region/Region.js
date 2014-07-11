@@ -8,8 +8,8 @@ var settings = require('../settings.js');
 var regionTypes = require('./regionTypes.js');
 var Context = require('../Context.js');
 
-var UI = require('../UI.js'); //todo remove UI dependency
 var language = require('../language.js');
+var log = require('../ui/Log.js').sharedInstance(); 
 
 
 module.exports = Region;
@@ -104,7 +104,7 @@ Region.prototype.loadProperties = function(_properties) {
 		});
 
 		if (!def) {
-			UI.log.appendWarning(messagePrefix + "Unknown property: " + pKey);
+			log.appendWarning(messagePrefix + "Unknown property: " + pKey);
 			return;
 		}
 
@@ -115,12 +115,12 @@ Region.prototype.loadProperties = function(_properties) {
 		}
 
 		if (typeof pValue !== def.type) {
-			UI.log.appendWarning(messagePrefix + "Incorrect type: " + pKey + "<br />Received " + typeof pValue + ". Expected " + def.type + ".");
+			log.appendWarning(messagePrefix + "Incorrect type: " + pKey + "<br />Received " + typeof pValue + ". Expected " + def.type + ".");
 			return;
 		}
 
 		if (def.values && !_(def.values).contains(pValue)) {
-			UI.log.appendWarning(messagePrefix + "Unrecognized value for property: " + pKey + "<br />Received \"" + pValue + "\". Expected " + def.values.join(", ") + ".");
+			log.appendWarning(messagePrefix + "Unrecognized value for property: " + pKey + "<br />Received \"" + pValue + "\". Expected " + def.values.join(", ") + ".");
 			return;
 		}
 
@@ -146,7 +146,7 @@ Region.prototype.loadProperties = function(_properties) {
 		})
 		.each(function(_def) {
 			if (self.properties[_def.keyword] === undefined) {
-				UI.log.appendWarning(
+				log.appendWarning(
 					messagePrefix + "Missing required property: " + _def.keyword
 				);
 			}
@@ -174,10 +174,10 @@ Region.prototype.loadChildren = function(_childrenData) {
 		}
 		else {
 			if (childData.editor_properties) {
-				UI.log.appendWarning("[Line " + childData.editor_properties.firstLine + "] Unknown region type: " + childKey);
+				log.appendWarning("[Line " + childData.editor_properties.firstLine + "] Unknown region type: " + childKey);
 			}
 			else {
-				UI.log.appendWarning("Unknown region type: " + childKey);
+				log.appendWarning("Unknown region type: " + childKey);
 			}
 		}
 

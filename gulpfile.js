@@ -15,7 +15,7 @@ var jade = require('gulp-jade');
 
 gulp.task('javascript', function() {
 	return gulp
-		.src(['./src/javascript/main.js', './src/javascript/doc.js'], {
+		.src(['./src/javascript/main.js', './src/javascript/docs.js'], {
 			read: false
 		})
 		.pipe(plumber())
@@ -39,7 +39,7 @@ gulp.task('jade', function() {
 
 
 gulp.task('less', function() {
-	return gulp.src(['./src/style/doc.less']) //, './src/style/main.less'
+	return gulp.src(['./src/style/docs.less']) //, './src/style/main.less'
 		.pipe(plumber())
 		.pipe(less())
 		.pipe(gulp.dest('./build/css/'))

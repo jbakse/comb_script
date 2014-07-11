@@ -2,7 +2,7 @@
 
 var _ = require('underscore');
 var jsYAML = require('js-yaml');
-var UI = require('./UI.js');
+var log = require('./ui/Log.js').sharedInstance();
 var language = require('./language.js');
 
 module.exports.parse = parse;
@@ -13,14 +13,14 @@ module.exports.parse = parse;
 function parse(_yaml) {
 	var data;
 
-	UI.log.appendMessage("Parsing YAML");
+	log.appendMessage("Parsing YAML");
 	
 	// try first without injections, so that errors will have correct line numbers
 	try {
 		data = jsYAML.safeLoad(_yaml);
 	}
 	catch (e) {
-		return UI.log.appendParseError(e);
+		return log.appendParseError(e);
 	}
 
 
@@ -31,11 +31,11 @@ function parse(_yaml) {
 		data = jsYAML.safeLoad(_yaml);
 	}
 	catch (e) {
-		return UI.log.appendParseError(e);
+		return log.appendParseError(e);
 	}
 
 	if (data === null || typeof data !== "object") {
-		return UI.log.appendError("Couldn't parse YAML.");
+		return log.appendError("Couldn't parse YAML.");
 	}
 
 	// todo default document goes here

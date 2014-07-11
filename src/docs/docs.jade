@@ -7,9 +7,8 @@ html
 		script(src="../../lib/paperjs-v0.9.18/dist/paper-full.js")
 		script(src="../../lib/ace/ace.js")
 
-
 		script(src="../javascript/language.js")
-		script(src="../javascript/doc.js")
+		script(src="../javascript/docs.js")
 
 		link(href='http://fonts.googleapis.com/css?family=Arvo:400,700,400italic', rel='stylesheet', type='text/css')
 		link(href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700', rel='stylesheet', type='text/css')
@@ -17,22 +16,89 @@ html
 
 	body
 		nav#menu
-			h2 Information
+			h2 Overview
 			ul
-				li
-					a(href='#introduction') Introduction
-				li
-					a(href='#syntax') Basic Syntax
-				li
-					a(href='#regions') Regions
-				li
-					a(href='#shapes') Shapes
-				li
-					a(href='#grids') Grids
-				li
-					a(href='#repeat') Constants
-				li
-					a(href='#repeat') Library Items
+				li: a(href='#introduction') Introduction
+				li: a(href='#syntax') Basic Syntax
+				li: a(href='#regions') Regions
+				li: a(href='#shapes') Shapes
+				li: a(href='#grids') Grids
+				li: a(href='#repeat') Constants
+				li: a(href='#repeat') Library Items
+
+
+			h2 API Reference
+			ul#template-menu
+				| {{#regionTypes}}
+				| <li><a href="\#{{class}}">{{class}}</a></li>
+				| {{/regionTypes}}
+		
+
 
 		main#content
 			include _comb_script
+
+			
+			div#template-regionTypes
+				| {{#regionTypes}}
+				| <section class="region-type" id="{{class}}">
+				| 	<h1>{{class}}</h1>
+
+				| 	<dl>
+				| 		{{#keyword}}<dt>keyword:</dt><dd>{{keyword}}</dd>{{/keyword}}
+				| 		{{#extends}}<dt>extends:</dt><dd><a href="\#{{extends}}">{{extends}}</a></dd>{{/extends}}
+				| 	</dl>
+					
+				| 	<div class="region-description">{{{description}}}</div>
+					
+				| 	{{#required_properties.length}}
+				| 		<h2>Required Properties</h2>
+				| 		<ul class="properties required-properties">
+				| 		{{#required_properties}}
+				| 			<li>{{>prop}}</li>
+				| 		{{/required_properties}}
+				| 		</ul>
+				| 	{{/required_properties.length}}
+
+				| 	{{#properties.length}}
+				| 		<h2>Properties</h2>
+				| 		<ul class="properties">
+				| 		{{#properties}}
+				| 			<li>{{>prop}}</li>
+				| 		{{/properties}}
+				| 		</ul>
+				| 	{{/properties.length}}
+					
+				| 	{{#inherited_properties.length}}
+				| 		<h2>Inherited Properties</h2>
+				| 		<ul class="properties inherited-properties">
+				| 		{{#inherited_properties}}
+				| 			<li>{{>prop}}</li>
+				| 		{{/inherited_properties}}
+				| 		</ul>
+				| 	{{/inherited_properties.length}}
+					
+				| </section>
+				| {{/regionTypes}}
+
+			div#template-property.hidden
+				| <div class="property-name">{{keyword}}</div>
+				| <div class="description">{{{description}}}</div>
+				| <dl>
+				| 	<dt>type:</dt>
+				| 	<dd>{{type}}</dd>
+				| 	<dt>default:</dt>
+				| 	<dd>{{default}}{{^default}}undefined{{/default}}</dd>
+				| 	{{#required}}
+				| 		<dt>required:</dt>
+				| 		<dd>{{required}}</dd>
+				| 	{{/required}}
+				| 	{{#values.length}}
+				| 		<dt>values:</dt>
+				| 		{{#values}}
+				| 		<dd>{{.}}</dd>
+				| 		{{/values}}
+				| 	{{/values.length}}
+				| </dl>
+			
+				

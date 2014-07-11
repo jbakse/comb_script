@@ -1,39 +1,50 @@
 'use strict';
 
 var _ = require('underscore');
-var regionTypes = require('./region/regionTypes.js');
+
 var settings = require('./settings.js');
 var util = require('./util.js');
-var UI = require('./UI.js');
+
+var regionTypes = require('./region/regionTypes.js');
+
 var Parser = require('./Parser.js');
 var Context = require('./Context.js');
 
-module.exports = new Controller();
+var Preview = require('./ui/Preview.js');
+var Editor = require('./ui/Editor.js');
+var Inspector = require('./ui/Inspector.js');
+var Menu = require('./ui/Menu.js');
+var log = require('./ui/Log.js').sharedInstance();
 
 
-function Controller() {
+module.exports = ApplicationController;
+
+
+function ApplicationController() {
 	this.doc = null;
 	this.selectedRegions = [];
 	this.keySelection = null;
 	this.hoverRegion = null;
+
+	this.preview = new Preview();
+	this.editor = new Editor();
+	this.inspector = new Inspector();
+	this.menu = new Menu();
+
 }
 
-Controller.prototype.redrawPreview = function(_region) {
+ApplicationController.prototype.init = function(_element) {
+	this.preview.init($('#paper-canvas').get(0));
+	this.editor.init($('#editor').get(0));
+	this.inspector.init($('#inspector').get(0), this);
+	this.menu.init($('#menu').get(0));
 
-	this.doc.setStyle("default", true);
-
-	_(this.selectedRegions).each(function(_region) {
-		_region.setStyle("selected");
-	});
-
-	if (this.keySelection) this.keySelection.setStyle("key");
-	if (this.hoverRegion) this.hoverRegion.setStyle("hover");
-
-	UI.preview.redraw();
+	this.attachHandlers();
 };
 
 
-Controller.prototype.attachHandlers = function() {
+
+ApplicationController.prototype.attachHandlers = function() {
 	var self = this;
 	$.Topic("UI/command/rebuild").subscribe(_.bind(this.rebuild, this));
 	$.Topic("UI/command/exportSVG").subscribe(_.bind(this.exportSVG, this));
@@ -60,8 +71,8 @@ Controller.prototype.attachHandlers = function() {
 
 			// $.Topic("UI/updateInspector").publish([_region]);
 
-			UI.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
-			UI.editor.gotoLine(_region.editorProperties.firstLine + 1, true);
+			this.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
+			this.editor.gotoLine(_region.editorProperties.firstLine + 1, true);
 		}
 	);
 
@@ -76,7 +87,22 @@ Controller.prototype.attachHandlers = function() {
 	);
 };
 
-Controller.prototype.onLineChange = function(_line) {
+ApplicationController.prototype.redrawPreview = function(_region) {
+
+	this.doc.setStyle("default", true);
+
+	_(this.selectedRegions).each(function(_region) {
+		_region.setStyle("selected");
+	});
+
+	if (this.keySelection) this.keySelection.setStyle("key");
+	if (this.hoverRegion) this.hoverRegion.setStyle("hover");
+
+	this.preview.redraw();
+};
+
+
+ApplicationController.prototype.onLineChange = function(_line) {
 	if (!this.doc) return;
 
 	var regions = _(this.doc.getDecendants()).filter(function(_region) {
@@ -108,7 +134,7 @@ Controller.prototype.onLineChange = function(_line) {
 	}
 
 	var r = regions[0];
-	UI.editor.highlightLines(r.editorProperties.firstLine, r.editorProperties.lastLine, r.type.toLowerCase());
+	this.editor.highlightLines(r.editorProperties.firstLine, r.editorProperties.lastLine, r.type.toLowerCase());
 
 	$.Topic("UI/updateInspector").publish([this.keySelection]);
 
@@ -116,32 +142,32 @@ Controller.prototype.onLineChange = function(_line) {
 
 };
 
-Controller.prototype.loadYAMLfromURL = function() {
+ApplicationController.prototype.loadYAMLfromURL = function() {
 	var self = this;
 	$.ajax({
 		url: settings.fileURL,
 
 		success: function(_data) {
-			UI.editor.setText(_data);
-			UI.editor.gotoLine(1, true);
+			self.editor.setText(_data);
+			self.editor.gotoLine(1, true);
 		},
 
 		fail: function(_data) {
-			UI.log.appendError("Couldn't retrieve YAML");
+			log.appendError("Couldn't retrieve YAML");
 		},
 
 		cache: false
 	});
 };
 
-Controller.prototype.rebuild = function() {
-	UI.log.clear();
-	this._updateYAML(UI.editor.getText());
-	this.onLineChange(UI.editor.editor.selection.getCursor().row);
+ApplicationController.prototype.rebuild = function() {
+	log.clear();
+	this._updateYAML(this.editor.getText());
+	this.onLineChange(this.editor.editor.selection.getCursor().row);
 };
 
-Controller.prototype.exportSVG = function() {
-	UI.log.appendMessage("Exporting SVG");
+ApplicationController.prototype.exportSVG = function() {
+	log.appendMessage("Exporting SVG");
 
 	var exportWidth = this.doc.properties.width;
 	var exportHeight = this.doc.properties.height;
@@ -167,7 +193,7 @@ Controller.prototype.exportSVG = function() {
 };
 
 
-Controller.prototype._updateYAML = function(_yaml) {
+ApplicationController.prototype._updateYAML = function(_yaml) {
 	console.log("update yaml");
 
 	try {
@@ -185,14 +211,14 @@ Controller.prototype._updateYAML = function(_yaml) {
 		var self = this;
 
 		$.whenAll.apply($, this.doc.waitList).always(function() {
-			if (self.doc.waitList.length) UI.log.appendSuccess("Subdocuments Loaded");
-			UI.preview.setDocument(self.doc);
+			if (self.doc.waitList.length) log.appendSuccess("Subdocuments Loaded");
+			self.preview.setDocument(self.doc);
 		});
 
-		UI.log.appendSuccess("Success");
+		log.appendSuccess("Success");
 	}
 	catch (_e) {
-		UI.log.appendException(_e, "Unable to parse or render this script.");
+		log.appendException(_e, "Unable to parse or render this script.");
 		throw(_e);
 	}
 

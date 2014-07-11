@@ -4,13 +4,15 @@ Ellipse:
     extends: Region
 
     description: |
+        <p>
         Ellipse draws an ellipse.
+        <p>
         <pre>
-        - ellipse:
-            properties:
-                name: simple_ellipse
-                width: 200
-                height: 200
+        children:
+            - ellipse:
+                properties:
+                    width: 200
+                    height: 200
         </pre>
 
     properties:

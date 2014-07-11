@@ -1,9 +1,11 @@
-var Context = require('./Context.js');
-var language = require('./language.js');
-var settings = require('./settings.js');
+'use strict';
 
+var Context = require('../Context.js');
+var language = require('../language.js');
+var settings = require('../settings.js');
 
 module.exports = Preview;
+
 
 ////////////////////////////////////////////////////////////////////
 // Preview
