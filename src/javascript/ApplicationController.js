@@ -71,8 +71,8 @@ ApplicationController.prototype.attachHandlers = function() {
 
 			// $.Topic("UI/updateInspector").publish([_region]);
 
-			this.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
-			this.editor.gotoLine(_region.editorProperties.firstLine + 1, true);
+			self.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
+			self.editor.gotoLine(_region.editorProperties.firstLine + 1, true);
 		}
 	);
 

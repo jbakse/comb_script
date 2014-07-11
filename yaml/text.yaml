@@ -1,0 +1,9 @@
+children:
+    - text:
+	properties:
+	    size: 20
+	    text: "Hello, Comb Script!"
+	    align: right
+	    vertical_align: center
+	    registration: top_right
+	    margin_top: 40

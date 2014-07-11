@@ -1,0 +1,38 @@
+Text:
+    keyword: text
+    class: Text
+    extends: Region
+
+    description: |
+	<p>
+	Draws a bit of text using the Sutton line font.
+	</p>
+	<pre>
+	children:
+	    - text:
+		properties:
+		    text: "Hello, Comb Script!"
+	</pre>
+
+    properties:
+	-   keyword: text
+	    description: The text to draw
+	    type: string
+
+	-   keyword: align
+	    description: The horizontal alignment of the text.
+	    type: string
+	    default: left
+	    values: [left, center, right]
+
+	-   keyword: vertical_align
+	    description: The vertical alignment of the text.
+	    type: string
+	    default: top
+	    values: [top, center, bottom]
+
+
+
+	-   keyword: size
+	    description: The size to draw the text. Measured from the base line to the top of a capital.
+	    type: number
