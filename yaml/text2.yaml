@@ -1,0 +1,87 @@
+children:
+    - region:
+        properties:
+            width: 0
+            height: 0
+            margin_left: 0
+            margin_top: -30
+        children:
+            - text:
+                properties:
+                    size: 30
+                    text: "Hello, Comb Script!"
+                    align: left
+                    #vertical_align: center
+                    registration: top
+                    margin_top: 30
+                    margin_left: 0
+            - region:
+                properties:
+                    name: lower_case
+                    width: 0
+                    height: 0
+                    margin_left: 0
+                    margin_top: 0
+                    scale_x: 0.75
+                    scale_y: 0.75
+                children:
+                    - text:
+                        properties:
+                            size: 50
+                            text: "the quick brown"
+                            align: left
+                            #vertical_align: center
+                            registration: top
+                            margin_top: 80
+                            margin_left: 0
+                    - text:
+                        properties:
+                            size: 50
+                            text: "fox jumps over"
+                            align: left
+                            registration: top
+                            margin_top: 160
+                            margin_left: 0
+                    - text:
+                        properties:
+                            size: 50
+                            text: "the lazy dog."
+                            align: left
+                            registration: top
+                            margin_top: 240
+                            margin_left: 0
+            - region:
+                properties:
+                    name: upper_case
+                    width: 0
+                    height: 0
+                    margin_left: 0
+                    margin_top: 300
+                    scale_x: 0.75
+                    scale_y: 0.75
+                children:
+                    - text:
+                        properties:
+                            size: 50
+                            text: "THE QUICK BROWN"
+                            align: left
+                            #vertical_align: center
+                            registration: top
+                            margin_top: 80
+                            margin_left: 0
+                    - text:
+                        properties:
+                            size: 50
+                            text: "FOX JUMPS OVER"
+                            align: left
+                            registration: top
+                            margin_top: 160
+                            margin_left: 0
+                    - text:
+                        properties:
+                            size: 50
+                            text: "THE LAZY DOG."
+                            align: left
+                            registration: top
+                            margin_top: 240
+                            margin_left: 0

@@ -67,6 +67,32 @@ var glyphMap = {
 'c': "char-c",
 'b': "char-b",
 'a': "char-a",
+'Z': "char-Z",
+'Y': "char-Y",
+'X': "char-X",
+'W': "char-W",
+'V': "char-V",
+'U': "char-U",
+'T': "char-T",
+'S': "char-S",
+'R': "char-R",
+'Q': "char-Q",
+'P': "char-P",
+'O': "char-O",
+'N': "char-N",
+'M': "char-M",
+'L': "char-L",
+'K': "char-K",
+'J': "char-J",
+'I': "char-I",
+'H': "char-H",
+'G': "char-G",
+'F': "char-F",
+'E': "char-E",
+'D': "char-D",
+'C': "char-C",
+'B': "char-B",
+'A': "char-A",
 };
 
 
@@ -103,7 +129,8 @@ Text.prototype.drawBounds = function(_bounds) {
 	_(this.properties.text).each(function(c, i) {
 		if (c === ' ') return;
 
-		var glyphID = glyphMap[c.toLowerCase()] || 'char-period';
+		//var glyphID = glyphMap[c.toLowerCase()] || 'char-period';
+		var glyphID = glyphMap[c] || 'char-period';
 		var glyphSVG = $("#"+glyphID, font).get(0);
 		var glyph = new paper.Group().importSVG(glyphSVG, {
 			expandShapes: true
