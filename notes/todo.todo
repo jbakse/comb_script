@@ -6,10 +6,12 @@ BUGS:
 - boolean rendering sometimes renders funny in preview. Looks like it sometimes has trouble with innards of closed shapes. Export looks fine though even though the preview renders funny.
 
 +----- fix symetry
------ While editting files you might break something in the re-render and then have to reload. fix that. you should be able to type any old garbage.
++----- While editting files you might break something in the re-render and then have to reload. fix that. you should be able to type any old garbage.
+
+
 
 For Sketching:
----	Examples in App
+.---	Examples in App
 
 ---	Examples
 	---	Drawbot Example
@@ -28,8 +30,13 @@ For Sketching:
 +---	Fix Refactoring related issues discovered building app examples
 
 ---	Comb Script -> CombScript
+---	.yaml -> .comb
 
 ---	Deploy
+
+-	export
+	+---	correct size
+	-	export style
 
 
 

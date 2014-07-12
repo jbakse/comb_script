@@ -68,7 +68,7 @@ Inspector.prototype.update = function(_regions) {
 		width: _region.previewBoundsGroup.bounds.width,
 		height: _region.previewBoundsGroup.bounds.height,
 	};
-	$(this.element).append(t("Height", this.formatDimensionObject(size) || "{}"));
+	$(this.element).append(t("Dimensions", this.formatDimensionObject(size) || "{}"));
 
 
 	var bounds = {

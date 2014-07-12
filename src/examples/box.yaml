@@ -1,0 +1,127 @@
+properties:
+    unit: mm
+    width: 200
+    height: 200
+
+library:
+    - &length 120
+    - &height 50
+    - &depth 50
+    - &m3_nut_width 6.5
+    - &m3_nut_height 2.5
+    - &m3_shaft_width 3
+    - &m3_pass
+        ellipse:
+            properties:
+                name: m3_pass
+                width: *m3_shaft_width
+                height: *m3_shaft_width
+
+    - &tslot
+        rectangle: 
+            properties:
+                name: tslot
+                width: *m3_shaft_width
+                bottom: 2
+                height: 12
+                radius: 1
+                boolean: add
+            children:
+                - rectangle:
+                    properties:
+                        name: nut
+                        width: *m3_nut_width
+                        height: *m3_nut_height
+                        margin_top: 3
+                        radius: 1
+children:
+    - *tslot
+    - rectangle:
+        properties:
+            name: bottom
+            width: *length
+            height: *depth
+            margin_top: 10
+            margin_left: 10
+            boolean: subtract
+        children:
+            - region_grid:
+                properties:
+                    name: front_holes
+                    column_width: 30
+                    height: 5
+                    margin_bottom: 0
+                    registration: top
+                children:
+                    - *m3_pass
+
+            - region_grid:
+                properties:
+                    name: back_holes
+                    column_width: 30
+                    height: 5
+                    margin_top: 0
+                    registration: bottom
+                children:
+                    - *m3_pass
+
+            - region_grid:
+                properties:
+                    name: slots
+                    column_width: 30
+                    height: 5
+                    margin_bottom: 0
+                    margin_left: 15
+                    registration: top
+                children:
+                    - rectangle:
+                        properties:
+                            width: 11
+                            height: 3
+
+            - region_grid:
+                properties:
+                    name: slots
+                    column_width: 30
+                    height: 5
+                    margin_top: 0
+                    margin_left: 15
+                    registration: bottom
+                children:
+                    - rectangle:
+                        properties:
+                            width: 11
+                            height: 3
+
+    - rectangle:
+        properties:
+            name: side
+            width: *length
+            height: *height
+            margin_top: 100
+            margin_left: 10
+            boolean: subtract
+        children:
+            - region_grid:
+                properties:
+                    name: tslots
+                    column_width: 30
+                    height: 5
+                    margin_bottom: 0
+                    registration: bottom
+                children:
+                    - *tslot
+
+            - region_grid:
+                properties:
+                    name: tabs
+                    column_width: 30
+                    height: 5
+                    margin_bottom: 0
+                    margin_left: 15
+                    registration: bottom
+                children:
+                    - rectangle:
+                        properties:
+                            width: 10
+                            height: 6

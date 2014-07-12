@@ -1,0 +1,5 @@
+properties:
+    name: transform
+    unit: mm
+    width: 100
+    height: 100

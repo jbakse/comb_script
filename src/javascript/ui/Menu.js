@@ -15,6 +15,13 @@ Menu.prototype.init = function(_element) {
 	this.addToggleCommand("#button-view-frame", "UI/command/toggleViewPreview");
 	this.addToggleCommand("#button-view-build", "UI/command/toggleViewBuild");
 	this.addToggleCommand("#button-view-export", "UI/command/toggleViewExport");
+
+
+	$('.example-link').click ( function (_e) {
+		// console.log("_e", _e, this, $(this).data('example'));
+		$.Topic("UI/command/loadYAML").publish($(this).data('example'));
+	});
+
 };
 
 Menu.prototype.addClickCommand = function(_element, _command) {

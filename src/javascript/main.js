@@ -10,10 +10,7 @@ function main() {
 	appController.init();
 
 
-	// $('div.split-pane').splitPane();
-	// $('#right-side-inner > .split-pane-resize-shim').mousemove(function() {
-	// 	UI.editor.resize();
-	// });
+	
 
 
 	// UI.log.appendMessage("Loading " + settings.fileURL);

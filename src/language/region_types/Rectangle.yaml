@@ -4,16 +4,16 @@ Rectangle:
     extends: Region
 
     description: |
-	<p>
-	Rectangle draws a rectangle or a rounded rectangle.
-	</p>
+        <p>
+        Rectangle draws a rectangle or a rounded rectangle.
+        </p>
         <pre>
-	children:
-	    - rectangle:
-		properties:
-		    width: 200
-		    height: 200
-		    radius: 10
+        children:
+            - rectangle:
+            properties:
+                width: 200
+                height: 200
+                radius: 10
         </pre>
 
     properties:

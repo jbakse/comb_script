@@ -40,7 +40,7 @@ gulp.task('jade', function() {
 
 
 gulp.task('less', function() {
-	return gulp.src(['./src/style/docs.less']) //, './src/style/main.less'
+	return gulp.src(['./src/style/docs.less', './src/style/main.less']) //, './src/style/main.less'
 		.pipe(plumber())
 		.pipe(less())
 		.pipe(gulp.dest('./build/css/'))
@@ -60,6 +60,13 @@ gulp.task('html', function() {
 gulp.task('images', function() {
 	return gulp.src('./src/images/**/*.*')
 		.pipe(gulp.dest('./build/images/'))
+		.pipe(livereload())
+		;
+});
+
+gulp.task('examples', function() {
+	return gulp.src('./src/examples/**/*.*')
+		.pipe(gulp.dest('./build/examples/'))
 		.pipe(livereload())
 		;
 });
@@ -89,7 +96,7 @@ gulp.task('watch', function() {
 	gulp.watch('./src/language/**/*.yaml', ['language']);
 	gulp.watch('./src/**/*.html', ['html']);
 	gulp.watch('./src/**/*.jade', ['jade']);
-
+	gulp.watch('./src/examples/**', ['examples']);
 
 	gulp.watch('yaml/*.*').on('change', function(file) {
 		livereload().changed(file.path);

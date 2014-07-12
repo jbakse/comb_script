@@ -1,5 +1,6 @@
 'use strict';
 
+var language = require('./language.js');
 var _ = require('underscore');
 
 var settings = require('./settings.js');
@@ -40,6 +41,11 @@ ApplicationController.prototype.init = function(_element) {
 	this.menu.init($('#menu').get(0));
 
 	this.attachHandlers();
+
+	$('div.split-pane').splitPane();
+	$('#right-side-inner > .split-pane-resize-shim').mousemove(function() {
+		this.editor.resize();
+	});
 };
 
 
@@ -50,6 +56,8 @@ ApplicationController.prototype.attachHandlers = function() {
 	$.Topic("UI/command/exportSVG").subscribe(_.bind(this.exportSVG, this));
 	$.Topic("UI/onContentChange").subscribe(_.bind(this.rebuild, this));
 	$.Topic("UI/onLineChange").subscribe(_.bind(this.onLineChange, this));
+
+	$.Topic("UI/command/loadYAML").subscribe(_.bind(this.loadYAMLfromURL, this));
 
 
 	$.Topic("region/onMouseEnter").subscribe(
@@ -106,7 +114,7 @@ ApplicationController.prototype.onLineChange = function(_line) {
 	if (!this.doc) return;
 
 	var regions = _(this.doc.getDecendants()).filter(function(_region) {
-		return _region.editorProperties.firstLine <= _line && _region.editorProperties.lastLine >= _line;
+		return _region.editorProperties.firstLine <= (_line - 1) && _region.editorProperties.lastLine >= (_line - 1);
 	});
 
 	var ancestors = _(regions).map(function(r) {
@@ -142,10 +150,10 @@ ApplicationController.prototype.onLineChange = function(_line) {
 
 };
 
-ApplicationController.prototype.loadYAMLfromURL = function() {
+ApplicationController.prototype.loadYAMLfromURL = function(_url) {
 	var self = this;
 	$.ajax({
-		url: settings.fileURL,
+		url: _url,
 
 		success: function(_data) {
 			self.editor.setText(_data);
@@ -169,16 +177,20 @@ ApplicationController.prototype.rebuild = function() {
 ApplicationController.prototype.exportSVG = function() {
 	log.appendMessage("Exporting SVG");
 
-	var exportWidth = this.doc.properties.width;
-	var exportHeight = this.doc.properties.height;
+	var unitScale = language.unitScales[this.doc.properties.unit] || 1;
+	
+	var exportWidth = this.doc.properties.width * unitScale;
+	var exportHeight = this.doc.properties.height * unitScale;
 	var context = new Context();
+	context.matrix.scale(unitScale);
+
 	var currentProject = paper.project;
 
 	var exportProject = new paper.Project($('<canvas width="' + exportWidth + '" height="' + exportHeight + '" />').get(0));
 	exportProject.activate();
 	this.doc.build(context);
 	exportProject.activeLayer.style = settings.exportStyle;
-	exportProject.activeLayer.translate(exportWidth * 0.5, exportHeight * 0.5);
+	// exportProject.activeLayer.translate(exportWidth * 0.5, exportHeight * 0.5);
 	var svg = exportProject.exportSVG({
 		asString: true
 	});
