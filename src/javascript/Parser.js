@@ -106,7 +106,7 @@ function injectEditorProperties(_yaml) {
 
 	lines.splice(0, 0, "editor_properties: " + JSON.stringify(documentData));
 
-	// console.log(lines.join("\n"));
+	console.log(lines.join("\n"));
 
 	return lines.join("\n");
 

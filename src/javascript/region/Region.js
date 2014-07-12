@@ -9,7 +9,7 @@ var regionTypes = require('./regionTypes.js');
 var Context = require('../Context.js');
 
 var language = require('../language.js');
-var log = require('../ui/Log.js').sharedInstance(); 
+var log = require('../ui/Log.js').sharedInstance();
 
 
 module.exports = Region;
@@ -33,7 +33,7 @@ function Region(_parent) {
 
 	this.children = [];
 	this.properties = {};
-	
+
 	this.editorProperties = {};
 
 	this.previewBoundsGroup = null;
@@ -77,8 +77,7 @@ Region.prototype.loadData = function(_data) {
 Region.prototype.loadProperties = function(_properties) {
 
 	var self = this;
-	// console.log("this.type", this.type, language.regionTypes);
-	//todo recurse?
+		//todo recurse?
 	var definitions = language.regionTypes[this.type].properties;
 	if (!Array.isArray(definitions)) {
 		definitions = [];
@@ -88,7 +87,7 @@ Region.prototype.loadProperties = function(_properties) {
 		definitions = util.mergeObjectArraysOnKey(language.regionTypes[superClass].properties, definitions, "keyword");
 	}
 
-	
+
 
 	// Build message prefix
 	// todo factor this out
@@ -96,6 +95,9 @@ Region.prototype.loadProperties = function(_properties) {
 	if (this.editorProperties.firstLine) {
 		messagePrefix = "[Line " + this.editorProperties.firstLine + " " + this.type + "] ";
 	}
+
+
+
 
 	// Validate and import provided properties.
 	_(_properties).each(function(pValue, pKey) {
@@ -129,7 +131,7 @@ Region.prototype.loadProperties = function(_properties) {
 
 
 	// Populate defaults
-	
+
 	_(definitions).chain()
 		.filter(function(_def) {
 			return _def && _def.default;
@@ -155,7 +157,12 @@ Region.prototype.loadProperties = function(_properties) {
 };
 
 Region.prototype.loadChildren = function(_childrenData) {
-
+	console.log("typeof children", typeof _childrenData);
+	console.log("_childrenData instanceof Array", _childrenData instanceof Array);
+	if (! (_childrenData instanceof Array)) {
+		log.appendWarning("Children should be an array. Prepend child nodes with a dash and space.");
+		return;
+	}
 	_.each(_childrenData, function(_childData) {
 		var childKey = _.keys(_childData)[0];
 		var childData = _.values(_childData)[0];
@@ -277,7 +284,7 @@ Region.prototype.build = function(_parentContext) {
 	var childPaths = ownPaths.concat(this.buildChildren(context));
 
 
-	
+
 	if (!('boolean' in this.properties)) {
 		return childPaths;
 	}
@@ -339,7 +346,8 @@ Region.prototype.setStyle = function(_style, _recursive) {
 
 	if (this.isShape) {
 		this.previewBoundsGroup.style = settings.styles.shape[_style];
-	} else {
+	}
+	else {
 		this.previewBoundsGroup.style = settings.styles.bounds[_style];
 	}
 	this.previewPositionGroup.style = settings.styles.position[_style];
@@ -368,5 +376,5 @@ Region.prototype.drawBuild = function(_bounds) {
 Region.prototype.drawPosition = function(_bounds, _matrix) {
 	var scaling = _matrix.scaling;
 	var rect = new paper.Rectangle(-0.5, -0.5, 1, 1); //.scale(1/scaling.x, 1/scaling.y)
-	return new paper.Path.Ellipse(rect.scale(1/scaling.x, 1/scaling.y));
+	return new paper.Path.Ellipse(rect.scale(1 / scaling.x, 1 / scaling.y));
 };
