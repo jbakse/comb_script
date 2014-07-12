@@ -1,7 +1,7 @@
 properties:
     unit: mm
     width: 200
-    height: 200
+    height: 300
 
 library:
     - &length 120
@@ -35,7 +35,6 @@ library:
                         margin_top: 3
                         radius: 1
 children:
-    - *tslot
     - rectangle:
         properties:
             name: bottom
@@ -95,12 +94,12 @@ children:
 
     - rectangle:
         properties:
-            name: side
+            name: front
             width: *length
             height: *height
             margin_top: 100
             margin_left: 10
-            boolean: subtract
+            boolean: mixed
         children:
             - region_grid:
                 properties:
@@ -109,6 +108,7 @@ children:
                     height: 5
                     margin_bottom: 0
                     registration: bottom
+                    mixed_boolean: subtract
                 children:
                     - *tslot
 
@@ -120,8 +120,50 @@ children:
                     margin_bottom: 0
                     margin_left: 15
                     registration: bottom
+                    mixed_boolean: add
                 children:
                     - rectangle:
                         properties:
                             width: 10
                             height: 6
+
+            - rectangle:
+                properties:
+                    name: left_slot
+                    margin_top: 5
+                    margin_bottom: 5
+                    margin_left: 5
+                    width: 3
+                    mixed_boolean: subtract
+
+            - rectangle:
+                properties:
+                    name: right_slot
+                    margin_top: 5
+                    margin_bottom: 5
+                    margin_right: 5
+                    width: 3
+                    mixed_boolean: subtract
+
+    - rectangle:
+        properties:
+            name: side
+            width: *depth
+            height: *height
+            margin_top: 200
+            margin_left: 10
+            boolean: add
+        children:
+            - rectangle:
+                properties:
+                    margin_left: -3
+                    width: 6
+                    margin_top: 5
+                    margin_bottom: 5
+            - rectangle:
+                properties:
+                    margin_right: -3
+                    width: 6
+                    margin_top: 5
+                    margin_bottom: 5
+

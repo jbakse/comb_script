@@ -284,7 +284,41 @@ Region.prototype.previewChildren = function(_context) {
 //////////////////////////////////////////////////////////////////////
 // Build
 
+//todo factor this and .build together better
+Region.prototype.mixedBooleanBuild = function(_parentContext) {
+	var context = _parentContext.deriveContext(this.properties);
+
+	var ownPaths = [].concat(this.drawBuild(context.bounds));
+	_.each(ownPaths, function(p) {
+		p.transform(context.matrix);
+	}, this);
+
+	var childPaths = [];
+	var childOps = [];
+
+	_.each(this.children, function(_child) {
+		var s = _child.build(context);
+		childPaths.push(s);
+		childOps.push(_child.properties.mixed_boolean);
+	});
+
+	for(var i = 0; i < childPaths.length; i++) {
+		console.log("combine", childPaths[i], childOps[i]);
+		var op = booleanOperations[childOps[i]];
+		ownPaths = [paperUtil.combinePaths(ownPaths.concat(childPaths[i]), op)];
+	}
+
+
+
+	return ownPaths;
+
+};
+
+
 Region.prototype.build = function(_parentContext) {
+	if (this.properties.boolean === 'mixed') {
+		return this.mixedBooleanBuild(_parentContext);
+	}
 	var context = _parentContext.deriveContext(this.properties);
 
 	var ownPaths = [].concat(this.drawBuild(context.bounds));

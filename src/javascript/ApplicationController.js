@@ -231,7 +231,7 @@ ApplicationController.prototype._updateYAML = function(_yaml) {
 	}
 	catch (_e) {
 		log.appendException(_e, "Unable to parse or render this script.");
-		// throw(_e);
+		throw(_e);
 	}
 
 
