@@ -102,8 +102,8 @@ RegionGrid.prototype.generateContexts = function(_gridContext) {
 
 	var generatedContexts = [];
 
-	for (var row = 0; row < rows; row++) {
-		for (var col = 0; col < cols; col++) {
+	for (var row = 0; row < Math.floor(rows); row++) {
+		for (var col = 0; col < Math.floor(cols); col++) {
 
 			// generate bounds			
 			var width = _gridContext.bounds.width / cols;
@@ -117,10 +117,18 @@ RegionGrid.prototype.generateContexts = function(_gridContext) {
 			);
 
 			// generate context
-			var gridContext = new Context(gridRectangle, _gridContext.matrix);
-			if (this.properties.registration === "center") {
-				gridContext.centerRegistration();
-			}
+			// var gridContext = new Context(gridRectangle, _gridContext.matrix);
+			// if (this.properties.registration === "center") {
+			// 	gridContext.centerRegistration();
+			// }
+
+			var gridContext = _gridContext.deriveContext({
+				top: y,
+				bottom: y+height,
+				left: x,
+				right: x+width,
+				registration: this.properties.registration
+			});
 
 			generatedContexts.push(gridContext);
 		}

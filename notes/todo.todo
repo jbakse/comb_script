@@ -8,14 +8,27 @@ BUGS:
 
 
 For Sketching:
--	Drawbot Example
--	T-Slot Box Example
--	Greg Font/Sutton
--	Finish Docs
--	SVG Import
--	Examples in App
--	Fix Refactoring related issues discovered building app examples
+---	Examples in App
 
+---	Examples
+	---	Drawbot Example
+	---	T-Slot Box Example
+
+-	Greg Font/Sutton
+	+- Single Line
+	- Wrap
+
+--	Finish Docs
+	+- Initial Overview
+	+- API Reference
+	-- tweak style
+
+---	SVG Import
++---	Fix Refactoring related issues discovered building app examples
+
+---	Comb Script -> CombScript
+
+---	Deploy
 
 
 

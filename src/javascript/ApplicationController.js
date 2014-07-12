@@ -194,7 +194,7 @@ ApplicationController.prototype.exportSVG = function() {
 
 
 ApplicationController.prototype._updateYAML = function(_yaml) {
-	console.log("update yaml");
+	// console.log("update yaml");
 
 	try {
 		var data = Parser.parse(_yaml);
@@ -206,7 +206,7 @@ ApplicationController.prototype._updateYAML = function(_yaml) {
 		this.doc.properties.top = 0;
 		this.doc.properties.registration = "center";
 		
-		console.log(this.doc);
+		// console.log(this.doc);
 
 		var self = this;
 

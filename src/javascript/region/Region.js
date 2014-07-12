@@ -77,7 +77,7 @@ Region.prototype.loadData = function(_data) {
 Region.prototype.loadProperties = function(_properties) {
 
 	var self = this;
-	console.log("this.type", this.type, language.regionTypes);
+	// console.log("this.type", this.type, language.regionTypes);
 	//todo recurse?
 	var definitions = language.regionTypes[this.type].properties;
 	if (!Array.isArray(definitions)) {

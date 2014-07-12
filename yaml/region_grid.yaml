@@ -10,13 +10,15 @@ children:
             name: example_grid
             width: 8
             height: 8
-            rows: 2
-            columns: 3
+            rows: 4
+            column_width: 2.5
+            registration: center
 
         children:
             - ellipse:
                 properties:
-
+                    width: 1
+                    height: 1
 
 
 
