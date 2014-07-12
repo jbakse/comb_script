@@ -2,17 +2,17 @@ html
 	head
 		meta(charset='UTF-8')
 		title Comb Script Docs
-		script(src='../../lib/jquery-2.1.1.min.js')
-		script(src='../../lib/google-code-prettify/prettify.js')
-		script(src="../../lib/paperjs-v0.9.18/dist/paper-full.js")
-		script(src="../../lib/ace/ace.js")
+		script(src='../lib/jquery-2.1.1.min.js')
+		script(src='../lib/google-code-prettify/prettify.js')
+		script(src="../lib/paperjs-v0.9.18/dist/paper-full.js")
+		script(src="../lib/ace/ace.js")
 
-		script(src="../javascript/language.js")
-		script(src="../javascript/docs.js")
+		script(src="javascript/language.js")
+		script(src="javascript/docs.js")
 
 		link(href='http://fonts.googleapis.com/css?family=Arvo:400,700,400italic', rel='stylesheet', type='text/css')
 		link(href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700', rel='stylesheet', type='text/css')
-		link(rel='stylesheet', href='../css/docs.css')
+		link(rel='stylesheet', href='css/docs.css')
 
 	body
 		nav#menu
@@ -32,13 +32,13 @@ html
 				| {{#regionTypes}}
 				| <li><a href="\#{{class}}">{{class}}</a></li>
 				| {{/regionTypes}}
-		
+
 
 
 		main#content
-			include _comb_script
+			include docs/_comb_script
 
-			
+
 			div#template-regionTypes
 				| {{#regionTypes}}
 				| <section class="region-type" id="{{class}}">
@@ -48,9 +48,9 @@ html
 				| 		{{#keyword}}<dt>keyword:</dt><dd>{{keyword}}</dd>{{/keyword}}
 				| 		{{#extends}}<dt>extends:</dt><dd><a href="\#{{extends}}">{{extends}}</a></dd>{{/extends}}
 				| 	</dl>
-					
+
 				| 	<div class="region-description">{{{description}}}</div>
-					
+
 				| 	{{#required_properties.length}}
 				| 		<h2>Required Properties</h2>
 				| 		<ul class="properties required-properties">
@@ -68,7 +68,7 @@ html
 				| 		{{/properties}}
 				| 		</ul>
 				| 	{{/properties.length}}
-					
+
 				| 	{{#inherited_properties.length}}
 				| 		<h2>Inherited Properties</h2>
 				| 		<ul class="properties inherited-properties">
@@ -77,7 +77,7 @@ html
 				| 		{{/inherited_properties}}
 				| 		</ul>
 				| 	{{/inherited_properties.length}}
-					
+
 				| </section>
 				| {{/regionTypes}}
 
@@ -100,5 +100,3 @@ html
 				| 		{{/values}}
 				| 	{{/values.length}}
 				| </dl>
-			
-				

@@ -4,15 +4,25 @@
 var _ = require('underscore');
 var Region = require('./Region.js');
 
+
 module.exports = Text;
 
 var font;
-$.ajax({
-	url: "images/fonts/sutton_30x60.svg",
-	success: function(_data) {
-		font = _data;
-	}
-});
+
+/* global __dirname */
+// using browserify and brfs to inline the svg data.
+// https://github.com/substack/brfs
+var fs = require('fs');
+var font = fs.readFileSync(__dirname + '/../../images/fonts/sutton_30x60.svg', 'utf8');
+
+
+
+// $.ajax({
+// 	url: "images/fonts/sutton_30x60.svg",
+// 	success: function(_data) {
+// 		font = _data;
+// 	}
+// });
 
 var font_height = 60;
 var font_width = 30;

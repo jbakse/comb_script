@@ -2,21 +2,24 @@ Region:
     keyword: region
     class: Region
     description: |
-        Generic, non-drawing node. <b>This is bold</b>
+	<p>
+	Regions are the basic building block of Comb Script. See <a href="#regions">Regions</a>.
+	</p>
         <pre>
-        - region:
-            properties:
-                name: simple_parent_region
-                width: 200
-                height: 200
-            children:
-                - region:
-                    name: child_region
-                    margin_top: 20
-                    margin_left: 20
-                     width: 100
-                    height: 100
-                </pre>
+	children:
+	    - region:
+		properties:
+		    name: parent_region
+		    width: 200
+		    height: 200
+		children:
+		    - region:
+			properties:
+			    name: child_region
+			    width: 100
+			    height: 100
+			    margin_left: 10
+	</pre>
 
     properties:
 

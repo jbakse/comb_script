@@ -20,6 +20,7 @@ gulp.task('javascript', function() {
 		})
 		.pipe(plumber())
 		.pipe(browserify({
+			transform: ['brfs'],
 			debug: true
 		}))
 		.pipe(gulp.dest('./build/javascript/'))
@@ -29,10 +30,10 @@ gulp.task('javascript', function() {
 });
 
 gulp.task('jade', function() {
-	return gulp.src(['./src/docs/**/*.jade', '!./src/docs/**/_*.jade']) //, './src/style/main.less'
+	return gulp.src(['./src/docs.jade']) //, './src/style/main.less'
 		.pipe(plumber())
 		.pipe(jade())
-		.pipe(gulp.dest('./build/docs/'))
+		.pipe(gulp.dest('./build/'))
 		.pipe(livereload())
 		;
 });
@@ -87,7 +88,7 @@ gulp.task('watch', function() {
 	gulp.watch('./src/style/*.less', ['less']);
 	gulp.watch('./src/language/**/*.yaml', ['language']);
 	gulp.watch('./src/**/*.html', ['html']);
-	gulp.watch('./src/docs/**/*.jade', ['jade']);
+	gulp.watch('./src/**/*.jade', ['jade']);
 
 
 	gulp.watch('yaml/*.*').on('change', function(file) {
