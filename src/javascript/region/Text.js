@@ -139,8 +139,8 @@ Text.prototype.drawBounds = function(_bounds) {
 	_(this.properties.text).each(function(c, i) {
 		if (c === ' ') return;
 
-		//var glyphID = glyphMap[c.toLowerCase()] || 'char-period';
-		var glyphID = glyphMap[c] || 'char-period';
+		var glyphID = glyphMap[c.toUpperCase()] || 'char-period';
+		// var glyphID = glyphMap[c] || 'char-period';
 		var glyphSVG = $("#"+glyphID, font).get(0);
 		var glyph = new paper.Group().importSVG(glyphSVG, {
 			expandShapes: true

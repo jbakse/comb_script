@@ -62,9 +62,9 @@ Region.prototype.loadData = function(_data) {
 		this.editorProperties = _.clone(_data.editor_properties);
 	}
 
-	if (typeof _data.properties === "object" && _data.properties !== null) {
-		this.loadProperties(_data.properties);
-	}
+	// if (typeof _data.properties === "object" && _data.properties !== null) {
+	this.loadProperties(_data.properties);
+	// }
 
 	if (typeof _data.children === "object" && _data.children !== null) {
 		this.loadChildren(_data.children);
@@ -89,11 +89,22 @@ Region.prototype.loadProperties = function(_properties) {
 
 
 
+
 	// Build message prefix
 	// todo factor this out
 	var messagePrefix = this.type + ": ";
 	if (this.editorProperties.firstLine) {
 		messagePrefix = "[Line " + this.editorProperties.firstLine + " " + this.type + "] ";
+	}
+
+
+	if (typeof _properties === 'undefined') {
+		_properties = {};
+	}
+	if (typeof _properties !== 'object') {
+		log.appendWarning(messagePrefix + "Properties should be a key/value map. " + 
+			"<br />Received " + typeof _properties + ".");
+		_properties = {};
 	}
 
 
@@ -157,8 +168,8 @@ Region.prototype.loadProperties = function(_properties) {
 };
 
 Region.prototype.loadChildren = function(_childrenData) {
-	console.log("typeof children", typeof _childrenData);
-	console.log("_childrenData instanceof Array", _childrenData instanceof Array);
+	// console.log("typeof children", typeof _childrenData);
+	// console.log("_childrenData instanceof Array", _childrenData instanceof Array);
 	if (! (_childrenData instanceof Array)) {
 		log.appendWarning("Children should be an array. Prepend child nodes with a dash and space.");
 		return;

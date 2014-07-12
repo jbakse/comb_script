@@ -1,12 +1,12 @@
 BUGS:
 +-	region_grid registration: top_left, top_right, etc is bugged and using the registration top_left, etc of the parent, not the individual region cells
 
-- when making an array of things if there’s no space between the dash and the variable name it won’t parse properly, and the and the warning displayed isn't very descriptive
++- when making an array of things if there’s no space between the dash and the variable name it won’t parse properly, and the and the warning displayed isn't very descriptive
 
 - boolean rendering sometimes renders funny in preview. Looks like it sometimes has trouble with innards of closed shapes. Export looks fine though even though the preview renders funny.
 
------ fix symetry
-
++----- fix symetry
+----- While editting files you might break something in the re-render and then have to reload. fix that. you should be able to type any old garbage.
 
 For Sketching:
 ---	Examples in App
