@@ -100,27 +100,38 @@ RegionGrid.prototype.generateContexts = function(_gridContext) {
 	cols = this.properties.columns || cols;
 	cols = (_gridContext.bounds.width / this.properties.column_width) || cols;
 
+	var width = _gridContext.bounds.width / cols;
+	var height = _gridContext.bounds.height / rows;
+	var baseX = _gridContext.bounds.left;
+	var baseY = _gridContext.bounds.top;
+
+	if (this.properties.column_align === 'right') {
+		baseX = _gridContext.bounds.right - width * Math.floor(cols);
+	}
+	if (this.properties.column_align === 'center') {
+		baseX = _gridContext.bounds.center.x - width * Math.floor(cols) * 0.5;
+	}
+	if (this.properties.row_align === 'bottom') {
+		baseY = _gridContext.bounds.bottom - height * Math.floor(rows);
+	}
+	if (this.properties.row_align === 'center') {
+		baseY = _gridContext.bounds.center.y - height * Math.floor(rows) * 0.5;
+	}
+
 	var generatedContexts = [];
 
 	for (var row = 0; row < Math.floor(rows); row++) {
 		for (var col = 0; col < Math.floor(cols); col++) {
 
 			// generate bounds			
-			var width = _gridContext.bounds.width / cols;
-			var height = _gridContext.bounds.height / rows;
-			var x = _gridContext.bounds.left + col * width;
-			var y = _gridContext.bounds.top + row * height;
+			
+			var x = baseX + col * width;
+			var y = baseY + row * height;
 
 			var gridRectangle = new paper.Rectangle(
 				new paper.Point(x, y),
 				new paper.Size(width, height)
 			);
-
-			// generate context
-			// var gridContext = new Context(gridRectangle, _gridContext.matrix);
-			// if (this.properties.registration === "center") {
-			// 	gridContext.centerRegistration();
-			// }
 
 			var gridContext = _gridContext.deriveContext({
 				top: y,

@@ -6,7 +6,7 @@ BUGS:
 - boolean rendering sometimes renders funny in preview. Looks like it sometimes has trouble with innards of closed shapes. Export looks fine though even though the preview renders funny.
 
 +----- fix symetry
-+----- While editting files you might break something in the re-render and then have to reload. fix that. you should be able to type any old garbage.
+----- While editting files you might break something in the re-render and then have to reload. fix that. you should be able to type any old garbage. We might have to trash the whole damn paper/preview and rebuild to make sure. Nuke from orbit.
 
 
 
@@ -16,6 +16,8 @@ For Sketching:
 ---	Examples
 	---	Drawbot Example
 	---	T-Slot Box Example
+
+--	Document Mixed boolean mode
 
 -	Greg Font/Sutton
 	+- Single Line

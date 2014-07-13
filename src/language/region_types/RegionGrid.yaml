@@ -42,3 +42,15 @@ RegionGrid:
         -   keyword: column_width
             description: The width of columns in the grid.
             type: number
+
+        -   keyword: column_align
+            description: The alignment of the columns in the grid (if columns don't fill the full width).
+            type: string
+            default: center
+            values: [left, center, right]
+
+        -   keyword: row_align
+            description: The alignment of the rows in the grid (if columns don't fill the full height).
+            type: string
+            default: center
+            values: [top, center, bottom]
