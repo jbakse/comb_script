@@ -1,3 +1,5 @@
+[Reveal.js Slideshow](http://justinbakse.com/reveal/index.php?src=https://raw.githubusercontent.com/jbakse/comb_script/master/notes/sketching.md)
+
 # Hello
 
 A couple of months ago Brand New School did a physical interface project for Herman Miller. We went from concept to final installation in three weeks. To get it done fast, we used a variety of prototyping technologies including 3D Printing, Laser-cutting, and the Arduino. I was going to do this presentation on how we used these technologies in the project, but Greg said "all that junk" was "old news".
