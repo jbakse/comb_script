@@ -111,5 +111,5 @@ gulp.task('watch', function() {
 
 
 // Default Task
-gulp.task('default', ['javascript', 'less', 'language', 'html', 'jade', 'images', 'watch']);
+gulp.task('default', ['javascript', 'less', 'language', 'html', 'jade', 'images', 'examples', 'watch']);
 

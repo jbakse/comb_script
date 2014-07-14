@@ -3,42 +3,44 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="30px"
 	 height="60px" viewBox="0 0 30 60" enable-background="new 0 0 30 60" xml:space="preserve">
+<g id="Layer_65">
+</g>
 <g id="char-ampersand">
 	<path fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
 		M23.571,36.429C23.571,32.878,26.45,30,30,30h8.571"/>
-
+	
 		<circle fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="15" cy="15" r="15"/>
 	<path fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
 		M15,30C6.716,30,0,36.715,0,45c0,8.283,6.716,15,15,15c8.284,0,15-6.717,15-15V30"/>
 </g>
 <g id="char-exclamation">
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="5" y1="40" x2="5" y2="0"/>
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="5" y1="50" x2="5" y2="60"/>
 </g>
 <g id="char-period">
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0" y1="60" x2="10" y2="50"/>
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0" y1="50" x2="10" y2="60"/>
 </g>
 <g id="char-question">
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="15" y1="50" x2="15" y2="60"/>
 	<path fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
 		M15,40V30c8.285,0,15-6.717,15-15c0-8.285-6.715-15-15-15C6.717,0,0,6.715,0,15"/>
 </g>
 <g id="char-semicolon">
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="5" y1="35" x2="5" y2="45"/>
 	<path fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
 		M5,55v5c0,2.762-2.238,5-5,5"/>
 </g>
 <g id="char-colon">
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="5" y1="20" x2="5" y2="30"/>
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="5" y1="40" x2="5" y2="50"/>
 </g>
 <g id="char-tilde">
@@ -54,41 +56,41 @@
 		M10,10V5c0-2.762-2.238-5-5-5"/>
 </g>
 <g id="char-quote">
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="10" y1="0" x2="10" y2="10"/>
 </g>
 <g id="char-doublequote">
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="15" y1="0" x2="15" y2="10"/>
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="10" y1="0" x2="10" y2="10"/>
 </g>
 <g id="char-dash">
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="5" y1="30" x2="25" y2="30"/>
 </g>
 <g id="char-9">
-
+	
 		<circle fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="15" cy="15" r="15"/>
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="30" y1="15" x2="30" y2="60"/>
 </g>
 <g id="char-8">
-
+	
 		<circle fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="15" cy="15" r="15"/>
-
+	
 		<circle fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="15" cy="45" r="15"/>
 </g>
 <g id="char-7">
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0" y1="0" x2="30" y2="0"/>
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="30" y1="0" x2="0" y2="60"/>
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="5" y1="30" x2="25" y2="30"/>
 </g>
 <g id="char-6">
-
+	
 		<circle fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="15" cy="45" r="15"/>
 	<path fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
 		M0,45V15C0,6.715,6.717,0,15,0c8.285,0,15,6.715,15,15"/>
@@ -98,7 +100,7 @@
 		M0,45c0,8.283,6.717,15,15,15c8.285,0,15-6.717,15-15c0-8.285-6.715-15-15-15H0V0h30"/>
 </g>
 <g id="char-4">
-
+	
 		<polyline fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
 		25,60 25,0 0,30 30,30 	"/>
 </g>
@@ -112,152 +114,321 @@
 		M30,60H0l27.457-36.646C29.062,20.967,30,18.093,30,15c0-8.285-6.716-15-15-15S0,6.715,0,15"/>
 </g>
 <g id="char-1">
-
+	
 		<polyline fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
 		15,0 0,10 15,0 15,60 0,60 30,60 	"/>
 </g>
 <g id="char-0">
 	<path fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
 		M30,45V15c0-8.284-6.716-15-15-15S0,6.716,0,15v30c0,8.284,6.716,15,15,15S30,53.284,30,45z"/>
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="5" y1="5" x2="25" y2="55"/>
 </g>
 <g id="char-z">
-
+	
+		<polyline fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		30,60 0,60 30,30.333 0,30.333 	"/>
+</g>
+<g id="char-y">
+	<g>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0" y1="30" x2="12" y2="60"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="30" y1="30" x2="0" y2="80"/>
+	</g>
+</g>
+<g id="char-x">
+	<g>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0" y1="30" x2="30" y2="60"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="30" y1="30" x2="0" y2="60"/>
+	</g>
+</g>
+<g id="char-w">
+	<g>
+		<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+			M0,20v32.5C0,56.643,3.357,60,7.5,60s7.5-3.357,7.5-7.5c0,4.143,3.357,7.5,7.5,7.5s7.5-3.357,7.5-7.5V20"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="15" y1="52.5" x2="15" y2="45"/>
+	</g>
+</g>
+<g id="char-v">
+	
+		<polyline fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		30,30 15,60 0,30 	"/>
+</g>
+<g id="char-u">
+	<g>
+		<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+			M30,30v15c0,8.285-6.716,15-15,15S0,53.285,0,45V30"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="30" y1="45" x2="30" y2="60"/>
+	</g>
+</g>
+<g id="char-t">
+	<g>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0" y1="30.001" x2="30" y2="30.001"/>
+		<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+			M5,60h5c2.762,0,5-2.238,5-5V0"/>
+	</g>
+</g>
+<g id="char-s">
+	<g>
+		<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+			M5,50c0,5.522,4.478,10,10,10s10-4.478,10-10s-4.478-10-10-10"/>
+		<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+			M25,30c0-5.522-4.478-10-10-10S5,24.478,5,30s4.478,10,10,10"/>
+	</g>
+</g>
+<g id="char-r">
+	<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M10,40c0-5.522,4.478-10,10-10s10,4.478,10,10"/>
+	<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M0,60h5c2.762,0,5-2.238,5-5V30"/>
+</g>
+<g id="char-q">
+	
+		<circle fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="15" cy="45" r="15"/>
+	
+		<polyline fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		30,30 30,80 40,70 	"/>
+</g>
+<g id="char-p">
+	<g>
+		<g>
+			
+				<circle fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="15" cy="45" r="15"/>
+		</g>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0" y1="30" x2="0" y2="80"/>
+	</g>
+</g>
+<g id="char-o">
+	<g>
+		
+			<circle fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="15" cy="45" r="15"/>
+	</g>
+</g>
+<g id="char-n">
+	<g>
+		<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+			M30,60V45c0-8.285-6.717-15-15-15C6.715,30,0,36.715,0,45v15V30"/>
+	</g>
+</g>
+<g id="char-m">
+	
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="15" y1="27.5" x2="15" y2="35"/>
+	<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M0,20v10v30V27.5C0,23.357,3.357,20,7.5,20s7.5,3.357,7.5,7.5c0-4.143,3.357-7.5,7.5-7.5s7.5,3.357,7.5,7.5V60"/>
+</g>
+<g id="char-l">
+	<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M5,60h5c2.762,0,5-2.238,5-5V0"/>
+</g>
+<g id="char-k">
+	
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="10" y1="45" x2="30" y2="60"/>
+	
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="10" y1="45" x2="30" y2="30"/>
+	<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M0,60h5c2.762,0,5-2.238,5-5V0"/>
+</g>
+<g id="char-j">
+	
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="20" y1="25" x2="20" y2="15"/>
+	<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M30,30h-5c-2.762,0-5,2.238-5,5v35c0,5.522-4.478,10-10,10S0,75.522,0,70"/>
+</g>
+<g id="char-i">
+	
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="15" y1="25" x2="15" y2="15"/>
+	<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M25,30h-5c-2.762,0-5,2.238-5,5v20c0,2.762-2.238,5-5,5H5"/>
+</g>
+<g id="char-h">
+	<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M30,60V45c0-8.285-6.716-15-15-15S0,36.715,0,45v15V0"/>
+</g>
+<g id="char-g">
+	
+		<circle fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="15" cy="45" r="15"/>
+	<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M30,45v20c0,8.283-6.716,15-15,15S0,73.283,0,65"/>
+</g>
+<g id="char-f">
+	<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M15,30"/>
+	
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0" y1="30" x2="20" y2="30"/>
+	<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M0,60h5c2.762,0,5-2.238,5-5V10c0-5.522,4.478-10,10-10s10,4.478,10,10"/>
+</g>
+<g id="char-e">
+	<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M25.606,55.606C22.678,58.535,18.839,60,15,60C6.716,60,0,53.283,0,45c0-8.285,6.716-15,15-15s15,6.715,15,15H0"/>
+</g>
+<g id="char-d">
+	
+		<circle fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="15" cy="45" r="15"/>
+	
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="30" y1="60" x2="30" y2="0"/>
+</g>
+<g id="char-c">
+	<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M25.606,34.394c-5.858-5.858-15.355-5.858-21.213,0c-5.858,5.857-5.858,15.354,0,21.213c5.856,5.857,15.355,5.858,21.213,0"/>
+</g>
+<g id="char-b">
+	
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0" y1="60" x2="0" y2="0"/>
+	
+		<circle fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="15" cy="45" r="15"/>
+</g>
+<g id="char-a">
+	
+		<circle fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="15" cy="45" r="15"/>
+	
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="30" y1="45" x2="30" y2="60"/>
+</g>
+<g id="char-Z">
+	
 		<polyline fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
 		30,60 0,60 30,0 0,0 	"/>
 </g>
-<g id="char-y">
-
+<g id="char-Y">
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0" y1="0" x2="15" y2="30"/>
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="15" y1="30" x2="30" y2="0"/>
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="15" y1="30" x2="15" y2="60"/>
 </g>
-<g id="char-x">
-
+<g id="char-X">
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0" y1="0" x2="30" y2="60"/>
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0" y1="60" x2="30" y2="0"/>
 </g>
-<g id="char-w">
-
+<g id="char-W">
+	
 		<polyline fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
 		0,0 0,60 15,10 30,60 30,0 	"/>
 </g>
-<g id="char-v">
-
+<g id="char-V">
+	
 		<polyline fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
 		0,0 15,60 30,0 	"/>
 </g>
-<g id="char-u">
+<g id="char-U">
 	<path fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
 		M0,0v45c0,8.284,6.715,15,15,15c8.283,0,15-6.716,15-15V0"/>
 </g>
-<g id="char-t">
-
+<g id="char-T">
+	
 		<polyline fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
 		30,0 0,0 15,0 15,60 	"/>
 </g>
-<g id="char-s">
+<g id="char-S">
 	<path fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
 		M0,45c0,8.284,6.716,15,15,15s15-6.716,15-15s-6.716-15-15-15S0,23.284,0,15S6.716,0,15,0s15,6.716,15,15"/>
 </g>
-<g id="char-r">
+<g id="char-R">
 	<path fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
 		M0,30h15c8.284,0,15-6.716,15-15S23.284,0,15,0H0v60"/>
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0" y1="30" x2="30" y2="60"/>
 </g>
-<g id="char-q">
+<g id="char-Q">
 	<path fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
 		M30,45V15c0-8.284-6.716-15-15-15S0,6.716,0,15v30c0,8.284,6.716,15,15,15S30,53.284,30,45z"/>
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="30" y1="60" x2="15" y2="45"/>
 </g>
-<g id="char-p">
+<g id="char-P">
 	<path fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
 		M0,30h15c8.285,0,15-6.716,15-15S23.285,0,15,0H0v60"/>
 </g>
-<g id="char-o">
+<g id="char-O">
 	<path fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
 		M30,45V15c0-8.284-6.715-15-15-15C6.717,0,0,6.716,0,15v30c0,8.284,6.717,15,15,15C23.285,60,30,53.284,30,45z"/>
 </g>
-<g id="char-n">
-
+<g id="char-N">
+	
 		<polyline fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
 		0,60 0,0 30,60 30,0 	"/>
 </g>
-<g id="char-m">
-
+<g id="char-M">
+	
 		<polyline fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
 		30,60 30,0 15,50 0,0 0,60 	"/>
 </g>
-<g id="char-l">
-
+<g id="char-L">
+	
 		<polyline fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
 		30,60 0,60 0,0 	"/>
 </g>
-<g id="char-k">
-
+<g id="char-K">
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0" y1="0" x2="0" y2="60"/>
-
+	
 		<polyline fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
 		30,0 0,30 30,60 	"/>
 </g>
-<g id="char-j">
+<g id="char-J">
 	<path fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
 		M10,0h20v45c0,8.284-6.716,15-15,15S0,53.284,0,45"/>
 </g>
-<g id="char-i">
-
+<g id="char-I">
+	
 		<polyline fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
 		30,0 0,0 15,0 15,60 0,60 30,60 	"/>
 </g>
-<g id="char-h">
-
+<g id="char-H">
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0" y1="60" x2="0" y2="0"/>
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="30" y1="60" x2="30" y2="0"/>
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0" y1="30" x2="30" y2="30"/>
 </g>
-<g id="char-g">
+<g id="char-G">
 	<path fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
 		M30,15c0-8.284-6.715-15-15-15C6.717,0,0,6.716,0,15v30c0,8.284,6.717,15,15,15c8.285,0,15-6.716,15-15V30H10"/>
 </g>
-<g id="char-f">
-
+<g id="char-F">
+	
 		<polyline fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
 		0,60 0,0 30,0 	"/>
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0" y1="30" x2="10" y2="30"/>
 </g>
-<g id="char-e">
-
+<g id="char-E">
+	
 		<polyline fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
 		30,60 0,60 0,0 30,0 	"/>
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0" y1="30" x2="10" y2="30"/>
 </g>
-<g id="char-d">
+<g id="char-D">
 	<path fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
 		M30,15c0-8.284-6.716-15-15-15H0v60h15c8.284,0,15-6.716,15-15V15z"/>
 </g>
-<g id="char-c">
+<g id="char-C">
 	<path fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
 		M30,15c0-8.284-6.716-15-15-15S0,6.716,0,15v30c0,8.284,6.716,15,15,15s15-6.716,15-15"/>
 </g>
-<g id="char-b">
+<g id="char-B">
 	<path fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
 		M15,0c8.283,0,15,6.717,15,15s-6.717,15-15,15c8.283,0,15,6.717,15,15s-6.717,15-15,15H0V0H15z"/>
 </g>
-<g id="char-a">
-
+<g id="char-A">
+	
 		<polyline fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
 		30,60 15,0 0,60 	"/>
-
+	
 		<line fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="22.5" y1="30" x2="7.5" y2="30"/>
+</g>
+<g id="Layer_1">
 </g>
 </svg>
