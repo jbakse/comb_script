@@ -1,5 +1,3 @@
-[Reveal.js Slideshow](http://justinbakse.com/reveal/index.php?src=https://raw.githubusercontent.com/jbakse/comb_script/master/notes/sketching.md)
-
 # Hello
 
 A couple of months ago Brand New School did a physical interface project for Herman Miller. We went from concept to final installation in three weeks. To get it done fast, we used a variety of prototyping technologies including 3D Printing, Laser-cutting, and the Arduino. I was going to do this presentation on how we used these technologies in the project, but Greg said "all that junk" was "old news".
@@ -10,7 +8,7 @@ Then Mike said to present "something that you’re excited about RIGHT NOW and w
 
 At that momemnt I was thinking about better ways to design combs.
 
----
+------
 
 # Designing a Comb
 
@@ -43,7 +41,7 @@ Illustrator does have some interesting tools like symbols and patterns. While cl
 
 Illustrator isn't the only option out there, and some CAD software packages are much better at this sort of thing. Looking for other options led me to think about how I _want_ a tool to work.
 
----
+------
 
 
 # Inspirations
@@ -143,7 +141,7 @@ bill-to: &id001
 - Full set of tools for creating static, animated, and interactive vector graphics
 - Supports boolean operations
 
----
+------
 
 # Introducing CombScript
 
@@ -207,7 +205,7 @@ The BEST Way to Design a Comb
 - Provides feedback on problems in your CombScript
 - Shape inspector shows info about your output
 
----
+------
 
 # Introducing Sutton
 ## The BEST Way to Write on a Comb
@@ -226,7 +224,7 @@ IMG Sutton Specimen
 - Designed by Greg
 
 
----
+------
 
 ## Neat
 
@@ -243,10 +241,14 @@ IMG Sutton Specimen
 - Never use it?
 
 
-----
+------
 
 # Goodbye
 
 Try it yourself at: combscript.com
 
 Contribute: https://github.com/jbakse/comb_script
+
+---
+
+[Reveal.js Slideshow](http://justinbakse.com/reveal/index.php?src=https://raw.githubusercontent.com/jbakse/comb_script/master/notes/sketching.md)
