@@ -8,6 +8,8 @@ BUGS:
 +----- fix symetry
 ----- While editting files you might break something in the re-render and then have to reload. fix that. you should be able to type any old garbage. We might have to trash the whole damn paper/preview and rebuild to make sure. Nuke from orbit.
 
+----	Docs missing inherited properties?
+---	Docs might be better off with all properties minimized.
 
 
 For Sketching:

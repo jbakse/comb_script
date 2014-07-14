@@ -124,10 +124,10 @@ Text.prototype.drawBounds = function(_bounds) {
 	var scale = this.properties.size / font_height;
 	var position = new paper.Point(0, 0);
 	if (this.properties.align == 'center') {
-		position.x = -(this.properties.text.length * 0.5) * (font_width + font_spacing) * scale;
+		position.x = -(this.properties.text.length * 0.5) * (font_width + font_spacing - 1) * scale;
 	}
 	if (this.properties.align == 'right') {
-		position.x = -(this.properties.text.length) * (font_width + font_spacing) * scale;
+		position.x = -(this.properties.text.length) * (font_width + font_spacing - 1) * scale;
 	}
 	if (this.properties.vertical_align == 'center') {
 		position.y = -(font_height * 0.5) * scale;

@@ -1,0 +1,70 @@
+properties:
+    name: comb
+    unit: mm
+    width: 200
+    height: 105
+
+library:
+    - &length 180
+    - &height 50
+
+children:
+    - text:
+	properties:
+	    name: title
+	    text: COMBSCRIPT
+	    margin_bottom: 10
+	    height: 0
+	    size: 24.6
+	    registration: center
+	    align: center
+	    vertical_align: bottom
+
+    - text:
+	properties:
+	    name: subtitle
+	    text: The BEST Way to Design a Comb.
+	    margin_bottom: -10
+	    height: 0
+	    size: 8.2
+	    registration: center
+	    align: center
+	    vertical_align: bottom
+
+
+
+    - region:
+	properties:
+	    name: comb
+	    width: *length
+	    height: *height
+	    registration: center
+	    boolean: mixed
+	    margin_top: 10
+
+	children:
+	    - rectangle:
+		properties:
+		    margin_bottom: 10
+		    radius: 16
+
+	    - rectangle:
+		properties:
+		    width: 180.001 #boolean bug workaround
+		    margin_top: 10
+		    radius: 8
+
+	    - region_grid:
+		properties:
+		    margin_left: 8
+		    margin_right: 8
+		    margin_bottom: -10
+		    height: 45
+		    column_width: 10
+		    mixed_boolean: subtract
+		children:
+		    - rectangle:
+			properties:
+			    margin_left: 1.5
+			    margin_right: 1.5
+			    radius: 3
