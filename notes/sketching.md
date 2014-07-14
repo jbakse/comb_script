@@ -1,10 +1,10 @@
 # Hello
 
-A couple of months ago Brand New School did a physical interface project for Herman Miller. We went from concept to final installation in three weeks. To get it done fast, we used a variety of prototyping technologies including 3D Printing, Laser-cutting, and the Arduino. I was going to do this presentation on how we used these technologies in the project, but Greg said "all that junk" was "old news".
-
+<p class="hidden">A couple of months ago Brand New School did a physical interface project for Herman Miller. We went from concept to final installation in three weeks. To get it done fast, we used a variety of prototyping technologies including 3D Printing, Laser-cutting, and the Arduino. I was going to do this presentation on how we used these technologies in the project, but Greg said “all that junk” was “old news”.
+</p>
 So then I was going to do a presentation on how cool it is that all that junk is old news. But Greg said that wasn't a good idea either.
 
-Then Mike said to present "something that you’re excited about RIGHT NOW and which you’ve done some recent work in that no one has seen publicly."
+Then Mike said to present “something that you’re excited about RIGHT NOW and which you’ve done some recent work in that no one has seen publicly.”
 
 At that momemnt I was thinking about better ways to design combs.
 
