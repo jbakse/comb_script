@@ -1,0 +1,16 @@
+properties:
+    name: text
+    unit: mm
+    width: 100
+    height: 100
+children:
+    - text:
+        properties:
+            size: 20
+            text: "Hello, Comb Script!"
+            align: right
+            vertical_align: center
+            margin_top: 40
+
+    #ABCDEFGHIJKLMNOPQRSTUVWXYZ
+    #That One Should Focus On Obvious, High-yield Activities Instead Of Wasting Time On Less Fruitful Ones.
