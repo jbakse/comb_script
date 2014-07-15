@@ -1,5 +1,13 @@
 # Hello
 
+---
+
+<!-- .slide: data-background="images/herman_miller.jpg" class="hide-contents"-->
+
+
+![Herman Miller Table](images/herman_miller.jpg)
+
+Note:
 A couple of months ago Brand New School did a physical interface project for Herman Miller. We went from concept to final installation in three weeks. To get it done fast, we used a variety of prototyping technologies including 3D Printing, Laser-cutting, and the Arduino. I was going to do this presentation on how we used these technologies in the project, but Greg said “all that junk” was “old news”.
 
 So then I was going to do a presentation on how cool it is that all that junk is old news. But Greg said that wasn't a good idea either.
@@ -12,7 +20,11 @@ At that momemnt I was thinking about better ways to design combs.
 
 # Designing a Comb
 
-Say you wanted to make a laser-cut comb. First you have to design and draw the shape of the comb. Then you have to clean up your drawing and prep it for cutting. After you laser-cut your comb, you might need to go back and change your design. 
+Say you wanted to make a laser-cut comb.
+
+- First you have to design and draw the shape of the comb.
+- Then you have to clean up your drawing and prep it for cutting.
+- After you laser-cut your comb, you might need to go back and change your design.
 
 What tool do you use to design your comb?
 
@@ -27,10 +39,11 @@ Apologies to [Jamie Zawinski](http://www.jwz.org/), [et al.](http://regex.info/b
 ---
 
 ## A Comb in Illustrator
-![A Comb in Illustrator](/images/comb_ai_screengrab.png)
+![A Comb in Illustrator](images/comb_ai_screengrab.png)
 
 Step one is to design and draw the shape of the comb. Illustrator is _pretty alright_ for this, and you can draw a first pass of your comb fairly easily. Preparing your file for printing isn't always straight forward and making changes to your comb can be downright hard. Illustrator is not _really_ the right tool for the job.
 
+Note:
 - Changing the number of teeth is difficult.
 - Changing the shape of the teeth is difficult.
 - If you make your comb longer, Illustrator will stretch the teeth instead of adding more, and the rounded corners will be distorted.
@@ -52,16 +65,22 @@ Illustrator isn't the only option out there, and some CAD software packages are 
 
 ![OpenSCAD Screengrab](images/openSCAD.png)
 
-[OpenSCAD](http://openjscad.org/) is a scripting language and tool for creating 3D models with code.
+---
+
+[OpenSCAD](http://www.openscad.org/) is a scripting language and tool for creating 3D models with code.
 
 - A great way to design a part for 3D printing.
 - The underlying technology for [customizable](http://customizer.makerbot.com/docs) things on [Thingiverse](http://www.thingiverse.com/).
 - A good model for how I'd like to design a 2D part for cutting or plotting.
 
+See also [OpenJSCAD](http://openjscad.org/), [Kokopelli](https://github.com/mkeeter/kokopelli)
+
 ---
 
 ## Recursive Drawing
 ![Recursive Drawing Screengrab](images/recursive_drawing.png)
+
+---
 
 [Recursive Drawing](http://recursivedrawing.com/) is an interface experiment by [Toby Schachman](http://tobyschachman.com/)
 
@@ -74,6 +93,8 @@ Illustrator isn't the only option out there, and some CAD software packages are 
 ##Illustrator
 
 ![Illustrator Snap](images/ai_snap.png)
+
+---
 
 [Illustrator](http://www.adobe.com/products/illustrator.html) is a powerful tool, but not right for the job.
 
@@ -136,6 +157,8 @@ bill-to: &id001
 
 ![Paper.js Screengrab](images/paperjs.png)
 
+---
+
 [Paper.js](http://paperjs.org/) is a JavaScript library for vector graphics.
 
 - Full set of tools for creating static, animated, and interactive vector graphics
@@ -145,7 +168,7 @@ bill-to: &id001
 
 # Introducing CombScript
 
-![CombScript Logo](/images/comb_logo.png)
+![CombScript Logo](images/comb_logo.png)
 
 The BEST Way to Design a Comb
 
@@ -165,24 +188,19 @@ The BEST Way to Design a Comb
 ## CombScript Goals
 
 -   **Parametric**
-
-    Because shapes in CombScript can be positioned relative to the bounds of their parents, it is possible to make designs that flex when dimensions change. Variables can be used to make customizable designs.
+Shapes are positioned relative parent and reposition when dimensions change. Variables can be used to make customizable designs.
 
 -   **Expressive**
-
-    Positions can be described in multiple ways allowing more natural expression. For example you can specify that a circle is 10 units from the right side of its container and vertically centered, rather than expressing its global coordinates.
+Positions are described more naturally. You can specify that a circle is 10 units from the right side of its container, rather than using global coordinates.
 
 -   **Declarative**
-
-    CombScript is more like HTML than JavaScript. Ideally, your document describes your design, not the steps required to make it.
+CombScript is more like HTML than JavaScript. Ideally, your document describes your design, not the steps required to make it.
 
 -   **Unstyled**
-
-    Shapes in CombScript represent only the path data and don't have their own style properties like fill-color, stroke-color, or stroke-width. CombScript is primarily designed for designs that describe paths for laser-cutters and plotters where such styles are not needed.
+Shapes in CombScript represent only the path data and don't have their own style properties like fill-color, stroke-color, or stroke-width.
 
 -   **Render to SVG**
-
-    Shape data can be exported as SVG using style templates.
+Shape data can be exported as SVG using style templates.
 
 ---
 
@@ -205,12 +223,16 @@ The BEST Way to Design a Comb
 - Provides feedback on problems in your CombScript
 - Shape inspector shows info about your output
 
+
+
+
 ------
 
 # Introducing Sutton
-## The BEST Way to Write on a Comb
+![Sutton](images/sutton_specimen.png)
 
-IMG Sutton Specimen
+The BEST Way to Write on a Comb
+
 
 ---
 
@@ -243,9 +265,7 @@ IMG Sutton Specimen
 
 ------
 
-# Goodbye
-
-Try it yourself at: combscript.com
+Try it yourself at: http://combscript.com
 
 Contribute: https://github.com/jbakse/comb_script
 
