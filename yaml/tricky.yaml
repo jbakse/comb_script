@@ -1,0 +1,28 @@
+properties:
+    name: boolean
+    unit: mm
+    width: 100
+    height: 100
+
+children:
+    - rectangle:
+        properties:
+            name: base_rectangle
+            width: 50
+            height: 50
+            #setting a boolean on this rectangle will apply the operation using all of the rectangles children
+            boolean: subtract
+            #valid boolean types: add, intersect, subtract and mixed
+            #the mixed boolean type would allow the children to specify their boolean operation
+        children:
+            - ellipse:
+                properties:
+                    name: subtract_ellipse
+                    height: 50
+                    width: 50
+                    left: -50
+                    top: -50
+                    # mixed_boolean: subtract
+            - text:
+                properties:
+                    text: Testing

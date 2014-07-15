@@ -168,8 +168,6 @@ Region.prototype.loadProperties = function(_properties) {
 };
 
 Region.prototype.loadChildren = function(_childrenData) {
-	// console.log("typeof children", typeof _childrenData);
-	// console.log("_childrenData instanceof Array", _childrenData instanceof Array);
 	if (! (_childrenData instanceof Array)) {
 		log.appendWarning("Children should be an array. Prepend child nodes with a dash and space.");
 		return;
@@ -305,10 +303,12 @@ Region.prototype.mixedBooleanBuild = function(_parentContext) {
 		childOps.push(_child.properties.mixed_boolean);
 	});
 
+
 	for(var i = 0; i < childPaths.length; i++) {
-		console.log("combine", childPaths[i], childOps[i]);
 		var op = booleanOperations[childOps[i]];
-		ownPaths = [paperUtil.combinePaths(ownPaths.concat(childPaths[i]), op)];
+		// ownPaths = [paperUtil.combinePaths(ownPaths.concat(childPaths[i]), op)];
+		var r = paperUtil.newCombinePaths(ownPaths[0], childPaths[i], op);
+		ownPaths[0] = r;
 	}
 
 
@@ -329,19 +329,25 @@ Region.prototype.build = function(_parentContext) {
 		p.transform(context.matrix);
 	}, this);
 
-	var childPaths = ownPaths.concat(this.buildChildren(context));
+	var childPaths = this.buildChildren(context);
 
-
+	var basePath = ownPaths[0];
+	if (!basePath) {
+		basePath = childPaths.splice(0,1)[0];
+	}
 
 	if (!('boolean' in this.properties)) {
-		return childPaths;
+		return ownPaths.concat(childPaths);
 	}
 	else {
 		var op = booleanOperations[this.properties.boolean];
-		childPaths = paperUtil.combinePaths(childPaths, op);
+		// childPaths = paperUtil.combinePaths(childPaths, op);
+		ownPaths[0] = paperUtil.newCombinePaths(basePath, childPaths, op);
+
+
 	}
 
-	return childPaths;
+	return ownPaths;
 };
 
 

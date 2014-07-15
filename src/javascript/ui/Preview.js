@@ -3,6 +3,7 @@
 var Context = require('../Context.js');
 var language = require('../language.js');
 var settings = require('../settings.js');
+var _ = require('underscore');
 
 module.exports = Preview;
 
@@ -95,8 +96,15 @@ Preview.prototype.setDocument = function(_doc) {
 	// draw build
 	this.buildLayer.removeChildren();
 	paper.project.activeLayer = this.buildLayer;
-	this.doc.build(context);
+	var buildShapes = this.doc.build(context);
 	this.buildLayer.style = settings.buildStyle;
+	
+	// _(buildShapes).each(function(shape) {
+	// 	shape.style = settings.buildStyle;
+	// 	// {
+	// 	// 	fillColor: settings.buildStyle
+	// 	// };
+	// });
 
 	// draw export
 	this.exportLayer.removeChildren();

@@ -35,7 +35,7 @@ library:
                         margin_top: 3
                         radius: 1
 children:
-    - region:
+    - rectangle:
         properties:
             name: bottom
             width: *length
@@ -43,6 +43,7 @@ children:
             margin_top: 10
             margin_left: 10
             registration: center
+            boolean: subtract
 
         children:
             - text:
@@ -52,79 +53,75 @@ children:
                     vertical_align: center
                     align: center
 
-            - rectangle:
-                properties: 
-                    boolean: subtract
+            - region_grid:
+                properties:
+                    name: front_holes
+                    column_width: 30
+                    height: 5
+                    margin_bottom: 0
+                    registration: top
                 children:
-                    - region_grid:
+                    - *m3_pass
+
+            - region_grid:
+                properties:
+                    name: back_holes
+                    column_width: 30
+                    height: 5
+                    margin_top: 0
+                    registration: bottom
+                children:
+                    - *m3_pass
+
+            - region_grid:
+                properties:
+                    name: slots
+                    column_width: 30
+                    height: 5
+                    margin_bottom: 0
+                    margin_left: 15
+                    margin_right: 15
+                    registration: top
+                children:
+                    - rectangle:
                         properties:
-                            name: front_holes
-                            column_width: 30
-                            height: 5
-                            margin_bottom: 0
-                            registration: top
-                        children:
-                            - *m3_pass
+                            width: 11
+                            height: 3
 
-                    - region_grid:
+            - region_grid:
+                properties:
+                    name: slots
+                    column_width: 30
+                    height: 5
+                    margin_top: 0
+                    margin_left: 15
+                    margin_right: 15
+                    registration: bottom
+                children:
+                    - rectangle:
                         properties:
-                            name: back_holes
-                            column_width: 30
-                            height: 5
-                            margin_top: 0
-                            registration: bottom
-                        children:
-                            - *m3_pass
+                            width: 11
+                            height: 3
 
-                    - region_grid:
-                        properties:
-                            name: slots
-                            column_width: 30
-                            height: 5
-                            margin_bottom: 0
-                            margin_left: 15
-                            margin_right: 15
-                            registration: top
-                        children:
-                            - rectangle:
-                                properties:
-                                    width: 11
-                                    height: 3
+            - &left_slot
+                rectangle:
+                    properties:
+                        name: left_slot
+                        margin_top: 6.5
+                        margin_bottom: 6.5
+                        margin_left: 5
+                        width: 3
+                        mixed_boolean: subtract
 
-                    - region_grid:
-                        properties:
-                            name: slots
-                            column_width: 30
-                            height: 5
-                            margin_top: 0
-                            margin_left: 15
-                            margin_right: 15
-                            registration: bottom
-                        children:
-                            - rectangle:
-                                properties:
-                                    width: 11
-                                    height: 3
-
-                    - &left_slot
-                        rectangle:
-                            properties:
-                                name: left_slot
-                                margin_top: 6.5
-                                margin_bottom: 6.5
-                                margin_left: 5
-                                width: 3
-                                mixed_boolean: subtract
-
-                    - &right_slot
-                        rectangle:
-                            properties:
-                                name: right_slot
-                                margin_top: 6.5
-                                margin_bottom: 6.5
-                                margin_right: 5
-                                width: 3
-                                mixed_boolean: subtract
+            - &right_slot
+                rectangle:
+                    properties:
+                        name: right_slot
+                        margin_top: 6.5
+                        margin_bottom: 6.5
+                        margin_right: 5
+                        width: 3
+                        mixed_boolean: subtract
 
     - rectangle:
         properties:
