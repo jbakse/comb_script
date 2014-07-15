@@ -6,33 +6,44 @@ properties:
 #yaml references can be used to define reusable blocks
 library:
     #references can be entire regions with properties and children
-    - &rounded_rect_symbol
+    - &price_tag_symbol
         #this entire rectangle node can be reused
         rectangle:
             properties:
-                name: margin_symbol_circle
+                name: price_tag
                 margin_top: 2
                 margin_left: 2
                 margin_bottom: 2
                 margin_right: 2
                 radius: 4
+                boolean: subtract
+            children:
+                - ellipse:
+                    properties:
+                        name: eyelet
+                        margin_top: 3
+                        margin_left: 3
+                        width: 3
+                        height: 3
 
 children:
     - region:
         properties:
+            name: small_tag
             margin_top: 5
             margin_left: 5
             width: 25
             height: 25
         children:
             #use the rectangle reference
-            - *rounded_rect_symbol
+            - *price_tag_symbol
     - region:
         properties:
+            name: big_tag
             margin_top: 5
             margin_right: 5
             width: 60
             height: 80
         children:
             #use references multiple times
-            - *rounded_rect_symbol
+            - *price_tag_symbol

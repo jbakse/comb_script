@@ -206,11 +206,12 @@ Shape data can be exported as SVG using style templates.
 
 ## Feature Tour
 
-- Variables
-- Symbols
+- Positioning
 - Boolean Operations
 - Mixed Boolean Operations
 - Region Grid
+- Variables
+- Symbols
 - Export
 - Documentation
 

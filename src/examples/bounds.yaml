@@ -8,7 +8,16 @@ children:
     - ellipse:
         properties:
             #this ellipse mixes a few different properties to define it's bounds
+            #it has fixed dimensions and aligns itself to near the left side
             top: -25
             bottom: 25
             margin_left: 10
             width: 50
+
+    - rectangle:
+        properties:
+            #this rectangle sets a fixed left position and inset values for top, right, and bottom
+            left: 0
+            margin_top: 10
+            margin_bottom: 10
+            margin_right: 10

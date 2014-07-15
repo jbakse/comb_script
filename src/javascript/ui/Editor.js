@@ -14,6 +14,7 @@ function Editor() {
 	this.editor = null;
 	this.sendChangeEvents = true;
 	this.sendChangeCursorEvents = true;
+	this.oldLine = 0;
 }
 
 
@@ -61,10 +62,7 @@ Editor.prototype.getText = function() {
 	return this.editor.getValue();
 };
 
-Editor.prototype.onChange = function(_e) {
-	if (!this.sendChangeEvents) return;
-	$.Topic("UI/onContentChange").publish(_e);
-};
+
 
 
 
@@ -94,12 +92,17 @@ Editor.prototype.gotoLine = function(line, focus) {
 };
 
 
-var oldLine = 0;
+
+Editor.prototype.onChange = function(_e) {
+	if (!this.sendChangeEvents) return;
+	$.Topic("UI/onContentChange").publish(_e);
+};
+
 Editor.prototype.onChangeCursor = function() {
 	if (!this.sendChangeCursorEvents) return;
 	var line = this.editor.selection.getCursor().row + 1;
-	if (oldLine != line) {
-		$.Topic("UI/onLineChange").publish(line);
-		oldLine = line;
+	if (this.oldLine != line) {
+		//$.Topic("UI/onLineChange").publish(line);
+		this.oldLine = line;
 	}
 };

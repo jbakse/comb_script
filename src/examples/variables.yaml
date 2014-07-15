@@ -6,20 +6,20 @@ properties:
 library:
 
     #references can be used for individual values
-    - &my_variable_size 75
-    - &my_variable_margin 10
+    - &size 75
+    - &margin 10
 
 children:
     - region:
         properties:
             #this region uses the variable above to define width and height
-            width: *my_variable_size
-            height: *my_variable_size
+            width: *size
+            height: *size
         children:
             - rectangle:
                 properties:
                     #the margins are also defined above
-                    margin_top: *my_variable_margin
-                    margin_left: *my_variable_margin
-                    margin_bottom: *my_variable_margin
-                    margin_right: *my_variable_margin
+                    margin_top: *margin
+                    margin_left: *margin
+                    margin_bottom: *margin
+                    margin_right: *margin

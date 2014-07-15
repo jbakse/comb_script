@@ -211,7 +211,6 @@ ApplicationController.prototype._updateYAML = function(_yaml) {
 	try {
 		var data = Parser.parse(_yaml);
 		if (!data) return;
-
 		this.doc = new regionTypes.Document();
 		this.doc.loadData(data);
 		this.doc.properties.left = 0;
