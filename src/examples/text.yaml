@@ -1,16 +1,18 @@
 properties:
     name: text
     unit: mm
-    width: 100
+    width: 200
     height: 100
 children:
-    - text:
+    - region:
         properties:
-            size: 20
-            text: "HAVEMEYER Locust 28th 1208th Clinton"
-            align: right
-            vertical_align: center
-            margin_top: 40
-
-    #ABCDEFGHIJKLMNOPQRSTUVWXYZ
-    #That One Should Focus On Obvious, High-yield Activities Instead Of Wasting Time On Less Fruitful Ones.
+            registration: top_right
+        children:
+            - text:
+                properties:
+                    size: 15
+                    #the text to show
+                    text: Hello CombScript
+                    #alignment can be used to position the text within it's bounds
+                    align: right
+                    vertical_align: top

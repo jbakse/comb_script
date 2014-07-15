@@ -5,6 +5,8 @@ BUGS:
 
 - boolean rendering sometimes renders funny in preview. Looks like it sometimes has trouble with innards of closed shapes. Export looks fine though even though the preview renders funny.
 
+- registration and 'text' regions are buggy on export. setting a registration to top left causes lower case o and p to mess up. probably some other letters as well. only visible on export.
+
 +----- fix symetry
 ----- While editting files you might break something in the re-render and then have to reload. fix that. you should be able to type any old garbage. We might have to trash the whole damn paper/preview and rebuild to make sure. Nuke from orbit.
 

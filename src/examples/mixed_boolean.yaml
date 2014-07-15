@@ -1,0 +1,25 @@
+properties:
+    name: boolean
+    unit: mm
+    width: 100
+    height: 100
+
+children:
+    - rectangle:
+        properties:
+            width: 70
+            height: 70
+            boolean: mixed
+        children:
+            - rectangle:
+                properties:
+                    name: base_rectangle
+                    width: 50
+                    height: 50
+                    margin_right: -10
+                    mixed_boolean: subtract
+            - ellipse:
+                properties:
+                    mixed_boolean: add
+                    width: 40
+                    height: 40

@@ -1,12 +1,12 @@
 properties:
-    name: symbols
+    name: variables
     unit: mm
     width: 100
     height: 100
 #yaml references can be used to define reusable blocks
 library:
     #references can be entire regions with properties and children
-    - &rounded_rect_symbol
+    - &inner_rounded_rect
         #this entire rectangle node can be reused
         rectangle:
             properties:
@@ -17,6 +17,9 @@ library:
                 margin_right: 2
                 radius: 4
 
+    #references can also be used for individual values
+    - &my_variable 80
+
 children:
     - region:
         properties:
@@ -26,14 +29,14 @@ children:
             height: 25
         children:
             #use the rectangle reference
-            - *rounded_rect_symbol
+            - *inner_rounded_rect
     - region:
         properties:
             margin_top: 5
             margin_right: 5
             width: 60
             #use my_variable in place of the regions height
-            height: 80
+            height: *my_variable
         children:
             #use references multiple times
-            - *rounded_rect_symbol
+            - *inner_rounded_rect
