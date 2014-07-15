@@ -32,7 +32,6 @@ children:
             margin_top: 5
             margin_right: 5
             width: 60
-            #use my_variable in place of the regions height
             height: 80
         children:
             #use references multiple times

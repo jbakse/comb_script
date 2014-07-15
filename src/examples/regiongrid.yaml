@@ -8,16 +8,18 @@ children:
     - region:
         children:
             - region_grid:
+                #region grids create a series of regions
                 properties:
                     width: 100
                     height: 100
                     column_width: 20
                     rows: 4
                     registration: center
-                    
                 children:
+                    #each new region is populated with whatever children the region_grid has
                     - region:
                         properties:
+                            #boolean operations can also be applied
                             boolean: subtract
                         children:
                             - ellipse:

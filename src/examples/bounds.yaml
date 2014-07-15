@@ -7,7 +7,7 @@ properties:
 children:
     - ellipse:
         properties:
-            #this ellipse mixes a few different properties to defin it's bounds
+            #this ellipse mixes a few different properties to define it's bounds
             top: -25
             bottom: 25
             margin_left: 10
