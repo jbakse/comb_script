@@ -177,7 +177,6 @@ Region.prototype.loadChildren = function(_childrenData) {
 	_.each(_childrenData, function(_childData) {
 		var childKey = _.keys(_childData)[0];
 		var childData = _.values(_childData)[0];
-		console.log("chileKey, Data",childKey,childData);
 		if (typeof childKey === "undefined" || typeof childData === "undefined") {
 			log.appendWarning("Undefined Child");
 			return;

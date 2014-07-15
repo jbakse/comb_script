@@ -11,13 +11,13 @@ function populateTemplates() {
 	var data = {};
 
 	data.regionTypes = _(language.regionTypes).values();
-	_(regionTypes).each(function(type){
+	_(data.regionTypes).each(function(type){
 		type.required_properties = _(type.properties).filter( function(prop) {
 			return prop.required && prop.required === true;
 		});
 		
 		type.properties = _(type.properties).difference(type.required_properties);
-		
+			
 		if (type.extends && language.regionTypes[type.extends]) {
 			type.inherited_properties = language.regionTypes[type.extends].properties;
 		}
@@ -28,6 +28,7 @@ function populateTemplates() {
 	Mustache.parse(menuTemplate); // optional, speeds up future uses
 	var menuRendered = Mustache.render(menuTemplate, data);
 	$('#template-menu').html(menuRendered);
+
 
 	var template = $('#template-regionTypes').html().replace(/&gt;/g, ">");
 	var propertyTemplate = $('#template-property').html();
