@@ -102,7 +102,7 @@ Editor.prototype.onChangeCursor = function() {
 	if (!this.sendChangeCursorEvents) return;
 	var line = this.editor.selection.getCursor().row + 1;
 	if (this.oldLine != line) {
-		//$.Topic("UI/onLineChange").publish(line);
+		$.Topic("UI/onLineChange").publish(line);
 		this.oldLine = line;
 	}
 };
