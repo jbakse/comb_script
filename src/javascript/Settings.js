@@ -2,7 +2,7 @@
 var _ = require('underscore');
 
 module.exports.fileURL = "./examples/box.yaml";
-module.exports.fileURL = "./examples/boolean.yaml";
+module.exports.fileURL = "../yaml/tricky.yaml";
 module.exports.previewCanvasWidth = 1200;
 module.exports.previewCanvasHeight = 1200;
 module.exports.inspectOnHover = false;

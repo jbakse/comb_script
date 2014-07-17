@@ -312,13 +312,15 @@ Region.prototype.mixedBooleanBuild = function(_parentContext) {
 	}
 
 
-
+	console.log("own", this.properties.name, ownPaths);
 	return ownPaths;
 
 };
 
 
 Region.prototype.build = function(_parentContext) {
+	console.log(this.properties.name, "build");
+
 	if (this.properties.boolean === 'mixed') {
 		return this.mixedBooleanBuild(_parentContext);
 	}
@@ -331,15 +333,20 @@ Region.prototype.build = function(_parentContext) {
 
 	var childPaths = this.buildChildren(context);
 
-	var basePath = ownPaths[0];
-	if (!basePath) {
-		basePath = childPaths.splice(0,1)[0];
-	}
+	console.log(this.properties.name, "own/child", ownPaths, childPaths);
+
+	
 
 	if (!('boolean' in this.properties)) {
-		return ownPaths.concat(childPaths);
+		ownPaths = ownPaths.concat(childPaths);
+		console.log("not bool", ownPaths);
 	}
 	else {
+		var basePath = ownPaths[0];
+		if (!basePath) {
+			basePath = childPaths.splice(0,1)[0];
+		}
+		
 		var op = booleanOperations[this.properties.boolean];
 		// childPaths = paperUtil.combinePaths(childPaths, op);
 		ownPaths[0] = paperUtil.newCombinePaths(basePath, childPaths, op);
@@ -347,6 +354,7 @@ Region.prototype.build = function(_parentContext) {
 
 	}
 
+	console.log(this.properties.name, "return", ownPaths);
 	return ownPaths;
 };
 

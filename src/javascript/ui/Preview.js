@@ -97,14 +97,18 @@ Preview.prototype.setDocument = function(_doc) {
 	this.buildLayer.removeChildren();
 	paper.project.activeLayer = this.buildLayer;
 	var buildShapes = this.doc.build(context);
-	this.buildLayer.style = settings.buildStyle;
+	// this.buildLayer.style = settings.buildStyle;
 	
-	// _(buildShapes).each(function(shape) {
-	// 	shape.style = settings.buildStyle;
-	// 	// {
-	// 	// 	fillColor: settings.buildStyle
-	// 	// };
-	// });
+	console.log("buildShapes", buildShapes);
+	_(buildShapes).each(function(shape) {
+		shape.style = settings.buildStyle;
+		// shape.style = 
+		// {
+		// 	fillColor: "red",
+		// 	strokeWidth: 1,
+		// 	strokeColor: "orange"
+		// };
+	});
 
 	// draw export
 	this.exportLayer.removeChildren();
