@@ -26,7 +26,6 @@ children:
             name: main
             width: 53
             height: 64
-            boolean: subtract
             radius: 3
         children:
             - region:
@@ -35,6 +34,7 @@ children:
                     left: 4.5
                     width: 3
                     registration: center
+                    boolean: subtract
                 children:
                     - *m3pass
                     - rectangle:
@@ -55,6 +55,7 @@ children:
                     width: 0
                     height: 0
                     registration: center
+                    boolean: subtract
                 children:
                     - *m3pass
 
@@ -66,6 +67,7 @@ children:
                     width: 0
                     height: 0
                     registration: center
+                    boolean: subtract
                 children:
                     - *m3pass
 
@@ -76,6 +78,7 @@ children:
                     width: 0
                     height: 0
                     registration: center
+                    boolean: subtract
                 children:
                     - *m3pass
 
@@ -86,6 +89,16 @@ children:
                     width: 8
                     row_height: 8
                     registration: center
+                    boolean: subtract
                 children:
                     - *m3tap
 
+            - text:
+                properties:
+                    text: vert.car
+                    rotation: -90
+                    registration: bottom_right
+                    size: 4
+                    vertical_align: bottom
+                    margin_right: 3
+                    margin_bottom: 3
