@@ -320,14 +320,14 @@ Region.prototype.build = function(_parentContext) {
 	
 	// filter out non booleanable paths (skips)
 	var skips = _(leftPathSet).filter(function(_path) {
-		return !(_path instanceof paper.Path);
+		return !(_path instanceof paper.Path || _path instanceof paper.CompoundPath);
 	});
 	resultPaths = resultPaths.concat(skips);
 	leftPathSet = _(leftPathSet).difference(skips);
 
 	_(rightPathSets).each(function(pathSet, pathSetIndex) {
 		skips = _(pathSet).filter(function(_path) {
-			return !(_path instanceof paper.Path);
+			return !(_path instanceof paper.Path || _path instanceof paper.CompoundPath);
 		});
 		resultPaths = resultPaths.concat(skips);
 		rightPathSets[pathSetIndex] = _(pathSet).difference(skips);

@@ -1,0 +1,22 @@
+children:
+    - ellipse:
+        properties:
+            width: 200
+            height: 200
+        children:
+            - &e
+                ellipse:
+                    properties:
+                        margin_top: 10
+                        margin_bottom: 10
+                        margin_left: 10
+                        margin_right: 10
+                        boolean: subtract
+    - ellipse:
+        properties:
+            left: 50
+            width: 200
+            height: 200
+            boolean: subtract
+        children:
+            - *e

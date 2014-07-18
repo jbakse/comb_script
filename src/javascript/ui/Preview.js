@@ -102,16 +102,19 @@ Preview.prototype.setDocument = function(_doc) {
 	
 	// console.log("childs", this.buildLayer.children);
 	// console.log("buildShapes", buildShapes);
-	// _(buildShapes).each(function(shape) {
-
-	// 	// shape.style = settings.buildStyle;
-	// 	shape.style = 
-	// 	{
-	// 		fillColor: "red",
-	// 		strokeWidth: 1,
-	// 		strokeColor: "blue"
-	// 	};
-	// });
+	_(buildShapes).each(function(shape) {
+		if (shape instanceof paper.Path) return;
+		if (shape instanceof paper.CompoundPath) return;
+		// style type
+		// shape.style = settings.buildStyle;
+		console.log("shape,", shape);
+		shape.style = 
+		{
+			fillColor: undefined,
+			strokeWidth: 1,
+			strokeColor: "red"
+		};
+	});
 
 	// draw export
 	this.exportLayer.removeChildren();
