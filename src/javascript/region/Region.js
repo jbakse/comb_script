@@ -77,7 +77,7 @@ Region.prototype.loadData = function(_data) {
 Region.prototype.loadProperties = function(_properties) {
 
 	var self = this;
-		//todo recurse?
+	//todo recurse?
 	var definitions = language.regionTypes[this.type].properties;
 	if (!Array.isArray(definitions)) {
 		definitions = [];
@@ -86,7 +86,6 @@ Region.prototype.loadProperties = function(_properties) {
 	if (superClass) {
 		definitions = util.mergeObjectArraysOnKey(language.regionTypes[superClass].properties, definitions, "keyword");
 	}
-
 
 
 
@@ -102,11 +101,10 @@ Region.prototype.loadProperties = function(_properties) {
 		_properties = {};
 	}
 	if (typeof _properties !== 'object') {
-		log.appendWarning(messagePrefix + "Properties should be a key/value map. " + 
+		log.appendWarning(messagePrefix + "Properties should be a key/value map. " +
 			"<br />Received " + typeof _properties + ".");
 		_properties = {};
 	}
-
 
 
 
@@ -168,7 +166,7 @@ Region.prototype.loadProperties = function(_properties) {
 };
 
 Region.prototype.loadChildren = function(_childrenData) {
-	if (! (_childrenData instanceof Array)) {
+	if (!(_childrenData instanceof Array)) {
 		log.appendWarning("Children should be an array. Prepend child nodes with a dash and space.");
 		return;
 	}
@@ -285,78 +283,95 @@ Region.prototype.previewChildren = function(_context) {
 //////////////////////////////////////////////////////////////////////
 // Build
 
-//todo factor this and .build together better
-Region.prototype.mixedBooleanBuild = function(_parentContext) {
-	var context = _parentContext.deriveContext(this.properties);
-
-	var ownPaths = [].concat(this.drawBuild(context.bounds));
-	_.each(ownPaths, function(p) {
-		p.transform(context.matrix);
-	}, this);
-
-	var childPaths = [];
-	var childOps = [];
-
-	_.each(this.children, function(_child) {
-		var s = _child.build(context);
-		childPaths.push(s);
-		childOps.push(_child.properties.mixed_boolean);
-	});
-
-
-	for(var i = 0; i < childPaths.length; i++) {
-		var op = booleanOperations[childOps[i]];
-		// ownPaths = [paperUtil.combinePaths(ownPaths.concat(childPaths[i]), op)];
-		var r = paperUtil.newCombinePaths(ownPaths[0], childPaths[i], op);
-		ownPaths[0] = r;
-	}
-
-
-	console.log("own", this.properties.name, ownPaths);
-	return ownPaths;
-
-};
 
 
 Region.prototype.build = function(_parentContext) {
-	console.log(this.properties.name, "build");
-
-	if (this.properties.boolean === 'mixed') {
-		return this.mixedBooleanBuild(_parentContext);
-	}
 	var context = _parentContext.deriveContext(this.properties);
 
+	
+	// build own paths
 	var ownPaths = [].concat(this.drawBuild(context.bounds));
 	_.each(ownPaths, function(p) {
 		p.transform(context.matrix);
 	}, this);
-
-	var childPaths = this.buildChildren(context);
-
-	console.log(this.properties.name, "own/child", ownPaths, childPaths);
-
 	
 
-	if (!('boolean' in this.properties)) {
-		ownPaths = ownPaths.concat(childPaths);
-		console.log("not bool", ownPaths);
+	// collect child paths/ops
+	var childPathSets = [];
+	var childOps = [];
+	_.each(this.children, function(_child) {
+		var s = _child.build(context);
+		childPathSets.push(s);
+		childOps.push(booleanOperations[_child.properties.boolean]);
+	});
+
+
+	// arrange operands
+	var leftPathSet = ownPaths;
+	var rightPathSets = childPathSets;
+	var ops = childOps;
+	var resultPaths = [];
+
+	if (ownPaths.length === 0) {
+		leftPathSet = rightPathSets.splice(0, 1)[0];
+		ops.splice(0, 1);
 	}
-	else {
-		var basePath = ownPaths[0];
-		if (!basePath) {
-			basePath = childPaths.splice(0,1)[0];
-		}
-		
-		var op = booleanOperations[this.properties.boolean];
-		// childPaths = paperUtil.combinePaths(childPaths, op);
-		ownPaths[0] = paperUtil.newCombinePaths(basePath, childPaths, op);
+
+	
+	// filter out non booleanable paths (skips)
+	var skips = _(leftPathSet).filter(function(_path) {
+		return !(_path instanceof paper.Path);
+	});
+	resultPaths = resultPaths.concat(skips);
+	leftPathSet = _(leftPathSet).difference(skips);
+
+	_(rightPathSets).each(function(pathSet, pathSetIndex) {
+		skips = _(pathSet).filter(function(_path) {
+			return !(_path instanceof paper.Path);
+		});
+		resultPaths = resultPaths.concat(skips);
+		rightPathSets[pathSetIndex] = _(pathSet).difference(skips);
+	});
 
 
-	}
+	// process the booleans
+	_(leftPathSet).each(function(leftPath, leftIndex) {
+		_(rightPathSets).each(function(rightPathSet, rightIndex) {
+			if (typeof ops[rightIndex] === 'undefined') {
+				resultPaths = resultPaths.concat(rightPathSet);
+				return;
+			}
+			var boolResult = this._combinePaths(leftPathSet[leftIndex], rightPathSet, ops[rightIndex]);
+			leftPathSet[leftIndex] = boolResult;
+		}, this);
+	}, this);
 
-	console.log(this.properties.name, "return", ownPaths);
-	return ownPaths;
+
+	resultPaths = resultPaths.concat(leftPathSet);
+
+	return resultPaths;
+
 };
+
+
+Region.prototype._combinePaths = function(_leftPath, _rightPathSet, _op) {
+
+	if (_rightPathSet.length < 1) return _leftPath;
+	// if (typeof _op === 'undefined') return _leftPath;
+	
+	_(_rightPathSet).each( function (_rightPath) {
+		_leftPath.remove();
+		_rightPath.remove();
+		try {
+			_leftPath = _leftPath[_op](_rightPath);
+		} catch(e) {
+			log.appendWarning("Failed to resolve boolean opperation.");
+			console.warn(e);// throw(e);
+		}
+	});
+	return _leftPath;
+}; 
+
 
 
 Region.prototype.buildChildren = function(_context) {

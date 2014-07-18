@@ -95,20 +95,23 @@ Preview.prototype.setDocument = function(_doc) {
 
 	// draw build
 	this.buildLayer.removeChildren();
+	
 	paper.project.activeLayer = this.buildLayer;
 	var buildShapes = this.doc.build(context);
-	// this.buildLayer.style = settings.buildStyle;
+	this.buildLayer.style = settings.buildStyle;
 	
-	console.log("buildShapes", buildShapes);
-	_(buildShapes).each(function(shape) {
-		shape.style = settings.buildStyle;
-		// shape.style = 
-		// {
-		// 	fillColor: "red",
-		// 	strokeWidth: 1,
-		// 	strokeColor: "orange"
-		// };
-	});
+	// console.log("childs", this.buildLayer.children);
+	// console.log("buildShapes", buildShapes);
+	// _(buildShapes).each(function(shape) {
+
+	// 	// shape.style = settings.buildStyle;
+	// 	shape.style = 
+	// 	{
+	// 		fillColor: "red",
+	// 		strokeWidth: 1,
+	// 		strokeColor: "blue"
+	// 	};
+	// });
 
 	// draw export
 	this.exportLayer.removeChildren();

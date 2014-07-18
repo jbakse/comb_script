@@ -119,7 +119,8 @@ Text.prototype = Object.create(Region.prototype);
 Text.prototype.constructor = Text;
 
 Text.prototype.drawBounds = function(_bounds) {
-	var g = new paper.Group();
+
+	var textGroup = new paper.Group();
 
 	var scale = this.properties.size / font_height;
 	var position = new paper.Point(0, 0);
@@ -142,22 +143,27 @@ Text.prototype.drawBounds = function(_bounds) {
 		//var glyphID = glyphMap[c.toUpperCase()] || 'char-period';
 		var glyphID = glyphMap[c] || 'char-period';
 		var glyphSVG = $("#"+glyphID, font).get(0);
-		var glyph = new paper.Group().importSVG(glyphSVG, {
+		var glyph = new paper.Group();
+
+		glyph.importSVG(glyphSVG, {
 			expandShapes: true
 		});
 
 		glyph.scale(scale, new paper.Point(0,0));
 		glyph.translate(position);
 		glyph.translate(i * (font_width + font_spacing) * scale, 0);
-		g.addChild(glyph);
+		textGroup.addChild(glyph);
+
 	}, this);
 
 
 
-	return g;
+	return textGroup;
 };
 
 
 Text.prototype.drawBuild = function(_bounds) {
+	
 	return this.drawBounds(_bounds);
+
 };

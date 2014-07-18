@@ -10,10 +10,10 @@ Rectangle:
         <pre>
         children:
             - rectangle:
-            properties:
-                width: 200
-                height: 200
-                radius: 10
+                properties:
+                    width: 200
+                    height: 200
+                    radius: 10
         </pre>
 
     properties:

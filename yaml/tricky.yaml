@@ -5,24 +5,32 @@ properties:
     height: 100
 
 children:
-    - rectangle:
-        properties:
-            name: base_rectangle
-            width: 50
-            height: 50
-            #setting a boolean on this rectangle will apply the operation using all of the rectangles children
-            boolean: subtract
-            #valid boolean types: add, intersect, subtract and mixed
-            #the mixed boolean type would allow the children to specify their boolean operation
+    - region:
+        properties: 
+            name: left
         children:
             - ellipse:
+                properties: 
+                    margin_top: -30
+                    height: 100
+            - ellipse:
                 properties:
-                    name: subtract_ellipse
-                    height: 50
-                    width: 50
-                    left: -50
-                    top: -50
-                    # mixed_boolean: subtract
-            - text:
+                    margin_top: 30
+                    height: 100
+
+    - region:
+        properties:
+            name: right
+            margin_left: 50
+            width: 100
+            boolean: subtract
+        children:
+            - rectangle:
+            - rectangle:
                 properties:
-                    text: Testing
+                    margin_top: 10
+                    margin_bottom: 10
+                    margin_left: -10
+    - text:
+        properties:
+            text: Testing

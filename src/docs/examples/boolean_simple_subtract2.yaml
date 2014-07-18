@@ -4,7 +4,7 @@ children:
             name: parent_region
             width: 300
             height: 200
-            boolean: intersect
+            
         children:
             - ellipse:
                 properties:
@@ -16,3 +16,4 @@ children:
                     margin_right: 0
                     height: 200
                     width: 200
+                    boolean: intersect

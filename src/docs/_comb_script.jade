@@ -128,18 +128,23 @@ section#shapes
         ## Combining Shapes
         Shapes can be combined using the `boolean` property. The possible values are `add`, `subtract`, and `intersect`. 
 
-        If you set the `boolean` property on a region-type that generates a shape, its shape will be the base for the operation.
+        Shapes with a set `boolean` property are combined with their parent's shape. If the parent does not generate a shape the shape of the first child will be used.
+
 
     pre.display
         include examples/boolean_simple_subtract1.yaml
 
 
-    :markdown
-
-        If you set the `boolean` property on a region-type that does not generate a shape, the shape of its first child will be the base.
-
     pre.display
         include examples/boolean_simple_subtract2.yaml
+
+    
+    :markdown
+        You can use booelan operations will applied to a region's children as well. For example you can subtract many shapes from a single shape, subtract a single shape from many shapes, or even subtract many shapes from many shapes.
+
+    pre.display
+        include examples/boolean_multiple.yaml
+
 
 
 

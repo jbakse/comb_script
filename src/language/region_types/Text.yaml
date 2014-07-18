@@ -12,9 +12,9 @@ Text:
             - text:
                 properties:
                     text: "Hello, Comb Script!"
-            align: center
-            vertical_align: bottom
-            size: 30
+                    align: center
+                    vertical_align: bottom
+                    size: 30
         </pre>
 
     properties:
