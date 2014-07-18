@@ -43,7 +43,7 @@ children:
             margin_top: 10
             margin_left: 10
             registration: center
-            boolean: subtract
+
 
         children:
             - text:
@@ -60,6 +60,8 @@ children:
                     height: 5
                     margin_bottom: 0
                     registration: top
+                    boolean: subtract
+
                 children:
                     - *m3_pass
 
@@ -70,6 +72,8 @@ children:
                     height: 5
                     margin_top: 0
                     registration: bottom
+                    boolean: subtract
+
                 children:
                     - *m3_pass
 
@@ -82,6 +86,8 @@ children:
                     margin_left: 15
                     margin_right: 15
                     registration: top
+                    boolean: subtract
+
                 children:
                     - rectangle:
                         properties:
@@ -97,6 +103,8 @@ children:
                     margin_left: 15
                     margin_right: 15
                     registration: bottom
+                    boolean: subtract
+
                 children:
                     - rectangle:
                         properties:
@@ -111,7 +119,7 @@ children:
                         margin_bottom: 6.5
                         margin_left: 5
                         width: 3
-                        mixed_boolean: subtract
+                        boolean: subtract
 
             - &right_slot
                 rectangle:
@@ -121,7 +129,7 @@ children:
                         margin_bottom: 6.5
                         margin_right: 5
                         width: 3
-                        mixed_boolean: subtract
+                        boolean: subtract
 
     - rectangle:
         properties:
@@ -130,7 +138,6 @@ children:
             height: *height
             margin_top: 100
             margin_left: 10
-            boolean: mixed
         children:
             - region_grid:
                 properties:
@@ -139,7 +146,7 @@ children:
                     height: 5
                     margin_bottom: 0
                     registration: bottom
-                    mixed_boolean: subtract
+                    boolean: subtract
                 children:
                     - *tslot
 
@@ -152,7 +159,7 @@ children:
                     margin_left: 15
                     margin_right: 15
                     registration: bottom
-                    mixed_boolean: add
+                    boolean: add
                 children:
                     - rectangle:
                         properties:
@@ -161,7 +168,7 @@ children:
             - *left_slot
             - *right_slot
 
-            
+
 
     - region:
         properties:
@@ -179,10 +186,9 @@ children:
                     size: 10
                     vertical_align: center
                     align: center
-            
+
             - region:
                 properties:
-                    boolean: add
                 children:
                     - rectangle:
                         properties:
@@ -191,20 +197,20 @@ children:
                             margin_right: 6.5
                             margin_bottom: -3
                             margin_top: 0
-                            
-                        
                     - rectangle:
                         properties:
                             margin_left: 3.5
                             width: 6
                             margin_top: 6.5
                             margin_bottom: 6.5
+                            boolean: add
                     - rectangle:
                         properties:
                             margin_right: 3.5
                             width: 6
                             margin_top: 6.5
                             margin_bottom: 6.5
+                            boolean: add
                     # - rectangle:
                     #     properties:
                     #         margin_left: -6
@@ -217,6 +223,5 @@ children:
                     #         width: 3
                     #         margin_top: 0
                     #         margin_bottom: 15
-            
 
 
