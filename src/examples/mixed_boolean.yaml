@@ -9,8 +9,6 @@ children:
         properties:
             width: 70
             height: 70
-            #use the mixed boolean type to allow a regions children to define the boolean
-            boolean: mixed
         children:
             - rectangle:
                 properties:
@@ -18,10 +16,11 @@ children:
                     width: 50
                     height: 50
                     margin_right: -10
-                    #children define their boolean operation using the mixed_boolean keyword
-                    mixed_boolean: subtract
+                    #this child is subtracted
+                    boolean: subtract
             - ellipse:
                 properties:
-                    mixed_boolean: add
+                    #this one is added
+                    boolean: add
                     width: 40
                     height: 40
