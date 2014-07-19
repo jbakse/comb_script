@@ -69,6 +69,7 @@ function renderExamples() {
 
 
 		var canvas = $("<canvas>")
+			.addClass("example")
 			.attr("id", "example-"+_index)
 			.attr("width", doc.properties.width + 25)
 			.attr("height", doc.properties.height + 25);
