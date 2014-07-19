@@ -19,8 +19,6 @@ children:
                     #each new region is populated with whatever children the region_grid has
                     - region:
                         properties:
-                            #boolean operations can also be applied
-                            boolean: subtract
                         children:
                             - ellipse:
                                 properties:
@@ -30,3 +28,4 @@ children:
                                 properties:
                                     width: 10
                                     height: 10
+                                    boolean: subtract

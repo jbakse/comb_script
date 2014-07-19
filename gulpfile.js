@@ -57,6 +57,14 @@ gulp.task('html', function() {
 });
 
 
+gulp.task('lib', function() {
+	return gulp.src('./lib/**')
+		.pipe(gulp.dest('./build/lib/'))
+		.pipe(livereload())
+		;
+});
+
+
 gulp.task('images', function() {
 	return gulp.src('./src/images/**/*.*')
 		.pipe(gulp.dest('./build/images/'))
@@ -111,5 +119,5 @@ gulp.task('watch', function() {
 
 
 // Default Task
-gulp.task('default', ['javascript', 'less', 'language', 'html', 'jade', 'images', 'examples', 'watch']);
+gulp.task('default', ['javascript', 'less', 'language', 'lib', 'html', 'jade', 'images', 'examples', 'watch']);
 
