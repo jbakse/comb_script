@@ -1,0 +1,227 @@
+properties:
+    unit: mm
+    width: 200
+    height: 300
+
+library:
+    - &length 140
+    - &height 30
+    - &depth 80
+    - &m3_nut_width 6.5
+    - &m3_nut_height 2.5
+    - &m3_shaft_width 3
+    - &m3_pass
+        ellipse:
+            properties:
+                name: m3_pass
+                width: *m3_shaft_width
+                height: *m3_shaft_width
+
+    - &tslot
+        rectangle: 
+            properties:
+                name: tslot
+                width: *m3_shaft_width
+                bottom: 2
+                height: 12
+                radius: 1
+                boolean: add
+            children:
+                - rectangle:
+                    properties:
+                        name: nut
+                        width: *m3_nut_width
+                        height: *m3_nut_height
+                        margin_top: 3
+                        radius: 1
+children:
+    - rectangle:
+        properties:
+            name: bottom
+            width: *length
+            height: *depth
+            margin_top: 10
+            margin_left: 10
+            registration: center
+
+
+        children:
+            - text:
+                properties:
+                    text: Bottom
+                    size: 10
+                    vertical_align: center
+                    align: center
+
+            - region_grid:
+                properties:
+                    name: front_holes
+                    column_width: 30
+                    height: 5
+                    margin_bottom: 0
+                    registration: top
+                    boolean: subtract
+
+                children:
+                    - *m3_pass
+
+            - region_grid:
+                properties:
+                    name: back_holes
+                    column_width: 30
+                    height: 5
+                    margin_top: 0
+                    registration: bottom
+                    boolean: subtract
+
+                children:
+                    - *m3_pass
+
+            - region_grid:
+                properties:
+                    name: slots
+                    column_width: 30
+                    height: 5
+                    margin_bottom: 0
+                    margin_left: 15
+                    margin_right: 15
+                    registration: top
+                    boolean: subtract
+
+                children:
+                    - rectangle:
+                        properties:
+                            width: 11
+                            height: 3
+
+            - region_grid:
+                properties:
+                    name: slots
+                    column_width: 30
+                    height: 5
+                    margin_top: 0
+                    margin_left: 15
+                    margin_right: 15
+                    registration: bottom
+                    boolean: subtract
+
+                children:
+                    - rectangle:
+                        properties:
+                            width: 11
+                            height: 3
+
+            - &left_slot
+                rectangle:
+                    properties:
+                        name: left_slot
+                        margin_top: 6.5
+                        margin_bottom: 6.5
+                        margin_left: 5
+                        width: 3
+                        boolean: subtract
+
+            - &right_slot
+                rectangle:
+                    properties:
+                        name: right_slot
+                        margin_top: 6.5
+                        margin_bottom: 6.5
+                        margin_right: 5
+                        width: 3
+                        boolean: subtract
+
+    - rectangle:
+        properties:
+            name: front
+            width: *length
+            height: *height
+            margin_top: 100
+            margin_left: 10
+        children:
+            - region_grid:
+                properties:
+                    name: tslots
+                    column_width: 30
+                    height: 5
+                    margin_bottom: 0
+                    registration: bottom
+                    boolean: subtract
+                children:
+                    - *tslot
+
+            - region_grid:
+                properties:
+                    name: tabs
+                    column_width: 30
+                    height: 5
+                    margin_bottom: 0
+                    margin_left: 15
+                    margin_right: 15
+                    registration: bottom
+                    boolean: add
+                children:
+                    - rectangle:
+                        properties:
+                            width: 10
+                            height: 6
+            - *left_slot
+            - *right_slot
+
+
+
+    - region:
+        properties:
+            name: side
+            width: *depth
+            height: *height
+            margin_top: 200
+            margin_left: 10
+            registration: center
+
+        children:
+            - text:
+                properties:
+                    text: Side
+                    size: 10
+                    vertical_align: center
+                    align: center
+
+            - region:
+                properties:
+                children:
+                    - rectangle:
+                        properties:
+                            name: main
+                            margin_left: 6.5
+                            margin_right: 6.5
+                            margin_bottom: -3
+                            margin_top: 0
+                    - rectangle:
+                        properties:
+                            margin_left: 3.5
+                            width: 6
+                            margin_top: 6.5
+                            margin_bottom: 6.5
+                            boolean: add
+                    - rectangle:
+                        properties:
+                            margin_right: 3.5
+                            width: 6
+                            margin_top: 6.5
+                            margin_bottom: 6.5
+                            boolean: add
+                    # - rectangle:
+                    #     properties:
+                    #         margin_left: -6
+                    #         width: 3
+                    #         margin_top: 0
+                    #         margin_bottom: 15
+                    # - rectangle:
+                    #     properties:
+                    #         margin_right: -6
+                    #         width: 3
+                    #         margin_top: 0
+                    #         margin_bottom: 15
+
+

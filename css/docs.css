@@ -1,0 +1,238 @@
+/* Pretty printing styles. Used with prettify.js. */
+/* SPAN elements with the classes below are added by prettyprint. */
+.pln {
+  color: #000000;
+}
+/* plain text */
+@media screen {
+  .str {
+    color: #00cc00;
+  }
+  /* string content */
+  .kwd {
+    color: #0000cc;
+  }
+  /* a keyword */
+  .com {
+    color: #cc0000;
+  }
+  /* a comment */
+  .typ {
+    color: #aa00aa;
+  }
+  /* a type name */
+  .lit {
+    color: #00aaaa;
+  }
+  /* a literal value */
+  /* punctuation, lisp open bracket, lisp close bracket */
+  .pun,
+  .opn,
+  .clo {
+    color: #aaaa00;
+  }
+  .tag {
+    color: #0000cc;
+  }
+  /* a markup tag name */
+  .atn {
+    color: #aa00aa;
+  }
+  /* a markup attribute name */
+  .atv {
+    color: #00cc00;
+  }
+  /* a markup attribute value */
+  .dec,
+  .var {
+    color: #aa00aa;
+  }
+  /* a declaration; a variable name */
+  .fun {
+    color: #ff0000;
+  }
+  /* a function name */
+}
+/* Micro ClearFix Mixin */
+.clearfix {
+  zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
+.hidden {
+  display: none;
+}
+body {
+  font-family: 'Oxygen', sans-serif;
+  background-color: #f7f7f7;
+  font-size: 16px;
+  line-height: 2;
+  margin: 0;
+}
+html {
+  margin: 0;
+  padding: 0;
+}
+a {
+  color: #228fff;
+  border-bottom: 1px solid #228fff;
+  text-decoration: none;
+  padding: 2px;
+  padding-bottom: 0px;
+  margin-left: -2px;
+  font-weight: bold;
+}
+a:hover {
+  background-color: #228fff;
+  color: white;
+}
+h1,
+h2,
+h3 {
+  margin: 2em 0 0 0;
+  font-family: 'Arvo', serif;
+  line-height: 1;
+  font-weight: normal;
+}
+h1 {
+  font-size: 2em;
+}
+h2 {
+  font-size: 1.3em;
+}
+h3 {
+  font-size: 1.0em;
+}
+ul {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+  margin-bottom: 2em;
+}
+section ul {
+  margin: 1em 0;
+}
+section ul li {
+  list-style: disc;
+  line-height: 1.5;
+  margin-bottom: 1em;
+}
+#menu {
+  position: fixed;
+  top: 0px;
+  left: 10px;
+}
+#menu li {
+  margin-bottom: 5px;
+}
+#content {
+  position: relative;
+  width: 550px;
+  margin-left: 190px;
+}
+.region-type {
+  overflow: hidden;
+}
+.region-description {
+  margin-bottom: 40px;
+}
+.region-type .properties {
+  margin-bottom: 50px;
+}
+.region-type .properties li {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ebebeb;
+}
+.region-type .properties .property-name {
+  color: #ff2259;
+  border-bottom: 1px solid #ff2259;
+  text-decoration: none;
+  padding: 2px;
+  padding-bottom: 0px;
+  margin-left: -2px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+.region-type .properties .property-name:hover {
+  background-color: #ff2259;
+  color: white;
+}
+.region-type .properties .closed .description,
+.region-type .properties .closed dl {
+  display: none;
+}
+dl {
+  margin-top: 5px;
+  zoom: 1;
+}
+dl:before,
+dl:after {
+  content: "";
+  display: table;
+}
+dl:after {
+  clear: both;
+}
+dt {
+  display: block;
+  float: left;
+  clear: left;
+  width: 75px;
+}
+dd {
+  float: left;
+  margin-left: 0px;
+  margin-right: 15px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #797979;
+}
+pre {
+  display: block;
+  color: #797979;
+  font-size: 14px;
+  font-family: Monaco, monospace;
+  background-color: #ebebeb;
+  border-left: 3px solid #9f9f9f;
+  padding: 10px;
+  white-space: pre-wrap;
+  /* css-3 */
+  white-space: -moz-pre-wrap;
+  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;
+  /* Opera 4-6 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 */
+  word-wrap: break-word;
+  /* Internet Explorer 5.5+ */
+  white-space: pre;
+  min-height: 250px;
+  box-sizing: border-box;
+}
+p code {
+  color: #797979;
+  padding: 1px 2px;
+  font-size: 14px;
+  font-family: Monaco, monospace;
+  background-color: #ebebeb;
+  border: 1px solid #d2d2d2;
+}
+canvas.example {
+  box-sizing: border-box;
+  border: 1px solid #797979;
+  position: absolute;
+  left: 570px;
+}
+@media (max-width: 1300px) {
+  canvas.example {
+    position: relative;
+    left: 0;
+  }
+}

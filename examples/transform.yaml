@@ -1,0 +1,17 @@
+properties:
+    name: transform
+    unit: mm
+    width: 100
+    height: 100
+
+children:
+    - rectangle:
+        properties:
+            width: 25
+            height: 25
+            #transforms take effect after the regions bounds have been generated
+            #transforms are applied based on the regions registration point
+            registration: top_left
+            scale_x: 0.75
+            scale_y: 2
+            rotation: 45

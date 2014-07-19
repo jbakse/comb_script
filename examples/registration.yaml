@@ -1,0 +1,23 @@
+properties:
+    name: registration
+    unit: mm
+    width: 100
+    height: 100
+children:
+    - region:
+        properties:
+            #this region uses margins to define it's it's bounds relative to it's parent
+            margin_top: 15
+            margin_bottom: 15
+            margin_left: 15
+            margin_right: 15
+            #setting registration to top_left moves the coordinate system (0,0) to the top left of the bounds
+            registration: top_left
+        children:
+            - rectangle:
+                properties:
+                    top: 0
+                    left: 0
+                    width: 25
+                    height: 25
+

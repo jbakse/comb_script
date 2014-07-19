@@ -1,0 +1,290 @@
+<html><head><meta charset="UTF-8"/><title>Comb Script Docs</title><script src="../lib/jquery-2.1.1.min.js"></script><script src="../lib/google-code-prettify/prettify.js"></script><script src="../lib/paperjs-v0.9.18/dist/paper-full.js"></script><script src="../lib/ace/ace.js"></script><script src="javascript/language.js"></script><script src="javascript/docs.js"></script><link href="http://fonts.googleapis.com/css?family=Arvo:400,700,400italic" rel="stylesheet" type="text/css"/><link href="http://fonts.googleapis.com/css?family=Oxygen:400,300,700" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="css/docs.css"/></head><body><nav id="menu"><h2>Overview</h2><ul><li><a href="#introduction">Introduction</a></li><li><a href="#syntax">Basic Syntax</a></li><li><a href="#regions">Regions</a></li><li><a href="#shapes">Shapes</a></li><li><a href="#grids">Grids</a></li><li><a href="#repeat">Constants</a></li><li><a href="#repeat">Library Items</a></li></ul><h2>API Reference</h2><ul id="template-menu">{{#regionTypes}}
+<li><a href="#{{class}}">{{class}}</a></li>
+{{/regionTypes}}</ul></nav><main id="content"><section id="introduction"><h1 id="introduction">Introduction</h1>
+<p>Comb Script is a language for describing technical vector designs and a tool that exports these designs as SVG files. A primary goal of Comb Script is to express designs naturally, so they are easier to adjust and customize.</p>
+<p>Comb Script was inspired by <a href="http://www.openscad.org/">OpenSCAD</a>, CSS, HTML, and Adobe Illustrator snapping shenanigans.</p>
+<ul>
+<li><p><strong>Parametric</strong></p>
+<p>Because shapes in Comb Script can be positioned relative to the bounds of their parents, it is possible to make designs that flex when dimensions change.</p>
+</li>
+<li><p><strong>Expressive</strong></p>
+<p>Positions can be described in multiple ways allowing more natural expression. For example you can specify that a circle is 10 units from the right side of its container and vertically centered, rather than expressing its global coordinates.</p>
+</li>
+<li><p><strong>Declarative</strong></p>
+<p>Comb Script is more like HTML than JavaScript. Ideally, your document describes your design, not the steps required to make it.</p>
+</li>
+<li><p><strong>Unstyled</strong></p>
+<p>Shapes in Comb Script represent only the path data and don&#39;t have their own style properties like fill-color, stroke-color, or stroke-width. Comb Script is primarily designed for designs that describe paths for laser-cutters and plotters where such styles are not needed.</p>
+</li>
+<li><p><strong>Boolean Operations</strong></p>
+<p>Combine shapes using boolean operations: Intersection, Union, and Difference</p>
+</li>
+<li><p><strong>Render to SVG</strong></p>
+<p>Shape data can be exported as SVG using style templates.</p>
+</li>
+</ul>
+</section><section id="syntax"><h1 id="basic-syntax">Basic Syntax</h1>
+<p>Comb Script documents are written in <a href="http://en.wikipedia.org/wiki/YAML">YAML</a>, a common and human-readable data-file format. Comb Script recognizes predefined keywords to describe regions, shapes, and their properties. </p>
+<p>Here is an example of a simple Comb Script document that draws an ellipse:</p>
+<pre class="display">properties:
+    width: 525
+    height: 225
+
+children:
+    - ellipse:
+        properties:
+            width: 200
+            height: 200
+</pre><p>This example begins by defining two document properties, <code>width</code> and <code>height</code> that describe the dimensions of the document. If these properties are not defined, defaults will be used. Document properties are defined using the <code>properties:</code> key followed by a set of indented <strong>key: value</strong> pairs.</p>
+<p>Next, the example defines its children under the <code>children:</code> key. The children are indented one level and each is prefixed with a <code>-</code> to indicate a YAML array item. There are several types of children in Comb Script including regions, rectangles, and ellipses. </p>
+<p>This document has one child, an <code>ellipse</code>. The ellipse defines <code>width</code> and <code>height</code> properties to set its dimensions.</p>
+</section><section id="regions"><h1 id="regions">Regions</h1>
+<p>The basic building-blocks in Comb Script are called <strong>regions</strong>. A region describes a rectangular bounds in the drawing and and can contain child regions. Child regions are laid out in relation to the bounds of their parent.</p>
+<p>There are several types of regions in Comb Script. The basic <code>region</code> type is primarily organizational. It is used to define a new part of the drawing and to group its children. The basic <code>region</code> will not generate a vector shape in the exported SVG. </p>
+<p>The <code>rectangle</code> or <code>ellipse</code> region types have all the same properties of the basic <code>region</code> but also draw a shape in the export.</p>
+<h2 id="region-bounds">Region Bounds</h2>
+<p>Every region has a set of bounds that describe a rectangular area in the drawing. These bounds can be set using the <code>top</code>, <code>left</code>, <code>bottom</code>, and <code>right</code> properties. These values are relative to the registration position of the region&#39;s parent.</p>
+<p>A region&#39;s bounds can also be specified relative to the parent&#39;s bounds using <code>margin_top</code>, <code>margin_left</code>, <code>margin_bottom</code>, and <code>margin_right</code> properties.</p>
+<p>You can specify the dimensions of the bounds with the <code>width</code> and <code>height</code> properties.</p>
+<p>These properties can be mixed any way you wish, as long as they don&#39;t conflict.</p>
+<pre class="display">children:
+    - region:
+        properties:
+            top: -100
+            bottom: 0
+            margin_left: 10
+            width: 100
+</pre><h2 id="registration">Registration</h2>
+<p>Regions can optionally set their registration position with the <code>registration</code> property. The new registration position will be used by the region&#39;s children when laying out their bounds. It will also be used for the pivot point for rotations and scales applied to the region.</p>
+<p>The default value of <code>registration</code> is <code>parent</code> which will keep the registration position set by the region&#39;s parent. Other values, such as &#39;top_left&#39; and &#39;center&#39; move it to a position determined by the region&#39;s bounds.</p>
+<pre class="display">children:
+    - region:
+        properties:
+            width: 200
+            height: 200
+            registration: top_right
+        children:
+            - rectangle:
+                properties:
+                    top: 0
+                    left: 0
+                    width: 75
+                    height: 75
+</pre><h2 id="transformations">Transformations</h2>
+<p>You can transform the coordinate system used by a region and its children using the <code>rotation</code>, <code>scale_x</code>, and <code>scale_y</code> properties.</p>
+<pre class="display">children:
+    - rectangle:
+        properties:
+            width: 100
+            height: 100
+            rotation: 45
+</pre><h2 id="children">Children</h2>
+<p>Regions can have any number of child regions. A region&#39;s bounds, registration, and transform are used by when positioning its children. Using nesting, you can describe the positional relationships of your shapes making parts of your design parametric. </p>
+<p>In the following example the position of the two ellipses is determined by the width of their parent.</p>
+<pre class="display">children:
+    - region:
+        properties:
+            width: 400
+            height: 200
+        children:
+            - ellipse:
+                properties:
+                    height: 100
+                    width: 100
+                    margin_left: 30
+            - ellipse:
+                properties:
+                    height: 100
+                    width: 100
+                    margin_right: 30
+</pre></section><section id="shapes"><h1 id="shapes">Shapes</h1>
+<p>The <code>rectangle</code> and <code>ellipse</code> region-types will generate a shape in the export. In these examples, exported shapes are filled in.</p>
+<pre class="display">children:
+    - rectangle:
+        properties:
+            margin_left: 10
+            width: 200
+            height: 200
+            radius: 10
+    - ellipse:
+        properties:
+            margin_right: 10
+            width: 200
+            height: 200
+            radius: 20
+</pre><h2 id="combining-shapes">Combining Shapes</h2>
+<p>Shapes can be combined using the <code>boolean</code> property. The possible values are <code>add</code>, <code>subtract</code>, and <code>intersect</code>. </p>
+<p>Shapes with a set <code>boolean</code> property are combined with their parent&#39;s shape. If the parent does not generate a shape the shape of the first child will be used.</p>
+<pre class="display">children:
+    - rectangle:
+        properties:
+            name: base_rectangle
+            width: 100
+            height: 100
+        children:
+            - ellipse:
+                properties:
+                    name: subtract_ellipse
+                    height: 100
+                    width: 100
+                    left: -100
+                    top: -100
+                    boolean: subtract
+</pre><pre class="display">children:
+    - region:
+        properties:
+            name: parent_region
+            width: 300
+            height: 200
+            
+        children:
+            - ellipse:
+                properties:
+                    margin_left: 0
+                    height: 200
+                    width: 200
+            - ellipse:
+                properties:
+                    margin_right: 0
+                    height: 200
+                    width: 200
+                    boolean: intersect
+</pre><p>You can use booelan operations will applied to a region&#39;s children as well. For example you can subtract many shapes from a single shape, subtract a single shape from many shapes, or even subtract many shapes from many shapes.</p>
+<pre class="display">children:
+    - region:
+        properties:
+            width: 100
+            height: 200
+        children:
+            - ellipse:
+                properties:
+                    margin_top: 0
+                    height: 85
+            - ellipse:
+                properties:
+                    margin_bottom: 0
+                    height: 85
+
+    - region:
+        properties:
+            width: 200
+            height: 100
+            boolean: subtract
+        children:
+            - ellipse:
+                properties:
+                    margin_left: 0
+                    width: 85
+            - ellipse:
+                properties:
+                    margin_right: 0
+                    width: 85
+</pre></section><section id="grids"><h1 id="grids">Grids</h1>
+<p>Comb Script provides a special region-type called a <code>region_grid</code>. Region grids can be used to draw a region repeatedly in a rectangular grid. </p>
+<p>The <code>rows</code> and <code>columns</code> properties will set the number of rows and columns in the grid directly. You can set <code>row_height</code> and <code>column_width</code> instead to create as many rows or columns as needed to fill the region grid.</p>
+<p>Each cell in the generated grid will contain a clone of the children of the region grid.</p>
+<pre class="display">children:
+    - region_grid:
+        properties:
+            width: 400
+            height: 200
+            column_width: 50
+            rows: 4
+            registration: center
+        children:
+            - ellipse:
+                properties:
+                    width: 30
+                    height: 30
+</pre></section><section id="repeat"><h1 id="yaml-repeated-nodes">YAML Repeated Nodes</h1>
+<p>YAML&#39;s <a href="http://yaml.org/spec/1.2/spec.html#id2760395">repeated node</a> feature can be used to to create named parameters and library shapes that can be used throughout your document. Repeated nodes are defined with <code>&amp;</code> followed by a name, and used with <code>*</code> followed by the name. Repeated nodes are genrally defined as an array under the <code>library:</code> key.</p>
+<h2 id="constants">Constants</h2>
+<p>You can use repeated nodes as named constants (aka variables or parameters) to identify commonly used values in your document and create a single place in the document where they can be changed. </p>
+<pre class="display">library:
+    - &size 200
+
+children:
+    - ellipse:
+        properties:
+            width:  *size
+            height: *size
+</pre><h2 id="library-items">Library Items</h2>
+<p>It is common that you will reuse the same shape in multiple places in your document. Repeated nodes can represent entire regions, their properties, and even nested children. Each repeated node will be separately laid out in their parent&#39;s context.</p>
+<pre class="display">library:
+    - &ex
+        rectangle:
+            properties:
+                margin_top: 10
+                margin_bottom: 10
+                width: 40
+                radius: 4
+
+children:
+    - region:
+        properties:
+            margin_left: 10
+            width: 150
+            height: 150
+            registration: center
+        children:
+            - *ex
+
+    - region:
+        properties:
+            margin_right: 10
+            width: 100
+            height: 100
+            registration: center
+        children:
+            - *ex
+</pre></section><div id="template-regionTypes">{{#regionTypes}}
+<section class="region-type" id="{{class}}">
+	<h1>{{class}}</h1>
+	<dl>
+		{{#keyword}}<dt>keyword:</dt><dd>{{keyword}}</dd>{{/keyword}}
+		{{#extends}}<dt>extends:</dt><dd><a href="#{{extends}}">{{extends}}</a></dd>{{/extends}}
+	</dl>
+	<div class="region-description">{{{description}}}</div>
+	{{#required_properties.length}}
+		<h2>Required Properties</h2>
+		<ul class="properties required-properties">
+		{{#required_properties}}
+			<li>{{>prop}}</li>
+		{{/required_properties}}
+		</ul>
+	{{/required_properties.length}}
+	{{#properties.length}}
+		<h2>Properties</h2>
+		<ul class="properties">
+		{{#properties}}
+			<li>{{>prop}}</li>
+		{{/properties}}
+		</ul>
+	{{/properties.length}}
+	{{#inherited_properties.length}}
+		<h2>Inherited Properties</h2>
+		<ul class="properties inherited-properties">
+		{{#inherited_properties}}
+			<li>{{>prop}}</li>
+		{{/inherited_properties}}
+		</ul>
+	{{/inherited_properties.length}}
+</section>
+{{/regionTypes}}</div><div id="template-property" class="hidden"><div class="property-name">{{keyword}}</div>
+<div class="description">{{{description}}}</div>
+<dl>
+	<dt>type:</dt>
+	<dd>{{type}}</dd>
+	<dt>default:</dt>
+	<dd>{{default}}{{^default}}undefined{{/default}}</dd>
+	{{#required}}
+		<dt>required:</dt>
+		<dd>{{required}}</dd>
+	{{/required}}
+	{{#values.length}}
+		<dt>values:</dt>
+		{{#values}}
+		<dd>{{.}}</dd>
+		{{/values}}
+	{{/values.length}}
+</dl></div></main></body></html>

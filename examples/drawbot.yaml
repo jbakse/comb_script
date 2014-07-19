@@ -1,0 +1,104 @@
+properties:
+    name: drawbot
+    unit: mm
+    width: 100
+    height: 100
+
+
+library:
+    - &m3pass
+        ellipse:
+            properties:
+                name: m3Pass
+                height: 3
+                width: 3
+    - &m3tap
+        ellipse:
+            properties:
+                name: m3Tap
+                height: 2
+                width: 2
+
+
+children:
+    - rectangle:
+        properties:
+            name: main
+            width: 53
+            height: 64
+            radius: 3
+        children:
+            - region:
+                properties:
+                    name: belt_attachment
+                    left: 4.5
+                    width: 3
+                    registration: center
+                    boolean: subtract
+                children:
+                    - *m3pass
+                    - rectangle:
+                        properties:
+                            margin_top: -1
+                            height: 9
+                            width: 3
+                    - rectangle:
+                        properties:
+                            margin_bottom: -1
+                            height: 9
+                            width: 3
+            - region:
+                properties:
+                    name: bearing_mount_1
+                    margin_right: 14
+                    margin_top: 11
+                    width: 0
+                    height: 0
+                    registration: center
+                    boolean: subtract
+                children:
+                    - *m3pass
+
+            - region:
+                properties:
+                    name: bearing_mount
+                    margin_right: 14
+                    margin_bottom: 11
+                    width: 0
+                    height: 0
+                    registration: center
+                    boolean: subtract
+                children:
+                    - *m3pass
+
+            - region:
+                properties:
+                    name: bearing_mount
+                    margin_left: 14
+                    width: 0
+                    height: 0
+                    registration: center
+                    boolean: subtract
+                children:
+                    - *m3pass
+
+            - region_grid:
+                properties:
+                    name: taps
+                    margin_left: 5
+                    width: 8
+                    row_height: 8
+                    registration: center
+                    boolean: subtract
+                children:
+                    - *m3tap
+
+            - text:
+                properties:
+                    text: vert.car
+                    rotation: -90
+                    registration: bottom_right
+                    size: 4
+                    vertical_align: bottom
+                    margin_right: 3
+                    margin_bottom: 3

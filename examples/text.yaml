@@ -1,0 +1,18 @@
+properties:
+    name: text
+    unit: mm
+    width: 200
+    height: 100
+children:
+    - region:
+        properties:
+            registration: top_right
+        children:
+            - text:
+                properties:
+                    size: 15
+                    #the text to show
+                    text: Hello CombScript
+                    #alignment can be used to position the text within it's bounds
+                    align: right
+                    vertical_align: top

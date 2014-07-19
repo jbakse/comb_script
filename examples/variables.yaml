@@ -1,0 +1,25 @@
+properties:
+    name: variables
+    unit: mm
+    width: 100
+    height: 100
+library:
+
+    #references can be used for individual values
+    - &size 75
+    - &margin 10
+
+children:
+    - region:
+        properties:
+            #this region uses the variable above to define width and height
+            width: *size
+            height: *size
+        children:
+            - rectangle:
+                properties:
+                    #the margins are also defined above
+                    margin_top: *margin
+                    margin_left: *margin
+                    margin_bottom: *margin
+                    margin_right: *margin
