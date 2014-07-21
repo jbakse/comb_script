@@ -1,5 +1,7 @@
 # Hello
 
+[Slides](http://justinbakse.com/revealer/https://raw.githubusercontent.com/jbakse/comb_script/master/sketching/sketching.md)
+
 ---
 
 <!-- .slide: data-background="images/herman_miller.jpg" class="hide-contents"-->
