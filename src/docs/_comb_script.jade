@@ -2,14 +2,14 @@ section#introduction
     :markdown
         # Introduction
 
-        Comb Script is a language for describing technical vector designs and a tool that exports these designs as SVG files. A primary goal of Comb Script is to express designs naturally, so they are easier to adjust and customize.
+        CombScript is a language for describing technical vector designs and a tool that exports these designs as SVG files. A primary goal of CombScript is to express designs naturally, so they are easier to adjust and customize.
 
-        Comb Script was inspired by [OpenSCAD](http://www.openscad.org/), CSS, HTML, and Adobe Illustrator snapping shenanigans.
+        CombScript was inspired by [OpenSCAD](http://www.openscad.org/), CSS, HTML, and Adobe Illustrator snapping shenanigans.
 
         
         -   **Parametric**
 
-            Because shapes in Comb Script can be positioned relative to the bounds of their parents, it is possible to make designs that flex when dimensions change.
+            Because shapes in CombScript can be positioned relative to the bounds of their parents, it is possible to make designs that flex when dimensions change.
 
         -   **Expressive**
 
@@ -17,11 +17,11 @@ section#introduction
 
         -   **Declarative**
 
-            Comb Script is more like HTML than JavaScript. Ideally, your document describes your design, not the steps required to make it.
+            CombScript is more like HTML than JavaScript. Ideally, your document describes your design, not the steps required to make it.
 
         -   **Unstyled**
 
-            Shapes in Comb Script represent only the path data and don't have their own style properties like fill-color, stroke-color, or stroke-width. Comb Script is primarily designed for designs that describe paths for laser-cutters and plotters where such styles are not needed.
+            Shapes in CombScript represent only the path data and don't have their own style properties like fill-color, stroke-color, or stroke-width. CombScript is primarily designed for designs that describe paths for laser-cutters and plotters where such styles are not needed.
 
         -   **Boolean Operations**
 
@@ -37,9 +37,9 @@ section#introduction
 section#syntax
     :markdown
         # Basic Syntax
-        Comb Script documents are written in [YAML](http://en.wikipedia.org/wiki/YAML), a common and human-readable data-file format. Comb Script recognizes predefined keywords to describe regions, shapes, and their properties. 
+        CombScript documents are written in [YAML](http://en.wikipedia.org/wiki/YAML), a common and human-readable data-file format. CombScript recognizes predefined keywords to describe regions, shapes, and their properties. 
 
-        Here is an example of a simple Comb Script document that draws an ellipse:
+        Here is an example of a simple CombScript document that draws an ellipse:
 
     pre.display
         include examples/ellipse_simple.yaml
@@ -48,7 +48,7 @@ section#syntax
 
         This example begins by defining two document properties, `width` and `height` that describe the dimensions of the document. If these properties are not defined, defaults will be used. Document properties are defined using the `properties:` key followed by a set of indented **key: value** pairs.
 
-        Next, the example defines its children under the `children:` key. The children are indented one level and each is prefixed with a `-` to indicate a YAML array item. There are several types of children in Comb Script including regions, rectangles, and ellipses. 
+        Next, the example defines its children under the `children:` key. The children are indented one level and each is prefixed with a `-` to indicate a YAML array item. There are several types of children in CombScript including regions, rectangles, and ellipses. 
 
         This document has one child, an `ellipse`. The ellipse defines `width` and `height` properties to set its dimensions.
 
@@ -58,9 +58,9 @@ section#syntax
 section#regions
     :markdown
         # Regions
-        The basic building-blocks in Comb Script are called **regions**. A region describes a rectangular bounds in the drawing and and can contain child regions. Child regions are laid out in relation to the bounds of their parent.
+        The basic building-blocks in CombScript are called **regions**. A region describes a rectangular bounds in the drawing and and can contain child regions. Child regions are laid out in relation to the bounds of their parent.
 
-        There are several types of regions in Comb Script. The basic `region` type is primarily organizational. It is used to define a new part of the drawing and to group its children. The basic `region` will not generate a vector shape in the exported SVG. 
+        There are several types of regions in CombScript. The basic `region` type is primarily organizational. It is used to define a new part of the drawing and to group its children. The basic `region` will not generate a vector shape in the exported SVG. 
 
         The `rectangle` or `ellipse` region types have all the same properties of the basic `region` but also draw a shape in the export.
 
@@ -151,7 +151,7 @@ section#shapes
 section#grids
     :markdown
         # Grids
-        Comb Script provides a special region-type called a `region_grid`. Region grids can be used to draw a region repeatedly in a rectangular grid. 
+        CombScript provides a special region-type called a `region_grid`. Region grids can be used to draw a region repeatedly in a rectangular grid. 
 
         The `rows` and `columns` properties will set the number of rows and columns in the grid directly. You can set `row_height` and `column_width` instead to create as many rows or columns as needed to fill the region grid.
 
