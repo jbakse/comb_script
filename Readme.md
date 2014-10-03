@@ -1,11 +1,9 @@
 # Comb Script
 ## The Best Way to Design a Comb
 
-- [Try it](http://combscript.justinbakse.com/)
-- [Docs](http://combscript.justinbakse.com/docs.html)
+First, [try the online demo](http://combscript.justinbakse.com/).
 
-
- # Introduction
+# Introduction
 
 CombScript is a language for describing technical vector designs and a tool that exports these designs as SVG files. A primary goal of CombScript is to express designs naturally, so they are easier to adjust and customize.
 
