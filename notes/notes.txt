@@ -1,3 +1,9 @@
+Login With Github / Store Data with Parse
+https://parse.com/tutorials/adding-third-party-authentication-to-your-web-app
+http://developer.github.com/v3/oauth/
+
+
+
 to calculate "top" we need
 - top
 - margin_top

@@ -15,7 +15,7 @@ Menu.prototype.init = function(_element) {
 	this.addToggleCommand("#button-view-frame", "UI/command/toggleViewPreview");
 	this.addToggleCommand("#button-view-build", "UI/command/toggleViewBuild");
 	this.addToggleCommand("#button-view-export", "UI/command/toggleViewExport");
-
+	this.addClickCommand("#button-yaml-open", "UI/command/openYAML");
 
 	$('.example-link').click ( function (_e) {
 		// console.log("_e", _e, this, $(this).data('example'));

@@ -17,6 +17,7 @@ var Inspector = require('./ui/Inspector.js');
 var Menu = require('./ui/Menu.js');
 var log = require('./ui/Log.js').sharedInstance();
 
+var Data = require('./Data.js');
 
 module.exports = ApplicationController;
 
@@ -32,9 +33,17 @@ function ApplicationController() {
 	this.inspector = new Inspector();
 	this.menu = new Menu();
 
+	
+
 }
 
 ApplicationController.prototype.init = function(_element) {
+
+
+	window.setTimeout(Data.init, 500);
+
+
+
 	this.preview.init($('#paper-canvas').get(0));
 	this.editor.init($('#editor').get(0));
 	this.inspector.init($('#inspector').get(0), this);
@@ -54,6 +63,8 @@ ApplicationController.prototype.attachHandlers = function() {
 	var self = this;
 	$.Topic("UI/command/rebuild").subscribe(_.bind(this.rebuild, this));
 	$.Topic("UI/command/exportSVG").subscribe(_.bind(this.exportSVG, this));
+	$.Topic("UI/command/openYAML").subscribe(_.bind(this.openYAML, this));
+
 	$.Topic("UI/onContentChange").subscribe(_.bind(this.rebuild, this));
 	$.Topic("UI/onLineChange").subscribe(_.bind(this.onLineChange, this));
 
@@ -69,7 +80,7 @@ ApplicationController.prototype.attachHandlers = function() {
 
 			self.redrawPreview();
 		}
-	);
+		);
 
 	$.Topic("region/onClick").subscribe(
 		function(_region) {
@@ -82,7 +93,7 @@ ApplicationController.prototype.attachHandlers = function() {
 			self.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
 			self.editor.gotoLine(_region.editorProperties.firstLine + 1, true);
 		}
-	);
+		);
 
 	$.Topic("region/onMouseLeave").subscribe(
 		function(_region) {
@@ -92,7 +103,7 @@ ApplicationController.prototype.attachHandlers = function() {
 
 			self.redrawPreview();
 		}
-	);
+		);
 };
 
 ApplicationController.prototype.redrawPreview = function(_region) {
@@ -203,6 +214,24 @@ ApplicationController.prototype.exportSVG = function() {
 
 	currentProject.activate();
 };
+
+ApplicationController.prototype.openYAML = function() {
+	var self = this;
+	
+	Data.openYAML().then( function(result) {
+
+		console.log("got the yaml");
+		console.log(result);
+		self.editor.setText(result);
+		self.editor.gotoLine(1, true);
+
+	})
+	.catch( function(error) {
+		console.log("caught error", error);
+	});
+
+
+}
 
 
 ApplicationController.prototype._updateYAML = function(_yaml) {
