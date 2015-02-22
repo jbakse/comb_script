@@ -33,8 +33,7 @@ function ApplicationController() {
 	this.inspector = new Inspector();
 	this.menu = new Menu();
 
-	
-
+	this.fileInfo = null;
 }
 
 ApplicationController.prototype.init = function(_element) {
@@ -64,6 +63,8 @@ ApplicationController.prototype.attachHandlers = function() {
 	$.Topic("UI/command/rebuild").subscribe(_.bind(this.rebuild, this));
 	$.Topic("UI/command/exportSVG").subscribe(_.bind(this.exportSVG, this));
 	$.Topic("UI/command/openYAML").subscribe(_.bind(this.openYAML, this));
+	$.Topic("UI/command/newYAML").subscribe(_.bind(this.newYAML, this));
+	$.Topic("UI/command/saveYAML").subscribe(_.bind(this.saveYAML, this));
 
 	$.Topic("UI/onContentChange").subscribe(_.bind(this.rebuild, this));
 	$.Topic("UI/onLineChange").subscribe(_.bind(this.onLineChange, this));
@@ -215,23 +216,56 @@ ApplicationController.prototype.exportSVG = function() {
 	currentProject.activate();
 };
 
-ApplicationController.prototype.openYAML = function() {
-	var self = this;
+ApplicationController.prototype.newYAML = function() {
 	
-	Data.openYAML().then( function(result) {
-
-		console.log("got the yaml");
-		console.log(result);
-		self.editor.setText(result);
-		self.editor.gotoLine(1, true);
-
+	Data.newYAML()
+	.then( function(result) {
+		console.log("newYaml Result", result);
 	})
 	.catch( function(error) {
 		console.log("caught error", error);
 	});
+	
+};
+
+ApplicationController.prototype.openYAML = function() {
+	var self = this;
+
+	Data.openYAML().then( function(fileInfo) {
+
+		console.log("got the yaml");
+		console.log(fileInfo);
+		self.editor.setText(fileInfo.content);
+		self.editor.gotoLine(1, true);
+
+		self.fileInfo = fileInfo;
+
+		//fileInfo.content += "touch";
+		//Data.saveYAML(fileInfo);
+
+	})
+	.catch( function(error) {
+		console.log("Error opening file.", error);
+	});
+};
+
+ApplicationController.prototype.saveYAML = function() {
+	if (!this.fileInfo) {
+		console.log("no open file");
+		return;
+	}
+	
+	this.fileInfo.content = this.editor.getText();
+
+	Data.saveYAML(this.fileInfo).then( function(result) {
+		console.log("save complete", result);
+	});
+};
 
 
-}
+
+
+
 
 
 ApplicationController.prototype._updateYAML = function(_yaml) {
