@@ -20,7 +20,7 @@ function Editor() {
 
 
 Editor.prototype.init = function(_element) {
-	this.editor = ace.edit("editor");
+	this.editor = ace.edit(_element);
 	this.editor.setTheme("ace/theme/monokai");
 	this.editor.getSession().setMode("ace/mode/yaml");
 	this.editor.setShowInvisibles(false);

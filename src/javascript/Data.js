@@ -27,7 +27,7 @@ module.exports.init = function() {
 			return gapi.load('picker');
 		})
 		.then(function() {
-			console.log("Google Drive API Ready!");
+			console.log("Google Drive API ready!");
 		})
 		.then(null, function(e) {
 			console.error("Error initializing google api.", e);
@@ -115,7 +115,6 @@ function pickFile() {
 
 		var pickerCallback = function(data) {
 			if (data.action == google.picker.Action.PICKED) {
-				console.log("data", data);
 				var fileId = data.docs[0].id;
 				resolve(fileId);
 			}

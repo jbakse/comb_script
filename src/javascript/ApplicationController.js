@@ -33,7 +33,7 @@ function ApplicationController() {
 	this.inspector = new Inspector();
 	this.menu = new Menu();
 
-	this.fileInfo = null;
+	this.fileInfo = {};
 }
 
 ApplicationController.prototype.init = function(_element) {
@@ -44,7 +44,7 @@ ApplicationController.prototype.init = function(_element) {
 
 
 	this.preview.init($('#paper-canvas').get(0));
-	this.editor.init($('#editor').get(0));
+	this.editor.init($('#editor-content').get(0));
 	this.inspector.init($('#inspector').get(0), this);
 	this.menu.init($('#menu').get(0));
 
@@ -168,8 +168,12 @@ ApplicationController.prototype.loadYAMLfromURL = function(_url) {
 		url: _url,
 
 		success: function(_data) {
+
+			
 			self.editor.setText(_data);
 			self.editor.gotoLine(1, true);
+			$("#file-dirty").hide();
+			$("#file-title").text('');
 		},
 
 		fail: function(_data) {
@@ -182,6 +186,9 @@ ApplicationController.prototype.loadYAMLfromURL = function(_url) {
 
 ApplicationController.prototype.rebuild = function() {
 	log.clear();
+	if (this.fileInfo.content !== this.editor.getText()) {
+		$("#file-dirty").show();
+	}
 	this._updateYAML(this.editor.getText());
 	this.onLineChange(this.editor.editor.selection.getCursor().row);
 };
@@ -217,32 +224,36 @@ ApplicationController.prototype.exportSVG = function() {
 };
 
 ApplicationController.prototype.newYAML = function() {
-	
-	Data.newYAML()
-	.then( function(result) {
-		console.log("newYaml Result", result);
-	})
-	.catch( function(error) {
-		console.log("caught error", error);
-	});
-	
+	this.fileInfo = {};
+	this.editor.setText('');
+	this.editor.gotoLine(1, true);
+	$("#file-dirty").hide();
+	$("#file-title").text('untitled');
+
+	// Data.newYAML()
+	// .then( function(result) {
+	// 	console.log("newYaml Result", result);
+	// })
+	// .catch( function(error) {
+	// 	console.log("caught error", error);
+	// });
+
 };
+
 
 ApplicationController.prototype.openYAML = function() {
 	var self = this;
 
 	Data.openYAML().then( function(fileInfo) {
 
-		console.log("got the yaml");
-		console.log(fileInfo);
+		// console.log("got the yaml");
+		// console.log(fileInfo);
+		log.appendSuccess("File opened.");
 		self.editor.setText(fileInfo.content);
 		self.editor.gotoLine(1, true);
-
+		$("#file-dirty").hide();
+		$("#file-title").text(fileInfo.title);
 		self.fileInfo = fileInfo;
-
-		//fileInfo.content += "touch";
-		//Data.saveYAML(fileInfo);
-
 	})
 	.catch( function(error) {
 		console.log("Error opening file.", error);
@@ -250,17 +261,37 @@ ApplicationController.prototype.openYAML = function() {
 };
 
 ApplicationController.prototype.saveYAML = function() {
-	if (!this.fileInfo) {
-		console.log("no open file");
+	
+
+	if (!this.fileInfo.id) {
+		this.createYAML();
 		return;
 	}
 	
 	this.fileInfo.content = this.editor.getText();
 
 	Data.saveYAML(this.fileInfo).then( function(result) {
-		console.log("save complete", result);
+		$("#file-dirty").hide();
+		log.appendSuccess("File saved.");
 	});
 };
+
+
+ApplicationController.prototype.createYAML = function() {
+	var self = this;
+
+	var title = prompt('Save file as');
+	var content = this.editor.getText();
+
+	Data.newYAML(title, content)
+	.then(function(result) {
+		log.appendSuccess("File created.");
+		self.fileInfo.title = title;
+		self.fileInfo.content = content;
+		self.fileInfo.id = result.id;
+	});
+};
+
 
 
 
