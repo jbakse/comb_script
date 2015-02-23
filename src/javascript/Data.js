@@ -55,6 +55,7 @@ function handleAuthResult(authResult) {
 			console.error("Error initializing google api.", e);
 		});
 	}else{
+		$("#button-connect-drive").removeClass('hidden');
 		console.error("Google Drive API authorization denied.");
 	}
 }
