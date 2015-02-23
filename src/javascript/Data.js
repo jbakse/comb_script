@@ -7,17 +7,17 @@ var _ = require('underscore');
 
 var DEVELOPER_KEY = 'AIzaSyAaps9tbXrXH7Yhk94HnHv7EmVaz8Hxmjo';
 var CLIENT_ID = '1055926372216-75g9p5ttbsb7vnu18rvfn46n13llbfsn.apps.googleusercontent.com';
-var SCOPES = ['https://www.googleapis.com/auth/drive'];
+var SCOPES = ['https://www.googleapis.com/auth/drive.install','https://www.googleapis.com/auth/drive.file'];
 var APP_ID = 'combscript-jbakse';
 
 
 // init - loads/authorizes google api for use
 
 module.exports.init = function() {
-	$("#button-connect-drive").show();
-	$("#button-yaml-new").hide();
-	$("#button-yaml-open").hide();
-	$("#button-yaml-save").hide();
+	// $("#button-connect-drive").show();
+	// $("#button-yaml-new").hide();
+	// $("#button-yaml-open").hide();
+	// $("#button-yaml-save").hide();
 
 	return gapi.auth.authorize({
 			'client_id': CLIENT_ID,
@@ -38,10 +38,10 @@ module.exports.manualConnect = function() {
 function handleAuthResult(authResult) {
 	if (authResult && !authResult.error) {
 		console.log("Google Drive API authorized.");
-		$("#button-connect-drive").hide();
-		$("#button-yaml-new").show();
-		$("#button-yaml-open").show();
-		$("#button-yaml-save").show();
+		
+		$("#button-yaml-new").removeClass('hidden');
+		$("#button-yaml-open").removeClass('hidden');
+		$("#button-yaml-save").removeClass('hidden');
 
 		gapi.client.load('drive', 'v2')
 		.then(function() {
@@ -51,6 +51,7 @@ function handleAuthResult(authResult) {
 			console.log("Google Drive API ready.");
 		})
 		.then(null, function(e) {
+			$("#button-connect-drive").removeClass('hidden');
 			console.error("Error initializing google api.", e);
 		});
 	}else{
@@ -62,10 +63,18 @@ function handleAuthResult(authResult) {
 // returns an object with info about the file
 // .title .content .id
 
-module.exports.openYAML = function() {
+module.exports.openYAML = function(id) {
 
 	var fileInfo = {};
-	return pickFile().then(function(fileId) {
+
+	var picked;
+	if (id) {
+		picked = Promise.resolve(id);
+	} else {
+		picked = pickFile();
+	}
+	
+	return picked.then(function(fileId) {
 		fileInfo.id = fileId;
 		return getFileResource(fileId);
 	})

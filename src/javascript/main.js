@@ -2,7 +2,7 @@
 
 require('./jquery_util.js');
 
-var settings = require('./settings.js');
+// var settings = require('./settings.js');
 var ApplicationController = require('./ApplicationController.js');
 
 function main() {
@@ -14,7 +14,7 @@ function main() {
 
 
 	// UI.log.appendMessage("Loading " + settings.fileURL);
-	appController.loadYAMLfromURL(settings.fileURL);
+	// appController.loadYAMLfromURL(settings.fileURL);
 
 	// UI.log.appendDebug("Initialized");
 }

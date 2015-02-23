@@ -54,8 +54,35 @@ ApplicationController.prototype.init = function(_element) {
 	$('#right-side-inner > .split-pane-resize-shim').mousemove(function() {
 		this.editor.resize();
 	});
+
+	
+	var state = getParameterByName('state');
+	var stateObj = state && JSON.parse(state);
+	if (stateObj && stateObj.action == "create") {
+		console.log("create new", stateObj);
+		this.newYAML();
+	}
+	else if (stateObj && stateObj.action == "open") {
+		var self = this;
+		window.setTimeout(function(){
+			self.openYAML(stateObj.ids[0]);
+		}, 2000);
+		
+	}
+	else {
+		this.loadYAMLfromURL(settings.fileURL);
+	}
+
+	//, JSON.parse(getParameterByName('state')));
 };
 
+//http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 
 
 ApplicationController.prototype.attachHandlers = function() {
@@ -246,10 +273,10 @@ ApplicationController.prototype.connectDrive = function() {
 	Data.manualConnect();
 };
 
-ApplicationController.prototype.openYAML = function() {
+ApplicationController.prototype.openYAML = function(id) {
 	var self = this;
 
-	Data.openYAML().then( function(fileInfo) {
+	Data.openYAML(id).then( function(fileInfo) {
 
 		// console.log("got the yaml");
 		// console.log(fileInfo);
