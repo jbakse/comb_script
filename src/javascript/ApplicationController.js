@@ -62,6 +62,8 @@ ApplicationController.prototype.attachHandlers = function() {
 	var self = this;
 	$.Topic("UI/command/rebuild").subscribe(_.bind(this.rebuild, this));
 	$.Topic("UI/command/exportSVG").subscribe(_.bind(this.exportSVG, this));
+	
+	$.Topic("UI/command/connectDrive").subscribe(_.bind(this.connectDrive, this));
 	$.Topic("UI/command/openYAML").subscribe(_.bind(this.openYAML, this));
 	$.Topic("UI/command/newYAML").subscribe(_.bind(this.newYAML, this));
 	$.Topic("UI/command/saveYAML").subscribe(_.bind(this.saveYAML, this));
@@ -240,6 +242,9 @@ ApplicationController.prototype.newYAML = function() {
 
 };
 
+ApplicationController.prototype.connectDrive = function() {
+	Data.manualConnect();
+};
 
 ApplicationController.prototype.openYAML = function() {
 	var self = this;

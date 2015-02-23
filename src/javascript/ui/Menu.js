@@ -15,6 +15,8 @@ Menu.prototype.init = function(_element) {
 	this.addToggleCommand("#button-view-frame", "UI/command/toggleViewPreview");
 	this.addToggleCommand("#button-view-build", "UI/command/toggleViewBuild");
 	this.addToggleCommand("#button-view-export", "UI/command/toggleViewExport");
+	
+	this.addClickCommand("#button-connect-drive", "UI/command/connectDrive");
 	this.addClickCommand("#button-yaml-open", "UI/command/openYAML");
 	this.addClickCommand("#button-yaml-new", "UI/command/newYAML");
 	this.addClickCommand("#button-yaml-save", "UI/command/saveYAML");

@@ -14,26 +14,49 @@ var APP_ID = 'combscript-jbakse';
 // init - loads/authorizes google api for use
 
 module.exports.init = function() {
+	$("#button-connect-drive").show();
+	$("#button-yaml-new").hide();
+	$("#button-yaml-open").hide();
+	$("#button-yaml-save").hide();
 
 	return gapi.auth.authorize({
 			'client_id': CLIENT_ID,
 			'scope': SCOPES,
 			'immediate': true
-		})
-		.then(function() {
-			return gapi.client.load('drive', 'v2');
-		})
+		}, handleAuthResult);
+
+		
+
+};
+
+module.exports.manualConnect = function() {
+	gapi.auth.authorize(
+                  {'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': false},
+                  handleAuthResult);
+};
+
+function handleAuthResult(authResult) {
+	if (authResult && !authResult.error) {
+		console.log("Google Drive API authorized.");
+		$("#button-connect-drive").hide();
+		$("#button-yaml-new").show();
+		$("#button-yaml-open").show();
+		$("#button-yaml-save").show();
+
+		gapi.client.load('drive', 'v2')
 		.then(function() {
 			return gapi.load('picker');
 		})
 		.then(function() {
-			console.log("Google Drive API ready!");
+			console.log("Google Drive API ready.");
 		})
 		.then(null, function(e) {
 			console.error("Error initializing google api.", e);
 		});
-
-};
+	}else{
+		console.error("Google Drive API authorization denied.");
+	}
+}
 
 // openYAML - promts user to select google drive file
 // returns an object with info about the file
