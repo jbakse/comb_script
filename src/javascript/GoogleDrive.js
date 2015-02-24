@@ -49,6 +49,8 @@ module.exports.init = function() {
 	$.Topic("UI/command/save").subscribe(saveFile);
 
 	$.Topic("UI/editor/onContentChange").subscribe(onContentChange);
+	
+
 
 	autoConnect();
 };
@@ -73,12 +75,12 @@ function handleAuthResult(authResult) {
 		$("#button-new").removeClass('hidden');
 		$("#button-open").removeClass('hidden');
 		$("#button-save").removeClass('hidden');
-
+		$("#button-connect-google-drive").addClass('hidden');
 		loadAPIs();
 		
 	}else{
 		console.error("Google Drive API authorization denied.");
-		$("#button-connect-drive").removeClass('hidden');
+		$("#button-connect-google-drive").removeClass('hidden');
 	}
 }
 
@@ -91,7 +93,7 @@ function loadAPIs() {
 		console.log("Google Drive API ready.");
 	})
 	.then(null, function(e) {
-		$("#button-connect-drive").removeClass('hidden');
+		$("#button-connect-google-drive").removeClass('hidden');
 		console.error("Error loading google api.", e);
 	});
 }
@@ -101,7 +103,7 @@ var currentFileInfo = {};
 
 function onContentChange(_e, content){
 	currentFileInfo.content = content;
-	$("#file-dirty").show();
+	$("#file-dirty").removeClass('hidden');
 }
 
 function newFile(){
@@ -109,10 +111,12 @@ function newFile(){
 	currentFileInfo.title = "untitled";
 	currentFileInfo.content = "";
 
-	$("#file-dirty").hide();
+	$.Topic("File/onLoad").publish(currentFileInfo.content);
+
+	$("#file-dirty").addClass('hidden');
+
 	$("#file-title").text(currentFileInfo.title);
 
-	$.Topic("File/onLoad").publish(currentFileInfo.content);
 }
 
 // openFile - promts user to select google drive file
@@ -141,10 +145,10 @@ function openFile(id) {
 	.then( function(content){
 		newFileInfo.content = content;
 
-		$("#file-dirty").hide();
-		$("#file-title").text(newFileInfo.title);
-
 		$.Topic("File/onLoad").publish(newFileInfo.content);
+
+		$("#file-dirty").addClass('hidden');
+		$("#file-title").text(newFileInfo.title);
 
 		currentFileInfo = newFileInfo;
 
@@ -165,14 +169,14 @@ function saveFile(){
 		createDriveFile(currentFileInfo.title, currentFileInfo.content)
 		.then( function(result) {
 			currentFileInfo.id = result.id;
-			$("#file-dirty").hide();
+			$("#file-dirty").addClass('hidden');
 			log.appendSuccess("File created.");
 		});
 
 	} else {
 		
 		updateDriveFile(currentFileInfo).then( function(result){
-			$("#file-dirty").hide();
+			$("#file-dirty").addClass('hidden');
 			log.appendSuccess("File saved.");
 		});
 	}

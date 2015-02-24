@@ -145,12 +145,11 @@ div
 	min-height: @editor-min-height;
 }
 
-#editor-info {
+#file-info {
 	height: @editor-info-height;
 	color: white;
 	background-color: @color-dark-gray;
 	border-bottom: 1px solid @color-accent;
-
 }
 
 #editor-content 
@@ -211,35 +210,32 @@ body
 	position: relative;
 }
 
-.editor-button {
+#file-info .button {
 	.menu-text-button ();
 	display: inline-block;
 	border: 1px solid #666;
 	margin-top: 4px;
 	padding: 4px 3px 3px 3px;
-}
-
-.editor-button.hidden
-{
-	display: none;
-	border: 1px solid red;
+	&.hidden {display: none;}
 }
 
 
 
-.editor-info {
+
+#file-info .info {
 	.menu-text-button ();
 	background-color: transparent;
 	padding: 0;
 }
 
-#file-dirty
+#file-info #file-dirty
 {
 	background-color: red;
 	border-radius: 5px;
 	height: 8px;
 	width: 8px;
 	display: inline-block;
+	&.hidden {display: none;}
 }
 
 #menu .disabled {
