@@ -1,3 +1,10 @@
+# Clean Up Google Integration
+
+Better encapsulation
+Better loading flow
+Close dirty file warnings
+
+
 BUGS:
 +-	region_grid registration: top_left, top_right, etc is bugged and using the registration top_left, etc of the parent, not the individual region cells
 
@@ -15,7 +22,7 @@ BUGS:
 +----	Docs missing inherited properties?
 .---	Docs might be better off with all properties minimized.
 
---- tries to fill in letters, letters cause issues in mixed situations, should be able to opt out of mixed booleans
+--- tries to fill in letters (sutton), letters cause issues in mixed situations, should be able to opt out of mixed booleans
 
 
 For Sketching:

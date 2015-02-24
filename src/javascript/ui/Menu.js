@@ -16,10 +16,10 @@ Menu.prototype.init = function(_element) {
 	this.addToggleCommand("#button-view-build", "UI/command/toggleViewBuild");
 	this.addToggleCommand("#button-view-export", "UI/command/toggleViewExport");
 	
-	this.addClickCommand("#button-connect-drive", "UI/command/connectDrive");
-	this.addClickCommand("#button-yaml-open", "UI/command/openYAML");
-	this.addClickCommand("#button-yaml-new", "UI/command/newYAML");
-	this.addClickCommand("#button-yaml-save", "UI/command/saveYAML");
+	this.addClickCommand("#button-connect-google-drive", "UI/command/connectGoogleDrive");
+	this.addClickCommand("#button-new", "UI/command/new");
+	this.addClickCommand("#button-open", "UI/command/open");
+	this.addClickCommand("#button-save", "UI/command/save");
 
 	$('.example-link').click ( function (_e) {
 		// console.log("_e", _e, this, $(this).data('example'));

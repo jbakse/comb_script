@@ -17,7 +17,7 @@ var Inspector = require('./ui/Inspector.js');
 var Menu = require('./ui/Menu.js');
 var log = require('./ui/Log.js').sharedInstance();
 
-var Data = require('./Data.js');
+var googleDrive = require('./GoogleDrive.js');
 
 module.exports = ApplicationController;
 
@@ -32,16 +32,16 @@ function ApplicationController() {
 	this.editor = new Editor();
 	this.inspector = new Inspector();
 	this.menu = new Menu();
-
+	
 	this.fileInfo = {};
 }
 
 ApplicationController.prototype.init = function(_element) {
 
-
-	window.setTimeout(Data.init, 500);
-
-
+	window.setTimeout( function() {
+		googleDrive.init();
+	},
+	500);
 
 	this.preview.init($('#paper-canvas').get(0));
 	this.editor.init($('#editor-content').get(0));
@@ -55,85 +55,39 @@ ApplicationController.prototype.init = function(_element) {
 		this.editor.resize();
 	});
 
-	
-	var state = getParameterByName('state');
-	var stateObj = state && JSON.parse(state);
-	if (stateObj && stateObj.action == "create") {
-		console.log("create new", stateObj);
-		this.newYAML();
-	}
-	else if (stateObj && stateObj.action == "open") {
-		var self = this;
-		window.setTimeout(function(){
-			self.openYAML(stateObj.ids[0]);
-		}, 2000);
-		
-	}
-	else {
-		this.loadYAMLfromURL(settings.fileURL);
-	}
-
-	//, JSON.parse(getParameterByName('state')));
 };
-
-//http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
 
 ApplicationController.prototype.attachHandlers = function() {
 	var self = this;
+	$.Topic("File/onLoad").subscribe(_.bind(this.setYAML, this));
+
 	$.Topic("UI/command/rebuild").subscribe(_.bind(this.rebuild, this));
 	$.Topic("UI/command/exportSVG").subscribe(_.bind(this.exportSVG, this));
-	
-	$.Topic("UI/command/connectDrive").subscribe(_.bind(this.connectDrive, this));
-	$.Topic("UI/command/openYAML").subscribe(_.bind(this.openYAML, this));
-	$.Topic("UI/command/newYAML").subscribe(_.bind(this.newYAML, this));
-	$.Topic("UI/command/saveYAML").subscribe(_.bind(this.saveYAML, this));
-
-	$.Topic("UI/onContentChange").subscribe(_.bind(this.rebuild, this));
-	$.Topic("UI/onLineChange").subscribe(_.bind(this.onLineChange, this));
-
 	$.Topic("UI/command/loadYAML").subscribe(_.bind(this.loadYAMLfromURL, this));
+	
+	$.Topic("UI/editor/onContentChange").subscribe(_.bind(this.rebuild, this));
+	$.Topic("UI/editor/onLineChange").subscribe(_.bind(this.highlightRegionsForLine, this));
 
 
-	$.Topic("region/onMouseEnter").subscribe(
-		function(_region) {
+	$.Topic("region/onMouseEnter").subscribe( function(_region) {
+		self.hoverRegion = _region;
+		if (settings.inspectOnHover) $.Topic("UI/updateInspector").publish([_region]);
+		self.redrawPreview();
+	});
 
-			self.hoverRegion = _region;
+	$.Topic("region/onClick").subscribe( function(_region) {
+		self.hoverRegion = null;
+		self.keySelection = _region;
+		// $.Topic("UI/updateInspector").publish([_region]);
+		self.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
+		self.editor.gotoLine(_region.editorProperties.firstLine + 1, true);
+	});
 
-			if (settings.inspectOnHover) $.Topic("UI/updateInspector").publish([_region]);
-
-			self.redrawPreview();
-		}
-		);
-
-	$.Topic("region/onClick").subscribe(
-		function(_region) {
-
-			self.hoverRegion = null;
-			self.keySelection = _region;
-
-			// $.Topic("UI/updateInspector").publish([_region]);
-
-			self.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
-			self.editor.gotoLine(_region.editorProperties.firstLine + 1, true);
-		}
-		);
-
-	$.Topic("region/onMouseLeave").subscribe(
-		function(_region) {
-
-			self.hoverRegion = undefined;
-			if (settings.inspectOnHover) $.Topic("UI/updateInspector").publish(self.selectedRegions);
-
-			self.redrawPreview();
-		}
-		);
+	$.Topic("region/onMouseLeave").subscribe(function(_region) {
+		self.hoverRegion = undefined;
+		if (settings.inspectOnHover) $.Topic("UI/updateInspector").publish(self.selectedRegions);
+		self.redrawPreview();
+	});
 };
 
 ApplicationController.prototype.redrawPreview = function(_region) {
@@ -151,7 +105,7 @@ ApplicationController.prototype.redrawPreview = function(_region) {
 };
 
 
-ApplicationController.prototype.onLineChange = function(_line) {
+ApplicationController.prototype.highlightRegionsForLine = function(_line) {
 	if (!this.doc) return;
 
 	var regions = _(this.doc.getDecendants()).filter(function(_region) {
@@ -197,12 +151,7 @@ ApplicationController.prototype.loadYAMLfromURL = function(_url) {
 		url: _url,
 
 		success: function(_data) {
-
-			
-			self.editor.setText(_data);
-			self.editor.gotoLine(1, true);
-			$("#file-dirty").hide();
-			$("#file-title").text('');
+			self.setYAML(_data);
 		},
 
 		fail: function(_data) {
@@ -213,14 +162,7 @@ ApplicationController.prototype.loadYAMLfromURL = function(_url) {
 	});
 };
 
-ApplicationController.prototype.rebuild = function() {
-	log.clear();
-	if (this.fileInfo.content !== this.editor.getText()) {
-		$("#file-dirty").show();
-	}
-	this._updateYAML(this.editor.getText());
-	this.onLineChange(this.editor.editor.selection.getCursor().row);
-};
+
 
 ApplicationController.prototype.exportSVG = function() {
 	log.appendMessage("Exporting SVG");
@@ -252,86 +194,22 @@ ApplicationController.prototype.exportSVG = function() {
 	currentProject.activate();
 };
 
-ApplicationController.prototype.newYAML = function() {
-	this.fileInfo = {};
-	this.editor.setText('');
+
+ApplicationController.prototype.setYAML = function(_yaml){
+	this.editor.setText(_yaml);
 	this.editor.gotoLine(1, true);
-	$("#file-dirty").hide();
-	$("#file-title").text('untitled');
-
-	// Data.newYAML()
-	// .then( function(result) {
-	// 	console.log("newYaml Result", result);
-	// })
-	// .catch( function(error) {
-	// 	console.log("caught error", error);
-	// });
-
-};
-
-ApplicationController.prototype.connectDrive = function() {
-	Data.manualConnect();
-};
-
-ApplicationController.prototype.openYAML = function(id) {
-	var self = this;
-
-	Data.openYAML(id).then( function(fileInfo) {
-
-		// console.log("got the yaml");
-		// console.log(fileInfo);
-		log.appendSuccess("File opened.");
-		self.editor.setText(fileInfo.content);
-		self.editor.gotoLine(1, true);
-		$("#file-dirty").hide();
-		$("#file-title").text(fileInfo.title);
-		self.fileInfo = fileInfo;
-	})
-	.catch( function(error) {
-		console.log("Error opening file.", error);
-	});
-};
-
-ApplicationController.prototype.saveYAML = function() {
-	
-
-	if (!this.fileInfo.id) {
-		this.createYAML();
-		return;
-	}
-	
-	this.fileInfo.content = this.editor.getText();
-
-	Data.saveYAML(this.fileInfo).then( function(result) {
-		$("#file-dirty").hide();
-		log.appendSuccess("File saved.");
-	});
+	this.rebuild();
 };
 
 
-ApplicationController.prototype.createYAML = function() {
-	var self = this;
-
-	var title = prompt('Save file as');
-	var content = this.editor.getText();
-
-	Data.newYAML(title, content)
-	.then(function(result) {
-		log.appendSuccess("File created.");
-		self.fileInfo.title = title;
-		self.fileInfo.content = content;
-		self.fileInfo.id = result.id;
-	});
+ApplicationController.prototype.rebuild = function() {
+	log.clear();
+	this._parseYAML(this.editor.getText());
+	this.highlightRegionsForLine(this.editor.editor.selection.getCursor().row);
 };
 
 
-
-
-
-
-
-
-ApplicationController.prototype._updateYAML = function(_yaml) {
+ApplicationController.prototype._parseYAML = function(_yaml) {
 	// console.log("update yaml");
 
 	try {

@@ -86,7 +86,7 @@ Editor.prototype.gotoLine = function(line, focus) {
 	this.editor.gotoLine(line, 1000, true);
 	this.sendChangeCursorEvents = true;
 
-	$.Topic("UI/onLineChange").publish(line);
+	$.Topic("UI/editor/onLineChange").publish(line);
 
 	if (focus) this.editor.focus();
 };
@@ -95,14 +95,14 @@ Editor.prototype.gotoLine = function(line, focus) {
 
 Editor.prototype.onChange = function(_e) {
 	if (!this.sendChangeEvents) return;
-	$.Topic("UI/onContentChange").publish(_e);
+	$.Topic("UI/editor/onContentChange").publish(_e, this.getText());
 };
 
 Editor.prototype.onChangeCursor = function() {
 	if (!this.sendChangeCursorEvents) return;
 	var line = this.editor.selection.getCursor().row + 1;
 	if (this.oldLine != line) {
-		$.Topic("UI/onLineChange").publish(line);
+		$.Topic("UI/editor/onLineChange").publish(line);
 		this.oldLine = line;
 	}
 };
