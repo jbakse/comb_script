@@ -40,6 +40,11 @@ var APP_ID = 'combscript-jbakse';
 
 
 // init - loads/authorizes google api for use
+window.gapiLoaded = function() {
+	console.log("GAPI LOADED");
+	autoConnect();
+};
+
 
 module.exports.init = function() {
 
@@ -52,7 +57,7 @@ module.exports.init = function() {
 	
 
 
-	autoConnect();
+	
 };
 
 function autoConnect() {
