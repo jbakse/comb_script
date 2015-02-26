@@ -12,39 +12,27 @@ var CLIENT_ID = '1055926372216-75g9p5ttbsb7vnu18rvfn46n13llbfsn.apps.googleuserc
 var SCOPES = ['https://www.googleapis.com/auth/drive.install','https://www.googleapis.com/auth/drive.file'];
 var APP_ID = 'combscript-jbakse';
 
+var gapiLoaded = false;
+var initialized = false;
 
 
-// var state = getParameterByName('state');
-// 	var stateObj = state && JSON.parse(state);
-// 	if (stateObj && stateObj.action == "create") {
-// 		console.log("create new", stateObj);
-// 		this.newYAML();
-// 	}
-// 	else if (stateObj && stateObj.action == "open") {
-// 		var self = this;
-// 		window.setTimeout(function(){
-// 			self.openYAML(stateObj.ids[0]);
-// 		}, 2000);
-		
-// 	}
-// 	else {
-// 		this.loadYAMLfromURL(settings.fileURL);
-// 	}
-// //http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
-// function getParameterByName(name) {
-//     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-//     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-//         results = regex.exec(location.search);
-//     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-// }
+
+
+function getParameterByName(name) {
+	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+	results = regex.exec(location.search);
+	return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 
 
 // init - loads/authorizes google api for use
-window.gapiLoaded = function() {
-	console.log("GAPI LOADED");
-	autoConnect();
-};
 
+window.gapiCallback = function() {
+	gapiLoaded = true;
+	kickOff();
+
+};
 
 module.exports.init = function() {
 
@@ -55,10 +43,16 @@ module.exports.init = function() {
 
 	$.Topic("UI/editor/onContentChange").subscribe(onContentChange);
 	
-
-
-	
+	initialized = true;
+	kickOff();
 };
+
+
+function kickOff() {
+	if (gapiLoaded && initialized) {
+		autoConnect();
+	}
+}
 
 function autoConnect() {
 	return gapi.auth.authorize(
@@ -67,7 +61,7 @@ function autoConnect() {
 }
 
 function manualConnect() {
-	gapi.auth.authorize(
+	return gapi.auth.authorize(
 		{'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': false},
 		handleAuthResult);
 }
@@ -75,52 +69,112 @@ function manualConnect() {
 
 function handleAuthResult(authResult) {
 	if (authResult && !authResult.error) {
-		console.log("Google Drive API authorized.");
-		
-		$("#button-new").removeClass('hidden');
-		$("#button-open").removeClass('hidden');
-		$("#button-save").removeClass('hidden');
-		$("#button-connect-google-drive").addClass('hidden');
+		log.appendSuccess("Google Drive authorized.");
 		loadAPIs();
 		
 	}else{
-		console.error("Google Drive API authorization denied.");
+		log.appendError("Google Drive authorization denied.");
 		$("#button-connect-google-drive").removeClass('hidden');
 	}
 }
 
-function loadAPIs() {
-	gapi.client.load('drive', 'v2')
-	.then(function() {
-		return gapi.load('picker');
-	})
-	.then(function() {
-		console.log("Google Drive API ready.");
-	})
-	.then(null, function(e) {
-		$("#button-connect-google-drive").removeClass('hidden');
-		console.error("Error loading google api.", e);
+function loadAPI(api) {
+	return new Promise(function(resolve, reject){
+		gapi.load(api, {'callback': function(result) {
+			resolve(result);
+		}});
 	});
 }
+
+
+function loadAPIs() {
+	
+	var drive = new Promise ( function (resolve, reject) {
+		gapi.client.load('drive', 'v2').then( function(r) {
+			if (r && r.error) reject(r);
+			resolve();
+		});
+	});
+
+	var picker = loadAPI('picker');
+	
+
+	Promise.all([drive, picker])
+	.then(function() {
+		log.appendSuccess("Google Drive ready.");
+		$("#button-new").removeClass('hidden');
+		$("#button-open").removeClass('hidden');
+		$("#button-save").removeClass('hidden');
+		$("#button-connect-google-drive").addClass('hidden');
+
+		handleGoogleDriveLaunchRequest();
+	})
+	.catch(function(e) {
+		log.appendError("Error connecting to Google Drive.");
+		$("#button-connect-google-drive").removeClass('hidden');
+	});
+}
+
+function handleGoogleDriveLaunchRequest(){
+	var state = getParameterByName('state');
+	var stateObj = state && JSON.parse(state);
+	
+	if (stateObj && stateObj.action == "create") {
+		// console.log("create new",a stateObj);
+		// this.newYAML();
+		newFile(stateObj.folderId);
+	}
+	else if (stateObj && stateObj.action == "open") {
+		openFile(stateObj.ids[0])
+		// var self = this;
+		// window.setTimeout(function(){
+		// 	self.openYAML(stateObj.ids[0]);
+		// }, 2000);
+	}
+	else {
+		// this.loadYAMLfromURL(settings.fileURL);
+	}
+	//http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+}
+
+
+
+
 
 
 var currentFileInfo = {}; 
 
 function onContentChange(_e, content){
 	currentFileInfo.content = content;
+	currentFileInfo.dirty = true;
 	$("#file-dirty").removeClass('hidden');
 }
 
-function newFile(){
+function closeFile(){
+	return newFile();
+}
+module.exports.closeFile = closeFile;
+
+
+function newFile(parentId){
+	if (currentFileInfo.dirty) {
+		var result = window.confirm("This will cause unsaved changes to be lost. Do you want to discard these changes?");
+		if (!result) return false;
+	}
+
 	currentFileInfo = {};
 	currentFileInfo.title = "untitled";
 	currentFileInfo.content = "";
+	currentFileInfo.parentId = parentId;
 
 	$.Topic("File/onLoad").publish(currentFileInfo.content);
 
+	currentFileInfo.dirty = false;
 	$("#file-dirty").addClass('hidden');
 
 	$("#file-title").text(currentFileInfo.title);
+
+	return true;
 
 }
 
@@ -129,7 +183,9 @@ function newFile(){
 // .title .content .id
 
 function openFile(id) {
-
+	if (!closeFile()) 
+		return;
+	
 	var newFileInfo = {};
 
 	var picked;
@@ -152,6 +208,7 @@ function openFile(id) {
 
 		$.Topic("File/onLoad").publish(newFileInfo.content);
 
+		currentFileInfo.dirty = false;
 		$("#file-dirty").addClass('hidden');
 		$("#file-title").text(newFileInfo.title);
 
@@ -171,16 +228,21 @@ function saveFile(){
 
 		currentFileInfo.title = prompt('Save file as');
 
-		createDriveFile(currentFileInfo.title, currentFileInfo.content)
+		createDriveFile(currentFileInfo.title, currentFileInfo.content, currentFileInfo.parentId)
 		.then( function(result) {
 			currentFileInfo.id = result.id;
+
+			currentFileInfo.dirty = false;
 			$("#file-dirty").addClass('hidden');
+			$("#file-title").text(currentFileInfo.title);
 			log.appendSuccess("File created.");
 		});
 
 	} else {
 		
 		updateDriveFile(currentFileInfo).then( function(result){
+
+			currentFileInfo.dirty = false;
 			$("#file-dirty").addClass('hidden');
 			log.appendSuccess("File saved.");
 		});
@@ -206,10 +268,11 @@ function updateDriveFile(fileInfo) {
 
 // createDriveFile - creates a new, untitled file on google drive
 
-function createDriveFile(name, content, type) {
+function createDriveFile(name, content, parentId, type) {
 
 	name = name || "untitled.comb";
 	content = content || "";
+	parentId = parentId || null;
 	type = type || "text/x-yaml";
 
 	// create a blob object to hold our data
@@ -221,6 +284,7 @@ function createDriveFile(name, content, type) {
 	// stick a fileName attribute on to the blob
 	// this makes it enough like a file object that insertFile() can use it
 	blob.fileName = name;
+	blob.parentId = parentId;
 
 
 	return new Promise(function(resolve, reject) {
@@ -326,6 +390,12 @@ function downloadFilePromise(file) {
  			'title': fileData.fileName,
  			'mimeType': contentType
  		};
+
+ 		// jcb add parent folder metadata
+ 		if (fileData.parentId) {
+ 			metadata.parents = [{id: fileData.parentId}];
+ 		}
+ 		
 
  		var base64Data = btoa(reader.result);
  		var multipartRequestBody =

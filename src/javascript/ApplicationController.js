@@ -38,10 +38,7 @@ function ApplicationController() {
 
 ApplicationController.prototype.init = function(_element) {
 
-	window.setTimeout( function() {
-		googleDrive.init();
-	},
-	500);
+	googleDrive.init();
 
 	this.preview.init($('#paper-canvas').get(0));
 	this.editor.init($('#editor-content').get(0));
@@ -146,6 +143,8 @@ ApplicationController.prototype.highlightRegionsForLine = function(_line) {
 };
 
 ApplicationController.prototype.loadYAMLfromURL = function(_url) {
+	if (!googleDrive.closeFile()) return false;
+	a
 	var self = this;
 	$.ajax({
 		url: _url,
