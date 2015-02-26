@@ -116,7 +116,7 @@ ApplicationController.prototype.highlightRegionsForLine = function(_line) {
 	regions = _(regions).difference(ancestors);
 
 	if (!regions || regions.length === 0) {
-		console.error("Couldn't find the region for line " + _line);
+		// console.error("Couldn't find the region for line " + _line);
 		return;
 	}
 
@@ -144,7 +144,7 @@ ApplicationController.prototype.highlightRegionsForLine = function(_line) {
 
 ApplicationController.prototype.loadYAMLfromURL = function(_url) {
 	if (!googleDrive.closeFile()) return false;
-	a
+	
 	var self = this;
 	$.ajax({
 		url: _url,

@@ -91,7 +91,7 @@ div
 @preview-min-width: 300px;
 @right-side-min-width: 300px;
 @editor-min-height: 200px;
-@editor-info-height: 30px;
+@file-info-height: 26px;
 @log-height: 200px;
 @log-min-height: 20px;
 
@@ -146,17 +146,20 @@ div
 }
 
 #file-info {
-	height: @editor-info-height;
-	color: white;
+	height: @file-info-height;
 	background-color: @color-dark-gray;
 	border-bottom: 1px solid @color-accent;
+	
+	color: white;
+	line-height: @file-info-height - 4;
+	
 }
 
 #editor-content 
 {
 	width: 100%;
 	position: absolute;
-	top: @editor-info-height;
+	top: @file-info-height;
 	bottom: 0px;
 }
 
@@ -211,14 +214,27 @@ body
 }
 
 #file-info .button {
-	.menu-text-button ();
-	display: inline-block;
-	border: 1px solid #666;
-	margin-top: 4px;
-	padding: 4px 3px 3px 3px;
+	font-size: 11px;
+	
+	// .menu-text-button ();
+	// display: inline-block;
+	// border: 1px solid #CCC;
+	// margin-top: 4px;
+	// padding: 4px 3px 3px 3px;
 	&.hidden {display: none;}
 }
 
+#file-info .button,
+#file-info img
+{
+	// vertical-align: middle;
+}
+
+#file-info img
+{
+	vertical-align: middle;
+	margin: -2px 0 0 6px;
+}
 
 
 
