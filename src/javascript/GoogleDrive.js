@@ -145,6 +145,7 @@ function handleGoogleDriveLaunchRequest(){
 var currentFileInfo = {}; 
 
 function onContentChange(_e, content){
+	console.log("change");
 	currentFileInfo.content = content;
 	currentFileInfo.dirty = true;
 	$("#file-dirty").removeClass('hidden');
@@ -167,6 +168,7 @@ function newFile(parentId){
 	currentFileInfo.content = "";
 	currentFileInfo.parentId = parentId;
 
+	//TODO need to protect code from getting trashed if the yaml parse fails
 	$.Topic("File/onLoad").publish(currentFileInfo.content);
 
 	currentFileInfo.dirty = false;
@@ -185,7 +187,7 @@ function newFile(parentId){
 function openFile(id) {
 	if (!closeFile()) 
 		return;
-	
+
 	var newFileInfo = {};
 
 	var picked;
@@ -206,14 +208,14 @@ function openFile(id) {
 	.then( function(content){
 		newFileInfo.content = content;
 
-		$.Topic("File/onLoad").publish(newFileInfo.content);
 
 		currentFileInfo.dirty = false;
 		$("#file-dirty").addClass('hidden');
 		$("#file-title").text(newFileInfo.title);
 
 		currentFileInfo = newFileInfo;
-
+onLoad
+		$.Topic("File/").publish(newFileInfo.content);
 		log.appendSuccess("File opened.");
 	})
 	.catch( function(error) {
@@ -239,7 +241,7 @@ function saveFile(){
 		});
 
 	} else {
-		
+		console.log(currentFileInfo);
 		updateDriveFile(currentFileInfo).then( function(result){
 
 			currentFileInfo.dirty = false;
