@@ -20,25 +20,33 @@ function parse(_yaml) {
 		data = jsYAML.safeLoad(_yaml);
 	}
 	catch (e) {
-		return log.appendParseError(e);
+		log.appendError("Parse Error");
+		log.appendParseError(e);
+		return false;
+	}
+	
+	if (data === null || typeof data !== 'object') {
+		log.appendError("Parse Error");
+		return false;
 	}
 
 
+	// parse again, this time with injected meta data properties
 	_yaml = injectEditorProperties(_yaml);
-
-	// parse again, for real this time
 	try {
 		data = jsYAML.safeLoad(_yaml);
 	}
 	catch (e) {
-		return log.appendParseError(e);
+		log.appendError("Parse Error (after injection)");
+		log.appendParseError(e);
+		return false;
 	}
 
-	if (data === null || typeof data !== "object") {
-		return log.appendError("Couldn't parse YAML.");
+	if (data === null || typeof data !== 'object') {
+		log.appendError("Parse Error (after injection)");
+		return false;
 	}
 
-	// todo default document goes here
 	if (!data.properties) data.properties = {};
 
 	return data;
@@ -52,9 +60,9 @@ function injectEditorProperties(_yaml) {
 	regionKeywords = _(regionKeywords).filter( function(_value) {
 		return _value; // remove untruthy values
 	});
-	regionKeywords = "(?:" + regionKeywords.join("|") + ")";
+	var regionKeywordsPattern = "(?:" + regionKeywords.join("|") + ")";
 	// console.log(regionKeywords);
-	var mapPattern = new RegExp(regionKeywords+":\\s*$");
+	var mapPattern = new RegExp(regionKeywordsPattern+":\\s*$");
 
 	var firstLine;
 	var lastLine;

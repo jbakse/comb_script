@@ -90,6 +90,7 @@ ApplicationController.prototype.attachHandlers = function() {
 };
 
 ApplicationController.prototype.redrawPreview = function(_region) {
+	if (!this.doc) return;
 
 	this.doc.setStyle("default", true);
 
@@ -224,29 +225,36 @@ ApplicationController.prototype._parseYAML = function(_yaml) {
 	try {
 		var data = Parser.parse(_yaml);
 		if (!data) return;
+
 		this.doc = new regionTypes.Document();
 		this.doc.loadData(data);
 		this.doc.properties.left = 0;
 		this.doc.properties.top = 0;
 		this.doc.properties.registration = "center";
-
-		// console.log(this.doc);
-
-		var self = this;
-
-		$.whenAll.apply($, this.doc.waitList).always(function() {
-			if (self.doc.waitList.length) log.appendSuccess("Subdocuments Loaded");
-			self.preview.setDocument(self.doc);
-		});
-
-		log.appendSuccess("Success");
 	}
-	catch (_e) {
-		log.appendException(_e, "Unable to parse or render this script.");
-		console.error("_parseYAML dumped");
-		console.log(_e.stack);
+	catch (e) {
+		log.appendException(e, "Exception loading document.");
+		console.error("Exception loading document.");
+		console.log(e.stack);
+		// console.log("data", data);
+		this.doc = null;
+		return false;
 	}
 
+	if (this.doc.waitList.length) {
+		log.appendError("Subdocuments are not currently supported.");
+	}
+
+	try {
+		this.preview.setDocument(this.doc);
+	}
+	catch (e) {
+		log.appendException(e, "Exception drawing document.");
+		console.error("Exception drawing document.");
+		console.log(e.stack);
+	}
 
 
+	log.appendSuccess("Success");
+	return true;
 };

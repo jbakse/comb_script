@@ -170,13 +170,29 @@ Region.prototype.loadChildren = function(_childrenData) {
 		log.appendWarning("Children should be an array. Prepend child nodes with a dash and space.");
 		return;
 	}
-	_.each(_childrenData, function(_childData) {
+	_.each(_childrenData, function loadChild(_childData) {
 		var childKey = _.keys(_childData)[0];
 		var childData = _.values(_childData)[0];
 		if (typeof childKey === "undefined" || typeof childData === "undefined") {
-			log.appendWarning("Undefined Child");
+			log.appendWarning("Undefined Child in " + this);
+			// console.log("undefined child in", this);
 			return;
 		}
+		if (childData === null) {
+			log.appendWarning("Illegal Empty Child ("+childKey+")");
+			return;
+		}
+
+		//make sure this child isn't somehow it's own father/grandfather
+		var ancestors = this.getAncestors();
+		var firstLines = _(ancestors).map( function(ancestor) {
+			return ancestor.editorProperties && ancestor.editorProperties.firstLine;
+		});
+		if (_(firstLines).contains(childData.editor_properties.firstLine)){
+			log.appendWarning("Illegal: Child contains itself  ("+childData.editor_properties.firstLine+")");
+			return;
+		}
+		
 
 		var def = _(language.regionTypes).find(function(_def) {
 			return _def.keyword === childKey;
@@ -207,8 +223,8 @@ Region.prototype.loadChildren = function(_childrenData) {
 
 Region.prototype.toString = function() {
 	var s = this.type;
-	if (this.editorProperties.line) {
-		s += "(" + this.editorProperties.line + ")";
+	if (this.editorProperties.firstLine) {
+		s += "(" + this.editorProperties.firstLine + ")";
 	}
 	s += ": ";
 	s += this.properties.name || "unnamed";

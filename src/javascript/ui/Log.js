@@ -25,7 +25,7 @@ function Log() {
 		_.template('<li class = "error"><span class="message"><%= message %></span></li>');
 
 	this.parseErrorTemplate =
-		_.template('<li class = "error"><span class="line">Line <%= mark.line + 1 %></span> <span class="message"><%= reason %></span></li>');
+		_.template('<li class = "error"><span class="line">Line <%= mark.line + 1 %></span><br/><span class="message"><%= reason %></span></li>');
 
 	this.exceptionTemplate =
 		_.template('<li class = "error"><span class="message"><%= message %><br />Exception occurred:  <%= e.message %></span></li>');
@@ -82,6 +82,10 @@ Log.prototype.appendError = function() {
 };
 
 Log.prototype.appendParseError = function(_YAMLException) {
+	// console.log("parseError")
+	// console.log(_YAMLException, _YAMLException.stack);
+	// console.trace();
+	
 	$("#log").append(this.parseErrorTemplate(_YAMLException));
 	//todo add click to this
 };

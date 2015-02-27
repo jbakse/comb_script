@@ -2,8 +2,17 @@
 
 +CSS
 +Better encapsulation
-Better loading flow
-Close dirty file warnings
++Better loading flow
++Close dirty file warnings
+
+-----	all those google drive errors in console!
+
+# Update Dependencies
+
+----	Learn and use Dependency manager? Bower?
+----	Make a test case for bad booleans, see if updating paper fixes.
+
+
 
 
 BUGS:
