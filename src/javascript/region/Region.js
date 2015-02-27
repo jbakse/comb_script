@@ -179,20 +179,20 @@ Region.prototype.loadChildren = function(_childrenData) {
 			return;
 		}
 		if (childData === null) {
-			log.appendWarning("Illegal Empty Child ("+childKey+")");
+			log.appendWarning("Illegal Empty Child (" + childKey + ")");
 			return;
 		}
 
 		//make sure this child isn't somehow it's own father/grandfather
 		var ancestors = this.getAncestors();
-		var firstLines = _(ancestors).map( function(ancestor) {
+		var firstLines = _(ancestors).map(function(ancestor) {
 			return ancestor.editorProperties && ancestor.editorProperties.firstLine;
 		});
-		if (_(firstLines).contains(childData.editor_properties.firstLine)){
-			log.appendWarning("Illegal: Child contains itself  ("+childData.editor_properties.firstLine+")");
+		if (_(firstLines).contains(childData.editor_properties.firstLine)) {
+			log.appendWarning("Illegal: Child contains itself  (" + childData.editor_properties.firstLine + ")");
 			return;
 		}
-		
+
 
 		var def = _(language.regionTypes).find(function(_def) {
 			return _def.keyword === childKey;
@@ -304,13 +304,13 @@ Region.prototype.previewChildren = function(_context) {
 Region.prototype.build = function(_parentContext) {
 	var context = _parentContext.deriveContext(this.properties);
 
-	
+
 	// build own paths
 	var ownPaths = [].concat(this.drawBuild(context.bounds));
 	_.each(ownPaths, function(p) {
 		p.transform(context.matrix);
 	}, this);
-	
+
 
 	// collect child paths/ops
 	var childPathSets = [];
@@ -333,7 +333,7 @@ Region.prototype.build = function(_parentContext) {
 		ops.splice(0, 1);
 	}
 
-	
+
 	// filter out non booleanable paths (skips)
 	var skips = _(leftPathSet).filter(function(_path) {
 		return !(_path instanceof paper.Path || _path instanceof paper.CompoundPath);
@@ -374,19 +374,28 @@ Region.prototype._combinePaths = function(_leftPath, _rightPathSet, _op) {
 
 	if (_rightPathSet.length < 1) return _leftPath;
 	// if (typeof _op === 'undefined') return _leftPath;
-	
-	_(_rightPathSet).each( function (_rightPath) {
-		_leftPath.remove();
-		_rightPath.remove();
+
+	_(_rightPathSet).each(function(_rightPath) {
+
 		try {
-			_leftPath = _leftPath[_op](_rightPath);
-		} catch(e) {
+			console.log("combine", _leftPath, _op, _rightPath);
+
+			var temp = _leftPath[_op](_rightPath);
+			_leftPath.remove();
+			_rightPath.remove();
+			_leftPath = temp;
+			
+			console.log("result", _leftPath);
+		}
+		catch (e) {
 			log.appendWarning("Failed to resolve boolean opperation.");
-			console.warn(e);// throw(e);
+			console.warn(e); // throw(e);
 		}
 	});
+
+
 	return _leftPath;
-}; 
+};
 
 
 

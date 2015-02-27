@@ -90,13 +90,15 @@ Preview.prototype.setDocument = function(_doc) {
 
 	// draw preview/frame
 	this.previewLayer.removeChildren();
-	paper.project.activeLayer = this.previewLayer;
+	//paper.project.activeLayer = this.previewLayer;
+	this.previewLayer.activate();
 	this.doc.preview(context);
 
 	// draw build
 	this.buildLayer.removeChildren();
 	
-	paper.project.activeLayer = this.buildLayer;
+	//paper.project.activeLayer = this.buildLayer;
+	this.buildLayer.activate();
 	var buildShapes = this.doc.build(context);
 	this.buildLayer.style = settings.buildStyle;
 	
@@ -118,7 +120,8 @@ Preview.prototype.setDocument = function(_doc) {
 
 	// draw export
 	this.exportLayer.removeChildren();
-	paper.project.activeLayer = this.exportLayer;
+	//paper.project.activeLayer = this.exportLayer;
+	this.exportLayer.activate();
 	this.doc.build(context);
 	this.exportLayer.style = settings.exportStyle;
 
