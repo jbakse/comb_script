@@ -144,8 +144,8 @@ function handleGoogleDriveLaunchRequest(){
 
 var currentFileInfo = {}; 
 
+
 function onContentChange(_e, content){
-	console.log("change");
 	currentFileInfo.content = content;
 	currentFileInfo.dirty = true;
 	$("#file-dirty").removeClass('hidden');
@@ -205,7 +205,7 @@ function openFile(id) {
 		newFileInfo.title = fileResource.title;
 		return downloadFilePromise(fileResource);
 	})
-	.then( function(content){
+	.then( function insertFile(content){
 		newFileInfo.content = content;
 
 
@@ -214,12 +214,15 @@ function openFile(id) {
 		$("#file-title").text(newFileInfo.title);
 
 		currentFileInfo = newFileInfo;
-onLoad
-		$.Topic("File/").publish(newFileInfo.content);
+
+		
+		$.Topic("File/onLoad").publish(newFileInfo.content);
+
 		log.appendSuccess("File opened.");
 	})
 	.catch( function(error) {
 		console.log("Error opening file.", error);
+		
 	});
 
 }

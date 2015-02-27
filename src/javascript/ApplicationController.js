@@ -1,5 +1,7 @@
 'use strict';
 
+Error.stackTraceLimit = 100;
+
 var language = require('./language.js');
 var _ = require('underscore');
 
@@ -195,16 +197,23 @@ ApplicationController.prototype.exportSVG = function() {
 
 
 ApplicationController.prototype.setYAML = function(_yaml){
+	
 	this.editor.setText(_yaml);
-	this.editor.gotoLine(1, true);
-	this.rebuild();
+	
+	//this.editor.gotoLine(1, true);
+	//this.rebuild();
 };
 
 
 ApplicationController.prototype.rebuild = function() {
-	log.clear();
-	this._parseYAML(this.editor.getText());
-	this.highlightRegionsForLine(this.editor.editor.selection.getCursor().row);
+	try {
+		log.clear();
+		this._parseYAML(this.editor.getText());
+		this.highlightRegionsForLine(this.editor.editor.selection.getCursor().row);
+	} catch (e) {
+		console.error("Error rebuilding YAML");
+		console.error(e.stack);
+	}
 };
 
 
@@ -233,8 +242,10 @@ ApplicationController.prototype._parseYAML = function(_yaml) {
 	}
 	catch (_e) {
 		log.appendException(_e, "Unable to parse or render this script.");
-		throw(_e);
+		console.error("_parseYAML dumped");
+		console.log(_e.stack);
 	}
+	
 
 
 };
