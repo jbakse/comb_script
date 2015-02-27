@@ -34,7 +34,7 @@ function ApplicationController() {
 	this.editor = new Editor();
 	this.inspector = new Inspector();
 	this.menu = new Menu();
-	
+
 	this.fileInfo = {};
 }
 
@@ -63,18 +63,18 @@ ApplicationController.prototype.attachHandlers = function() {
 	$.Topic("UI/command/rebuild").subscribe(_.bind(this.rebuild, this));
 	$.Topic("UI/command/exportSVG").subscribe(_.bind(this.exportSVG, this));
 	$.Topic("UI/command/loadYAML").subscribe(_.bind(this.loadYAMLfromURL, this));
-	
+
 	$.Topic("UI/editor/onContentChange").subscribe(_.bind(this.rebuild, this));
 	$.Topic("UI/editor/onLineChange").subscribe(_.bind(this.highlightRegionsForLine, this));
 
 
-	$.Topic("region/onMouseEnter").subscribe( function(_region) {
+	$.Topic("region/onMouseEnter").subscribe(function(_region) {
 		self.hoverRegion = _region;
 		if (settings.inspectOnHover) $.Topic("UI/updateInspector").publish([_region]);
 		self.redrawPreview();
 	});
 
-	$.Topic("region/onClick").subscribe( function(_region) {
+	$.Topic("region/onClick").subscribe(function(_region) {
 		self.hoverRegion = null;
 		self.keySelection = _region;
 		// $.Topic("UI/updateInspector").publish([_region]);
@@ -146,7 +146,7 @@ ApplicationController.prototype.highlightRegionsForLine = function(_line) {
 
 ApplicationController.prototype.loadYAMLfromURL = function(_url) {
 	if (!googleDrive.closeFile()) return false;
-	
+
 	var self = this;
 	$.ajax({
 		url: _url,
@@ -169,7 +169,7 @@ ApplicationController.prototype.exportSVG = function() {
 	log.appendMessage("Exporting SVG");
 
 	var unitScale = language.unitScales[this.doc.properties.unit] || 1;
-	
+
 	var exportWidth = this.doc.properties.width * unitScale;
 	var exportHeight = this.doc.properties.height * unitScale;
 	var context = new Context();
@@ -196,10 +196,10 @@ ApplicationController.prototype.exportSVG = function() {
 };
 
 
-ApplicationController.prototype.setYAML = function(_yaml){
-	
+ApplicationController.prototype.setYAML = function(_yaml) {
+
 	this.editor.setText(_yaml);
-	
+
 	//this.editor.gotoLine(1, true);
 	//this.rebuild();
 };
@@ -210,7 +210,8 @@ ApplicationController.prototype.rebuild = function() {
 		log.clear();
 		this._parseYAML(this.editor.getText());
 		this.highlightRegionsForLine(this.editor.editor.selection.getCursor().row);
-	} catch (e) {
+	}
+	catch (e) {
 		console.error("Error rebuilding YAML");
 		console.error(e.stack);
 	}
@@ -228,7 +229,7 @@ ApplicationController.prototype._parseYAML = function(_yaml) {
 		this.doc.properties.left = 0;
 		this.doc.properties.top = 0;
 		this.doc.properties.registration = "center";
-		
+
 		// console.log(this.doc);
 
 		var self = this;
@@ -245,7 +246,7 @@ ApplicationController.prototype._parseYAML = function(_yaml) {
 		console.error("_parseYAML dumped");
 		console.log(_e.stack);
 	}
-	
+
 
 
 };
