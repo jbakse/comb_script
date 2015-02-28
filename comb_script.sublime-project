@@ -5,9 +5,10 @@
 			"folder_exclude_patterns":
 			[
 				"node_modules",
+				"bower_components",
+				"test_lib",
 				"build",
-				"lib",
-				"old_scripts"
+				"lib"
 			],
 			"follow_symlinks": true,
 			"path": "."

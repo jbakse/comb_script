@@ -1,5 +1,8 @@
 # Clean Up Google Integration
 
+----- http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/
+----- Include the build number 0.0.12 on the interface, start bumping it!
+
 +CSS
 +Better encapsulation
 +Better loading flow
@@ -7,11 +10,15 @@
 
 -----	all those google drive errors in console!
 
+
 # Update Dependencies
 
-----	Learn and use Dependency manager? Bower?
-----	Make a test case for bad booleans, see if updating paper fixes.
++----	Learn and use Dependency manager? Bower?
+lib holds most dependencies and was manually built. moving to using bower to list and pull dependencies
+bower-installer moves the actual production file from bower-modules to test_lib. so `bower update` followed by `bower-installer` will update the libs. links from index.html (etc.) will need to be switched from lib to test-lib and checked.
 
++----	Make a test case for bad booleans, see if updating paper fixes.
+	---- Still broken
 
 
 
@@ -27,7 +34,7 @@ BUGS:
 +----- fix symetry
 
 -- typing junk
--- While editing files you might break something in the re-render and then have to reload. fix that. you should be able to type any old garbage. We might have to trash the whole damn paper/preview and rebuild to make sure. Nuke from orbit.
++-- While editing files you might break something in the re-render and then have to reload. fix that. you should be able to type any old garbage. We might have to trash the whole damn paper/preview and rebuild to make sure. Nuke from orbit.
 
 +----	Docs missing inherited properties?
 .---	Docs might be better off with all properties minimized.
@@ -175,9 +182,9 @@ Exporting
 	--	Dimension Units
 		+--- LVP document settings includes a `unit` and scales the drawing to achieve (like how drawbot.yaml did it)
 		+--- inspector
-		-- mixed demensions
-			-- Allow Dimensions units in dimensional properties
-			-- Allow default unit (used for numbers without units, used in inspector)
+		---- mixed demensions
+			---- Allow Dimensions units in dimensional properties
+			---- Allow default unit (used for numbers without units, used in inspector)
 
 
 	---	Documentation
@@ -195,21 +202,28 @@ Exporting
 		-	scale doc to bounds, scale art to bounds
 		-	greg font / text region
 
-	-	pan/zoom
+	----	pan/zoom
 		+-	pan
-		-	zoom
+		----	pan preserved on rebuild
+		----	zoom
 
-	-	ghost unselected regions
+	----	focus on current
+		----	pan/zoom preview to show region where cursor is
+		----    isolation mode? would be great when editing library items
+		-	ghost unselected regions
 	
+	----	symbols
+		---- maybe implement a mixin system instead of relying on yaml mixins somehting more powerful like a  prototype with overridable properties
+
 	-	Document
 		-	Implement settings/prefs as properties (different key `settings` for not regionlike things?) on document (maybe using load on top of default document)
 
 	-	ui overlay/inspector
 		- fix dimension units
 
-	-       iso mode?
+	
 
-	- 	laser export
+	---- 	laser export
 		---	define style in Document properties
 		-	export for lasercutter (auto layout and exporitng with defined style)
 		-	asign output tags to shapes (kind of like a css class) to determine how they are output in build/export (outputGroup: cut | etch)
@@ -230,7 +244,7 @@ Exporting
 	-	save and load file? cant save and load from harddrive unless an app, consider dropbox/drive integration? consider storing files on server? **COPY PASTE WORKS FOR NOW, SADLY**
 
 
-	-	expressions in attributes
+	-----	expressions in attributes
 		- units: 2in, 2cm
 		- percents: 30%
 		- math: 2+2in

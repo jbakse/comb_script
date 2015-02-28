@@ -378,14 +378,14 @@ Region.prototype._combinePaths = function(_leftPath, _rightPathSet, _op) {
 	_(_rightPathSet).each(function(_rightPath) {
 
 		try {
-			console.log("combine", _leftPath, _op, _rightPath);
+			// console.log("combine", _leftPath, _op, _rightPath);
 
 			var temp = _leftPath[_op](_rightPath);
 			_leftPath.remove();
 			_rightPath.remove();
 			_leftPath = temp;
 			
-			console.log("result", _leftPath);
+			// console.log("result", _leftPath);
 		}
 		catch (e) {
 			log.appendWarning("Failed to resolve boolean opperation.");
