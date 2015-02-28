@@ -5,7 +5,6 @@
   "authors": [
     "Justin Bakse <justin@tsfim.com>"
   ],
-  "license": "Copyright 2015",
   "private": true,
   "ignore": [
     "**/.*",

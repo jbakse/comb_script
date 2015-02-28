@@ -3,7 +3,7 @@ properties:
     width: 150
     height: 150
     unit: mm
-    
+
 children:
     - region:
         properties:

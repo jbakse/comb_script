@@ -1,7 +1,6 @@
 'use strict';
 /* global gapi:false */
 /* global google:false */
-/* jshint esnext:true */
 
 var log = require('./ui/Log.js').sharedInstance();
 
@@ -125,7 +124,7 @@ function handleGoogleDriveLaunchRequest(){
 		newFile(stateObj.folderId);
 	}
 	else if (stateObj && stateObj.action == "open") {
-		openFile(stateObj.ids[0])
+		openFile(stateObj.ids[0]);
 		// var self = this;
 		// window.setTimeout(function(){
 		// 	self.openYAML(stateObj.ids[0]);

@@ -5,6 +5,7 @@
 
 	"strict": false,
 	"globalstrict": true,
+	
 	"globals" :
 		{
 			"module": false,
