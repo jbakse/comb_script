@@ -1,0 +1,25 @@
+Polygon:
+    keyword: polygon
+    class: Polygon
+    extends: Region
+
+    description: |
+        <p>
+        Polygon draws a polygon.
+        </p>
+        <pre>
+        children:
+            - polygon:
+                properties:
+                    radius: 100
+                    sides: 3
+        </pre>
+
+    properties:
+        -   keyword: radius
+            description: radius of the polygon
+            type: number
+        -   keyword: sides
+            description: number of sides of the polygon
+            type: number
+            default: 8
