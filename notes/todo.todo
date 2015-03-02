@@ -1,7 +1,30 @@
 # Clean Up Google Integration
 
+-----	describe dev and production dependenices how and why they are used
+
+----- make a file that explains the rolls of major directories so its easier to remember what is going on when you (re)join the project
+
+
+----- Navigation away from page should warn when dirty!
+
+----- Keyboard navigation might need to be disabled, hitting delete or command-brackets is common in an editor and if the wrong thing is focused, you leave the page
+
+
+----- Reorg examples
+	/yaml + /svg are development/testing files we made to test featuers as we went (needs a cleaner organization)
+	/src/examples are the examples available from the ide
+	/src/docs/examples are the examples that show up in the api reference
+
+	this orginization just needs total rethinking
+
+----	Right now, a regiom type (e.g. Rectangle) is added through a two files. a YAML that describes its use, and a js that implements its behavior. it would be cool for (simple) region types to be fully encapsulated in the YAML, kind of a literate approach
+
+----	Might also be cool if region types could be dynamically loaded "uses http://plugins/polygon.yaml", maybe? 
+
 ----- http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/
 ----- Include the build number 0.0.12 on the interface, start bumping it!
+----- http://mathjs.org/docs/expressions/customization.html
+
 
 +CSS
 +Better encapsulation

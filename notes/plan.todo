@@ -1,0 +1,64 @@
+# # # # # # # # # # # # # # # # # # # # # # # # # # 
+# Todo
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # 
+# Bugs
+
+-----	all those google drive errors in console!
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # 
+# User facing Features
+
+--	General
+	-- Keyboard navigation might need to be disabled, hitting delete or command-brackets is common in an editor and if the wrong thing is focused, you leave the page
+	
+
+
+--	File Management
+	-- Google Drive Save As?
+	-- Warn on navigation away from dirty file (prompt for sav)
+
+--	Expression support
+	--	Possible Library: http://mathjs.org/docs/expressions/customization.html
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # 
+# Refactoring / Cleanup / Developer facing features
+
+--	Build Tool
+	-- 	Clean up gulp
+	-- 	Interesting: http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/
+	--	Include the build number 0.0.12 on the interface, start bumping it!
+
+
+--	Right now, a regiom type (e.g. Rectangle) is added through a two files. a YAML that describes its use, and a js that implements its behavior. it would be cool for (simple) region types to be fully encapsulated in the YAML, kind of a literate approach
+
+--	Update Libraries
+
+--	Reorg examples
+	/yaml + /svg are development/testing files we made to test featuers as we went (needs a cleaner organization)
+	/src/examples are the examples available from the ide
+	/src/docs/examples are the examples that show up in the api reference
+
+	this orginization just needs total rethinking
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # 
+# Developer Docs
+
+--	Prod/Develpment Dependencies, how they are used, where they come from (bower, npm, direct, etc)
+
+--	Project Directories
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # 
+# User Docs
+
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # 
+# Low Priority ? Wild Ideas
+
+----	Might also be cool if plugin region types could be dynamically loaded from the .comb file "uses http://plugins/polygon.yaml"

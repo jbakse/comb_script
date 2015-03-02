@@ -119,7 +119,7 @@ gulp.task('watch', function() {
 
 
 	// livereload.listen();
- //  	gulp.watch('build/**').on('change', livereload.changed);
+	// gulp.watch('build/**').on('change', livereload.changed);
 
 });
 
