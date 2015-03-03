@@ -11,29 +11,63 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # User facing Features
 
---	General
-	-- Keyboard navigation might need to be disabled, hitting delete or command-brackets is common in an editor and if the wrong thing is focused, you leave the page
+# General
+--	Keyboard browser navigation: might need to be disabled, hitting delete or command-brackets is common in an editor and if the wrong thing is focused, you leave the page
 	
+# Preview
+--	Let user Pan
+--	Let user Zoom
+--	Don't screw up pan on code changes
+--	Isolation Mode? 
+--	Auto Pan and Zoom on code under text cursor?
+--	Ghost unselected regions?
+--	Click on covered items: right now a large box over small box prevents selection of small box
 
+# Symbols/Mixins
+--	Provide .comb specific way to reuse library items: instead of using yaml symbols, something like uses or inherit that pulls properties from another region
 
---	File Management
-	-- Google Drive Save As?
-	-- Warn on navigation away from dirty file (prompt for sav)
+# File Management
+--	Google Drive Save As?
+--	Warn on navigation away from dirty file (prompt for sav)
 
---	Expression support
-	--	Possible Library: http://mathjs.org/docs/expressions/customization.html
+# Math Expression support
+--	Possible Library: http://mathjs.org/docs/expressions/customization.html
+--	Dimension Units
+--	Basic Maths
+--	Access Parent Bounds
+--	Use document units
 
+# Booleans
+--	Review: how child_booleans vs self_booleans work, does it make sense?
+--	Non-Boolean Paths: flag paths as inellegible for boolean (tries to fill in letters (sutton), letters cause issues in mixed situations, should be able to opt out of mixed booleans)
+--	Many to Many: test document
+
+# Type
+--	Single Live vs Wrap
+--	Scale?
+
+# Polygon
+--	Sizes: should follow provided bounds, maybe make radius optional, maybe consider fit/cover options
+
+# SVG
+--	SVG Import Support
+
+# Export
+--	Perserve Groups on Export?: Might at least be worth looking at having the tree represented in groups so they export nested?
+
+--	Export Styles: finish+document
+--	Support for Cut vs Etch vs Guide
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Refactoring / Cleanup / Developer facing features
 
---	Build Tool
-	-- 	Clean up gulp
-	-- 	Interesting: http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/
-	--	Include the build number 0.0.12 on the interface, start bumping it!
+#Build Tool
+-- 	Clean up gulp
+-- 	Interesting: http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/
+--	Versioning: Include the build number 0.0.12 on the interface, start bumping it!
+--	Language YAMLs: are built with the build tool, should this be handled by the javascript? not sure
 
-
---	Right now, a regiom type (e.g. Rectangle) is added through a two files. a YAML that describes its use, and a js that implements its behavior. it would be cool for (simple) region types to be fully encapsulated in the YAML, kind of a literate approach
+--	1 file plugins: Right now, a regiom type (e.g. Rectangle) is added through a two files. a YAML that describes its use, and a js that implements its behavior. it would be cool for (simple) region types to be fully encapsulated in the YAML, kind of a literate approach
 
 --	Update Libraries
 
@@ -56,9 +90,17 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # User Docs
 
+--	Document Mixed boolean mode: whole booelan system really
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # 
+# Demo Projects
+
+--	Drawbot
+--	T-Slot Box
+
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Low Priority ? Wild Ideas
 
-----	Might also be cool if plugin region types could be dynamically loaded from the .comb file "uses http://plugins/polygon.yaml"
+-	Might also be cool if plugin region types could be dynamically loaded from the .comb file "uses http://plugins/polygon.yaml"
