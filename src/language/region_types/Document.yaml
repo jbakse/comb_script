@@ -39,6 +39,17 @@ Document:
             type: number
             default: 400
 
+	-   keyword: cut_color
+	    description: The color to use for cut lines
+	    type: color
+	    default: {red: 255, green: 0, blue: 0}
+
+	-   keyword: cut_width
+	    description: The stroke width to use for cut lines
+	    type: number
+	    default: 1
+
+
         # -   keyword: scale
         #     description: Amount to scale the entire document. A value of 2 will make the document twice as big.
         #     type: number

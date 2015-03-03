@@ -125,7 +125,11 @@ Region.prototype.loadProperties = function(_properties) {
 
 		}
 
-		if (typeof pValue !== def.type) {
+		var expectedType = def.type;
+		if (def.type === 'color') {
+			expectedType = 'object';
+		}
+		if (typeof pValue !== expectedType) {
 			log.appendWarning(messagePrefix + "Incorrect type: " + pKey + "<br />Received " + typeof pValue + ". Expected " + def.type + ".");
 			return;
 		}

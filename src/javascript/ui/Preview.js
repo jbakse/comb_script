@@ -123,7 +123,20 @@ Preview.prototype.setDocument = function(_doc) {
 	//paper.project.activeLayer = this.exportLayer;
 	this.exportLayer.activate();
 	this.doc.build(context);
-	this.exportLayer.style = settings.exportStyle;
+
+
+	var style = settings.exportStyle;
+
+	if (this.doc.properties.cut_color) {
+		style.strokeColor = new paper.Color(this.doc.properties.cut_color.red, this.doc.properties.cut_color.green, this.doc.properties.cut_color.blue);
+	}
+	if (this.doc.properties.cut_width) {
+		style.strokeWidth = Math.max(0.5, this.doc.properties.cut_width);
+	}
+
+	this.exportLayer.style = style;
+
+	// this.exportLayer.style = settings.exportStyle;
 
 
 	paper.view.center = new paper.Point(_doc.properties.width * 0.5 * unit, _doc.properties.height * 0.5 * unit);
