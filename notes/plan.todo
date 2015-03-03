@@ -23,6 +23,9 @@
 --	Ghost unselected regions?
 --	Click on covered items: right now a large box over small box prevents selection of small box
 
+# Inspector
+--	List dimensions in document unit
+
 # Symbols/Mixins
 --	Provide .comb specific way to reuse library items: instead of using yaml symbols, something like uses or inherit that pulls properties from another region
 
@@ -33,6 +36,7 @@
 # Math Expression support
 --	Possible Library: http://mathjs.org/docs/expressions/customization.html
 --	Dimension Units
+--	support percents
 --	Basic Maths
 --	Access Parent Bounds
 --	Use document units
@@ -42,12 +46,22 @@
 --	Non-Boolean Paths: flag paths as inellegible for boolean (tries to fill in letters (sutton), letters cause issues in mixed situations, should be able to opt out of mixed booleans)
 --	Many to Many: test document
 
+# Syntax
+--	Mirror
+--	min/max width/height
+
+
 # Type
 --	Single Live vs Wrap
 --	Scale?
 
 # Polygon
 --	Sizes: should follow provided bounds, maybe make radius optional, maybe consider fit/cover options
+
+# Plugins
+--	Vertical Line
+--	Horizontal Line
+--	Polygon as array of points
 
 # SVG
 --	SVG Import Support
@@ -58,6 +72,10 @@
 --	Export Styles: finish+document
 --	Support for Cut vs Etch vs Guide
 
+
+# Quick Reference
+--	Some sort of context aware reference, listing legal properties/values, tooltips?
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Refactoring / Cleanup / Developer facing features
 
@@ -66,6 +84,7 @@
 -- 	Interesting: http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/
 --	Versioning: Include the build number 0.0.12 on the interface, start bumping it!
 --	Language YAMLs: are built with the build tool, should this be handled by the javascript? not sure
+--	Browserify Dependencies: rather than script tags, do we want to?
 
 --	1 file plugins: Right now, a regiom type (e.g. Rectangle) is added through a two files. a YAML that describes its use, and a js that implements its behavior. it would be cool for (simple) region types to be fully encapsulated in the YAML, kind of a literate approach
 
@@ -104,3 +123,7 @@
 # Low Priority ? Wild Ideas
 
 -	Might also be cool if plugin region types could be dynamically loaded from the .comb file "uses http://plugins/polygon.yaml"
+
+-	sibling relative positioning: what are some options? named object relative positioning?
+
+-	combined attributes: margin: 0 or margin: 0 10 20 10
