@@ -8,7 +8,7 @@ var _ = require('underscore');
 
 var DEVELOPER_KEY = 'AIzaSyAaps9tbXrXH7Yhk94HnHv7EmVaz8Hxmjo';
 var CLIENT_ID = '1055926372216-75g9p5ttbsb7vnu18rvfn46n13llbfsn.apps.googleusercontent.com';
-var SCOPES = ['https://www.googleapis.com/auth/drive.install','https://www.googleapis.com/auth/drive.file'];
+var SCOPES = ['https://www.googleapis.com/auth/drive.install', 'https://www.googleapis.com/auth/drive.file'];
 var APP_ID = 'combscript-jbakse';
 
 var gapiLoaded = false;
@@ -16,11 +16,10 @@ var initialized = false;
 
 
 
-
 function getParameterByName(name) {
 	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-	results = regex.exec(location.search);
+		results = regex.exec(location.search);
 	return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
@@ -41,7 +40,7 @@ module.exports.init = function() {
 	$.Topic("UI/command/save").subscribe(saveFile);
 
 	$.Topic("UI/editor/onContentChange").subscribe(onContentChange);
-	
+
 	initialized = true;
 	kickOff();
 };
@@ -54,14 +53,20 @@ function kickOff() {
 }
 
 function autoConnect() {
-	return gapi.auth.authorize(
-		{'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': true},
+	return gapi.auth.authorize({
+			'client_id': CLIENT_ID,
+			'scope': SCOPES,
+			'immediate': true
+		},
 		handleAuthResult);
 }
 
 function manualConnect() {
-	return gapi.auth.authorize(
-		{'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': false},
+	return gapi.auth.authorize({
+			'client_id': CLIENT_ID,
+			'scope': SCOPES,
+			'immediate': false
+		},
 		handleAuthResult);
 }
 
@@ -70,54 +75,57 @@ function handleAuthResult(authResult) {
 	if (authResult && !authResult.error) {
 		log.appendSuccess("Google Drive authorized.");
 		loadAPIs();
-		
-	}else{
+
+	}
+	else {
 		log.appendError("Google Drive authorization denied.");
 		$("#button-connect-google-drive").removeClass('hidden');
 	}
 }
 
 function loadAPI(api) {
-	return new Promise(function(resolve, reject){
-		gapi.load(api, {'callback': function(result) {
-			resolve(result);
-		}});
+	return new Promise(function(resolve, reject) {
+		gapi.load(api, {
+			'callback': function(result) {
+				resolve(result);
+			}
+		});
 	});
 }
 
 
 function loadAPIs() {
-	
-	var drive = new Promise ( function (resolve, reject) {
-		gapi.client.load('drive', 'v2').then( function(r) {
+
+	var drive = new Promise(function(resolve, reject) {
+		gapi.client.load('drive', 'v2').then(function(r) {
 			if (r && r.error) reject(r);
 			resolve();
 		});
 	});
 
 	var picker = loadAPI('picker');
-	
+
 
 	Promise.all([drive, picker])
-	.then(function() {
-		log.appendSuccess("Google Drive ready.");
-		$("#button-new").removeClass('hidden');
-		$("#button-open").removeClass('hidden');
-		$("#button-save").removeClass('hidden');
-		$("#button-connect-google-drive").addClass('hidden');
+		.then(function() {
+			log.appendSuccess("Google Drive ready.");
+			$("#button-new").removeClass('hidden');
+			$("#button-open").removeClass('hidden');
+			$("#button-save").removeClass('hidden');
+			$("#button-connect-google-drive").addClass('hidden');
 
-		handleGoogleDriveLaunchRequest();
-	})
-	.catch(function(e) {
-		log.appendError("Error connecting to Google Drive.");
-		$("#button-connect-google-drive").removeClass('hidden');
-	});
+			handleGoogleDriveLaunchRequest();
+		})
+		.catch(function(e) {
+			log.appendError("Error connecting to Google Drive.");
+			$("#button-connect-google-drive").removeClass('hidden');
+		});
 }
 
-function handleGoogleDriveLaunchRequest(){
+function handleGoogleDriveLaunchRequest() {
 	var state = getParameterByName('state');
 	var stateObj = state && JSON.parse(state);
-	
+
 	if (stateObj && stateObj.action == "create") {
 		// console.log("create new",a stateObj);
 		// this.newYAML();
@@ -138,25 +146,47 @@ function handleGoogleDriveLaunchRequest(){
 
 
 
+var currentFileInfo = {};
 
 
+window.onbeforeunload = confirmPageNavigation;
 
-var currentFileInfo = {}; 
+function confirmPageNavigation(e) {
+	if (!currentFileInfo.dirty) return;
+	
+	e = e || window.event;
 
+	var	message = "You have unsaved changes that will be lost.";
+	
+	// For IE6-8 and Firefox prior to version 4
+	if (e) {
+		e.returnValue = message;
+	}
 
-function onContentChange(_e, content){
+	// For Chrome, Safari, IE8+ and Opera 12+
+	return message;
+}
+
+function onContentChange(_e, content) {
 	currentFileInfo.content = content;
 	currentFileInfo.dirty = true;
 	$("#file-dirty").removeClass('hidden');
 }
 
-function closeFile(){
+function setClean(){
+	currentFileInfo.dirty = false;
+	$("#file-dirty").addClass('hidden');
+}
+module.exports.setClean = setClean;
+
+
+function closeFile() {
 	return newFile();
 }
 module.exports.closeFile = closeFile;
 
 
-function newFile(parentId){
+function newFile(parentId) {
 	if (currentFileInfo.dirty) {
 		var result = window.confirm("This will cause unsaved changes to be lost. Do you want to discard these changes?");
 		if (!result) return false;
@@ -184,7 +214,7 @@ function newFile(parentId){
 // .title .content .id
 
 function openFile(id) {
-	if (!closeFile()) 
+	if (!closeFile())
 		return;
 
 	var newFileInfo = {};
@@ -192,59 +222,63 @@ function openFile(id) {
 	var picked;
 	if (id) {
 		picked = Promise.resolve(id);
-	} else {
+	}
+	else {
 		picked = showPicker();
 	}
-	
+
 	picked.then(function(fileId) {
-		newFileInfo.id = fileId;
-		return getFileResource(fileId);
-	})
-	.then( function(fileResource) {
-		newFileInfo.title = fileResource.title;
-		return downloadFilePromise(fileResource);
-	})
-	.then( function insertFile(content){
-		newFileInfo.content = content;
+			newFileInfo.id = fileId;
+			return getFileResource(fileId);
+		})
+		.then(function(fileResource) {
+			newFileInfo.title = fileResource.title;
+			return downloadFilePromise(fileResource);
+		})
+		.then(function insertFile(content) {
+			newFileInfo.content = content;
+
+			$.Topic("File/onLoad").publish(newFileInfo.content);
+
+			setClean();
+			// currentFileInfo.dirty = false;
+			// $("#file-dirty").addClass('hidden');
+			$("#file-title").text(newFileInfo.title);
+
+			currentFileInfo = newFileInfo;
 
 
-		currentFileInfo.dirty = false;
-		$("#file-dirty").addClass('hidden');
-		$("#file-title").text(newFileInfo.title);
 
-		currentFileInfo = newFileInfo;
 
-		
-		$.Topic("File/onLoad").publish(newFileInfo.content);
+			log.appendSuccess("File opened.");
+		})
+		.catch(function(error) {
+			console.log("Error opening file.", error);
 
-		log.appendSuccess("File opened.");
-	})
-	.catch( function(error) {
-		console.log("Error opening file.", error);
-		
-	});
+		});
 
 }
 
 
-function saveFile(){
+function saveFile() {
 	if (!currentFileInfo.id) {
 
 		currentFileInfo.title = prompt('Save file as');
 
 		createDriveFile(currentFileInfo.title, currentFileInfo.content, currentFileInfo.parentId)
-		.then( function(result) {
-			currentFileInfo.id = result.id;
+			.then(function(result) {
+				currentFileInfo.id = result.id;
 
-			currentFileInfo.dirty = false;
-			$("#file-dirty").addClass('hidden');
-			$("#file-title").text(currentFileInfo.title);
-			log.appendSuccess("File created.");
-		});
+				currentFileInfo.dirty = false;
+				$("#file-dirty").addClass('hidden');
+				$("#file-title").text(currentFileInfo.title);
+				log.appendSuccess("File created.");
+			});
 
-	} else {
+	}
+	else {
 		console.log(currentFileInfo);
-		updateDriveFile(currentFileInfo).then( function(result){
+		updateDriveFile(currentFileInfo).then(function(result) {
 
 			currentFileInfo.dirty = false;
 			$("#file-dirty").addClass('hidden');
@@ -259,7 +293,9 @@ function updateDriveFile(fileInfo) {
 	var request = gapi.client.request({
 		'path': '/upload/drive/v2/files/' + fileInfo.id,
 		'method': 'PUT',
-		'params': {'uploadType': 'media'},
+		'params': {
+			'uploadType': 'media'
+		},
 		'headers': {
 			'Content-Type': 'text/x-yaml'
 		},
@@ -300,8 +336,6 @@ function createDriveFile(name, content, parentId, type) {
 
 
 
-
-
 // displays google picker
 // resolves with a google file ID (e.g. 0BzODaS_ym7yXaFJCenRDblatb2c)
 
@@ -322,14 +356,14 @@ function showPicker() {
 
 
 		var picker = new google.picker.PickerBuilder()
-		.setAppId(APP_ID)
-		.setDeveloperKey(DEVELOPER_KEY)
-		.setOAuthToken(gapi.auth.getToken().access_token)
-		.enableFeature(google.picker.Feature.NAV_HIDDEN)
-		.addView(view)
-		.setCallback(pickerCallback)
-		.build()
-		.setVisible(true);
+			.setAppId(APP_ID)
+			.setDeveloperKey(DEVELOPER_KEY)
+			.setOAuthToken(gapi.auth.getToken().access_token)
+			.enableFeature(google.picker.Feature.NAV_HIDDEN)
+			.addView(view)
+			.setCallback(pickerCallback)
+			.build()
+			.setVisible(true);
 	});
 }
 
@@ -340,13 +374,13 @@ function getFileResource(fileId) {
 	return new Promise(function(resolve, reject) {
 
 		var request = gapi.client.drive.files.get({
-			'fileId': fileId
-		})
-		.then(function(response) {
-			resolve(response.result);
-		}, function(reason) {
-			reject(reason);
-		});
+				'fileId': fileId
+			})
+			.then(function(response) {
+				resolve(response.result);
+			}, function(reason) {
+				reject(reason);
+			});
 
 	});
 }
@@ -357,14 +391,13 @@ function downloadFilePromise(file) {
 		downloadFile(file, function(contents) {
 			if (contents !== null) {
 				resolve(contents);
-			} else {
+			}
+			else {
 				reject(Error("Could not get file contents."));
 			}
 		});
 	});
 }
-
-
 
 
 
@@ -381,57 +414,59 @@ function downloadFilePromise(file) {
  * @param {File} fileData File object to read data from.
  * @param {Function} callback Function to call when the request is complete.
  */
- function insertFile(fileData, callback) {
- 	var boundary = '-------314159265358979323846';
- 	var delimiter = "\r\n--" + boundary + "\r\n";
- 	var close_delim = "\r\n--" + boundary + "--";
+function insertFile(fileData, callback) {
+	var boundary = '-------314159265358979323846';
+	var delimiter = "\r\n--" + boundary + "\r\n";
+	var close_delim = "\r\n--" + boundary + "--";
 
- 	var reader = new FileReader();
- 	reader.readAsBinaryString(fileData);
- 	reader.onload = function(e) {
- 		var contentType = fileData.type || 'application/octet-stream';
- 		var metadata = {
- 			'title': fileData.fileName,
- 			'mimeType': contentType
- 		};
+	var reader = new FileReader();
+	reader.readAsBinaryString(fileData);
+	reader.onload = function(e) {
+		var contentType = fileData.type || 'application/octet-stream';
+		var metadata = {
+			'title': fileData.fileName,
+			'mimeType': contentType
+		};
 
- 		// jcb add parent folder metadata
- 		if (fileData.parentId) {
- 			metadata.parents = [{id: fileData.parentId}];
- 		}
- 		
+		// jcb add parent folder metadata
+		if (fileData.parentId) {
+			metadata.parents = [{
+				id: fileData.parentId
+			}];
+		}
 
- 		var base64Data = btoa(reader.result);
- 		var multipartRequestBody =
- 		delimiter +
- 		'Content-Type: application/json\r\n\r\n' +
- 		JSON.stringify(metadata) +
- 		delimiter +
- 		'Content-Type: ' + contentType + '\r\n' +
- 		'Content-Transfer-Encoding: base64\r\n' +
- 		'\r\n' +
- 		base64Data +
- 		close_delim;
 
- 		var request = gapi.client.request({
- 			'path': '/upload/drive/v2/files',
- 			'method': 'POST',
- 			'params': {
- 				'uploadType': 'multipart'
- 			},
- 			'headers': {
- 				'Content-Type': 'multipart/mixed; boundary="' + boundary + '"'
- 			},
- 			'body': multipartRequestBody
- 		});
- 		if (!callback) {
- 			callback = function(file) {
- 				console.log(file);
- 			};
- 		}
- 		request.execute(callback);
- 	};
- }
+		var base64Data = btoa(reader.result);
+		var multipartRequestBody =
+			delimiter +
+			'Content-Type: application/json\r\n\r\n' +
+			JSON.stringify(metadata) +
+			delimiter +
+			'Content-Type: ' + contentType + '\r\n' +
+			'Content-Transfer-Encoding: base64\r\n' +
+			'\r\n' +
+			base64Data +
+			close_delim;
+
+		var request = gapi.client.request({
+			'path': '/upload/drive/v2/files',
+			'method': 'POST',
+			'params': {
+				'uploadType': 'multipart'
+			},
+			'headers': {
+				'Content-Type': 'multipart/mixed; boundary="' + boundary + '"'
+			},
+			'body': multipartRequestBody
+		});
+		if (!callback) {
+			callback = function(file) {
+				console.log(file);
+			};
+		}
+		request.execute(callback);
+	};
+}
 
 /**
  * Update an existing file's metadata and content.
@@ -441,43 +476,47 @@ function downloadFilePromise(file) {
  * @param {File} fileData File object to read data from.
  * @param {Function} callback Callback function to call when the request is complete.
  */
- function updateFile(fileId, fileMetadata, fileData, callback) {
- 	var boundary = '-------314159265358979323846';
- 	var delimiter = "\r\n--" + boundary + "\r\n";
- 	var close_delim = "\r\n--" + boundary + "--";
+function updateFile(fileId, fileMetadata, fileData, callback) {
+	var boundary = '-------314159265358979323846';
+	var delimiter = "\r\n--" + boundary + "\r\n";
+	var close_delim = "\r\n--" + boundary + "--";
 
- 	var reader = new FileReader();
- 	reader.readAsBinaryString(fileData);
- 	reader.onload = function(e) {
- 		var contentType = fileData.type || 'application/octet-stream';
-    // Updating the metadata is optional and you can instead use the value from drive.files.get.
-    var base64Data = btoa(reader.result);
-    var multipartRequestBody =
-    delimiter +
-    'Content-Type: application/json\r\n\r\n' +
-    JSON.stringify(fileMetadata) +
-    delimiter +
-    'Content-Type: ' + contentType + '\r\n' +
-    'Content-Transfer-Encoding: base64\r\n' +
-    '\r\n' +
-    base64Data +
-    close_delim;
+	var reader = new FileReader();
+	reader.readAsBinaryString(fileData);
+	reader.onload = function(e) {
+		var contentType = fileData.type || 'application/octet-stream';
+		// Updating the metadata is optional and you can instead use the value from drive.files.get.
+		var base64Data = btoa(reader.result);
+		var multipartRequestBody =
+			delimiter +
+			'Content-Type: application/json\r\n\r\n' +
+			JSON.stringify(fileMetadata) +
+			delimiter +
+			'Content-Type: ' + contentType + '\r\n' +
+			'Content-Transfer-Encoding: base64\r\n' +
+			'\r\n' +
+			base64Data +
+			close_delim;
 
-    var request = gapi.client.request({
-    	'path': '/upload/drive/v2/files/' + fileId,
-    	'method': 'PUT',
-    	'params': {'uploadType': 'multipart', 'alt': 'json'},
-    	'headers': {
-    		'Content-Type': 'multipart/mixed; boundary="' + boundary + '"'
-    	},
-    	'body': multipartRequestBody});
-    if (!callback) {
-    	callback = function(file) {
-    		console.log(file);
-    	};
-    }
-    request.execute(callback);
-};
+		var request = gapi.client.request({
+			'path': '/upload/drive/v2/files/' + fileId,
+			'method': 'PUT',
+			'params': {
+				'uploadType': 'multipart',
+				'alt': 'json'
+			},
+			'headers': {
+				'Content-Type': 'multipart/mixed; boundary="' + boundary + '"'
+			},
+			'body': multipartRequestBody
+		});
+		if (!callback) {
+			callback = function(file) {
+				console.log(file);
+			};
+		}
+		request.execute(callback);
+	};
 }
 
 
@@ -488,21 +527,21 @@ function downloadFilePromise(file) {
  * @param {File} file Drive File instance.
  * @param {Function} callback Function to call when the request is complete.
  */
- function downloadFile(file, callback) {
- 	if (file.downloadUrl) {
- 		var accessToken = gapi.auth.getToken().access_token;
- 		var xhr = new XMLHttpRequest();
- 		xhr.open('GET', file.downloadUrl);
- 		xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
- 		xhr.onload = function() {
- 			callback(xhr.responseText);
- 		};
- 		xhr.onerror = function() {
- 			callback(null);
- 		};
- 		xhr.send();
- 	}
- 	else {
- 		callback(null);
- 	}
- }
+function downloadFile(file, callback) {
+	if (file.downloadUrl) {
+		var accessToken = gapi.auth.getToken().access_token;
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', file.downloadUrl);
+		xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+		xhr.onload = function() {
+			callback(xhr.responseText);
+		};
+		xhr.onerror = function() {
+			callback(null);
+		};
+		xhr.send();
+	}
+	else {
+		callback(null);
+	}
+}

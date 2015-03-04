@@ -156,6 +156,7 @@ ApplicationController.prototype.loadYAMLfromURL = function(_url) {
 
 		success: function(_data) {
 			self.setYAML(_data);
+			googleDrive.setClean();
 		},
 
 		fail: function(_data) {
