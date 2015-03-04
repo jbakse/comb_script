@@ -42,10 +42,10 @@
 # Math Expression support
 ---	Possible Library: http://mathjs.org/docs/expressions/customization.html
 +---	Dimension Units
+---	Access Parent Bounds (move evaluation to context, parse in region also for validation?, change the 'type' in the language files, should we rename/limit available variables to expressions)
 ---	support percents
 +---	Basic Maths
----	Access Parent Bounds
----	Use document units
++---	Use document units
 
 # Booleans
 -	Review: how child_booleans vs self_booleans work, does it make sense?

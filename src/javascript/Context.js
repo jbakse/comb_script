@@ -1,5 +1,6 @@
 "use strict";
 
+var math = require('../../lib/mathjs/math.min.js');
 
 module.exports = Context;
 
@@ -15,7 +16,36 @@ Context.prototype.toString = function() {
 };
 
 
+Context.prototype.scope = function(){
+	return {
+		parent_height: this.bounds.height,
+		parent_width: this.bounds.width,
+		parent_left: this.bounds.left,
+		parent_right: this.bounds.right,
+		parent_top: this.bounds.top,
+		parent_bottom: this.bounds.bottom
+	};
+};
+
 Context.prototype.deriveContext = function(_properties) {
+
+
+	// if (typeof _properties.width === 'string') {
+	// 	try {
+	// 		var converted = math.eval(_properties.width, this.scope());
+	// 		if (typeof converted == "object") {
+	// 			converted = converted.toNumber('mm');
+	// 		}
+	// 		_properties.width = converted;
+	// 	}
+	// 	catch (e) {
+	// 		console.log("error", e.stack);
+	// 		// log.appendError(messagePrefix + "Unable to parse width: " + _properties.width);
+
+	// 	}
+	// }
+
+	// console.log("props", _properties, this);
 
 	// Calculate Bounds
 	var derivedBounds = new paper.Rectangle();
@@ -73,7 +103,7 @@ Context.prototype.deriveContext = function(_properties) {
 	if (_properties.registration === "bottom_right") {
 		derivedContext.moveRegistration(derivedContext.bounds.right, derivedContext.bounds.bottom);
 	}
-	
+
 	if (_properties.translate_x || _properties.translate_y) {
 		derivedContext.matrix.translate(_properties.translate_x || 0, _properties.translate_y || 0);
 	}

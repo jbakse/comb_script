@@ -4,8 +4,14 @@
 var _ = require('underscore');
 var math = require('../../../lib/mathjs/math.min.js');
 //insert 'px' unit so math js can covert to/from px
-math.type.Unit.UNITS.px = {name: 'px', base: math.type.Unit.BASE_UNITS.LENGTH, prefixes:  math.type.Unit.PREFIXES.NONE, value: 0.0254 / 72.0, offset: 0};
-		
+math.type.Unit.UNITS.px = {
+	name: 'px',
+	base: math.type.Unit.BASE_UNITS.LENGTH,
+	prefixes: math.type.Unit.PREFIXES.NONE,
+	value: 0.0254 / 72.0,
+	offset: 0
+};
+
 
 var paperUtil = require('../paper_util.js');
 var util = require('../util.js');
@@ -79,9 +85,7 @@ Region.prototype.loadData = function(_data) {
 };
 
 
-Region.prototype.loadProperties = function(_properties) {
-
-	var self = this;
+Region.prototype.getPropertyDefinitions = function() {
 	//todo recurse?
 	var definitions = language.regionTypes[this.type].properties;
 	if (!Array.isArray(definitions)) {
@@ -91,7 +95,14 @@ Region.prototype.loadProperties = function(_properties) {
 	if (superClass) {
 		definitions = util.mergeObjectArraysOnKey(language.regionTypes[superClass].properties, definitions, "keyword");
 	}
+	return definitions;
+};
 
+Region.prototype.loadProperties = function(_properties) {
+
+	var self = this;
+
+	var definitions = this.getPropertyDefinitions();
 
 
 	// Build message prefix
@@ -112,7 +123,7 @@ Region.prototype.loadProperties = function(_properties) {
 	}
 
 
-	
+
 	// Validate and import provided properties.
 	_(_properties).each(function(pValue, pKey) {
 		var def = _(definitions).find(function(_def) {
@@ -124,15 +135,19 @@ Region.prototype.loadProperties = function(_properties) {
 			return;
 		}
 
+		var expectedType = def.type;
+
 		// use mathjs to convert expressions to a number (cast)
+		// just to see if the expression is valid and report errors
 		if (typeof pValue == "string" && def.type == "number" && pValue !== '') {
-				
+			
 			try {
-				var converted = math.eval(pValue);
+
+				var converted = math.eval(pValue, new Context().scope());
 				if (typeof converted == "object") {
 					converted = converted.toNumber(self.root.properties.unit);
 				}
-				pValue = converted;
+				expectedType = "string";
 			}
 			catch (e) {
 				log.appendError(messagePrefix + "Unable to parse expression: " + pValue);
@@ -142,10 +157,11 @@ Region.prototype.loadProperties = function(_properties) {
 			}
 		}
 
-		var expectedType = def.type;
-		if (def.type === 'color') {
-			expectedType = 'object';
+
+		if (def.type === "color") {
+			expectedType = "object";
 		}
+
 		if (typeof pValue !== expectedType) {
 			log.appendWarning(messagePrefix + "Incorrect type: " + pKey + "<br />Received " + typeof pValue + ". Expected " + def.type + ".");
 			return;
@@ -279,10 +295,46 @@ Region.prototype.tree = function(_depth) {
 };
 
 
+
 //////////////////////////////////////////////////////////////////////
 // Preview
 
+// evalMathProperties
+// math properties can't be eval'd during inital parse of document, because they need the context of their parent
+// this is called during the build/preview to eval math just before it is needed
+
+Region.prototype.evalMathProperties = function(context) {
+	var definitions = this.getPropertyDefinitions();
+	var self = this;
+
+	_(definitions).chain()
+		.filter(function(_def) {
+			return _def && _def.type === 'number';
+		})
+		.each(function(_def) {
+			var pValue = self.properties[_def.keyword];
+
+			if (typeof pValue == "string") {
+				console.log("scope", context.scope());
+				try {
+					var converted = math.eval(pValue, context.scope());
+					if (typeof converted == "object") {
+						converted = converted.toNumber(self.root.properties.unit);
+					}
+					self.properties[_def.keyword] = converted;
+					console.log("converted", _def.keyword, converted);
+				}
+				catch (e) {
+					log.appendError("Unable to evaluate expression: " + pValue);
+				}
+			}
+			
+		});
+
+};
+
 Region.prototype.preview = function(_parentContext) {
+	this.evalMathProperties(_parentContext);
 	var context = _parentContext.deriveContext(this.properties);
 
 	this.previewBoundsGroup = new paper.Group();
@@ -323,6 +375,7 @@ Region.prototype.previewChildren = function(_context) {
 
 
 Region.prototype.build = function(_parentContext) {
+	this.evalMathProperties(_parentContext);
 	var context = _parentContext.deriveContext(this.properties);
 
 
