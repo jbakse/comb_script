@@ -8,8 +8,13 @@ var _ = require('underscore');
 
 var DEVELOPER_KEY = 'AIzaSyAaps9tbXrXH7Yhk94HnHv7EmVaz8Hxmjo';
 var CLIENT_ID = '1055926372216-75g9p5ttbsb7vnu18rvfn46n13llbfsn.apps.googleusercontent.com';
-var SCOPES = ['https://www.googleapis.com/auth/drive.install', 'https://www.googleapis.com/auth/drive.file'];
+var SCOPES = [
+'https://www.googleapis.com/auth/drive.install', 
+'https://www.googleapis.com/auth/drive.readonly', 
+'https://www.googleapis.com/auth/drive.file'
+];
 var APP_ID = 'combscript-jbakse';
+
 
 var gapiLoaded = false;
 var initialized = false;
@@ -73,6 +78,7 @@ function manualConnect() {
 
 function handleAuthResult(authResult) {
 	if (authResult && !authResult.error) {
+
 		log.appendSuccess("Google Drive authorized.");
 		loadAPIs();
 
@@ -341,8 +347,10 @@ function createDriveFile(name, content, parentId, type) {
 
 function showPicker() {
 	return new Promise(function(resolve, reject) {
-		var view = new google.picker.View(google.picker.ViewId.DOCS);
+
+		var view = new google.picker.DocsView(google.picker.ViewId.DOCS);
 		view.setMimeTypes("text/x-yaml");
+		view.setMode(google.picker.DocsViewMode.LIST);
 
 		var pickerCallback = function(data) {
 			if (data.action == google.picker.Action.PICKED) {
@@ -354,7 +362,6 @@ function showPicker() {
 			}
 		};
 
-
 		var picker = new google.picker.PickerBuilder()
 			.setAppId(APP_ID)
 			.setDeveloperKey(DEVELOPER_KEY)
@@ -362,8 +369,8 @@ function showPicker() {
 			.enableFeature(google.picker.Feature.NAV_HIDDEN)
 			.addView(view)
 			.setCallback(pickerCallback)
-			.build()
-			.setVisible(true);
+			.build();
+		picker.setVisible(true);
 	});
 }
 
