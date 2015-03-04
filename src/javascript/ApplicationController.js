@@ -54,6 +54,8 @@ ApplicationController.prototype.init = function(_element) {
 		this.editor.resize();
 	});
 
+	this.loadYAMLfromURL(settings.fileURL);
+
 };
 
 ApplicationController.prototype.attachHandlers = function() {
