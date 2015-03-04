@@ -22,7 +22,8 @@
     "js-yaml": "^3.0.2",
     "marked": "^0.3.2",
     "mustache": "^0.8.2",
-    "underscore": "^1.6.0"
+    "underscore": "^1.6.0",
+    "gulp-build": "^0.5.3"
   },
   "dependencies": {},
   "repository": {

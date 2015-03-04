@@ -12,6 +12,11 @@ var concat = require('gulp-concat');
 var insert = require('gulp-insert');
 var browserify = require('gulp-browserify');
 var jade = require('gulp-jade');
+var build = require('gulp-build');
+
+
+var comb_package = require('./package.json');
+
 
 gulp.task('javascript', function() {
 	return gulp
@@ -51,6 +56,7 @@ gulp.task('less', function() {
 
 gulp.task('html', function() {
 	return gulp.src('./src/**/*.html')
+		.pipe(build(comb_package))
 		.pipe(gulp.dest('./build/'))
 		.pipe(livereload())
 		;
