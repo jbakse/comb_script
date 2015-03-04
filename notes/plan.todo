@@ -41,9 +41,9 @@
 
 # Math Expression support
 ---	Possible Library: http://mathjs.org/docs/expressions/customization.html
----	Dimension Units
++---	Dimension Units
 ---	support percents
----	Basic Maths
++---	Basic Maths
 ---	Access Parent Bounds
 ---	Use document units
 

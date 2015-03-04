@@ -2,6 +2,7 @@
 	"browser": true,
 	"devel": true,
 	"jquery": true,
+	"evil": true,
 
 	"strict": false,
 	"globalstrict": true,

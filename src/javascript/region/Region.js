@@ -2,6 +2,11 @@
 
 
 var _ = require('underscore');
+var math = require('../../../lib/mathjs/math.min.js');
+//insert 'px' unit so math js can covert to/from px
+math.type.Unit.UNITS.px = {name: 'px', base: math.type.Unit.BASE_UNITS.LENGTH, prefixes:  math.type.Unit.PREFIXES.NONE, value: 0.0254 / 72.0, offset: 0};
+		
+
 var paperUtil = require('../paper_util.js');
 var util = require('../util.js');
 var settings = require('../settings.js');
@@ -107,7 +112,7 @@ Region.prototype.loadProperties = function(_properties) {
 	}
 
 
-
+	
 	// Validate and import provided properties.
 	_(_properties).each(function(pValue, pKey) {
 		var def = _(definitions).find(function(_def) {
@@ -119,10 +124,22 @@ Region.prototype.loadProperties = function(_properties) {
 			return;
 		}
 
-		if (typeof pValue == "string" && def.type == "number" && !isNaN(pValue) && pValue !== '') {
-			// try casting strings to numbers
-			pValue = Number(pValue);
-
+		// use mathjs to convert expressions to a number (cast)
+		if (typeof pValue == "string" && def.type == "number" && pValue !== '') {
+				
+			try {
+				var converted = math.eval(pValue);
+				if (typeof converted == "object") {
+					converted = converted.toNumber(self.root.properties.unit);
+				}
+				pValue = converted;
+			}
+			catch (e) {
+				log.appendError(messagePrefix + "Unable to parse expression: " + pValue);
+				if (typeof self.root.properties.unit === "undefined") {
+					log.appendError(messagePrefix + "Document `unit` must be set before other properties that use units.");
+				}
+			}
 		}
 
 		var expectedType = def.type;
@@ -388,7 +405,7 @@ Region.prototype._combinePaths = function(_leftPath, _rightPathSet, _op) {
 			_leftPath.remove();
 			_rightPath.remove();
 			_leftPath = temp;
-			
+
 			// console.log("result", _leftPath);
 		}
 		catch (e) {

@@ -4,7 +4,6 @@ Error.stackTraceLimit = 100;
 
 var language = require('./language.js');
 var _ = require('underscore');
-var math = require('../../lib/mathjs/math.min.js');
 
 
 
@@ -31,7 +30,7 @@ module.exports = ApplicationController;
 
 
 function ApplicationController() {
-	console.log("got math?", math);
+	
 	this.doc = null;
 	this.selectedRegions = [];
 	this.keySelection = null;
