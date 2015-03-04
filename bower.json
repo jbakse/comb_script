@@ -20,10 +20,13 @@
     "js-yaml": "~3.2.7",
     "paper": "https://github.com/paperjs/paper.js",
     "split-pane": "~0.4.0",
-    "underscore": "~1.8.2"
+    "underscore": "~1.8.2",
+    "mathjs": "~1.4.0"
   },
-  // see: https://www.npmjs.com/package/bower-installer
-  "install" : {
-    "path" : "test_lib"
+  "install": {
+    "path": "test_lib"
+  },
+  "resolutions": {
+    "jquery": "~2.1.3"
   }
 }

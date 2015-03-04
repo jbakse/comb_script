@@ -1,7 +1,7 @@
 'use strict';
 var _ = require('underscore');
 
-module.exports.fileURL = "./examples/drawbot.yaml";
+module.exports.fileURL = "./examples/expressions.yaml";
 // module.exports.fileURL = "../yaml/tricky_grid.yaml";
 module.exports.previewCanvasWidth = 1600;
 module.exports.previewCanvasHeight = 1600;

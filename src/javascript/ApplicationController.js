@@ -4,6 +4,9 @@ Error.stackTraceLimit = 100;
 
 var language = require('./language.js');
 var _ = require('underscore');
+var math = require('../../lib/mathjs/math.min.js');
+
+
 
 var settings = require('./settings.js');
 var util = require('./util.js');
@@ -24,7 +27,11 @@ var googleDrive = require('./GoogleDrive.js');
 module.exports = ApplicationController;
 
 
+
+
+
 function ApplicationController() {
+	console.log("got math?", math);
 	this.doc = null;
 	this.selectedRegions = [];
 	this.keySelection = null;
@@ -50,8 +57,9 @@ ApplicationController.prototype.init = function(_element) {
 	this.attachHandlers();
 
 	$('div.split-pane').splitPane();
+	var self = this;
 	$('#right-side-inner > .split-pane-resize-shim').mousemove(function() {
-		this.editor.resize();
+		self.editor.resize();
 	});
 
 	this.loadYAMLfromURL(settings.fileURL);

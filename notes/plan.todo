@@ -89,7 +89,7 @@
 #Build Tool
 --- 	Clean up gulp
 - 	Interesting: http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/
-----	Versioning: Include the build number 0.0.12 on the interface, start bumping it!
++----	Versioning: Include the build number 0.0.12 on the interface, start bumping it!
 -	Language YAMLs: are built with the build tool, should this be handled by the javascript? not sure
 --	Browserify Dependencies: rather than script tags, do we want to?
 
