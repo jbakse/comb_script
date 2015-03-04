@@ -89,6 +89,14 @@ ApplicationController.prototype.attachHandlers = function() {
 		if (settings.inspectOnHover) $.Topic("UI/updateInspector").publish(self.selectedRegions);
 		self.redrawPreview();
 	});
+
+
+	$(document).bind('keydown', function (event) {
+		// keyCode 8 is delete / backspace
+		if (event.keyCode === 8) { event.preventDefault(); }
+	});
+    
+
 };
 
 ApplicationController.prototype.redrawPreview = function(_region) {

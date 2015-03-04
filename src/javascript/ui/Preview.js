@@ -109,7 +109,7 @@ Preview.prototype.setDocument = function(_doc) {
 		if (shape instanceof paper.CompoundPath) return;
 		// style type
 		// shape.style = settings.buildStyle;
-		console.log("shape,", shape);
+		// console.log("shape,", shape);
 		shape.style = 
 		{
 			fillColor: undefined,

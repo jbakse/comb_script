@@ -12,7 +12,7 @@
 # User facing Features
 
 # General
------	Keyboard browser navigation: might need to be disabled, hitting delete or command-brackets is common in an editor and if the wrong thing is focused, you leave the page
++-----	Keyboard browser navigation: might need to be disabled, hitting delete or command-brackets is common in an editor and if the wrong thing is focused, you leave the page
 	
 # Preview
 ---	Let user Pan
@@ -37,7 +37,7 @@
 
 # File Management
 -	Google Drive Save As?
------	Warn on navigation away from dirty file (prompt for sav)
++-----	Warn on navigation away from dirty file (prompt for sav)
 
 # Math Expression support
 ---	Possible Library: http://mathjs.org/docs/expressions/customization.html

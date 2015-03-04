@@ -18,7 +18,6 @@ function Editor() {
 }
 
 
-
 Editor.prototype.init = function(_element) {
 	this.editor = ace.edit(_element);
 	this.editor.setTheme("ace/theme/monokai");
@@ -29,18 +28,25 @@ Editor.prototype.init = function(_element) {
 	this.editor.getSession().on('change', _(this.onChange).bind(this));
 	this.editor.getSession().selection.on('changeCursor', _(this.onChangeCursor).bind(this));
 
+	var self = this;
+	this.editor.commands.addCommand({
+		name: "Remove Indent",
+		bindKey: { win: "Ctrl-[", mac: "Command-[" },
+		exec: function (_e) {
+			var selection = self.editor.getSelectionRange();
+			self.editor.getSession().outdentRows(selection);
+		}
+	});
 
-	// this.editor.commands.addCommand({
-	// 	name: "Rebuild",
-	// 	bindKey: {
-	// 		win: "Ctrl-B|Ctrl-R",
-	// 		mac: "Command-B|Command-R"
-	// 	},
-	// 	// exec: _.bind(controller.rebuild, controller)
-	// 	exec: function(_e) {
-	// 		$.Topic("UI/command/rebuild").publish(_e);
-	// 	}
-	// });
+	this.editor.commands.addCommand({
+		name: "Add Indent",
+		bindKey: { win: "Ctrl-]", mac: "Command-]" },
+		exec: function (_e) {
+			var selection = self.editor.getSelectionRange();
+			self.editor.getSession().indentRows(selection.start.row, selection.end.row, "\t");
+		}
+	});
+
 
 };
 
