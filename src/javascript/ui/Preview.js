@@ -61,8 +61,18 @@ Preview.prototype.init = function(_element) {
 	var drag = false;
 	var lastMouse;
 
+	$(paper.view.element).bind('contextmenu', function(e) {
+		console.log("context");
+		return false;
+	});
+
+
 	// handle dragging/panning
 	$(paper.view.element).mousedown(function(_e) {
+		if (_e.which != 1) {
+			_e.preventDefault();
+			return false;
+		}
 		drag = true;
 		lastMouse = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);
 	});
@@ -81,46 +91,38 @@ Preview.prototype.init = function(_element) {
 };
 
 Preview.prototype.setDocument = function(_doc) {
+	var oldDoc = this.doc;
 	this.doc = _doc;
 
 	var context = new Context();
 	var unit = language.unitScales[this.doc.properties.unit] || 1;
 	context.matrix.scale(unit);
-	// module.exports.inspector.setUnit(this.doc.properties.unit);
 
 	// draw preview/frame
 	this.previewLayer.removeChildren();
-	//paper.project.activeLayer = this.previewLayer;
 	this.previewLayer.activate();
 	this.doc.preview(context);
 
 	// draw build
 	this.buildLayer.removeChildren();
-	
-	//paper.project.activeLayer = this.buildLayer;
+
 	this.buildLayer.activate();
 	var buildShapes = this.doc.build(context);
 	this.buildLayer.style = settings.buildStyle;
-	
-	// console.log("childs", this.buildLayer.children);
-	// console.log("buildShapes", buildShapes);
+
 	_(buildShapes).each(function(shape) {
 		if (shape instanceof paper.Path) return;
 		if (shape instanceof paper.CompoundPath) return;
-		// style type
-		// shape.style = settings.buildStyle;
-		// console.log("shape,", shape);
-		shape.style = 
-		{
+		shape.style = {
 			fillColor: undefined,
 			strokeWidth: 1,
 			strokeColor: "red"
 		};
 	});
 
+
 	// draw export
 	this.exportLayer.removeChildren();
-	//paper.project.activeLayer = this.exportLayer;
 	this.exportLayer.activate();
 	this.doc.build(context);
 
@@ -136,10 +138,9 @@ Preview.prototype.setDocument = function(_doc) {
 
 	this.exportLayer.style = style;
 
-	// this.exportLayer.style = settings.exportStyle;
-
-
-	paper.view.center = new paper.Point(_doc.properties.width * 0.5 * unit, _doc.properties.height * 0.5 * unit);
+	if (oldDoc === null) {
+		paper.view.center = new paper.Point(_doc.properties.width * 0.5 * unit, _doc.properties.height * 0.5 * unit);
+	}
 	paper.view.update();
 
 };

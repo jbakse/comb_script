@@ -5,7 +5,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Bugs
 
------	all those google drive errors in console!
++-----	all those google drive errors in console!
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
@@ -16,13 +16,13 @@
 	
 # Preview
 ---	Let user Pan
-	--- prevent sticky mouse pan
-	--- prevent text selection during pan
+	+--- prevent sticky mouse pan
+	+--- prevent text selection during pan
 
 ---	Let user Zoom
 	--- tool bar magnifying glass?
 
-----	Don't screw up pan on code changes
++----	Don't screw up pan on code changes
 
 -	Isolation Mode? 
 -	Auto Pan and Zoom on code under text cursor?
@@ -76,6 +76,7 @@
 ---	Export Styles: finish+document
 ---	Support for Cut vs Etch vs Guide
 --	Perserve Groups on Export?: Might at least be worth looking at having the tree represented in groups so they export nested?
+--	Include source in exported .svg?
 
 
 # UI
