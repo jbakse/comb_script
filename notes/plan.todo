@@ -53,9 +53,16 @@
 	+--	(no)change the 'type' in the language files
 	+--	should we rename/limit available variables to expressions)
 	----	Make Examples + Document
-		- units, simple math, parent bound variables
-		- Mathjs
-	----	User provided variables: define in document only, or at any node, cascade and override? probably
+		+- units
+		+- simple math
+		- parent boundary variables
+		- constants
+			- shadowing
+			- referencing parent constants, but not own
+		+- Mathjs
+
+	----	constants: 
+		----	DRY the math.eval stuff to check for input type, report errors, etc consistantly
 	+----	Dry Code :(and maybe consider resolving contexts during inital load/parse instead of draw/preview (this will eliminate redundancy))
 
 --	support percents

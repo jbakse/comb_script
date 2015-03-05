@@ -5,26 +5,29 @@ properties:
     height: 1 in
     # zoom: .25
 constants:
-    table_height: 2
+    table_height: 2in
 
 
 children:
     - rectangle:
         properties:
             radius: .25 in
-	    height: table_height
+            height: table_height
 
     - ellipse:
+        constants:
+            table_height: table_height + 1cm
+
         properties:
             name: number_one
             width: parent_height
-            height: parent_height
+            height: table_height
             left: parent_right
             # height: 2cm * 1.5
     - ellipse:
         properties:
             name: number_two
             width: parent_height
-            height: parent_height
+            height: table_height
             right: parent_left
             # height: 2cm * 1.5

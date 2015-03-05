@@ -95,16 +95,40 @@ Region.prototype.loadConstants = function (_contstants) {
 		_contstants = {};
 	}
 
+
 	if (this.parent) {
-		var parentContstants = _(this.parent.constants).clone();
-		_contstants = _(parentContstants).extend(_contstants);
+		this.constants = _(this.parent.constants).clone();
 	} else {
-		_contstants = _(_contstants).clone();
+		this.constants = {};
 	}
 
-	this.constants = _contstants;
+	_(_contstants).each( function(value, key) {
+		if (typeof value === "number") {
+			self.constants[key] = value;
+			return;
+		}
 
-	// console.log(this.type, this.name, this.constants);
+		if (typeof value === "string") {
+			try {
+				var scope = {};
+				if (self.parent) scope = _(self.parent.constants).clone();
+				self.constants[key] = math.eval(value, scope);
+			} catch (e) {
+				logPropertyError(self, key, "unable to evaluate constant<br/>"+e.message, "\"" + value + "\"");
+				return;
+			}
+			return;
+		}
+
+		logPropertyError(self, key, "unknown constant type");
+		
+
+	});
+
+	
+	
+
+	
 };
 
 Region.prototype.getPropertyDefinitions = function() {
@@ -174,7 +198,7 @@ Region.prototype.loadProperties = function(_properties) {
 				expectedType = "string";
 			}
 			catch (e) {
-				logPropertyError(self, pKey, "unable to parse expression", "\"" + pValue + "\"");
+				logPropertyError(self, pKey, "unable to parse expression<br/>"+e.message, "\"" + pValue + "\"");
 				return;
 			}
 		}
@@ -259,7 +283,7 @@ Region.prototype.evalMathProperties = function(context) {
 					self.properties[_def.keyword] = converted;
 				}
 				catch (e) {
-					log.appendError("Unable to evaluate expression: " + pValue);
+					logPropertyError(self, _def.keyword, "unable to evaluate expression<br/>"+e.message, "\"" + pValue + "\"");
 				}
 			}
 
