@@ -10,7 +10,7 @@ module.exports.inspectOnHover = false;
 
 
 //colors
-var shapeFillColor = new paper.Color(0.4, .4, 0.4, 0.4);
+var shapeFillColor = new paper.Color(0.4, 0.4, 0.4, 0.4);
 var shapeStrokeColor = new paper.Color(0.0,0.0,0.0, 0.15);
 var boundsStrokeColor = new paper.Color(0.0, 1.0, 1.0, 0.75);
 var highlightColor = new paper.Color("#f92772");

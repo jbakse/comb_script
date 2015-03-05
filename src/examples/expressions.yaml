@@ -4,6 +4,7 @@ properties:
     unit: mm
     width: 100
     height: 50
+    zoom: .25
 
 children:
     - ellipse:

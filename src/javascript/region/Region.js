@@ -315,14 +315,12 @@ Region.prototype.evalMathProperties = function(context) {
 			var pValue = self.properties[_def.keyword];
 
 			if (typeof pValue == "string") {
-				console.log("scope", context.scope());
 				try {
 					var converted = math.eval(pValue, context.scope());
 					if (typeof converted == "object") {
 						converted = converted.toNumber(self.root.properties.unit);
 					}
 					self.properties[_def.keyword] = converted;
-					console.log("converted", _def.keyword, converted);
 				}
 				catch (e) {
 					log.appendError("Unable to evaluate expression: " + pValue);
@@ -527,7 +525,6 @@ Region.prototype.setStyle = function(_style, _recursive) {
 		this.previewBoundsGroup.style = settings.styles.bounds[_style];
 	}
 	this.previewPositionGroup.style = settings.styles.position[_style];
-
 	if (_recursive) {
 		_(this.children).invoke('setStyle', _style, true);
 	}

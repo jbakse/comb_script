@@ -102,6 +102,7 @@ Preview.prototype.setDocument = function(_doc) {
 	this.previewLayer.removeChildren();
 	this.previewLayer.activate();
 	this.doc.preview(context);
+	
 
 	// draw build
 	this.buildLayer.removeChildren();
@@ -110,7 +111,12 @@ Preview.prototype.setDocument = function(_doc) {
 	var buildShapes = this.doc.build(context);
 	this.buildLayer.style = settings.buildStyle;
 
+
+	
+
+
 	_(buildShapes).each(function(shape) {
+
 		if (shape instanceof paper.Path) return;
 		if (shape instanceof paper.CompoundPath) return;
 		shape.style = {
@@ -141,6 +147,8 @@ Preview.prototype.setDocument = function(_doc) {
 	if (oldDoc === null) {
 		paper.view.center = new paper.Point(_doc.properties.width * 0.5 * unit, _doc.properties.height * 0.5 * unit);
 	}
+	// console.log("doc", _doc);
+	paper.view.zoom = _doc.properties.zoom;
 	paper.view.update();
 
 };
