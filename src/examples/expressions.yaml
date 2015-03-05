@@ -2,22 +2,25 @@
 properties:
     name: bounds
     
-    width: 100
+    width: 1 in
     height: 1 in
     # zoom: .25
 
 children:
+    - rectangle:
+        properties:
+            radius: .25 in
     - ellipse:
         properties:
             name: number_one
             width: parent_height
-            height: parent_height * .
+            height: parent_height
             left: parent_right
             # height: 2cm * 1.5
     - ellipse:
         properties:
             name: number_two
             width: parent_height
-            height: parent_height * .
-            left: parent_right
+            height: parent_height
+            right: parent_left
             # height: 2cm * 1.5

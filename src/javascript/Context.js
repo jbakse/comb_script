@@ -29,24 +29,6 @@ Context.prototype.scope = function(){
 
 Context.prototype.deriveContext = function(_properties) {
 
-
-	// if (typeof _properties.width === 'string') {
-	// 	try {
-	// 		var converted = math.eval(_properties.width, this.scope());
-	// 		if (typeof converted == "object") {
-	// 			converted = converted.toNumber('mm');
-	// 		}
-	// 		_properties.width = converted;
-	// 	}
-	// 	catch (e) {
-	// 		console.log("error", e.stack);
-	// 		// log.appendError(messagePrefix + "Unable to parse width: " + _properties.width);
-
-	// 	}
-	// }
-
-	// console.log("props", _properties, this);
-
 	// Calculate Bounds
 	var derivedBounds = new paper.Rectangle();
 

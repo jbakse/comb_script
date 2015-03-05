@@ -1,8 +1,7 @@
 'use strict';
 
-var Context = require('../Context.js');
 var language = require('../language.js');
-var settings = require('../settings.js');
+var settings = require('../Settings.js');
 var _ = require('underscore');
 
 module.exports = Preview;
@@ -62,7 +61,6 @@ Preview.prototype.init = function(_element) {
 	var lastMouse;
 
 	$(paper.view.element).bind('contextmenu', function(e) {
-		console.log("context");
 		return false;
 	});
 
@@ -94,27 +92,23 @@ Preview.prototype.setDocument = function(_doc) {
 	var oldDoc = this.doc;
 	this.doc = _doc;
 
-	var context = new Context();
-	var unit = language.unitScales[this.doc.properties.unit] || 1;
-	context.matrix.scale(unit);
+
+	var unitScale = language.unitScales[this.doc.properties.unit] || 1;
 
 	// draw preview/frame
-	this.previewLayer.removeChildren();
 	this.previewLayer.activate();
-	this.doc.preview(context);
+	this.previewLayer.removeChildren();
+	this.doc.preview();
 	
+
 
 	// draw build
-	this.buildLayer.removeChildren();
-
 	this.buildLayer.activate();
-	var buildShapes = this.doc.build(context);
+	this.buildLayer.removeChildren();
+	var buildShapes = this.doc.build();
+
+	// re-style build layer
 	this.buildLayer.style = settings.buildStyle;
-
-
-	
-
-
 	_(buildShapes).each(function(shape) {
 
 		if (shape instanceof paper.Path) return;
@@ -130,9 +124,10 @@ Preview.prototype.setDocument = function(_doc) {
 	// draw export
 	this.exportLayer.removeChildren();
 	this.exportLayer.activate();
-	this.doc.build(context);
+	this.doc.build();
 
 
+	// re-style export layer
 	var style = settings.exportStyle;
 
 	if (this.doc.properties.cut_color) {
@@ -144,10 +139,12 @@ Preview.prototype.setDocument = function(_doc) {
 
 	this.exportLayer.style = style;
 
+
+
 	if (oldDoc === null) {
-		paper.view.center = new paper.Point(_doc.properties.width * 0.5 * unit, _doc.properties.height * 0.5 * unit);
+		paper.view.center = new paper.Point(_doc.properties.width * 0.5 * unitScale, _doc.properties.height * 0.5 * unitScale);
 	}
-	// console.log("doc", _doc);
+
 	paper.view.zoom = _doc.properties.zoom;
 	paper.view.update();
 

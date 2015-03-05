@@ -7,7 +7,7 @@ var _ = require('underscore');
 
 
 
-var settings = require('./settings.js');
+var settings = require('./Settings.js');
 var util = require('./util.js');
 
 var regionTypes = require('./region/regionTypes.js');
@@ -191,14 +191,13 @@ ApplicationController.prototype.exportSVG = function() {
 
 	var exportWidth = this.doc.properties.width * unitScale;
 	var exportHeight = this.doc.properties.height * unitScale;
-	var context = new Context();
-	context.matrix.scale(unitScale);
+
 
 	var currentProject = paper.project;
 
 	var exportProject = new paper.Project($('<canvas width="' + exportWidth + '" height="' + exportHeight + '" />').get(0));
 	exportProject.activate();
-	this.doc.build(context);
+	this.doc.build();
 
 
 	var style = settings.exportStyle;
@@ -257,9 +256,7 @@ ApplicationController.prototype._parseYAML = function(_yaml) {
 
 		this.doc = new regionTypes.Document();
 		this.doc.loadData(data);
-		this.doc.properties.left = 0;
-		this.doc.properties.top = 0;
-		this.doc.properties.registration = "center";
+		
 	}
 	catch (e) {
 		log.appendException(e, "Exception loading document.");

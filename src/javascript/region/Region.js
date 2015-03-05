@@ -15,7 +15,7 @@ math.type.Unit.UNITS.px = {
 
 var paperUtil = require('../paper_util.js');
 var util = require('../util.js');
-var settings = require('../settings.js');
+var settings = require('../Settings.js');
 var regionTypes = require('./regionTypes.js');
 var Context = require('../Context.js');
 
@@ -40,7 +40,7 @@ var booleanOperations = {
 function Region(_parent) {
 	this.type = "Region";
 	this.parent = _parent || null;
-	this.root = this.parent && this.parent.root || this;
+	this.root = (this.parent && this.parent.root) || this;
 
 	this.children = [];
 	this.properties = {};
@@ -49,6 +49,7 @@ function Region(_parent) {
 
 	this.previewBoundsGroup = null;
 	this.previewPositionGroup = null;
+	this.context = null;
 
 	this.isShape = false;
 }
@@ -75,9 +76,12 @@ Region.prototype.loadData = function(_data) {
 
 	this.loadProperties(_data.properties);
 
+	this.buildContext();
+
 	if (typeof _data.children === "object" && _data.children !== null) {
 		this.loadChildren(_data.children);
 	}
+
 
 	return this;
 };
@@ -206,6 +210,56 @@ Region.prototype.loadProperties = function(_properties) {
 
 };
 
+
+// evalMathProperties
+// math properties can't be eval'd during inital parse of document, because they need the context of their parent
+// this is called during the build/preview to eval math just before it is needed
+
+Region.prototype.evalMathProperties = function(context) {
+	var definitions = this.getPropertyDefinitions();
+	var self = this;
+
+	_(definitions).chain()
+		.filter(function(_def) {
+			return _def && _def.type === 'number';
+		})
+		.each(function(_def) {
+			var pValue = self.properties[_def.keyword];
+
+			if (typeof pValue == "string") {
+				try {
+					var converted = math.eval(pValue, context.scope());
+					if (typeof converted == "object") {
+						converted = converted.toNumber(self.root.properties.unit);
+					}
+					self.properties[_def.keyword] = converted;
+				}
+				catch (e) {
+					log.appendError("Unable to evaluate expression: " + pValue);
+				}
+			}
+
+		});
+
+};
+
+Region.prototype.buildContext = function() {
+	var context;
+	if (this.parent) {
+		context = this.parent.context;
+	}
+	else {
+		// we are the root create a new context scaled to our unit property
+		context = new Context();
+		var unitScale = language.unitScales[this.properties.unit] || 1;
+		context.matrix.scale(unitScale);
+
+	}
+	this.evalMathProperties(context);
+
+	this.context = context.deriveContext(this.properties);
+};
+
 Region.prototype.loadChildren = function(_childrenData) {
 	if (!(_childrenData instanceof Array)) {
 		log.appendWarning("Children should be an array. Prepend child nodes with a dash and space.");
@@ -216,7 +270,6 @@ Region.prototype.loadChildren = function(_childrenData) {
 		var childData = _.values(_childData)[0];
 		if (typeof childKey === "undefined" || typeof childData === "undefined") {
 			log.appendWarning("Undefined Child in " + this);
-			// console.log("undefined child in", this);
 			return;
 		}
 		if (childData === null) {
@@ -304,41 +357,11 @@ Region.prototype.tree = function(_depth) {
 //////////////////////////////////////////////////////////////////////
 // Preview
 
-// evalMathProperties
-// math properties can't be eval'd during inital parse of document, because they need the context of their parent
-// this is called during the build/preview to eval math just before it is needed
 
-Region.prototype.evalMathProperties = function(context) {
-	var definitions = this.getPropertyDefinitions();
-	var self = this;
-
-	_(definitions).chain()
-		.filter(function(_def) {
-			return _def && _def.type === 'number';
-		})
-		.each(function(_def) {
-			var pValue = self.properties[_def.keyword];
-
-			if (typeof pValue == "string") {
-				try {
-					var converted = math.eval(pValue, context.scope());
-					if (typeof converted == "object") {
-						converted = converted.toNumber(self.root.properties.unit);
-					}
-					self.properties[_def.keyword] = converted;
-				}
-				catch (e) {
-					log.appendError("Unable to evaluate expression: " + pValue);
-				}
-			}
-
-		});
-
-};
 
 Region.prototype.preview = function(_parentContext) {
-	this.evalMathProperties(_parentContext);
-	var context = _parentContext.deriveContext(this.properties);
+
+	var context = this.context;
 
 	this.previewBoundsGroup = new paper.Group();
 	this.previewPositionGroup = new paper.Group();
@@ -378,9 +401,8 @@ Region.prototype.previewChildren = function(_context) {
 
 
 Region.prototype.build = function(_parentContext) {
-	this.evalMathProperties(_parentContext);
-	var context = _parentContext.deriveContext(this.properties);
 
+	var context = this.context;
 
 	// build own paths
 	var ownPaths = [].concat(this.drawBuild(context.bounds));
@@ -455,14 +477,12 @@ Region.prototype._combinePaths = function(_leftPath, _rightPathSet, _op) {
 	_(_rightPathSet).each(function(_rightPath) {
 
 		try {
-			// console.log("combine", _leftPath, _op, _rightPath);
 
 			var temp = _leftPath[_op](_rightPath);
 			_leftPath.remove();
 			_rightPath.remove();
 			_leftPath = temp;
 
-			// console.log("result", _leftPath);
 		}
 		catch (e) {
 			log.appendWarning("Failed to resolve boolean opperation.");
