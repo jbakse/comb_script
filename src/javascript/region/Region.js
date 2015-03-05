@@ -55,12 +55,7 @@ function Region(_parent) {
 }
 
 Region.prototype.proxy = function() {
-	// var proxy = new this.constructor();
-	// proxy.parent = this.parent;
-	// proxy.root = this.root;
-	// proxy.
 	var proxy = Object.create(this);
-	// proxy.previewBoundsGroup = null;
 	return proxy;
 };
 
@@ -74,6 +69,7 @@ Region.prototype.loadData = function(_data) {
 		this.editorProperties = _.clone(_data.editor_properties);
 	}
 
+	this.loadConstants(_data.constants);
 	this.loadProperties(_data.properties);
 
 	this.buildContext();
@@ -86,6 +82,30 @@ Region.prototype.loadData = function(_data) {
 	return this;
 };
 
+
+Region.prototype.loadConstants = function (_contstants) {
+	var self = this;
+
+	if (typeof _contstants === 'undefined') {
+		_contstants = {};
+	}
+
+	if (typeof _contstants !== 'object') {
+		logPropertyError(self, null, "constants should be a key/value map", "received " + typeof _properties);
+		_contstants = {};
+	}
+
+	if (this.parent) {
+		var parentContstants = _(this.parent.constants).clone();
+		_contstants = _(parentContstants).extend(_contstants);
+	} else {
+		_contstants = _(_contstants).clone();
+	}
+
+	this.constants = _contstants;
+
+	console.log(this.type, this.name, this.constants);
+};
 
 Region.prototype.getPropertyDefinitions = function() {
 	//todo recurse?
@@ -148,7 +168,9 @@ Region.prototype.loadProperties = function(_properties) {
 		// numbers can be numbers or math expressions, use mathjs to validate expressions are legal
 		if (def.type == "number" && typeof pValue == "string") {
 			try {
-				var converted = math.eval(pValue, new Context().scope());
+				var scope = _(self.constants).clone();
+				scope = _(scope).extend(new Context().scope());
+				var converted = math.eval(pValue, scope);
 				expectedType = "string";
 			}
 			catch (e) {
@@ -228,7 +250,9 @@ Region.prototype.evalMathProperties = function(context) {
 
 			if (typeof pValue == "string") {
 				try {
-					var converted = math.eval(pValue, context.scope());
+					var scope = _(self.constants).clone();
+					scope = _(scope).extend(context.scope());
+					var converted = math.eval(pValue, scope);
 					if (typeof converted == "object") {
 						converted = converted.toNumber(self.root.properties.unit);
 					}

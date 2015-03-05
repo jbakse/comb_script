@@ -56,7 +56,7 @@
 		- units, simple math, parent bound variables
 		- Mathjs
 	----	User provided variables: define in document only, or at any node, cascade and override? probably
-	----	Dry Code :(and maybe consider resolving contexts during inital load/parse instead of draw/preview (this will eliminate redundancy))
+	+----	Dry Code :(and maybe consider resolving contexts during inital load/parse instead of draw/preview (this will eliminate redundancy))
 
 --	support percents
 +---	Basic Maths

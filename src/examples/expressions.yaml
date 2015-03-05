@@ -1,15 +1,19 @@
 # http://mathjs.org/
 properties:
     name: bounds
-    
     width: 1 in
     height: 1 in
     # zoom: .25
+constants:
+    table_height: 2
+
 
 children:
     - rectangle:
         properties:
             radius: .25 in
+	    height: table_height
+
     - ellipse:
         properties:
             name: number_one
