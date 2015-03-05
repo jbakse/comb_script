@@ -1,0 +1,7 @@
+properties:
+    unit: in
+children:
+    - rectangle:
+        properties:
+            width: 1 in + 25.4 mm
+            height: 2 feet / 12
