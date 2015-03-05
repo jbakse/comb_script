@@ -16,11 +16,16 @@
 	
 # Preview
 ---	Let user Pan
+	
 	+--- prevent sticky mouse pan
 	+--- prevent text selection during pan
 
 ---	Let user Zoom
-	--- tool bar magnifying glass?
+	---- scroll wheel zoom
+	---- keyboard command zoom
+	---- tool bar magnifying glass?
+	---- option key maginfying glass cursor?
+	---- zoom aware pan
 
 +----	Don't screw up pan on code changes
 
@@ -40,10 +45,20 @@
 +-----	Warn on navigation away from dirty file (prompt for sav)
 
 # Math Expression support
----	Possible Library: http://mathjs.org/docs/expressions/customization.html
-+---	Dimension Units
----	Access Parent Bounds (move evaluation to context, parse in region also for validation?, change the 'type' in the language files, should we rename/limit available variables to expressions)
----	support percents
+	---	Possible Library: http://mathjs.org/docs/expressions/customization.html
+	+---	Dimension Units
+	---	Access Parent Bounds 
+	+--	move evaluation to build/preview
+	+--	parse in region also for validation?
+	+--	(no)change the 'type' in the language files
+	+--	should we rename/limit available variables to expressions)
+	----	Make Examples + Document
+		- units, simple math, parent bound variables
+		- Mathjs
+	----	User provided variables: define in document only, or at any node, cascade and override? probably
+	----	Dry Code :(and maybe consider resolving contexts during inital load/parse instead of draw/preview (this will eliminate redundancy))
+
+--	support percents
 +---	Basic Maths
 +---	Use document units
 
