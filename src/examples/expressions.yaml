@@ -1,16 +1,23 @@
 # http://mathjs.org/
 properties:
     name: bounds
-    unit: mm
+    
     width: 100
-    height: 50
-    zoom: .25
+    height: 1 in
+    # zoom: .25
 
 children:
     - ellipse:
         properties:
-
+            name: number_one
             width: parent_height
-            height: parent_height * .5
+            height: parent_height * .
+            left: parent_right
+            # height: 2cm * 1.5
+    - ellipse:
+        properties:
+            name: number_two
+            width: parent_height
+            height: parent_height * .
             left: parent_right
             # height: 2cm * 1.5

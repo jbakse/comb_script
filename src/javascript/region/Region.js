@@ -73,9 +73,7 @@ Region.prototype.loadData = function(_data) {
 		this.editorProperties = _.clone(_data.editor_properties);
 	}
 
-	// if (typeof _data.properties === "object" && _data.properties !== null) {
 	this.loadProperties(_data.properties);
-	// }
 
 	if (typeof _data.children === "object" && _data.children !== null) {
 		this.loadChildren(_data.children);
@@ -98,77 +96,78 @@ Region.prototype.getPropertyDefinitions = function() {
 	return definitions;
 };
 
+
+function logPropertyError(region, property, message, details) {
+	var m = region.toString() + "<br/>";
+	if (property) {
+		m += property + ": ";
+	}
+	m += message + "<br/>";
+	if (details) {
+		m += details;
+	}
+	log.appendWarning(m);
+}
+
 Region.prototype.loadProperties = function(_properties) {
 
 	var self = this;
 
 	var definitions = this.getPropertyDefinitions();
 
-
-	// Build message prefix
-	// todo factor this out
-	var messagePrefix = this.type + ": ";
-	if (this.editorProperties.firstLine) {
-		messagePrefix = "[Line " + this.editorProperties.firstLine + " " + this.type + "] ";
-	}
-
-
 	if (typeof _properties === 'undefined') {
 		_properties = {};
 	}
+
 	if (typeof _properties !== 'object') {
-		log.appendWarning(messagePrefix + "Properties should be a key/value map. " +
-			"<br />Received " + typeof _properties + ".");
+		logPropertyError(self, null, "properties should be a key/value map", "received " + typeof _properties);
 		_properties = {};
 	}
 
-
-
+	////////////////////////////////////////////////////////////////////
 	// Validate and import provided properties.
+
 	_(_properties).each(function(pValue, pKey) {
 		var def = _(definitions).find(function(_def) {
 			return _def.keyword === pKey;
 		});
 
+		// property known
 		if (!def) {
-			log.appendWarning(messagePrefix + "Unknown property: " + pKey);
+			logPropertyError(self, pKey, "unrecognized property");
 			return;
 		}
 
 		var expectedType = def.type;
 
-		// use mathjs to convert expressions to a number (cast)
-		// just to see if the expression is valid and report errors
-		if (typeof pValue == "string" && def.type == "number" && pValue !== '') {
-			
-			try {
 
+		// numbers can be numbers or math expressions, use mathjs to validate expressions are legal
+		if (def.type == "number" && typeof pValue == "string") {
+			try {
 				var converted = math.eval(pValue, new Context().scope());
-				if (typeof converted == "object") {
-					converted = converted.toNumber(self.root.properties.unit);
-				}
 				expectedType = "string";
 			}
 			catch (e) {
-				log.appendError(messagePrefix + "Unable to parse expression: " + pValue);
-				if (typeof self.root.properties.unit === "undefined") {
-					log.appendError(messagePrefix + "Document `unit` must be set before other properties that use units.");
-				}
+				logPropertyError(self, pKey, "unable to parse expression", "\"" + pValue + "\"");
+				return;
 			}
 		}
 
-
+		// color variables should be objects
 		if (def.type === "color") {
+			// todo make sure correct properties are in color object
 			expectedType = "object";
 		}
 
+		// correct color type
 		if (typeof pValue !== expectedType) {
-			log.appendWarning(messagePrefix + "Incorrect type: " + pKey + "<br />Received " + typeof pValue + ". Expected " + def.type + ".");
+			logPropertyError(self, pKey, "incorrect type", "received " + typeof pValue + "; expected " + def.type);
 			return;
 		}
 
+		// value in allowed set
 		if (def.values && !_(def.values).contains(pValue)) {
-			log.appendWarning(messagePrefix + "Unrecognized value for property: " + pKey + "<br />Received \"" + pValue + "\". Expected " + def.values.join(", ") + ".");
+			logPropertyError(self, pKey, "unrecognized property value", "received \"" + pValue + "\"; expected " + def.values.join(", "));
 			return;
 		}
 
@@ -176,27 +175,32 @@ Region.prototype.loadProperties = function(_properties) {
 	});
 
 
+	////////////////////////////////////////////////////////////////////
 	// Populate defaults
 
 	_(definitions).chain()
 		.filter(function(_def) {
+			// find property definitions that have defaults
 			return _def && _def.default;
 		})
 		.each(function(_def) {
+			// use default if property not set by user
 			self.properties[_def.keyword] = self.properties[_def.keyword] || _def.default;
 		});
 
 
+	////////////////////////////////////////////////////////////////////
 	// Enforce required
+
 	_(definitions).chain()
 		.filter(function(_def) {
+			// find property definitions that have requrired set true
 			return _def && _def.required === true;
 		})
 		.each(function(_def) {
+			// warn if not set
 			if (self.properties[_def.keyword] === undefined) {
-				log.appendWarning(
-					messagePrefix + "Missing required property: " + _def.keyword
-				);
+				logPropertyError(self, _def.keyword, "missing required property");
 			}
 		});
 
@@ -261,10 +265,11 @@ Region.prototype.loadChildren = function(_childrenData) {
 Region.prototype.toString = function() {
 	var s = this.type;
 	if (this.editorProperties.firstLine) {
-		s += "(" + this.editorProperties.firstLine + ")";
+		s += "(" + (this.editorProperties.firstLine + 1) + "-" + (this.editorProperties.lastLine + 1) + ")";
 	}
-	s += ": ";
-	s += this.properties.name || "unnamed";
+	if (this.properties.name) {
+		s += " \"" + this.properties.name + "\" ";
+	}
 	return s;
 };
 
@@ -326,7 +331,7 @@ Region.prototype.evalMathProperties = function(context) {
 					log.appendError("Unable to evaluate expression: " + pValue);
 				}
 			}
-			
+
 		});
 
 };
