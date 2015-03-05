@@ -185,17 +185,17 @@ section#repeat
 section#expressions
     :markdown
         # Expressions, Units, & Constants
-        Any property with the type `number` can be replaced with an expression. Expressions can be used for: math operations, specifying units, and constants. Combscript uses the [mathjs](http://mathjs.org/) library for evaluating expressions. Expressions are evaluated using `mathjs.eval()` check out the mathjs documentation for syntaxt and available functions.
+        Any property with the type `number` will also accept an expression. Expressions can be used for math operations, specifying units, and using constants. Combscript uses the [mathjs](http://mathjs.org/) library for evaluating expressions. Check out the [mathjs expression syntax documentation](http://mathjs.org/docs/expressions/syntax.html) for details.
 
-        ## Expressions
-        The main goal of expressions is to allow simple math `4 * .7` More complex mathmatic functions can also be used `sqrt(3^2 + 4^2)`
+        ## Mathematic Expressions
+        Expressions allow mathematic expressions like `4 * .7` and `sqrt(3^2 + 4^2)`.
 
     pre.display
         include examples/expressions_simple.yaml
 
     :markdown
         ## Units
-        Units can be used to define numbers `3 inch` or calculate the product of two different units `1 inch + 2 mm` Units are also used in the document properties to define the export and default document units.
+        Units can be used when specifying dimensions `3 in`. Dimension units can be mixed in expressions: `1 inch + 2 mm`. If no unit is included when specifying a property value, the document unit will be assumed. The document unit can be set in the document properties, the default is `px`.
 
     pre.display
         include examples/units_simple.yaml

@@ -1,5 +1,5 @@
 children:
     - ellipse:
         properties:
-            width: 1 in + 25.4 mm
-            height: 4 in * .5
+            width: 50 * 3
+            height: 100 / 2

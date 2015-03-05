@@ -104,7 +104,7 @@ Region.prototype.loadConstants = function (_contstants) {
 
 	this.constants = _contstants;
 
-	console.log(this.type, this.name, this.constants);
+	// console.log(this.type, this.name, this.constants);
 };
 
 Region.prototype.getPropertyDefinitions = function() {

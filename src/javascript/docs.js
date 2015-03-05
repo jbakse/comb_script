@@ -58,15 +58,12 @@ function renderExamples() {
 		var data = Parser.parse(source);
 		if (!data) return;
 
+		data.properties.width = data.properties.width || 525;
+		data.properties.height = data.properties.height || 225;
+
 		var doc = new regionTypes.Document();
 		doc.loadData(data);
-		// console.log("doc", data, doc.properties);
-		doc.properties.left = 0;
-		doc.properties.top = 0;
-		doc.properties.width = data.properties.width || 525;
-		doc.properties.height = data.properties.height || 225;
-		doc.properties.registration = "center";
-
+		
 
 		var canvas = $("<canvas>")
 			.addClass("example")
