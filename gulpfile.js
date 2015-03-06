@@ -28,7 +28,7 @@ var comb_package = require('./package.json');
 
 var bundler = watchify(browserify('./src/javascript/main.js', watchify.args));
 bundler.transform('brfs');
-bundler.transform('deglobalify');
+// bundler.transform('deglobalify');
 bundler.on('update', bundle); // on any dep update, runs the bundler
 bundler.on('log', gutil.log); // output build logs to terminal
 

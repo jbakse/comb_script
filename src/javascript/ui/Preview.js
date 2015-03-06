@@ -1,7 +1,13 @@
 'use strict';
 
-var Mousetrap = require('../../../test_lib/mousetrap/mousetrap.js', ['Mousetrap']).Mousetrap;
-console.log("preview");
+// var Mousetrap = require('../../../test_lib/mousetrap/mousetrap.js', ['Mousetrap']).Mousetrap;
+// require('../../../test_lib/mousetrap/mousetrap-global-bind.js', ['Mousetrap']).Mousetrap;
+require('../../../test_lib/mousetrap/mousetrap.js', ['Mousetrap']);
+require('../../../test_lib/mousetrap/mousetrap-global-bind.js', ['Mousetrap']);
+/* global Mousetrap:false */
+
+console.log(Mousetrap);
+
 
 var language = require('../language.js');
 var settings = require('../Settings.js');
@@ -54,10 +60,8 @@ function Preview() {
 		}
 	);
 
-	console.log(Mousetrap);
-	Mousetrap.bind('4', function() { alert("4"); } );
-	Mousetrap.bind('command+=', function() { paper.view.zoom *= 2; return false; } );
-	Mousetrap.bind('command+-', function() { paper.view.zoom *= 0.5; return false; } );
+	Mousetrap.bindGlobal('command+=', function() { paper.view.zoom *= 2; return false; } );
+	Mousetrap.bindGlobal('command+-', function() { paper.view.zoom *= 0.5; return false; } );
 
 
 }
@@ -93,8 +97,7 @@ Preview.prototype.init = function(_element) {
 	$(window).mousemove(function(_e) {
 		if (!drag) return;
 		var thisMouse = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);
-		var zoom = paper.view.zoom || 1;
-		paper.view.scrollBy(lastMouse.subtract(thisMouse).multiply(1.0 / zoom));
+		paper.view.scrollBy(lastMouse.subtract(thisMouse).multiply(1.0 / paper.view.zoom));
 		lastMouse = thisMouse;
 	});
 
@@ -157,7 +160,7 @@ Preview.prototype.setDocument = function(_doc) {
 		paper.view.center = new paper.Point(_doc.properties.width * 0.5 * unitScale, _doc.properties.height * 0.5 * unitScale);
 	}
 
-	paper.view.zoom = _doc.properties.zoom;
+	// paper.view.zoom = _doc.properties.zoom;
 	paper.view.update();
 
 };
