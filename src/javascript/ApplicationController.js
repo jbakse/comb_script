@@ -4,8 +4,7 @@ Error.stackTraceLimit = 100;
 
 var language = require('./language.js');
 var _ = require('underscore');
-
-
+var Mousetrap = require('../../test_lib/mousetrap/mousetrap.js', ['Mousetrap']).Mousetrap;
 
 var settings = require('./Settings.js');
 var util = require('./util.js');

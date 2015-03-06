@@ -25,7 +25,7 @@ gulp.task('javascript', function() {
 		})
 		.pipe(plumber())
 		.pipe(browserify({
-			transform: ['brfs'],
+			transform: ['brfs', 'deglobalify'],
 			debug: true
 		}))
 		.pipe(gulp.dest('./build/javascript/'))

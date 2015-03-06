@@ -82,7 +82,8 @@ Preview.prototype.init = function(_element) {
 	$(window).mousemove(function(_e) {
 		if (!drag) return;
 		var thisMouse = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);
-		paper.view.scrollBy(lastMouse.subtract(thisMouse));
+		var zoom = paper.view.zoom || 1;
+		paper.view.scrollBy(lastMouse.subtract(thisMouse).multiply(1.0 / zoom));
 		lastMouse = thisMouse;
 	});
 

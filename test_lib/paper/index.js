@@ -32,7 +32,7 @@
     <meta name="selected-link" value="repo_source" data-pjax-transient>
       <meta name="google-analytics" content="UA-3769691-2">
 
-    <meta content="collector.githubapp.com" name="octolytics-host" /><meta content="collector-cdn.github.com" name="octolytics-script-host" /><meta content="github" name="octolytics-app-id" /><meta content="CC9149B2:64B5:1224AE4:54F765E7" name="octolytics-dimension-request_id" />
+    <meta content="collector.githubapp.com" name="octolytics-host" /><meta content="collector-cdn.github.com" name="octolytics-script-host" /><meta content="github" name="octolytics-app-id" /><meta content="185A59A2:4CA0:46F0965:54F91CC6" name="octolytics-dimension-request_id" />
     
     <meta content="Rails, view, files#disambiguate" name="analytics-event" />
 
@@ -41,15 +41,15 @@
 
 
     <meta content="authenticity_token" name="csrf-param" />
-<meta content="//bgnRVSHaa9CJbh+bramR2GNfs00yKyzvtBtVDOFcDfKgi6GNrz1sdObE8tT/XaCPiRo6p1J4L9qWu0DnWE8Q==" name="csrf-token" />
+<meta content="qibyfN4MDSfayOxX+KCivSXc923WSnbX8UEQXL7Oa3+qGdx6OJOSl/hZj6xD4xD/rDTw1dzZ3D+wXXLmUcOrfg==" name="csrf-token" />
 
     <link href="https://assets-cdn.github.com/assets/github-fff66249e57e12b5b264967f6a4d21f8923d59247f86c4419d1e3092660fe54b.css" media="all" rel="stylesheet" />
-    <link href="https://assets-cdn.github.com/assets/github2-27099ff875724b3da49fac6911968f783aa96ed08970c77185d963ce6c21af75.css" media="all" rel="stylesheet" />
+    <link href="https://assets-cdn.github.com/assets/github2-ade0148a562b52311cf36a8e5f019126eb5ef7054bf2a0463ea00c536a358d33.css" media="all" rel="stylesheet" />
     
     
 
 
-    <meta http-equiv="x-pjax-version" content="ed74a93e66dba560c5d3a29550cff6ac">
+    <meta http-equiv="x-pjax-version" content="35de4da0a01f3d9a09076e58a47144e5">
 
       
   <meta name="description" content="paper.js - The Swiss Army Knife of Vector Graphics Scripting – Scriptographer ported to JavaScript and the browser, using HTML5 Canvas. Created by @lehni &amp; @puckey">
@@ -136,7 +136,7 @@
     Watch
   </a>
   <a class="social-count" href="/paperjs/paper.js/watchers">
-    273
+    275
   </a>
 
 
@@ -151,7 +151,7 @@
   </a>
 
     <a class="social-count js-social-count" href="/paperjs/paper.js/stargazers">
-      4,785
+      4,793
     </a>
 
   </li>
@@ -164,7 +164,7 @@
         Fork
       </a>
       <a href="/paperjs/paper.js/network" class="social-count">
-        489
+        488
       </a>
     </li>
 </ul>
@@ -1413,21 +1413,20 @@ If you are fixing a ticket, a convenient way to name the branch is to use the UR
       <li><a href="https://developer.github.com" data-ga-click="Footer, go to api, text:api">API</a></li>
       <li><a href="http://training.github.com" data-ga-click="Footer, go to training, text:training">Training</a></li>
       <li><a href="http://shop.github.com" data-ga-click="Footer, go to shop, text:shop">Shop</a></li>
-        <li><a href="/blog" data-ga-click="Footer, go to blog, text:blog">Blog</a></li>
-        <li><a href="/about" data-ga-click="Footer, go to about, text:about">About</a></li>
+        <li><a href="https://github.com/blog" data-ga-click="Footer, go to blog, text:blog">Blog</a></li>
+        <li><a href="https://github.com/about" data-ga-click="Footer, go to about, text:about">About</a></li>
 
     </ul>
 
-    <a href="/" aria-label="Homepage">
+    <a href="https://github.com" arial-label="Homepage">
       <span class="mega-octicon octicon-mark-github" title="GitHub"></span>
-    </a>
-
+</a>
     <ul class="site-footer-links">
-      <li>&copy; 2015 <span title="0.05483s from github-fe120-cp1-prd.iad.github.net">GitHub</span>, Inc.</li>
-        <li><a href="/site/terms" data-ga-click="Footer, go to terms, text:terms">Terms</a></li>
-        <li><a href="/site/privacy" data-ga-click="Footer, go to privacy, text:privacy">Privacy</a></li>
-        <li><a href="/security" data-ga-click="Footer, go to security, text:security">Security</a></li>
-        <li><a href="/contact" data-ga-click="Footer, go to contact, text:contact">Contact</a></li>
+      <li>&copy; 2015 <span title="0.04085s from github-fe120-cp1-prd.iad.github.net">GitHub</span>, Inc.</li>
+        <li><a href="https://github.com/site/terms" data-ga-click="Footer, go to terms, text:terms">Terms</a></li>
+        <li><a href="https://github.com/site/privacy" data-ga-click="Footer, go to privacy, text:privacy">Privacy</a></li>
+        <li><a href="https://github.com/security" data-ga-click="Footer, go to security, text:security">Security</a></li>
+        <li><a href="https://github.com/contact" data-ga-click="Footer, go to contact, text:contact">Contact</a></li>
     </ul>
   </div>
 </div>

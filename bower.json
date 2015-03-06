@@ -21,7 +21,8 @@
     "paper": "https://github.com/paperjs/paper.js",
     "split-pane": "~0.4.0",
     "underscore": "~1.8.2",
-    "mathjs": "~1.4.0"
+    "mathjs": "~1.4.0",
+    "mousetrap": "~1.4.6"
   },
   "install": {
     "path": "test_lib"
