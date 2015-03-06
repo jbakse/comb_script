@@ -49,6 +49,7 @@ function Preview() {
 				_state = !self.exportLayer.visible;
 			}
 			self.exportLayer.visible = _state;
+
 			paper.view.update();
 		}
 	);

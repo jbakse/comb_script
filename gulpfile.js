@@ -35,7 +35,11 @@ bundler.on('log', gutil.log); // output build logs to terminal
 function bundle() {
   return bundler.bundle()
     // log errors if they happen
-    .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+    // .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+
+    .on('error', function(e) { 
+    	gutil.log(gutil.colors.red("Browserify Error\n"), "Line:", e.loc.line, "\n", "File:", e.filename);
+    })
     .pipe(source('bundle.js'))
     // optional, remove if you dont want sourcemaps
       .pipe(buffer())
