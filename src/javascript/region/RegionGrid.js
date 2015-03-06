@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('underscore');
+var _ = require('underscore/underscore.js');
 var Context = require('../Context.js');
 var Region = require('./Region.js');
 

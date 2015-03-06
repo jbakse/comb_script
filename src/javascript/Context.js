@@ -1,6 +1,5 @@
 "use strict";
 
-var math = require('../../lib/mathjs/math.min.js');
 
 module.exports = Context;
 

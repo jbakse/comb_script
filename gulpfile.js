@@ -1,32 +1,34 @@
 'use strict';
 
-// Include Gulp
 var gulp = require('gulp');
 
 var gutil = require('gulp-util');
 var sourcemaps = require('gulp-sourcemaps');
+var rename = require('gulp-rename');
+var insert = require('gulp-insert');
+var concat = require('gulp-concat');
+var build = require('gulp-build');
+var plumber = require('gulp-plumber');
+var livereload = require('gulp-livereload');
+
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
+
 var watchify = require('watchify');
 var browserify = require('browserify');
 
-var rename = require('gulp-rename');
-var plumber = require('gulp-plumber');
-var livereload = require('gulp-livereload');
 var less = require('gulp-less');
 var yaml = require('gulp-yml');
-var concat = require('gulp-concat');
-var insert = require('gulp-insert');
-// var browserify = require('gulp-browserify');
 var jade = require('gulp-jade');
-var build = require('gulp-build');
-
 
 var comb_package = require('./package.json');
 
 
 
-var bundler = watchify(browserify('./src/javascript/main.js', watchify.args));
+
+var args = watchify.args;
+args.paths = ['new_lib'];
+var bundler = watchify(browserify('./src/javascript/main.js', args));
 bundler.transform('brfs');
 // bundler.transform('deglobalify');
 bundler.on('update', bundle); // on any dep update, runs the bundler
@@ -38,7 +40,7 @@ function bundle() {
     // .on('error', gutil.log.bind(gutil, 'Browserify Error'))
 
     .on('error', function(e) { 
-    	gutil.log(gutil.colors.red("Browserify Error\n"), "Line:", e.loc.line, "\n", "File:", e.filename);
+	gutil.log(gutil.colors.red("Browserify Error\n"), "Line:", e.loc && e.loc.line, "\n", "File:", e.filename, "\n", e);
     })
     .pipe(source('bundle.js'))
     // optional, remove if you dont want sourcemaps
@@ -46,7 +48,7 @@ function bundle() {
       .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
       .pipe(sourcemaps.write()) // writes .map file
     //
-    .pipe(rename("main.js"))
+    .pipe(rename({basename: "main"}))
     .pipe(gulp.dest('./build/javascript/'))
     .pipe(livereload());
 }
@@ -56,21 +58,6 @@ gulp.task('browserify', bundle); // so you can run `gulp js` to build the file
 
 
 
-// gulp.task('javascript', function() {
-// 	return gulp
-// 		.src(['./src/javascript/main.js', './src/javascript/docs.js'], {
-// 			read: false
-// 		})
-// 		.pipe(plumber())
-// 		.pipe(browserify({
-// 			transform: ['brfs', 'deglobalify'],
-// 			debug: true
-// 		}))
-// 		.pipe(gulp.dest('./build/javascript/'))
-		
-// 		.pipe(livereload())
-// 		;
-// });
 
 gulp.task('jade', function() {
 	return gulp.src(['./src/docs.jade']) //, './src/style/main.less'
@@ -102,7 +89,7 @@ gulp.task('html', function() {
 
 
 gulp.task('lib', function() {
-	return gulp.src('./lib/**')
+	return gulp.src('./new_lib/**')
 		.pipe(gulp.dest('./build/lib/'))
 		.pipe(livereload())
 		;
@@ -172,3 +159,22 @@ gulp.task('watch', function() {
 // Default Task
 gulp.task('default', ['browserify', 'less', 'language', 'lib', 'test_lib', 'html', 'jade', 'images', 'examples', 'watch']);
 
+
+
+
+// var browserify = require('gulp-browserify');
+// gulp.task('javascript', function() {
+// 	return gulp
+// 		.src(['./src/javascript/main.js', './src/javascript/docs.js'], {
+// 			read: false
+// 		})
+// 		.pipe(plumber())
+// 		.pipe(browserify({
+// 			transform: ['brfs', 'deglobalify'],
+// 			debug: true
+// 		}))
+// 		.pipe(gulp.dest('./build/javascript/'))
+
+// 		.pipe(livereload())
+// 		;
+// });

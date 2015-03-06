@@ -2,9 +2,10 @@
 /* global gapi:false */
 /* global google:false */
 
-var log = require('./ui/Log.js').sharedInstance();
 
-var _ = require('underscore');
+var _ = require('underscore/underscore.js');
+
+var log = require('./ui/Log.js').sharedInstance();
 
 var DEVELOPER_KEY = 'AIzaSyAaps9tbXrXH7Yhk94HnHv7EmVaz8Hxmjo';
 var CLIENT_ID = '1055926372216-75g9p5ttbsb7vnu18rvfn46n13llbfsn.apps.googleusercontent.com';

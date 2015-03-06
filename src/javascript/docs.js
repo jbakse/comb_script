@@ -1,5 +1,5 @@
 require('./jquery_util.js');
-var _ = require('underscore');
+var _ = require('underscore/underscore.js');
 var Mustache = require('mustache');
 var language = require('./language.js');
 var Preview = require('./ui/Preview.js');

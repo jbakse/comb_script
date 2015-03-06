@@ -1,7 +1,7 @@
 'use strict';
 
 /* global ace */
-var _ = require('underscore');
+var _ = require('underscore/underscore.js');
 var Range = ace.require('ace/range').Range;
 
 module.exports = Editor;

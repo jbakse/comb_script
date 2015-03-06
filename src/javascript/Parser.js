@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('underscore');
+var _ = require('underscore/underscore.js');
 var jsYAML = require('js-yaml');
 var log = require('./ui/Log.js').sharedInstance();
 var language = require('./language.js');

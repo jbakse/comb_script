@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('underscore');
+var _ = require('underscore/underscore.js');
 var Region = require('./Region.js');
 
 module.exports = Rectangle;

@@ -1,6 +1,8 @@
 'use strict';
 
-var _ = require('underscore');
+var _ = require('underscore/underscore.js');
+
+
 var language = require('../language.js');
 
 module.exports = Inspector;

@@ -1,6 +1,6 @@
+
+
 var topics = {};
-
-
 jQuery.Topic = function( id ) {
     var callbacks,
         topic = id && topics[ id ];

@@ -1,11 +1,12 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Todo
 
-
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Bugs
 
 +-----	all those google drive errors in console!
+----- SOURCEMAPS
+----- NEW "server" SOLUTION
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
@@ -21,11 +22,11 @@
 	+--- prevent text selection during pan
 
 ---	Let user Zoom
-	---- scroll wheel zoom
-	---- keyboard command zoom
-	---- tool bar magnifying glass?
-	---- option key maginfying glass cursor?
-	---- zoom aware pan
+	--- scroll wheel zoom
+	+---- keyboard command zoom
+	--- tool bar magnifying glass?
+	--- option key maginfying glass cursor?
+	+---- zoom aware pan
 
 +----	Don't screw up pan on code changes
 

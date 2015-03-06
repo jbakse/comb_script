@@ -1,8 +1,9 @@
 'use strict';
 
 
-var _ = require('underscore');
-var math = require('../../../lib/mathjs/math.min.js');
+var _ = require('underscore/underscore.js');
+var math = require('mathjs/math.min.js');
+
 //insert 'px' unit so math js can covert to/from px
 math.type.Unit.UNITS.px = {
 	name: 'px',

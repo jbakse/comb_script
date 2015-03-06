@@ -1,17 +1,13 @@
 'use strict';
 
-// var Mousetrap = require('../../../test_lib/mousetrap/mousetrap.js', ['Mousetrap']).Mousetrap;
-// require('../../../test_lib/mousetrap/mousetrap-global-bind.js', ['Mousetrap']).Mousetrap;
-require('../../../test_lib/mousetrap/mousetrap.js', ['Mousetrap']);
-require('../../../test_lib/mousetrap/mousetrap-global-bind.js', ['Mousetrap']);
-/* global Mousetrap:false */
 
-console.log(Mousetrap);
+
+
 
 
 var language = require('../language.js');
 var settings = require('../Settings.js');
-var _ = require('underscore');
+var _ = require('underscore/underscore.js');
 
 module.exports = Preview;
 

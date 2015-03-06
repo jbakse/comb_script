@@ -3,8 +3,8 @@
 Error.stackTraceLimit = 100;
 
 var language = require('./language.js');
-var _ = require('underscore');
-// var Mousetrap = require('../../test_lib/mousetrap/mousetrap.js', ['Mousetrap']).Mousetrap;
+var _ = require('underscore/underscore.js');
+
 
 var settings = require('./Settings.js');
 var util = require('./util.js');
@@ -29,7 +29,7 @@ module.exports = ApplicationController;
 
 
 function ApplicationController() {
-	
+	console.log("init application controller");
 	this.doc = null;
 	this.selectedRegions = [];
 	this.keySelection = null;

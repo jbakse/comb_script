@@ -1,5 +1,6 @@
 'use strict';
-var _ = require('underscore');
+
+var _ = require('underscore/underscore.js');
 
 module.exports.fileURL = "./examples/expressions.yaml";
 // module.exports.fileURL = "../yaml/tricky_grid.yaml";

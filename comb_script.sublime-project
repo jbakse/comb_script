@@ -12,6 +12,10 @@
 			],
 			"follow_symlinks": true,
 			"path": "."
+		},
+		{
+			"follow_symlinks": true,
+			"path": "build/javascript"
 		}
 	]
 }
