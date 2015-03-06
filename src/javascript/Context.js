@@ -119,29 +119,29 @@ Context.prototype.centerRegistration = function() {
 
 function deriveBound(parentBound, parentOppositeBound, positionRelative, boundRelative, oppositePositionRelative, oppositeBoundRelative, dimension, direction) {
 
-	if (typeof positionRelative === "number") {
+	if (typeof positionRelative === "number") { //top
 		return positionRelative;
 	}
 
-	else if (typeof boundRelative === "number") {
+	else if (typeof boundRelative === "number") { //margin_top
 		return parentBound + boundRelative * -direction;
 	}
 
-	else if (typeof oppositePositionRelative === "number" && typeof dimension === "number") {
+	else if (typeof oppositePositionRelative === "number" && typeof dimension === "number") { //bottom + height
 		return oppositePositionRelative + dimension * direction;
 	}
 
-	else if (typeof oppositeBoundRelative === "number" && typeof dimension === "number") {
+	else if (typeof oppositeBoundRelative === "number" && typeof dimension === "number") { //margin_bottom + height
 		return (parentOppositeBound + oppositeBoundRelative * direction) + dimension * direction;
 	}
 
-	else if (typeof dimension === "number") {
+	else if (typeof dimension === "number") { // height
 		return (dimension * 0.5 * direction);
 	}
 
-	else if (typeof oppositePositionRelative === "number") {
-		return oppositePositionRelative;
-	}
+	// else if (typeof oppositePositionRelative === "number") { // bottom
+	// 	return oppositePositionRelative;
+	// }
 
 	else {
 		return parentBound;

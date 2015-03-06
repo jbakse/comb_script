@@ -75,10 +75,7 @@ Region.prototype.loadData = function(_data) {
 
 	this.buildContext();
 
-	if (typeof _data.children === "object" && _data.children !== null) {
-		this.loadChildren(_data.children);
-	}
-
+	this.loadChildren(_data.children);
 
 	return this;
 };
@@ -310,11 +307,20 @@ Region.prototype.buildContext = function() {
 };
 
 Region.prototype.loadChildren = function(_childrenData) {
+	if (_childrenData === null || typeof _childrenData === "undefined") {
+		return;
+	}
+
 	if (!(_childrenData instanceof Array)) {
 		log.appendWarning("Children should be an array. Prepend child nodes with a dash and space.");
 		return;
 	}
-	_.each(_childrenData, function loadChild(_childData) {
+
+	_.each(_childrenData, this.loadChild, this);
+};
+
+Region.prototype.loadChild = function(_childData) {
+
 		var childKey = _.keys(_childData)[0];
 		var childData = _.values(_childData)[0];
 		if (typeof childKey === "undefined" || typeof childData === "undefined") {
@@ -357,8 +363,9 @@ Region.prototype.loadChildren = function(_childrenData) {
 			}
 		}
 
-	}, this);
+
 };
+
 
 
 //////////////////////////////////////////////////////////////////////

@@ -3,6 +3,7 @@
 var _ = require('underscore/underscore.js');
 var Context = require('../Context.js');
 var Region = require('./Region.js');
+var log = require('../ui/Log.js').sharedInstance();
 
 module.exports = RegionGrid;
 
@@ -20,51 +21,70 @@ RegionGrid.prototype.constructor = RegionGrid;
 
 
 
-RegionGrid.prototype.preview = function(_parentContext) {
-	var context = _parentContext.deriveContext(this.properties);
-
-	this.previewBoundsGroup = new paper.Group();
-	this.previewPositionGroup = new paper.Group();
-
-	this.previewBoundsGroup.onMouseEnter = _.bind(this.onMouseEnter, this);
-	this.previewBoundsGroup.onMouseLeave = _.bind(this.onMouseLeave, this);
-	this.previewBoundsGroup.onClick = _.bind(this.onClick, this);
-
-
-	if (!this.specifiedChildren) {
-		this.generateChildren(context);
-	}
-	_.each(this.children, function(child) {
-		child.preview(child.context);
-	}, this);
-
-	this.setStyle("default");
-};
-
-RegionGrid.prototype.build = function(_parentContext) {
-	var context = _parentContext.deriveContext(this.properties);
-
-
-
-	if (!this.specifiedChildren) {
-		this.generateChildren(context);
+RegionGrid.prototype.loadChildren = function(_childrenData) {
+	console.log("rg lc");
+	if (_childrenData === null || typeof _childrenData === "undefined") {
+		return;
 	}
 
-	var childPaths = [];
-	_.each(this.children, function(child) {
-		childPaths = childPaths.concat(child.buildChildren(child.context));
-	}, this);
+	if (!(_childrenData instanceof Array)) {
+		log.appendWarning("Children should be an array. Prepend child nodes with a dash and space.");
+		return;
+	}
 
+	_.each(_childrenData, this.loadChild, this);
+	this.generateChildren(this.context);
 
-
-	// var gridContexts = this.generateContexts(context);
-	// var childPaths = [];
-	// _.each(gridContexts, function(gridContext) {
-	// 	childPaths = childPaths.concat(this.buildChildren(gridContext));
-	// }, this);
-
-	return childPaths;
 };
+
+
+
+
+// RegionGrid.prototype.preview = function(_parentContext) {
+// 	var context = _parentContext.deriveContext(this.properties);
+
+// 	this.previewBoundsGroup = new paper.Group();
+// 	this.previewPositionGroup = new paper.Group();
+
+// 	this.previewBoundsGroup.onMouseEnter = _.bind(this.onMouseEnter, this);
+// 	this.previewBoundsGroup.onMouseLeave = _.bind(this.onMouseLeave, this);
+// 	this.previewBoundsGroup.onClick = _.bind(this.onClick, this);
+
+
+// 	if (!this.specifiedChildren) {
+// 		this.generateChildren(context);
+// 	}
+// 	_.each(this.children, function(child) {
+// 		child.preview(child.context);
+// 	}, this);
+
+// 	this.setStyle("default");
+// };
+
+// RegionGrid.prototype.build = function(_parentContext) {
+// 	var context = _parentContext.deriveContext(this.properties);
+
+
+
+// 	if (!this.specifiedChildren) {
+// 		this.generateChildren(context);
+// 	}
+
+// 	var childPaths = [];
+// 	_.each(this.children, function(child) {
+// 		childPaths = childPaths.concat(child.buildChildren(child.context));
+// 	}, this);
+
+
+
+// 	// var gridContexts = this.generateContexts(context);
+// 	// var childPaths = [];
+// 	// _.each(gridContexts, function(gridContext) {
+// 	// 	childPaths = childPaths.concat(this.buildChildren(gridContext));
+// 	// }, this);
+
+// 	return childPaths;
+// };
 
 RegionGrid.prototype.generateChildren = function(_context) {
 	this.specifiedChildren = this.children;
@@ -78,13 +98,17 @@ RegionGrid.prototype.generateChildren = function(_context) {
 		gridChild.parent = this;
 		gridChild.editorProperties = this.editorProperties;
 		gridChild.properties.name = this.properties.name + "_" + i++;
+		gridChild.context = gridContext;
+
+
+		// add proxy children to generated region
 		_(this.specifiedChildren).each(function(_child) {
 			var proxy = _child.proxy();
 			proxy.parent = gridChild;
+			proxy.buildContext();
 			gridChild.children.push(proxy);
 		}, this);
 
-		gridChild.context = gridContext;
 		this.children.push(gridChild);
 		// gridChild.preview(gridContext);
 	}, this);
@@ -140,6 +164,7 @@ RegionGrid.prototype.generateContexts = function(_gridContext) {
 				right: x+width,
 				registration: this.properties.registration
 			});
+
 
 			generatedContexts.push(gridContext);
 		}
