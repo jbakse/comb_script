@@ -6,6 +6,7 @@
   "author": "Justin Bakse",
   "devDependencies": {
     "brfs": "^1.1.2",
+    "browserify": "9.0.2",
     "coffeeify": "^0.6.0",
     "deglobalify": "^0.2.0",
     "gulp": "^3.8.1",
@@ -18,13 +19,17 @@
     "gulp-livereload": "^2.1.0",
     "gulp-plumber": "~0.5.6",
     "gulp-rename": "^1.2.0",
+    "gulp-sourcemaps": "^1.5.0",
     "gulp-util": "^2.2.19",
     "gulp-yml": "^0.1.1",
     "http-server": "^0.7.5",
     "js-yaml": "^3.0.2",
     "marked": "^0.3.2",
     "mustache": "^0.8.2",
-    "underscore": "^1.6.0"
+    "underscore": "^1.6.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.0.0",
+    "watchify": "^2.4.0"
   },
   "dependencies": {},
   "repository": {

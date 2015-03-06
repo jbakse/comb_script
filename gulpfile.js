@@ -3,6 +3,13 @@
 // Include Gulp
 var gulp = require('gulp');
 
+var gutil = require('gulp-util');
+var sourcemaps = require('gulp-sourcemaps');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+var watchify = require('watchify');
+var browserify = require('browserify');
+
 var rename = require('gulp-rename');
 var plumber = require('gulp-plumber');
 var livereload = require('gulp-livereload');
@@ -10,7 +17,7 @@ var less = require('gulp-less');
 var yaml = require('gulp-yml');
 var concat = require('gulp-concat');
 var insert = require('gulp-insert');
-var browserify = require('gulp-browserify');
+// var browserify = require('gulp-browserify');
 var jade = require('gulp-jade');
 var build = require('gulp-build');
 
@@ -18,21 +25,48 @@ var build = require('gulp-build');
 var comb_package = require('./package.json');
 
 
-gulp.task('javascript', function() {
-	return gulp
-		.src(['./src/javascript/main.js', './src/javascript/docs.js'], {
-			read: false
-		})
-		.pipe(plumber())
-		.pipe(browserify({
-			transform: ['brfs', 'deglobalify'],
-			debug: true
-		}))
-		.pipe(gulp.dest('./build/javascript/'))
+
+var bundler = watchify(browserify('./src/javascript/main.js', watchify.args));
+bundler.transform('brfs');
+bundler.transform('deglobalify');
+bundler.on('update', bundle); // on any dep update, runs the bundler
+bundler.on('log', gutil.log); // output build logs to terminal
+
+function bundle() {
+  return bundler.bundle()
+    // log errors if they happen
+    .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+    .pipe(source('bundle.js'))
+    // optional, remove if you dont want sourcemaps
+      .pipe(buffer())
+      .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
+      .pipe(sourcemaps.write()) // writes .map file
+    //
+    .pipe(rename("main.js"))
+    .pipe(gulp.dest('./build/javascript/'))
+    .pipe(livereload());
+}
+
+gulp.task('browserify', bundle); // so you can run `gulp js` to build the file
+
+
+
+
+// gulp.task('javascript', function() {
+// 	return gulp
+// 		.src(['./src/javascript/main.js', './src/javascript/docs.js'], {
+// 			read: false
+// 		})
+// 		.pipe(plumber())
+// 		.pipe(browserify({
+// 			transform: ['brfs', 'deglobalify'],
+// 			debug: true
+// 		}))
+// 		.pipe(gulp.dest('./build/javascript/'))
 		
-		.pipe(livereload())
-		;
-});
+// 		.pipe(livereload())
+// 		;
+// });
 
 gulp.task('jade', function() {
 	return gulp.src(['./src/docs.jade']) //, './src/style/main.less'
@@ -112,7 +146,7 @@ gulp.task('language', function() {
 //Watch Files For Changes
 gulp.task('watch', function() {
 
-	gulp.watch('./src/javascript/**/*.js', ['javascript']);
+	// gulp.watch('./src/javascript/**/*.js', ['javascript']);
 	gulp.watch('./src/style/*.less', ['less']);
 	gulp.watch('./src/language/**/*.yaml', ['language']);
 	gulp.watch('./src/**/*.html', ['html']);
@@ -132,5 +166,5 @@ gulp.task('watch', function() {
 
 
 // Default Task
-gulp.task('default', ['javascript', 'less', 'language', 'lib', 'test_lib', 'html', 'jade', 'images', 'examples', 'watch']);
+gulp.task('default', ['browserify', 'less', 'language', 'lib', 'test_lib', 'html', 'jade', 'images', 'examples', 'watch']);
 

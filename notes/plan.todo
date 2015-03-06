@@ -30,7 +30,7 @@
 +----	Don't screw up pan on code changes
 
 -	Isolation Mode? 
--	Auto Pan and Zoom on code under text cursor?
+---	Auto Pan and Zoom on code under text cursor?
 -	Ghost unselected regions?
 --	Click on covered items: right now a large box over small box prevents selection of small box
 

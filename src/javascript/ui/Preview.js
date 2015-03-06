@@ -1,5 +1,8 @@
 'use strict';
 
+var Mousetrap = require('../../../test_lib/mousetrap/mousetrap.js', ['Mousetrap']).Mousetrap;
+console.log("preview");
+
 var language = require('../language.js');
 var settings = require('../Settings.js');
 var _ = require('underscore');
@@ -19,6 +22,7 @@ function Preview() {
 
 
 	var self = this;
+
 	$.Topic("UI/command/toggleViewPreview").subscribe(
 		function(_state) {
 			if (_state === undefined) {
@@ -28,6 +32,7 @@ function Preview() {
 			paper.view.update();
 		}
 	);
+
 	$.Topic("UI/command/toggleViewBuild").subscribe(
 		function(_state) {
 			if (_state === undefined) {
@@ -37,6 +42,7 @@ function Preview() {
 			paper.view.update();
 		}
 	);
+
 	$.Topic("UI/command/toggleViewExport").subscribe(
 		function(_state) {
 			if (_state === undefined) {
@@ -47,6 +53,10 @@ function Preview() {
 		}
 	);
 
+	console.log(Mousetrap);
+	Mousetrap.bind('4', function() { alert("4"); } );
+	Mousetrap.bind('command+=', function() { paper.view.zoom *= 2; return false; } );
+	Mousetrap.bind('command+-', function() { paper.view.zoom *= 0.5; return false; } );
 
 
 }
