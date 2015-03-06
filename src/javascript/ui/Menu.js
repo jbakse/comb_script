@@ -38,7 +38,7 @@ Menu.prototype.addClickCommand = function(_element, _command) {
 
 Menu.prototype.addToggleCommand = function(_element, _command) {
 	var state = !$(_element).hasClass("off");
-	$(_element).append('<img class="strike-through" src="images/menu_icons/icon_off.svg">');
+	// $(_element).append('<img class="strike-through" src="images/menu_icons/icon_off.svg">');
 	$(_element).click(
 		function() {
 			state = !state;
