@@ -123,7 +123,7 @@ div
 
 #welcome {
 	position: absolute;
-	top: 0;	
+	top: @menu-height;
 }
 
 
@@ -303,7 +303,7 @@ body
 		background-color: @menu-dropcolor;
 		display: inline-block;
 		// border: 1px solid black;
-		border-left: none;
+		// border-left: none;
 
 	}
 
@@ -344,11 +344,14 @@ body
 		font-weight: bold;
 		// color: red;
 	}
+	a{
+		text-decoration: none;
+	}
 }
 
 .example-link
 {
-	text-decoration: underline;
+	// text-decoration: underline;
 	cursor: pointer;
 }
 

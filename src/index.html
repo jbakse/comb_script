@@ -22,128 +22,12 @@
 	<script type="text/javascript" src="https://apis.google.com/js/client.js?onload=gapiCallback"></script>
 </head>
 <body>
-	<!--
-	<div id="menu">
-		<div id="button-svg-export" class = "menu-text-button button">Export</div>
-	-->
 
-		<!-- <div class = "menu-button button disabled">
-			<div class="icon">
-				<img src="images/menu_icons/icon_prefs.svg"/>
-			</div>
-		</div>
-		<div class = "menu-button button disabled">
-			<div class="icon">
-				<img src="images/menu_icons/icon_zoom_plus.svg"/>
-
-			<img src="images/menu_icons/icon_zoom_magnify.svg"/>
-			<img src="images/menu_icons/icon_zoom_minus.svg"/>
-			</div>
-		</div>
-		<div class = "menu-button button disabled">
-			<div class="icon">
-				<img src="images/menu_icons/icon_ruler.svg"/>
-			</div>
-		</div>
-		<div class = "menu-button button disabled">
-			<div class="icon">
-				<span class="label">Grid</span>
-				<img src="images/menu_icons/icon_grid.svg"/>
-			</div>
-		</div>
-		<div class = "menu-button button disabled">
-			<div class="icon">
-				<span class="label">Center</span>
-				<img src="images/menu_icons/icon_registration.svg"/>
-			</div>
-		</div> -->
-
-
-		<!-- <div class = "menu-button button">
-			<div class="icon" id="button-view-frame">
-				<span class="label">Frame</span><img src="images/menu_icons/icon_view_frame.svg"/>
-			</div>
-		</div>
-
-		<div class = "menu-button button">
-			<div class="icon" id="button-view-build">
-				<span class="label">Build</span><img src="images/menu_icons/icon_view_build.svg"/>
-			</div>
-		</div>
-
-		<div class = "menu-button button">
-			<div class="icon of" id="button-view-export">
-				<span class="label">Frame</span><img src="images/menu_icons/icon_view_export.svg"/>
-			</div>
-		</div> -->
-
-		<!--
-		<div class = "menu-button button">
-			<div class="icon">
-				<span class="label">View</span>
-				<img src="images/menu_icons/icon_view.svg"/>
-			</div>
-			<div class = "menu-popup" style="width: 245px;">
-				<ul>
-					<li id="button-view-frame" class="icon"><span class="label">Frame</span><img src="images/menu_icons/icon_view_frame.svg"/></li>
-					<li id="button-view-build" class="icon"><span class="label">Build</span><img src="images/menu_icons/icon_view_build.svg"/></li>
-					<li id="button-view-export" class="icon off"><span class="label">Export</span><img src="images/menu_icons/icon_view_export.svg"/></li>
-				</ul>
-			</div>
-		</div>
-		<div class = "menu-button button">
-			<div class="icon">
-				<span class="label">Docs</span>
-				<img src="images/menu_icons/icon_docs.svg"/>
-			</div>
-			<div class = "menu-popup list" style="width: 245px;">
-				<ul>
-					<li class = "group-title">Documentation</li>
-					<li><a href="./docs.html#introduction" target="docs">Overview</a></li>
-					<li><a href="./docs.html#Document" target="docs">API</a></li>
-
-					<li class = "group-title">Positioning</li>
-					<li class="example-link" data-example="examples/bounds.yaml">Bounds</li>
-					<li class="example-link" data-example="examples/registration.yaml">Registration</li>
-					<li class="example-link" data-example="examples/transform.yaml">Transform</li>
-
-					<li class = "group-title">Shapes</li>
-					<li class="example-link" data-example="examples/shape_types.yaml">Types</li>
-					<li class="example-link" data-example="examples/boolean.yaml">Boolean</li>
-					<li class="example-link" data-example="examples/mixed_boolean.yaml">Mixed Boolean</li>
-
-					<li class = "group-title">Misc</li>
-					<li class="example-link" data-example="examples/regiongrid.yaml">Region Grid</li>
-					<li class="example-link" data-example="examples/text.yaml">Text</li>
-					<li class="example-link" data-example="examples/variables.yaml">Variables</li>
-					<li class="example-link" data-example="examples/symbols.yaml">Symbols</li>
-
-					<li class = "group-title">Full Demos</li>
-					<li class="example-link" data-example="examples/box.yaml">Box</li>
-					<li class="example-link" data-example="examples/drawbot.yaml">Drawbot</li>
-				</ul>
-			</div>
-		</div>
-		-->
-		
-		<!--
-		<div class = "menu-button button">
-			<div class="icon">
-				<span class="label">Docs</span>
-				<a href="docs/docs.html" target="docs"><img src="images/menu_icons/icon_docs.svg"/></a>
-			</div>
-		</div>
-		-->
-		
-
-<!--
-	</div> 
-	-->
 	<div id="document-wrap">
 	<div id="document" class="split-pane fixed-left">
 		<div id="preview" class="split-pane-component">
 			<div id="menu">
-				<div class = "menu-button button">
+				<!-- <div class = "menu-button button">
 					<div class="label">File</div>
 					<div class = "menu-popup list" style="width: 120px;">
 						<ul>
@@ -154,7 +38,7 @@
 							<li id="button-file-export">Export</li>
 						</ul>
 					</div>
-				</div>
+				</div> -->
 				<div class = "menu-button button">
 					<div class="label">View</div>
 					<div class = "menu-popup list" style="width: 120px;">
@@ -200,13 +84,13 @@
 						</ul>
 					</div>
 				</div>
-				<div class="menu-button" id="zoom">
+				<!-- <div class="menu-button" id="zoom">
 					200% + -
-				</div>
+				</div> -->
 
 			</div>
 			<canvas id="paper-canvas" width="1200" height="1200"></canvas>
-			<!--<div id="welcome">This is CombScript ({{version}}), a tool for creating technical vector designs with code. CombScript is mostly an experiment at this point. If you are interested, <a href="https://github.com/jbakse/comb_script">get involved on Github</a>.</div>-->
+			<div id="welcome">This is CombScript ({{version}}), a tool for creating technical vector designs with code. CombScript is mostly an experiment at this point. If you are interested, <a href="https://github.com/jbakse/comb_script">get involved on Github</a>.</div>
 			<div id="inspector">Inspector</div>
 		</div>
 		
