@@ -6,6 +6,7 @@ var Preview = require('./ui/Preview.js');
 var regionTypes = require('./region/regionTypes.js');
 var Parser = require('./Parser.js');
 
+console.log("Hello, Docs!");
 function populateTemplates() {
 	// prepare data
 	var data = {};

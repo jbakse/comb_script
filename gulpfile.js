@@ -23,37 +23,27 @@ var jade = require('gulp-jade');
 
 var comb_package = require('./package.json');
 
-
-
-
 var args = watchify.args;
 args.paths = ['new_lib'];
-var bundler = watchify(browserify('./src/javascript/main.js', args));
+args.debug = true;
+
+var bundler = watchify(browserify("./src/javascript/main.js", args));
 bundler.transform('brfs');
-// bundler.transform('deglobalify');
 bundler.on('update', bundle); // on any dep update, runs the bundler
 bundler.on('log', gutil.log); // output build logs to terminal
 
 function bundle() {
-  return bundler.bundle()
-    // log errors if they happen
-    // .on('error', gutil.log.bind(gutil, 'Browserify Error'))
 
-    .on('error', function(e) { 
+  return bundler.bundle()
+    .on('error', function(e) {
 	gutil.log(gutil.colors.red("Browserify Error\n"), "Line:", e.loc && e.loc.line, "\n", "File:", e.filename, "\n", e);
     })
-    .pipe(source('bundle.js'))
-    // optional, remove if you dont want sourcemaps
-      .pipe(buffer())
-      .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
-      .pipe(sourcemaps.write()) // writes .map file
-    //
-    .pipe(rename({basename: "main"}))
+    .pipe(source('main.js'))
     .pipe(gulp.dest('./build/javascript/'))
     .pipe(livereload());
 }
 
-gulp.task('browserify', bundle); // so you can run `gulp js` to build the file
+gulp.task('browserify', bundle);
 
 
 

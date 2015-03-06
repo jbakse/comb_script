@@ -1,7 +1,5 @@
 'use strict';
 
-console.log("$", $);
-
 require('./jquery_util.js');
 
 var ApplicationController = require('./ApplicationController.js');

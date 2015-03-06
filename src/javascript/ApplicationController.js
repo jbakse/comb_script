@@ -29,7 +29,7 @@ module.exports = ApplicationController;
 
 
 function ApplicationController() {
-	console.log("init application controller");
+	console.log("hello, appcontroll");
 	this.doc = null;
 	this.selectedRegions = [];
 	this.keySelection = null;
@@ -46,6 +46,7 @@ function ApplicationController() {
 ApplicationController.prototype.init = function(_element) {
 
 	googleDrive.init();
+
 
 	this.preview.init($('#paper-canvas').get(0));
 	this.editor.init($('#editor-content').get(0));
