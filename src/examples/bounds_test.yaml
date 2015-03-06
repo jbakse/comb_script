@@ -6,8 +6,5 @@ properties:
 
 children:
     - ellipse:
-	properties:
-	    top: 3
-	    left: 3
-	    width: 10
-	    height: 10
+        properties:
+            top: 3

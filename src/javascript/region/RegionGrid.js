@@ -105,6 +105,7 @@ RegionGrid.prototype.generateChildren = function(_context) {
 		_(this.specifiedChildren).each(function(_child) {
 			var proxy = _child.proxy();
 			proxy.parent = gridChild;
+			proxy.properties = _(_child.properties).clone();
 			proxy.buildContext();
 			gridChild.children.push(proxy);
 		}, this);

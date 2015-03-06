@@ -291,6 +291,7 @@ Region.prototype.evalMathProperties = function(context) {
 
 Region.prototype.buildContext = function() {
 	var context;
+	console.log("bc", this);
 	if (this.parent) {
 		context = this.parent.context;
 	}

@@ -6,10 +6,12 @@ properties:
 
 children:
     - region_grid:
-	properties:
-	    columns: 5
-	    rows: 5
-	    registration: center
-	children:
-	    - ellipse:
-		properties:
+        properties:
+            columns: 5
+            rows: 5
+            registration: center
+        children:
+            - ellipse:
+                properties:
+                    # margin_top: 5
+                    top: parent_top + 5
