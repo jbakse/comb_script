@@ -90,6 +90,7 @@
 -	Vertical Line
 -	Horizontal Line
 -	Polygon as array of points
+----	Pages Plugin that creates a stack of regions and sticks each child into one. See the hassle of laying out "parts" where thier position isn't actually important.
 
 # SVG
 -	SVG Import Support
