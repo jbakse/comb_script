@@ -287,7 +287,7 @@ function saveFile() {
 
 	}
 	else {
-		console.log(currentFileInfo);
+		// console.log(currentFileInfo);
 		updateDriveFile(currentFileInfo).then(function(result) {
 
 			currentFileInfo.dirty = false;

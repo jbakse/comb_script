@@ -20,6 +20,8 @@
 +----- Proxies are getting the result of math, they are not each calculating for themselves
 ----- boolean mixed and mixed_boolean seem to be deprecated but the documentation was not updated
 
+----- mixed unit bug parent_top is a number, so you can't subtract a unit from it.  top = parent_top + 1 cm don't work
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # User facing Features
 
