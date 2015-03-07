@@ -13,7 +13,7 @@ module.exports = RegionGrid;
 function RegionGrid(_data, _parent) {
 	Region.call(this, _data, _parent);
 	this.type = "RegionGrid";
-	this.specifiedChildren = undefined;
+	this.childrenData = null;
 }
 
 RegionGrid.prototype = Object.create(Region.prototype);
@@ -22,7 +22,6 @@ RegionGrid.prototype.constructor = RegionGrid;
 
 
 RegionGrid.prototype.loadChildren = function(_childrenData) {
-	console.log("rg lc");
 	if (_childrenData === null || typeof _childrenData === "undefined") {
 		return;
 	}
@@ -32,90 +31,39 @@ RegionGrid.prototype.loadChildren = function(_childrenData) {
 		return;
 	}
 
-	_.each(_childrenData, this.loadChild, this);
-	this.generateChildren(this.context);
-
+	// _.each(_childrenData, this.loadChild, this);
+	this.childrenData = _childrenData;
+	this.generateChildren();
 };
 
 
-
-
-// RegionGrid.prototype.preview = function(_parentContext) {
-// 	var context = _parentContext.deriveContext(this.properties);
-
-// 	this.previewBoundsGroup = new paper.Group();
-// 	this.previewPositionGroup = new paper.Group();
-
-// 	this.previewBoundsGroup.onMouseEnter = _.bind(this.onMouseEnter, this);
-// 	this.previewBoundsGroup.onMouseLeave = _.bind(this.onMouseLeave, this);
-// 	this.previewBoundsGroup.onClick = _.bind(this.onClick, this);
-
-
-// 	if (!this.specifiedChildren) {
-// 		this.generateChildren(context);
-// 	}
-// 	_.each(this.children, function(child) {
-// 		child.preview(child.context);
-// 	}, this);
-
-// 	this.setStyle("default");
-// };
-
-// RegionGrid.prototype.build = function(_parentContext) {
-// 	var context = _parentContext.deriveContext(this.properties);
-
-
-
-// 	if (!this.specifiedChildren) {
-// 		this.generateChildren(context);
-// 	}
-
-// 	var childPaths = [];
-// 	_.each(this.children, function(child) {
-// 		childPaths = childPaths.concat(child.buildChildren(child.context));
-// 	}, this);
-
-
-
-// 	// var gridContexts = this.generateContexts(context);
-// 	// var childPaths = [];
-// 	// _.each(gridContexts, function(gridContext) {
-// 	// 	childPaths = childPaths.concat(this.buildChildren(gridContext));
-// 	// }, this);
-
-// 	return childPaths;
-// };
-
-RegionGrid.prototype.generateChildren = function(_context) {
-	this.specifiedChildren = this.children;
+RegionGrid.prototype.generateChildren = function() {
+	
 	this.children = [];
 
-	var gridContexts = this.generateContexts(_context);
+	var gridContexts = this.generateContexts();
 
-	var i = 0;
-	_.each(gridContexts, function(gridContext) {
+
+	_.each(gridContexts, function(gridContext, i) {
 		var gridChild = new Region();
 		gridChild.parent = this;
 		gridChild.editorProperties = this.editorProperties;
-		gridChild.properties.name = this.properties.name + "_" + i++;
+		gridChild.constants = this.constants;
+		gridChild.root = this.root;
+		gridChild.properties.name = this.properties.name + "_" + i;
 		gridChild.context = gridContext;
 
-
-		// add proxy children to generated region
-		_(this.specifiedChildren).each(function(_child) {
-			var proxy = _child.proxy();
-			proxy.parent = gridChild;
-			proxy.properties = _(_child.properties).clone();
-			proxy.buildContext();
-			gridChild.children.push(proxy);
-		}, this);
-
 		this.children.push(gridChild);
-		// gridChild.preview(gridContext);
+
+		_(this.childrenData).each(gridChild.loadChild, gridChild);
+		
 	}, this);
 };
 
-RegionGrid.prototype.generateContexts = function(_gridContext) {
+RegionGrid.prototype.generateContexts = function() {
+
+	var _gridContext = this.context;
+
 	// calculate rows/cols to draw
 	var rows = 1;
 	rows = this.properties.rows || rows;

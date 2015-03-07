@@ -29,7 +29,6 @@ module.exports = ApplicationController;
 
 
 function ApplicationController() {
-	console.log("hello, appcontroll");
 	this.doc = null;
 	this.selectedRegions = [];
 	this.keySelection = null;
@@ -256,8 +255,6 @@ ApplicationController.prototype._parseYAML = function(_yaml) {
 
 		this.doc = new regionTypes.Document();
 		this.doc.loadData(data);
-
-		console.log(this.doc);
 		
 	}
 	catch (e) {
