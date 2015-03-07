@@ -47,6 +47,9 @@ module.exports.init = function() {
 
 	$.Topic("UI/editor/onContentChange").subscribe(onContentChange);
 
+	Mousetrap.bindGlobal('command+s', function(){saveFile(); return false;} );
+
+
 	initialized = true;
 	kickOff();
 };

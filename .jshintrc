@@ -12,6 +12,7 @@
 			"module": false,
 			"paper": false,
 			"require": false,
-			"jsyaml": false
+			"jsyaml": false,
+			"Mousetrap": false
 		}
 }

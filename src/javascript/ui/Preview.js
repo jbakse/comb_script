@@ -56,6 +56,7 @@ function Preview() {
 		}
 	);
 
+
 	Mousetrap.bindGlobal('command+=', function() { paper.view.zoom *= 2; return false; } );
 	Mousetrap.bindGlobal('command+-', function() { paper.view.zoom *= 0.5; return false; } );
 
