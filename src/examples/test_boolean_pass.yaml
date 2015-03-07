@@ -1,0 +1,34 @@
+properties:
+    name: test_boolean_pass
+    unit: mm
+    width: 100
+    height: 100
+
+children:
+    - rectangle:
+        children:
+            - region:
+                properties:
+                    name: one
+                    boolean: pass
+                children:
+                    - ellipse:
+                        properties:
+                            name: e
+                            height: 10
+                            width: 10
+                            margin_top: -5
+                            boolean: subtract
+                    - region:
+                        properties:
+                            name: two
+                            boolean: pass
+                        children:
+                            - rectangle:
+                                properties:
+                                    name: r
+                                    width: 50
+                                    height: 50
+                                    boolean: subtract
+
+

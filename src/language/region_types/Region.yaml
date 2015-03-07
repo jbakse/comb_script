@@ -105,7 +105,7 @@ Region:
         -   keyword: boolean
             description: The location of the regions registration point.
             type: string
-            values: [add, subtract, intersect, mixed, none]
+            values: [add, subtract, intersect, mixed, none, pass]
 
         -   keyword: mixed_boolean
             description: The location of the regions registration point.

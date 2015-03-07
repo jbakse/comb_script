@@ -81,7 +81,7 @@ Region.prototype.loadData = function(_data) {
 };
 
 
-Region.prototype.loadConstants = function (_contstants) {
+Region.prototype.loadConstants = function(_contstants) {
 	var self = this;
 
 	if (typeof _contstants === 'undefined') {
@@ -96,11 +96,12 @@ Region.prototype.loadConstants = function (_contstants) {
 
 	if (this.parent) {
 		this.constants = _(this.parent.constants).clone();
-	} else {
+	}
+	else {
 		this.constants = {};
 	}
 
-	_(_contstants).each( function(value, key) {
+	_(_contstants).each(function(value, key) {
 		if (typeof value === "number") {
 			self.constants[key] = value;
 			return;
@@ -111,22 +112,21 @@ Region.prototype.loadConstants = function (_contstants) {
 				var scope = {};
 				if (self.parent) scope = _(self.parent.constants).clone();
 				self.constants[key] = math.eval(value, scope);
-			} catch (e) {
-				logPropertyError(self, key, "unable to evaluate constant<br/>"+e.message, "\"" + value + "\"");
+			}
+			catch (e) {
+				logPropertyError(self, key, "unable to evaluate constant<br/>" + e.message, "\"" + value + "\"");
 				return;
 			}
 			return;
 		}
 
 		logPropertyError(self, key, "unknown constant type");
-		
+
 
 	});
 
-	
-	
 
-	
+
 };
 
 Region.prototype.getPropertyDefinitions = function() {
@@ -196,7 +196,7 @@ Region.prototype.loadProperties = function(_properties) {
 				expectedType = "string";
 			}
 			catch (e) {
-				logPropertyError(self, pKey, "unable to parse expression<br/>"+e.message, "\"" + pValue + "\"");
+				logPropertyError(self, pKey, "unable to parse expression<br/>" + e.message, "\"" + pValue + "\"");
 				return;
 			}
 		}
@@ -215,7 +215,7 @@ Region.prototype.loadProperties = function(_properties) {
 
 		// value in allowed set
 		if (def.values && !_(def.values).contains(pValue)) {
-			logPropertyError(self, pKey, "unrecognized property value", "received \"" + pValue + "\"; expected [" + def.values.join(", ") +"]");
+			logPropertyError(self, pKey, "unrecognized property value", "received \"" + pValue + "\"; expected [" + def.values.join(", ") + "]");
 			return;
 		}
 
@@ -281,7 +281,7 @@ Region.prototype.evalMathProperties = function(context) {
 					self.properties[_def.keyword] = converted;
 				}
 				catch (e) {
-					logPropertyError(self, _def.keyword, "unable to evaluate expression<br/>"+e.message, "\"" + pValue + "\"");
+					logPropertyError(self, _def.keyword, "unable to evaluate expression<br/>" + e.message, "\"" + pValue + "\"");
 				}
 			}
 
@@ -291,7 +291,7 @@ Region.prototype.evalMathProperties = function(context) {
 
 Region.prototype.buildContext = function() {
 	var context;
-	
+
 	if (this.parent) {
 		context = this.parent.context;
 	}
@@ -322,47 +322,47 @@ Region.prototype.loadChildren = function(_childrenData) {
 
 Region.prototype.loadChild = function(_childData) {
 
-		var childKey = _.keys(_childData)[0];
-		var childData = _.values(_childData)[0];
-		if (typeof childKey === "undefined" || typeof childData === "undefined") {
-			log.appendWarning("Undefined Child in " + this);
-			return;
-		}
-		if (childData === null) {
-			log.appendWarning("Illegal Empty Child (" + childKey + ")");
-			return;
-		}
+	var childKey = _.keys(_childData)[0];
+	var childData = _.values(_childData)[0];
+	if (typeof childKey === "undefined" || typeof childData === "undefined") {
+		log.appendWarning("Undefined Child in " + this);
+		return;
+	}
+	if (childData === null) {
+		log.appendWarning("Illegal Empty Child (" + childKey + ")");
+		return;
+	}
 
-		//make sure this child isn't somehow it's own father/grandfather
-		var ancestors = this.getAncestors();
-		var firstLines = _(ancestors).map(function(ancestor) {
-			return ancestor.editorProperties && ancestor.editorProperties.firstLine;
-		});
-		if (_(firstLines).contains(childData.editor_properties.firstLine)) {
-			log.appendWarning("Illegal: Child contains itself  (" + childData.editor_properties.firstLine + ")");
-			return;
-		}
-
-
-		var def = _(language.regionTypes).find(function(_def) {
-			return _def.keyword === childKey;
-		});
-		var targetClass = def && def.class;
+	//make sure this child isn't somehow it's own father/grandfather
+	var ancestors = this.getAncestors();
+	var firstLines = _(ancestors).map(function(ancestor) {
+		return ancestor.editorProperties && ancestor.editorProperties.firstLine;
+	});
+	if (_(firstLines).contains(childData.editor_properties.firstLine)) {
+		log.appendWarning("Illegal: Child contains itself  (" + childData.editor_properties.firstLine + ")");
+		return;
+	}
 
 
-		if (targetClass && targetClass in regionTypes) {
-			var child = new(regionTypes[targetClass])(this);
-			child.loadData(childData);
-			this.children.push(child);
+	var def = _(language.regionTypes).find(function(_def) {
+		return _def.keyword === childKey;
+	});
+	var targetClass = def && def.class;
+
+
+	if (targetClass && targetClass in regionTypes) {
+		var child = new(regionTypes[targetClass])(this);
+		child.loadData(childData);
+		this.children.push(child);
+	}
+	else {
+		if (childData.editor_properties) {
+			log.appendWarning("[Line " + childData.editor_properties.firstLine + "] Unknown region type: " + childKey);
 		}
 		else {
-			if (childData.editor_properties) {
-				log.appendWarning("[Line " + childData.editor_properties.firstLine + "] Unknown region type: " + childKey);
-			}
-			else {
-				log.appendWarning("Unknown region type: " + childKey);
-			}
+			log.appendWarning("Unknown region type: " + childKey);
 		}
+	}
 
 
 };
@@ -468,14 +468,38 @@ Region.prototype.build = function(_parentContext) {
 	}, this);
 
 
+
 	// collect child paths/ops
 	var childPathSets = [];
 	var childOps = [];
-	_.each(this.children, function(_child) {
+
+	// collectBooleanChildren
+	// we are about to boolean each of this region's children against this region
+	// if a child has boolean pass set, we need to include that child's children (recursively)
+	// this function collects the eligible decendants
+	var booleanChildren = [];
+	function collectBooleanChildren(_node) {
+		_(_node.children).each(
+			function(_childNode) {
+				if (_childNode.properties.boolean === 'pass') {
+					collectBooleanChildren(_childNode);
+				}
+				else {
+					booleanChildren = booleanChildren.concat(_childNode);
+				}
+			}
+		);
+
+	}
+	collectBooleanChildren(this);
+	
+
+	_.each(booleanChildren, function(_child) {
 		var s = _child.build(context);
 		childPathSets.push(s);
 		childOps.push(booleanOperations[_child.properties.boolean]);
 	});
+
 
 
 	// arrange operands
