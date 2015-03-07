@@ -3,7 +3,6 @@
 var gulp = require('gulp');
 
 var gutil = require('gulp-util');
-var sourcemaps = require('gulp-sourcemaps');
 var rename = require('gulp-rename');
 var insert = require('gulp-insert');
 var concat = require('gulp-concat');
@@ -150,21 +149,3 @@ gulp.task('watch', function() {
 gulp.task('default', ['browserify', 'less', 'language', 'lib', 'test_lib', 'html', 'jade', 'images', 'examples', 'watch']);
 
 
-
-
-// var browserify = require('gulp-browserify');
-// gulp.task('javascript', function() {
-// 	return gulp
-// 		.src(['./src/javascript/main.js', './src/javascript/docs.js'], {
-// 			read: false
-// 		})
-// 		.pipe(plumber())
-// 		.pipe(browserify({
-// 			transform: ['brfs', 'deglobalify'],
-// 			debug: true
-// 		}))
-// 		.pipe(gulp.dest('./build/javascript/'))
-
-// 		.pipe(livereload())
-// 		;
-// });

@@ -11,16 +11,19 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Todo
 
+----- expirement. if boolean add or subtract is set, slightly enlarge the bounds (auto trap) if a very slight trapping fixes the booleans that would probably be okay, like say .0001 inches. 
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Bugs
 
 +-----	all those google drive errors in console!
------ BUILD DOCS
------ NEW "server" SOLUTION
+
 +----- Proxies are getting the result of math, they are not each calculating for themselves
 ----- boolean mixed and mixed_boolean seem to be deprecated but the documentation was not updated
 
------ mixed unit bug parent_top is a number, so you can't subtract a unit from it.  top = parent_top + 1 cm don't work
+----- mixed unit bug parent_top is a number, so you can't subtract a unit from it.  top = parent_top + 1 cm don't work (probably change parent_top, etc, to units)
+
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # User facing Features
@@ -124,7 +127,22 @@
 # Refactoring / Cleanup / Developer facing features
 
 #Build Tool
+
 --- 	Clean up gulp
+----- 	BUILD DOCS
+----- 	NEW "server" SOLUTION
+----	https://cameronspear.com/blog/how-to-handle-gulp-watch-errors-with-plumber/
+---- 	Goals
+	----	Clean & DRY
+	----	Better Error Reporting
+	----	Error Beeps
+	----	Watch and Build
+	----	Clean Live Reload (once per build)
+	----	Quick Incremental Builds
+	----	Integrated Server
+	----	Use popular, active, supported plugins
+	----    https://github.com/greypants/gulp-starter
+	----	gulp changed, cached, remember
 - 	Interesting: http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/
 +----	Versioning: Include the build number 0.0.12 on the interface, start bumping it!
 -	Language YAMLs: are built with the build tool, should this be handled by the javascript? not sure
@@ -171,3 +189,5 @@
 -	sibling relative positioning: what are some options? named object relative positioning?
 
 -	combined attributes: margin: 0 or margin: 0 10 20 10
+
+-	nicer dialog (alert/confirm/prompt) with a library
