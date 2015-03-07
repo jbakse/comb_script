@@ -215,7 +215,7 @@ Region.prototype.loadProperties = function(_properties) {
 
 		// value in allowed set
 		if (def.values && !_(def.values).contains(pValue)) {
-			logPropertyError(self, pKey, "unrecognized property value", "received \"" + pValue + "\"; expected " + def.values.join(", "));
+			logPropertyError(self, pKey, "unrecognized property value", "received \"" + pValue + "\"; expected [" + def.values.join(", ") +"]");
 			return;
 		}
 

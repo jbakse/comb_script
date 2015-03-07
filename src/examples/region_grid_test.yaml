@@ -10,6 +10,7 @@ children:
             columns: 5
             rows: 5
             registration: center
+            populate: alternate
         children:
             - ellipse:
                 properties:

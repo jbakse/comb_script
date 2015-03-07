@@ -55,7 +55,13 @@ RegionGrid.prototype.generateChildren = function() {
 
 		this.children.push(gridChild);
 
-		_(this.childrenData).each(gridChild.loadChild, gridChild);
+		if (this.properties.populate === 'repeat') {
+			_(this.childrenData).each(gridChild.loadChild, gridChild);
+		}
+
+		if (this.properties.populate === 'alternate') {
+			gridChild.loadChild(this.childrenData[i % this.childrenData.length]);
+		}
 		
 	}, this);
 };

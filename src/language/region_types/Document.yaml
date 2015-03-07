@@ -54,7 +54,7 @@ Document:
         #     description: Amount to scale the entire document. A value of 2 will make the document twice as big.
         #     type: number
 
-        -   keyword: zoom
-            description: Amount of zoom applied to the document. A value of 0.5 would zoom out on the document.
-            type: number
-            default: 1
+        # -   keyword: zoom
+        #     description: Amount of zoom applied to the document. A value of 0.5 would zoom out on the document.
+        #     type: number
+        #     default: 1

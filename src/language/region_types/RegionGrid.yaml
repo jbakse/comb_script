@@ -25,6 +25,12 @@ RegionGrid:
         </pre>
 
     properties:
+        -   keyword: populate
+            description:
+            type: string
+            values: [repeat, alternate]
+            default: repeat
+
         -   keyword: columns
             description: The number of columns in the grid.
             type: number
