@@ -97,6 +97,12 @@ Context.prototype.deriveContext = function(_properties) {
 		derivedContext.matrix.scale(_properties.scale_x || 1, _properties.scale_y || 1);
 	}
 
+	if (_properties.trapping) {
+		derivedContext.bounds.x -= _properties.trapping;
+		derivedContext.bounds.y -= _properties.trapping;
+		derivedContext.bounds.width += _properties.trapping * 2;
+		derivedContext.bounds.height += _properties.trapping * 2;	
+	}
 
 	return derivedContext;
 };

@@ -6,7 +6,9 @@ module.exports = {
     server: {
       // Serve up our build folder
       baseDir: dest
-    }
+    },
+    port: 8000
+    // https: true
   },
   images: {
     src: src + "/images/**",

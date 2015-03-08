@@ -113,4 +113,10 @@ Region:
             values: [add, subtract, intersect]
             default: add
 
+        # EXPERIMENTAL
+
+        -   keyword: trapping
+            description: "Amount to enlarge the region. Trapping can be used to slightly enlarge (e.g. .0001 inch) a region to prevent errors evaluating boolean regions."
+            type: number
+            default: 0
 

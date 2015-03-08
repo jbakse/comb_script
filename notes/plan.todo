@@ -3,7 +3,7 @@
 
 - Region Grid Alternate
 - Boolean Pass
-	
+- New, Improved, Gulp. Chrips on errors, Browser Sync hosting and reload. Clean
 
 	:?state=%7B"ids":%5B"0BzODaS_ym7yXNlFBckRHclBjSkk"%5D,"action":"open","userId":"114861567981343107341"%7D
 
@@ -128,29 +128,10 @@
 
 #Build Tool
 
---- 	Clean up gulp
------ 	BUILD DOCS
------ 	NEW "server" SOLUTION
+-----	BUILD DOCS
 
------ Don't like the gulp langague task
-----	https://cameronspear.com/blog/how-to-handle-gulp-watch-errors-with-plumber/
----- 	Goals
-	----	Clean & DRY
-	----	Better Error Reporting
-	----	Error Beeps
-	----	Watch and Build
-	----	Clean Live Reload (once per build)
-	----	Quick Incremental Builds
-	----	Integrated Server
-	----	Use popular, active, supported plugins
-	----    https://github.com/greypants/gulp-starter
-	----	gulp changed, cached, remember
-- 	Interesting: http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/
-+----	Versioning: Include the build number 0.0.12 on the interface, start bumping it!
--	Language YAMLs: are built with the build tool, should this be handled by the javascript? not sure
+-----	Don't like the gulp langague task:Language YAMLs: are built with the build tool, should this be handled by the javascript? not sure
 --	Browserify Dependencies: rather than script tags, do we want to?
-
--	1 file plugins: Right now, a regiom type (e.g. Rectangle) is added through a two files. a YAML that describes its use, and a js that implements its behavior. it would be cool for (simple) region types to be fully encapsulated in the YAML, kind of a literate approach
 
 ---	Update Libraries
 
@@ -187,6 +168,7 @@
 # Low Priority ? Wild Ideas
 
 -	Might also be cool if plugin region types could be dynamically loaded from the .comb file "uses http://plugins/polygon.yaml"
+-	1 file plugins: Right now, a regiom type (e.g. Rectangle) is added through a two files. a YAML that describes its use, and a js that implements its behavior. it would be cool for (simple) region types to be fully encapsulated in the YAML, kind of a literate approach
 
 -	sibling relative positioning: what are some options? named object relative positioning?
 
