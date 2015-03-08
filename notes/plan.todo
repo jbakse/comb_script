@@ -131,6 +131,8 @@
 --- 	Clean up gulp
 ----- 	BUILD DOCS
 ----- 	NEW "server" SOLUTION
+
+----- Don't like the gulp langague task
 ----	https://cameronspear.com/blog/how-to-handle-gulp-watch-errors-with-plumber/
 ---- 	Goals
 	----	Clean & DRY

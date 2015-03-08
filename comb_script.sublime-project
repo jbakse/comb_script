@@ -8,7 +8,8 @@
 				"bower_components",
 				"test_lib",
 				"build",
-				"lib"
+				"lib",
+				"new_lib"
 			],
 			"follow_symlinks": true,
 			"path": "."

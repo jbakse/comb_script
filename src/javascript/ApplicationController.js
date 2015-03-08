@@ -29,6 +29,7 @@ module.exports = ApplicationController;
 
 
 function ApplicationController() {
+	console.log("Hello, Application!");
 	this.doc = null;
 	this.selectedRegions = [];
 	this.keySelection = null;

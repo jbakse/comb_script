@@ -27,7 +27,8 @@ Editor.prototype.init = function(_element) {
 	this.editor.setHighlightActiveLine(false);
 	this.editor.getSession().on('change', _(this.onChange).bind(this));
 	this.editor.getSession().selection.on('changeCursor', _(this.onChangeCursor).bind(this));
-
+	this.editor.$blockScrolling = Infinity;
+	
 	var self = this;
 	this.editor.commands.addCommand({
 		name: "Remove Indent",
