@@ -1,5 +1,6 @@
 "use strict";
 
+var math = require('mathjs/math.min.js');
 
 module.exports = Context;
 
@@ -17,12 +18,12 @@ Context.prototype.toString = function() {
 
 Context.prototype.scope = function(){
 	return {
-		parent_height: this.bounds.height,
-		parent_width: this.bounds.width,
-		parent_left: this.bounds.left,
-		parent_right: this.bounds.right,
-		parent_top: this.bounds.top,
-		parent_bottom: this.bounds.bottom
+		parent_height: math.unit(this.bounds.height, 'px'),
+		parent_width: math.unit(this.bounds.width, 'px'),
+		parent_left: math.unit(this.bounds.left, 'px'),
+		parent_right: math.unit(this.bounds.right, 'px'),
+		parent_top: math.unit(this.bounds.top, 'px'),
+		parent_bottom: math.unit(this.bounds.bottom, 'px')
 	};
 };
 

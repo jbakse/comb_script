@@ -274,6 +274,7 @@ Region.prototype.evalMathProperties = function(context) {
 				try {
 					var scope = _(self.constants).clone();
 					scope = _(scope).extend(context.scope());
+					console.log(context.scope());
 					var converted = math.eval(pValue, scope);
 					if (typeof converted == "object") {
 						converted = converted.toNumber(self.root.properties.unit);

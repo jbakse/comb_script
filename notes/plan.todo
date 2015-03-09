@@ -1,17 +1,21 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # New Features (DOCUMENT ME)
 
-- Region Grid Alternate
+- Region Grid `Alternate`
 - Boolean Pass
+- Trapping
 - New, Improved, Gulp. Chrips on errors, Browser Sync hosting and reload. Clean
-
-	:?state=%7B"ids":%5B"0BzODaS_ym7yXNlFBckRHclBjSkk"%5D,"action":"open","userId":"114861567981343107341"%7D
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Todo
 
------ expirement. if boolean add or subtract is set, slightly enlarge the bounds (auto trap) if a very slight trapping fixes the booleans that would probably be okay, like say .0001 inches. 
+----- Trapping Experiment.
+	Added Trapping property. it looks very promising
+	Auto trapping (like auto add trapping to all adds/subtracts) would be cool, but i can't find a way to make it work out, as when two aligned shapes are both added, adding the same trap to both of them won't work (they'll still be aligned to each other).
+	----	trap in rectangle draw: trapping probably shouldn't actually effect the region size (as used by children). trapping probably not needed for ellipses. it is meant for tiny tiny adjustments just to fix the boolean bug, not to actually effect design dimensions. (if it would be useful to have another way to spread a shape add that sperately (i don't think it would that helpful))
+	----	hardcode trap amount: should trap accept an amount at all? maybe it should be hard coded to .0001px or something. two problems, sometimes trap should be outward, sometimes inward. (maybe trapping: outward, trapping: inward or shrink/expand) second problem. might need different values in different contexts (large values work better, smaller values distort drawing less, i think we can just try some values and see if there is a good general fit)
+	----	report bug: even with the trapping the joist example still fails, seems like maybe worth reporting the case
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Bugs
@@ -19,9 +23,9 @@
 +-----	all those google drive errors in console!
 
 +----- Proxies are getting the result of math, they are not each calculating for themselves
------ boolean mixed and mixed_boolean seem to be deprecated but the documentation was not updated
++----- boolean language files: boolean mixed and mixed_boolean seem to be deprecated but the language spec was not updated figure out wht the system really cares about, and update
 
------ mixed unit bug parent_top is a number, so you can't subtract a unit from it.  top = parent_top + 1 cm don't work (probably change parent_top, etc, to units)
++----- mixed unit bug parent_top is a number, so you can't subtract a unit from it.  top = parent_top + 1 cm don't work (probably change parent_top, etc, to units)
 
 
 
@@ -45,7 +49,9 @@
 	+---- zoom aware pan
 
 +----	Don't screw up pan on code changes
-
+	
+	----	Scroll preview to selected region in text
+	
 -	Isolation Mode? 
 ---	Auto Pan and Zoom on code under text cursor?
 -	Ghost unselected regions?
@@ -107,7 +113,7 @@
 -	Vertical Line
 -	Horizontal Line
 -	Polygon as array of points
-----	Pages Plugin that creates a stack of regions and sticks each child into one. See the hassle of laying out "parts" where thier position isn't actually important.
++----	Pages Plugin that creates a stack of regions and sticks each child into one. See the hassle of laying out "parts" where thier position isn't actually important.
 
 # SVG
 -	SVG Import Support
@@ -154,7 +160,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # User Docs
 
--	Document Mixed boolean mode: whole booelan system really
+-	Document boolean system: whole booelan system really
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Demo Projects
