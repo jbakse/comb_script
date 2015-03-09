@@ -10,7 +10,10 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Todo
 
------ Trapping Experiment.
+-----	Discuss requiring units always
+	: con, mildly tedius maybe. pro, clearer to read, cleaner/shorter parsing code with less special cases. eval is never gonna fly with "1in + 3" or "parent_height + 3" because you can't add units to non-units
+
+-----	Trapping Experiment.
 	Added Trapping property. it looks very promising
 	Auto trapping (like auto add trapping to all adds/subtracts) would be cool, but i can't find a way to make it work out, as when two aligned shapes are both added, adding the same trap to both of them won't work (they'll still be aligned to each other).
 	----	trap in rectangle draw: trapping probably shouldn't actually effect the region size (as used by children). trapping probably not needed for ellipses. it is meant for tiny tiny adjustments just to fix the boolean bug, not to actually effect design dimensions. (if it would be useful to have another way to spread a shape add that sperately (i don't think it would that helpful))
@@ -51,7 +54,7 @@
 +----	Don't screw up pan on code changes
 	
 	----	Scroll preview to selected region in text
-	
+
 -	Isolation Mode? 
 ---	Auto Pan and Zoom on code under text cursor?
 -	Ghost unselected regions?
@@ -68,7 +71,7 @@
 +-----	Warn on navigation away from dirty file (prompt for sav)
 
 # Math Expression support
-	---	Possible Library: http://mathjs.org/docs/expressions/customization.html
+	+---	Possible Library: http://mathjs.org/docs/expressions/customization.html
 	+---	Dimension Units
 	---	Access Parent Bounds 
 	+--	move evaluation to build/preview
@@ -84,8 +87,8 @@
 			- referencing parent constants, but not own
 		+- Mathjs
 
-	----	constants: 
-		----	DRY the math.eval stuff to check for input type, report errors, etc consistantly
+	+----	constants: 
+		+----	DRY the math.eval stuff to check for input type, report errors, etc consistantly
 	+----	Dry Code :(and maybe consider resolving contexts during inital load/parse instead of draw/preview (this will eliminate redundancy))
 
 --	support percents
@@ -136,7 +139,7 @@
 
 +-----	BUILD DOCS
 
------	Don't like the gulp langague task:Language YAMLs: are built with the build tool, should this be handled by the javascript? not sure
+--	Don't like the gulp langague task:Language YAMLs: are built with the build tool, should this be handled by the javascript? not sure
 --	Browserify Dependencies: rather than script tags, do we want to?
 
 ---	Update Libraries

@@ -102,27 +102,14 @@ Region.prototype.loadConstants = function(_contstants) {
 	}
 
 	_(_contstants).each(function(value, key) {
-		if (typeof value === "number") {
-			self.constants[key] = value;
-			return;
+		var scope = {};
+		if (self.parent) scope = _(self.parent.constants).clone();
+		try {
+			evaluateMathjsExpression(value, scope, self.root.properties.unit);
 		}
-
-		if (typeof value === "string") {
-			try {
-				var scope = {};
-				if (self.parent) scope = _(self.parent.constants).clone();
-				self.constants[key] = math.eval(value, scope);
-			}
-			catch (e) {
-				logPropertyError(self, key, "unable to evaluate constant<br/>" + e.message, "\"" + value + "\"");
-				return;
-			}
-			return;
+		catch (e) {
+			logPropertyError(self, key, e.message);
 		}
-
-		logPropertyError(self, key, "unknown constant type");
-
-
 	});
 
 
@@ -189,16 +176,20 @@ Region.prototype.loadProperties = function(_properties) {
 
 		// numbers can be numbers or math expressions, use mathjs to validate expressions are legal
 		if (def.type == "number" && typeof pValue == "string") {
-			try {
-				var scope = _(self.constants).clone();
-				scope = _(scope).extend(new Context().scope());
-				var converted = math.eval(pValue, scope);
-				expectedType = "string";
-			}
-			catch (e) {
-				logPropertyError(self, pKey, "unable to parse expression<br/>" + e.message, "\"" + pValue + "\"");
-				return;
-			}
+			// if a number is asked for, and a string is provided, let it pass
+			// that string will try to be evaluated shortly, and if it can't be an error will be displayed
+			expectedType = "string";
+
+			// try {
+			// 	var scope = _(self.constants).clone();
+			// 	scope = _(scope).extend(new Context().scope());
+			// 	var converted = math.eval(pValue, scope);
+			// 	expectedType = "string";
+			// }
+			// catch (e) {
+			// 	logPropertyError(self, pKey, "unable to parse expression<br/>" + e.message, "\"" + pValue + "\"");
+			// 	return;
+			// }
 		}
 
 		// color variables should be objects
@@ -265,30 +256,53 @@ Region.prototype.evalMathProperties = function(context) {
 
 	_(definitions).chain()
 		.filter(function(_def) {
-			return _def && _def.type === 'number';
+			return _def && _def.type === "number";
 		})
 		.each(function(_def) {
 			var pValue = self.properties[_def.keyword];
-
-			if (typeof pValue == "string") {
-				try {
-					var scope = _(self.constants).clone();
-					scope = _(scope).extend(context.scope());
-					console.log(context.scope());
-					var converted = math.eval(pValue, scope);
-					if (typeof converted == "object") {
-						converted = converted.toNumber(self.root.properties.unit);
-					}
-					self.properties[_def.keyword] = converted;
-				}
-				catch (e) {
-					logPropertyError(self, _def.keyword, "unable to evaluate expression<br/>" + e.message, "\"" + pValue + "\"");
-				}
+			if (typeof pValue === "undefined") {
+				return;
+			}
+			
+			var scope = _(self.constants).clone();
+			scope = _(scope).extend(context.scope());
+			try {
+				self.properties[_def.keyword] = evaluateMathjsExpression(pValue, scope, self.root.properties.unit);
+			}
+			catch (e) {
+				logPropertyError(self, _def.keyword, e.message);
 			}
 
 		});
 
 };
+
+// todo, this funciton might belong in a library?
+
+function evaluateMathjsExpression(_expression, _scope, _unit) {
+	if (typeof _expression === "number") {
+		return _expression;
+	}
+
+	if (typeof _expression === "string") {
+		try {
+			var result = math.eval(_expression, _scope);
+			if (typeof result === "number") {
+				return result;
+			}
+			if (result instanceof math.type.Unit) {
+				return result.toNumber(_unit);
+			}
+			throw new Error("result of expression unexpected type");
+		}
+		catch (e) {
+			throw new Error("unable to evaluate expression<br/>" + e.message);
+		}
+	}
+
+	throw new Error("invalid type");
+}
+
 
 Region.prototype.buildContext = function() {
 	var context;
@@ -479,6 +493,7 @@ Region.prototype.build = function(_parentContext) {
 	// if a child has boolean pass set, we need to include that child's children (recursively)
 	// this function collects the eligible decendants
 	var booleanChildren = [];
+
 	function collectBooleanChildren(_node) {
 		_(_node.children).each(
 			function(_childNode) {
@@ -493,7 +508,7 @@ Region.prototype.build = function(_parentContext) {
 
 	}
 	collectBooleanChildren(this);
-	
+
 
 	_.each(booleanChildren, function(_child) {
 		var s = _child.build(context);

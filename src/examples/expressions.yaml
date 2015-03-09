@@ -5,11 +5,11 @@ properties:
     height: 1 in
     # zoom: .25
 constants:
-    table_height: 2in
+    table_height: 2in +
 
 
 children:
     - rectangle:
         properties:
             radius: .125 in
-            top: parent_top + 10mm
+            top: parent_top +
