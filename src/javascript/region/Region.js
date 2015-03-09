@@ -105,7 +105,9 @@ Region.prototype.loadConstants = function(_contstants) {
 		var scope = {};
 		if (self.parent) scope = _(self.parent.constants).clone();
 		try {
-			evaluateMathjsExpression(value, scope, self.root.properties.unit);
+			// todo, can't actually assume mm
+
+			evaluateMathjsExpression(value, scope, self.root.properties.unit || "mm");
 		}
 		catch (e) {
 			logPropertyError(self, key, e.message);
@@ -267,6 +269,7 @@ Region.prototype.evalMathProperties = function(context) {
 			var scope = _(self.constants).clone();
 			scope = _(scope).extend(context.scope());
 			try {
+				console.log(pValue, scope, scope.parent_height.toNumber('inch'), evaluateMathjsExpression(pValue, scope, self.root.properties.unit));
 				self.properties[_def.keyword] = evaluateMathjsExpression(pValue, scope, self.root.properties.unit);
 			}
 			catch (e) {
@@ -290,10 +293,12 @@ function evaluateMathjsExpression(_expression, _scope, _unit) {
 			if (typeof result === "number") {
 				return result;
 			}
-			if (result instanceof math.type.Unit) {
+			else if (result instanceof math.type.Unit) {
 				return result.toNumber(_unit);
 			}
-			throw new Error("result of expression unexpected type");
+			else {
+				throw new Error("result of expression unexpected type");
+			}
 		}
 		catch (e) {
 			throw new Error("unable to evaluate expression<br/>" + e.message);

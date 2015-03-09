@@ -4,20 +4,12 @@ properties:
     width: 100
     height: 100
 
+constants:
+    x: 1 in
+
 children:
-    - region_grid:
+    - ellipse:
         properties:
-            columns: 5
-            rows: 5
-            registration: center
-            populate: alternate
-        children:
-            - ellipse:
-                properties:
-                    # margin_top: 5
-                    top: parent_top + 5
-            - ellipse:
-                properties:
-                    # margin_top: 5
-                    left: parent_top + 5
-                    boolean: add
+            width: parent_height
+            height: 2in
+
