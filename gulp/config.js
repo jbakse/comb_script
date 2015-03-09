@@ -38,6 +38,12 @@ module.exports = {
       // extensions: ['.coffee', '.hbs'],
       // list of modules to make require-able externally
       // require: ['jquery', 'backbone/node_modules/underscore']
+      },
+      {
+      entries: src + '/javascript/docs.js',
+      dest: dest + '/javascript',
+      outputName: 'docs.js',
+      paths: ['new_lib']
       }]
   },
   production: {
