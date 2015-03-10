@@ -32,43 +32,43 @@ Region:
 
         -   keyword: top
             description: The top of the bounds relative to the parent's registration point.
-            type: number
+            type: dimension
 
         -   keyword: left
             description: The left of the bounds relative to the parent's registration point.
-            type: number
+            type: dimension
 
         -   keyword: bottom
             description: The bottom of the bounds relative to the parent's registration point.
-            type: number
+            type: dimension
 
         -   keyword: right
             description: The right of the bounds relative to the parent's registration point.
-            type: number
+            type: dimension
 
         -   keyword: margin_top
             description: The top of the bounds relative to parent's bounds.
-            type: number
+            type: dimension
 
         -   keyword: margin_left
             description: The left of the bounds relative to parent's bounds.
-            type: number
+            type: dimension
 
         -   keyword: margin_bottom
             description: The bottom of the bounds relative to parent's bounds.
-            type: number
+            type: dimension
 
         -   keyword: margin_right
             description: The right of the bounds relative to parent's bounds.
-            type: number
+            type: dimension
 
         -   keyword: width
             description: The width of the bounds.
-            type: number
+            type: dimension
 
         -   keyword: height
             description: The height of the bounds.
-            type: number
+            type: dimension
 
         # REGISTRATION
 
@@ -82,11 +82,11 @@ Region:
 
         -   keyword: translate_x
             description: Horizontal translation.
-            type: number 
+            type: dimension 
 
         -   keyword: translate_y
             description: Vertical translation.
-            type: number 
+            type: dimension 
 
         -   keyword: rotation
             description: Rotation in degrees.
@@ -111,6 +111,6 @@ Region:
 
         -   keyword: trapping
             description: "Amount to enlarge the region. Trapping can be used to slightly enlarge (e.g. .0001 inch) a region to prevent errors evaluating boolean regions."
-            type: number
-            default: 0
+            type: dimension
+            default: .0001cm
 

@@ -43,11 +43,11 @@ RegionGrid:
 
         -   keyword: row_height
             description: The height of rows in the grid.
-            type: number
+            type: dimension
 
         -   keyword: column_width
             description: The width of columns in the grid.
-            type: number
+            type: dimension
 
         -   keyword: column_align
             description: The alignment of the columns in the grid (if columns don't fill the full width).

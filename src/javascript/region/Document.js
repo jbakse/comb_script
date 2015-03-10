@@ -1,4 +1,5 @@
 'use strict';
+var math = require('mathjs/math.min.js');
 
 var Region = require('./Region.js');
 var util = require('../util.js');
@@ -13,8 +14,8 @@ function Document(_data, _parent) {
 	this.type = "Document";
 	this.waitList = [];
 
-	this.properties.left = 0;
-	this.properties.top = 0;
+	this.properties.left = math.unit('0 cm');
+	this.properties.top = math.unit('0 cm');
 	this.properties.registration = "center";
 }
 

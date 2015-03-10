@@ -73,10 +73,13 @@ Region.prototype.loadData = function(_data) {
 	this.loadConstants(_data.constants);
 	this.loadProperties(_data.properties);
 
-	this.buildContext();
+	var parentContext = this.parent ? this.parent.context : new Context();
+	this.evalMathProperties(parentContext);
+	this.buildContext(parentContext);
 
 	this.loadChildren(_data.children);
 
+	console.log(this);
 	return this;
 };
 
@@ -106,7 +109,6 @@ Region.prototype.loadConstants = function(_contstants) {
 		if (self.parent) scope = _(self.parent.constants).clone();
 		try {
 			self.constants[key] = evalMathjsExpression(value, scope);
-			console.log("imported", key, self.constants[key]);
 		}
 		catch (e) {
 			logPropertyError(self, key, e.message);
@@ -162,6 +164,7 @@ Region.prototype.loadProperties = function(_properties) {
 	// Validate and import provided properties.
 
 	_(_properties).each(function(pValue, pKey) {
+
 		var def = _(definitions).find(function(_def) {
 			return _def.keyword === pKey;
 		});
@@ -172,36 +175,28 @@ Region.prototype.loadProperties = function(_properties) {
 			return;
 		}
 
-		var expectedType = def.type;
+		var allowedInputTypes;
 
-
-		// numbers can be numbers or math expressions, use mathjs to validate expressions are legal
-		if (def.type == "number" && typeof pValue == "string") {
-			// if a number is asked for, and a string is provided, let it pass
-			// that string will try to be evaluated shortly, and if it can't be an error will be displayed
-			expectedType = "string";
-
-			// try {
-			// 	var scope = _(self.constants).clone();
-			// 	scope = _(scope).extend(new Context().scope());
-			// 	var converted = math.eval(pValue, scope);
-			// 	expectedType = "string";
-			// }
-			// catch (e) {
-			// 	logPropertyError(self, pKey, "unable to parse expression<br/>" + e.message, "\"" + pValue + "\"");
-			// 	return;
-			// }
+		if (def.type == "string") {
+			allowedInputTypes = ["string"];
 		}
 
-		// color variables should be objects
+		if (def.type == "dimension") {
+			allowedInputTypes = ["string"];
+		}
+
+		if (def.type == "number") {
+			allowedInputTypes = ["number", "string"];
+		}
+
 		if (def.type === "color") {
 			// todo make sure correct properties are in color object
-			expectedType = "object";
+			allowedInputTypes = ["object"];
 		}
 
 		// correct color type
-		if (typeof pValue !== expectedType) {
-			logPropertyError(self, pKey, "incorrect type", "received " + typeof pValue + "; expected " + def.type);
+		if (!_(allowedInputTypes).contains(typeof pValue)) {
+			logPropertyError(self, pKey, "incorrect type", "\""+pValue+"\" is a " + typeof pValue + "; expected " + def.type);
 			return;
 		}
 
@@ -248,44 +243,90 @@ Region.prototype.loadProperties = function(_properties) {
 
 
 // evalMathProperties
-// math properties can't be eval'd during inital parse of document, because they need the context of their parent
-// this is called during the build/preview to eval math just before it is needed
-
 Region.prototype.evalMathProperties = function(context) {
 	var definitions = this.getPropertyDefinitions();
 	var self = this;
 
-	_(definitions).chain()
-		.filter(function(_def) {
-			return _def && _def.type === "number";
-		})
-		.each(function(_def) {
-			var pValue = self.properties[_def.keyword];
-			if (typeof pValue === "undefined") {
-				return;
-			}
-			
-			var scope = _(self.constants).clone();
-			scope = _(scope).extend(context.scope());
-			try {
-				// console.log(pValue, scope, scope.parent_height.toNumber('inch'), evalMathjsExpression(pValue, scope, self.root.properties.unit));
-				var result = evalMathjsExpression(pValue, scope);
-				if (result instanceof math.type.Unit) {
-					result = result.toNumber("px");
-				}
-				self.properties[_def.keyword] = result;
-			}
-			catch (e) {
-				logPropertyError(self, _def.keyword, e.message);
-			}
+	var scope = _(self.constants).clone();
+	scope = _(scope).extend(context.scope());
 
-		});
+	// process defined "number" properties
+	_(definitions).chain()
+	.filter(function(_def) {
+		return _def && _def.type === "number" && (typeof self.properties[_def.keyword] !== "undefined");
+	})
+	.each(function(_def) {
+		try {
+			self.properties[_def.keyword] = evalMathjsNumber(self.properties[_def.keyword], scope);
+		} catch (e) {
+			logPropertyError(self, _def.keyword, e.message);
+		}
+	});
+
+	_(definitions).chain()
+	.filter(function(_def) {
+		return _def && _def.type === "dimension" && (typeof self.properties[_def.keyword] !== "undefined");
+	})
+	.each(function(_def) {
+		try {
+			self.properties[_def.keyword] = evalMathjsDimension(self.properties[_def.keyword], scope);
+		} catch (e) {
+			logPropertyError(self, _def.keyword, e.message);
+		}
+	});
+
+
+
+
+	// var dimensionProperties = _(definitions).filter(function(_def) {
+	// 	return _def && _def.type === "number";
+	// });
+
+	// _(definitions).chain()
+	// 	.filter(function(_def) {
+	// 		return _def && _def.type === "number";
+	// 	})
+	// 	.each(function(_def) {
+	// 		var pValue = self.properties[_def.keyword];
+	// 		if (typeof pValue === "undefined") {
+	// 			return;
+	// 		}
+
+	// 		var scope = _(self.constants).clone();
+	// 		scope = _(scope).extend(context.scope());
+	// 		try {
+	// 			var result = evalMathjsExpression(pValue, scope);
+	// 			if (result instanceof math.type.Unit) {
+	// 				result = result.toNumber("px");
+	// 			}
+	// 			self.properties[_def.keyword] = result;
+	// 		}
+	// 		catch (e) {
+	// 			logPropertyError(self, _def.keyword, e.message);
+	// 		}
+
+	// 	});
 
 };
 
-// todo, this funciton might belong in a library?
+function evalMathjsNumber(_expression, _scope) {
+	var result = evalMathjsExpression(_expression, _scope);
+	if (typeof result !== "number") {
+		throw new Error("expression should result in a number (result should not include a unit).");
+	}
+	return result;
+}
+
+function evalMathjsDimension(_expression, _scope) {
+	var result = evalMathjsExpression(_expression, _scope);
+	if (!(result instanceof math.type.Unit)) {
+		throw new Error("expression should result in a dimension (you may need to include a unit).");
+	}
+	return result;
+}
 
 function evalMathjsExpression(_expression, _scope) {
+
 	if (typeof _expression === "number") {
 		return _expression;
 	}
@@ -293,15 +334,7 @@ function evalMathjsExpression(_expression, _scope) {
 	if (typeof _expression === "string") {
 		try {
 			var result = math.eval(_expression, _scope);
-			if (typeof result === "number") {
-				return result;
-			}
-			else if (result instanceof math.type.Unit) {
-				return result; //.toNumber("px");
-			}
-			else {
-				throw new Error("result of expression unexpected type");
-			}
+			return result;
 		}
 		catch (e) {
 			throw new Error("unable to evaluate expression<br/>" + e.message);
@@ -312,22 +345,8 @@ function evalMathjsExpression(_expression, _scope) {
 }
 
 
-Region.prototype.buildContext = function() {
-	var context;
-
-	if (this.parent) {
-		context = this.parent.context;
-	}
-	else {
-		// we are the root create a new context scaled to our unit property
-		context = new Context();
-		// var unitScale = language.unitScales[this.properties.unit] || 1;
-		// context.matrix.scale(unitScale);
-
-	}
-	this.evalMathProperties(context);
-
-	this.context = context.deriveContext(this.properties);
+Region.prototype.buildContext = function(parentContext) {
+	this.context = parentContext.deriveContext(this.properties);
 };
 
 Region.prototype.loadChildren = function(_childrenData) {

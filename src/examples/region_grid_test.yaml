@@ -3,12 +3,5 @@ properties:
     width: 2 in
     height: 2 in
 
-constants:
-    x: 1 in
-
 children:
     - ellipse:
-        properties:
-            width: 2cm
-            height: parent_height
-

@@ -18,7 +18,8 @@ Polygon:
     properties:
         -   keyword: radius
             description: radius of the polygon
-            type: number
+            type: dimension
+
         -   keyword: sides
             description: number of sides of the polygon
             type: number

@@ -23,21 +23,15 @@ Document:
             type: string
             default: document
 
-        # -   keyword: unit
-        #     description: The dimension unit to use. 
-        #     type: string
-        #     default: px
-        #     values: [px, in, ft, mm, cm, m]
-
         -   keyword: width
             description: The width of the document bounds.
-            type: number
-            default: 400
+            type: dimension
+            default: 10cm
 
         -   keyword: height
             description: The height of the document bounds.
-            type: number
-            default: 400
+            type: dimension
+            default: 10cm
 
         -   keyword: cut_color
             description: The color to use for cut lines
@@ -58,3 +52,9 @@ Document:
         #     description: Amount of zoom applied to the document. A value of 0.5 would zoom out on the document.
         #     type: number
         #     default: 1
+
+        # -   keyword: unit
+        #     description: The dimension unit to use. 
+        #     type: string
+        #     default: px
+        #     values: [px, in, ft, mm, cm, m]

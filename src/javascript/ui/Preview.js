@@ -23,43 +23,7 @@ function Preview() {
 	this.doc = null;
 
 
-	var self = this;
-
-	$.Topic("UI/command/toggleViewPreview").subscribe(
-		function(_state) {
-			if (_state === undefined) {
-				_state = !self.previewLayer.visible;
-			}
-			self.previewLayer.visible = _state;
-			paper.view.update();
-		}
-	);
-
-	$.Topic("UI/command/toggleViewBuild").subscribe(
-		function(_state) {
-			if (_state === undefined) {
-				_state = !self.buildLayer.visible;
-			}
-			self.buildLayer.visible = _state;
-			paper.view.update();
-		}
-	);
-
-	$.Topic("UI/command/toggleViewExport").subscribe(
-		function(_state) {
-			if (_state === undefined) {
-				_state = !self.exportLayer.visible;
-			}
-			self.exportLayer.visible = _state;
-
-			paper.view.update();
-		}
-	);
-
-
-	Mousetrap.bindGlobal('command+=', function() { paper.view.zoom *= 2; return false; } );
-	Mousetrap.bindGlobal('command+-', function() { paper.view.zoom *= 0.5; return false; } );
-
+	
 
 }
 
@@ -98,6 +62,45 @@ Preview.prototype.init = function(_element) {
 		lastMouse = thisMouse;
 	});
 
+
+	var self = this;
+
+	$.Topic("UI/command/toggleViewPreview").subscribe(
+		function(_state) {
+			if (_state === undefined) {
+				_state = !self.previewLayer.visible;
+			}
+			self.previewLayer.visible = _state;
+			paper.view.update();
+		}
+	);
+
+	$.Topic("UI/command/toggleViewBuild").subscribe(
+		function(_state) {
+			if (_state === undefined) {
+				_state = !self.buildLayer.visible;
+			}
+			self.buildLayer.visible = _state;
+			paper.view.update();
+		}
+	);
+
+	$.Topic("UI/command/toggleViewExport").subscribe(
+		function(_state) {
+			if (_state === undefined) {
+				_state = !self.exportLayer.visible;
+			}
+			self.exportLayer.visible = _state;
+
+			paper.view.update();
+		}
+	);
+
+
+	Mousetrap.bindGlobal('command+=', function() { paper.view.zoom *= 2; return false; } );
+	Mousetrap.bindGlobal('command+-', function() { paper.view.zoom *= 0.5; return false; } );
+
+
 };
 
 Preview.prototype.setDocument = function(_doc) {
@@ -105,8 +108,10 @@ Preview.prototype.setDocument = function(_doc) {
 	this.doc = _doc;
 
 
-	var unitScale = language.unitScales[this.doc.properties.unit] || 1;
+	
 
+
+	console.log(paper.view);
 	// draw preview/frame
 	this.previewLayer.activate();
 	this.previewLayer.removeChildren();
@@ -154,7 +159,7 @@ Preview.prototype.setDocument = function(_doc) {
 
 
 	if (oldDoc === null) {
-		paper.view.center = new paper.Point(_doc.properties.width * 0.5 * unitScale, _doc.properties.height * 0.5 * unitScale);
+		paper.view.center = new paper.Point(_doc.properties.width.toNumber("px") * 0.5, _doc.properties.height.toNumber("px") * 0.5);
 	}
 
 	// paper.view.zoom = _doc.properties.zoom;

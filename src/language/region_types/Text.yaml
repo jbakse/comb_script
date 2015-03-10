@@ -24,8 +24,8 @@ Text:
 
     -   keyword: size
         description: The size to draw the text. Measured from the base line to the top of a capital.
-        default: 10
-        type: number
+        type: dimension
+        default: 1cm
 
     -   keyword: align
         description: The horizontal alignment of the text relative to the text region's registration.

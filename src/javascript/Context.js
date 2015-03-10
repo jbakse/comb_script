@@ -1,5 +1,7 @@
 "use strict";
 
+
+var _ = require('underscore/underscore.js');
 var math = require('mathjs/math.min.js');
 
 module.exports = Context;
@@ -16,8 +18,8 @@ Context.prototype.toString = function() {
 };
 
 
-Context.prototype.scope = function(){
-	
+Context.prototype.scope = function() {
+
 	return {
 		parent_height: math.unit(this.bounds.height, 'px'),
 		parent_width: math.unit(this.bounds.width, 'px'),
@@ -29,6 +31,28 @@ Context.prototype.scope = function(){
 };
 
 Context.prototype.deriveContext = function(_properties) {
+	_properties = _(_properties).clone();
+
+	// translate dimensional propeties to value in pixels (paperjs native)
+	_(["top",
+			"bottom",
+			"margin_top",
+			"margin_bottom",
+			"height",
+			"left",
+			"right",
+			"margin_left",
+			"margin_right",
+			"width",
+			"trapping",
+			"translate_x",
+			"translate_y"
+		])
+		.each(function(key) {
+			if (_properties[key]) {
+				_properties[key] = _properties[key].toNumber("px");
+			}
+		});
 
 	// Calculate Bounds
 	var derivedBounds = new paper.Rectangle();
@@ -103,8 +127,9 @@ Context.prototype.deriveContext = function(_properties) {
 		derivedContext.bounds.x -= _properties.trapping;
 		derivedContext.bounds.y -= _properties.trapping;
 		derivedContext.bounds.width += _properties.trapping * 2;
-		derivedContext.bounds.height += _properties.trapping * 2;	
+		derivedContext.bounds.height += _properties.trapping * 2;
 	}
+
 
 	return derivedContext;
 };

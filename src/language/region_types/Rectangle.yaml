@@ -19,4 +19,4 @@ Rectangle:
     properties:
         -   keyword: radius
             description: The corner radius for a rounded rectangle
-            type: number
+            type: dimension
