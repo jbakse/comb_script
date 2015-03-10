@@ -23,11 +23,11 @@ Document:
             type: string
             default: document
 
-        -   keyword: unit
-            description: The dimension unit to use. 
-            type: string
-            default: px
-            values: [px, in, ft, mm, cm, m]
+        # -   keyword: unit
+        #     description: The dimension unit to use. 
+        #     type: string
+        #     default: px
+        #     values: [px, in, ft, mm, cm, m]
 
         -   keyword: width
             description: The width of the document bounds.

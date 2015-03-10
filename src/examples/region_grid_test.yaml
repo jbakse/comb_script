@@ -1,8 +1,7 @@
 properties:
     name: region_grid_test
-    unit: mm
-    width: 100
-    height: 100
+    width: 2 in
+    height: 2 in
 
 constants:
     x: 1 in
@@ -10,6 +9,6 @@ constants:
 children:
     - ellipse:
         properties:
-            width: parent_height
-            height: 2in
+            width: 2cm
+            height: parent_height
 

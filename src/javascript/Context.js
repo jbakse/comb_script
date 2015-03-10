@@ -17,6 +17,7 @@ Context.prototype.toString = function() {
 
 
 Context.prototype.scope = function(){
+	
 	return {
 		parent_height: math.unit(this.bounds.height, 'px'),
 		parent_width: math.unit(this.bounds.width, 'px'),

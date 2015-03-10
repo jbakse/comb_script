@@ -105,9 +105,8 @@ Region.prototype.loadConstants = function(_contstants) {
 		var scope = {};
 		if (self.parent) scope = _(self.parent.constants).clone();
 		try {
-			// todo, can't actually assume mm
-
-			evaluateMathjsExpression(value, scope, self.root.properties.unit || "mm");
+			self.constants[key] = evalMathjsExpression(value, scope);
+			console.log("imported", key, self.constants[key]);
 		}
 		catch (e) {
 			logPropertyError(self, key, e.message);
@@ -269,8 +268,12 @@ Region.prototype.evalMathProperties = function(context) {
 			var scope = _(self.constants).clone();
 			scope = _(scope).extend(context.scope());
 			try {
-				console.log(pValue, scope, scope.parent_height.toNumber('inch'), evaluateMathjsExpression(pValue, scope, self.root.properties.unit));
-				self.properties[_def.keyword] = evaluateMathjsExpression(pValue, scope, self.root.properties.unit);
+				// console.log(pValue, scope, scope.parent_height.toNumber('inch'), evalMathjsExpression(pValue, scope, self.root.properties.unit));
+				var result = evalMathjsExpression(pValue, scope);
+				if (result instanceof math.type.Unit) {
+					result = result.toNumber("px");
+				}
+				self.properties[_def.keyword] = result;
 			}
 			catch (e) {
 				logPropertyError(self, _def.keyword, e.message);
@@ -282,7 +285,7 @@ Region.prototype.evalMathProperties = function(context) {
 
 // todo, this funciton might belong in a library?
 
-function evaluateMathjsExpression(_expression, _scope, _unit) {
+function evalMathjsExpression(_expression, _scope) {
 	if (typeof _expression === "number") {
 		return _expression;
 	}
@@ -294,7 +297,7 @@ function evaluateMathjsExpression(_expression, _scope, _unit) {
 				return result;
 			}
 			else if (result instanceof math.type.Unit) {
-				return result.toNumber(_unit);
+				return result; //.toNumber("px");
 			}
 			else {
 				throw new Error("result of expression unexpected type");
@@ -318,8 +321,8 @@ Region.prototype.buildContext = function() {
 	else {
 		// we are the root create a new context scaled to our unit property
 		context = new Context();
-		var unitScale = language.unitScales[this.properties.unit] || 1;
-		context.matrix.scale(unitScale);
+		// var unitScale = language.unitScales[this.properties.unit] || 1;
+		// context.matrix.scale(unitScale);
 
 	}
 	this.evalMathProperties(context);
