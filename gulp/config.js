@@ -22,6 +22,14 @@ module.exports = {
     src: [src + "/style/main.less", src + "/style/docs.less"],
     dest: dest + "/css"
   },
+  sass: {
+    src: src + "/style/*.{sass,scss}",
+    dest: dest + "/css",
+    settings: {
+      //indentedSyntax: true, // Enable .sass syntax!
+      //imagePath: 'images' // Used by the image-url helper
+    }
+  },
   jade: {
     src: src + "/docs.jade",
     dest: dest

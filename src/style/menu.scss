@@ -1,0 +1,30 @@
+body {
+
+}
+
+.block
+{
+	font-size: 120px;
+	border-radius: 30px;
+}
+
+.one
+{
+
+	@extend .block;
+	background-color: #F00;
+
+}
+
+.two
+{
+	@extend .block;
+	background-color: #0F0;
+}
+
+
+.three
+{
+	@extend .block;
+	background-color: #00F;
+}
