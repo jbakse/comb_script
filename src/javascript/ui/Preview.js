@@ -111,7 +111,6 @@ Preview.prototype.setDocument = function(_doc) {
 	
 
 
-	console.log(paper.view);
 	// draw preview/frame
 	this.previewLayer.activate();
 	this.previewLayer.removeChildren();

@@ -79,7 +79,6 @@ Region.prototype.loadData = function(_data) {
 
 	this.loadChildren(_data.children);
 
-	console.log(this);
 	return this;
 };
 
