@@ -6,7 +6,7 @@ $menu-blue: #06aaff;
 $menu-green: #1de982;
 $menu-yellow: #fffc01;
 
-$menu-text-color:#000;
+$menu-text-color: #000;
 $menu-link-color: #000;
 
 $menu-height: 40px;
@@ -53,11 +53,23 @@ a{
 .menu-item{
 	position: relative;
 	display: inline-block;
+	float: left;
 }
+
+.dropdown-content-wrap{
+	// padding-left: $menu-margin;
+	margin: 0px $menu-margin $menu-lineheight*.8 $menu-margin;
+}
+
 .menu-item h1{
+	@extend .dropdown-content-wrap;
 	font-weight: 300;
 	font-size: 26px;
 	border-bottom: 1px dotted black;
+}
+.menu-item p{
+	@extend .dropdown-content-wrap;
+	line-height:$menu-lineheight*.8;
 }
 
 .menu-item .label{
@@ -68,27 +80,22 @@ a{
 	font-weight:600;
 	cursor: pointer;
 	font-size: 18px;
+	user-select: none;
 }
 
 
 /* DROP DOWN */
-.dropdown-content-wrap{
-	padding-left: $menu-margin;
-	padding-right: $menu-margin;
-}
+
 .column-list{
-	max-height:300px;
-	overflow:scroll;
+	// max-height:300px;
+	// overflow:scroll;
 	overflow-x: hidden;
 	padding-left: $menu-margin;
-}
-.copy-block{
-	line-height:$menu-lineheight*.8;
 }
 
 .menu-dropdown{
 	// display:none;
-	background-color:$menu-blue;
+	
 	padding: $menu-margin 0;
 	width: 300px;
 	position:absolute;
@@ -131,6 +138,7 @@ a{
 /* BUTTONS */
 #menu .button{
 	cursor: pointer;
+	user-select: none;
 	font-weight: 600;
 	font-size: 18px;
 
@@ -139,7 +147,7 @@ a{
 	clear: both;
 
 	padding: 3px 7px 0px 7px;
-	transition: background-color .2s;
+	transition: background-color .15s;
 }
 #menu .button:hover{
 	background-color: $menu-yellow;	
@@ -147,10 +155,20 @@ a{
 
 /* SPECIFIC MENUS LAYOUT */
 
+#dropdown-documentation.open .label,
+#dropdown-documentation .menu-dropdown{
+	background-color: $menu-blue;
+}
+
 #dropdown-documentation .menu-dropdown{
 	width: $menu-column-width*3 + $menu-gutter*2 + $menu-margin*2;
 }
 
-#dropdown-documentation.open .label{
-	background-color: $menu-blue;
+#dropdown-file.open .label,
+#dropdown-file .menu-dropdown{
+	background-color: $menu-orange;
+}
+
+#dropdown-file .menu-dropdown{
+	width: $menu-column-width*2 + $menu-gutter + $menu-margin*2;
 }
