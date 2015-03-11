@@ -4,19 +4,30 @@ require('./jquery_util.js');
 
 // var ApplicationController = require('./ApplicationController.js');
 
-function menu() {
+function setupMenuItems() {
 	//setup event listeners to open the menus
-	// alert("oi");
-	$(".menu-item").click(
+	$(".menu-label").mousedown(
 		function() {
-			var state = $(this).hasClass("open");
+			var isOpen = $(this).parent().hasClass("open");
 			$(".menu-item").removeClass("open");
-			$(this).toggleClass("open", !state);
+			$(this).parent().toggleClass("open", !isOpen);
+		}
+	);
+
+	$(".menu-item").mousedown(
+		function(e) {
+			e.stopPropagation();
+		}
+	);
+
+	$(document).mousedown(
+		function(e) {
+			$(".menu-item").removeClass("open");
 		}
 	);
 }
 
 
 $(function() {
-	menu();
+	setupMenuItems();
 });
