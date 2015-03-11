@@ -159,6 +159,7 @@ a{
 /* OTHER UI ELEMENTS */
 #preview-ui{
 	float:right;
+	margin-right:10px;
 }
 
 .preview-ui-element{
@@ -167,23 +168,27 @@ a{
 	height:30px;
 	margin-left:5px;
 	margin-top:5px;
+	background-color: #139855;
+	color:white;
 }
 
 .view-mode-icon{
 	width:30px;
-	background-color: black;
 	@extend .preview-ui-element;
 }
 #zoom-level{
+	// font-weight:600;
 	display:inline-block;
-	background-color: white;
 	padding: 0 9px 0 9px;
+	line-height:34px;
 	@extend .preview-ui-element;
 }
 .zoom-button{
-
+	// font-weight:400;
+	font-size:30px;
+	text-align:center;
+	line-height:30px;
 	display:inline-block;
-	background-color: white;
 	width:30px;
 	@extend .preview-ui-element;
 }
