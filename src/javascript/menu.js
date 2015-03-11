@@ -9,7 +9,9 @@ function menu() {
 	// alert("oi");
 	$(".menu-item").click(
 		function() {
-			$(this).toggleClass("open");
+			var state = $(this).hasClass("open");
+			$(".menu-item").removeClass("open");
+			$(this).toggleClass("open", !state);
 		}
 	);
 }

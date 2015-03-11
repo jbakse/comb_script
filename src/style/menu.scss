@@ -1,5 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700);
-$josef: 'Josefin Sans', sans-serif;
+$uifont: 'Josefin Sans', sans-serif;
 
 $menu-orange: #ff6529;
 $menu-blue: #06aaff;
@@ -8,18 +8,16 @@ $menu-yellow: #fffc01;
 
 $menu-text-color: #000;
 $menu-link-color: #000;
+$menu-button-padding: 7px;
 
-$menu-height: 40px;
+$menu-bar-height: 40px;
 $menu-lineheight: 26px;
 $menu-gutter: 12px;
 $menu-margin: 24px;
 $menu-column-width: 160px;
 
-// $button-margin-adjust: 7px;
-
-
 body {
-	font-family: $josef;
+	font-family: $uifont;
 	margin: 0;
 }
 
@@ -34,7 +32,7 @@ a{
 	box-sizing: border-box;
 	
 	width: 100%;
-	height: $menu-height;
+	height: $menu-bar-height;
 	background-color: $menu-green;
 }
 
@@ -87,21 +85,22 @@ a{
 /* DROP DOWN */
 
 .column-list{
+/*if we want the column lists to scroll*/
 	// max-height:300px;
 	// overflow:scroll;
+
 	overflow-x: hidden;
 	padding-left: $menu-margin;
 }
 
 .menu-dropdown{
-	// display:none;
-	
-	padding: $menu-margin 0;
+	padding: $menu-margin 0 0 0;
 	width: 300px;
 	position:absolute;
-	top:$menu-height;
+	top:$menu-bar-height;
 	left:0px;
 	display:none;
+	user-select: none;
 }
 
 .menu-item.open .menu-dropdown{
@@ -128,14 +127,13 @@ a{
 }
 
 .group{
-	padding-left:7px;
-	margin-left: -14px;
-	margin-bottom:$menu-lineheight+3;
 	overflow: auto;
-	margin-top:0px;
+	padding-left:$menu-button-padding;
+	margin: 0px 0px $menu-lineheight+3 $menu-button-padding * -2;
 }
 
 /* BUTTONS */
+/*might need to add example link back in*/
 #menu .button{
 	cursor: pointer;
 	user-select: none;
@@ -146,15 +144,51 @@ a{
 	float:left;
 	clear: both;
 
-	padding: 3px 7px 0px 7px;
+	padding: 3px $menu-button-padding 0px $menu-button-padding;
 	transition: background-color .15s;
+
+	.key-shortcut{
+		font-size: 12px;
+		margin-left: 5px
+	}
 }
 #menu .button:hover{
 	background-color: $menu-yellow;	
 }
 
-/* SPECIFIC MENUS LAYOUT */
+/* OTHER UI ELEMENTS */
+#preview-ui{
+	float:right;
+}
 
+.preview-ui-element{
+	display:inline-block;
+	float:left;
+	height:30px;
+	margin-left:5px;
+	margin-top:5px;
+}
+
+.view-mode-icon{
+	width:30px;
+	background-color: black;
+	@extend .preview-ui-element;
+}
+#zoom-level{
+	display:inline-block;
+	background-color: white;
+	padding: 0 9px 0 9px;
+	@extend .preview-ui-element;
+}
+.zoom-button{
+
+	display:inline-block;
+	background-color: white;
+	width:30px;
+	@extend .preview-ui-element;
+}
+
+/* SPECIFIC MENUS LAYOUT */
 #dropdown-documentation.open .label,
 #dropdown-documentation .menu-dropdown{
 	background-color: $menu-blue;
