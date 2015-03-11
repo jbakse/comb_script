@@ -15,6 +15,8 @@ $menu-gutter: 12px;
 $menu-margin: 24px;
 $menu-column-width: 160px;
 
+// $button-margin-adjust: 7px;
+
 
 body {
 	font-family: $josef;
@@ -69,7 +71,7 @@ a{
 }
 
 
-/*actual drop down contents*/
+/* DROP DOWN */
 .dropdown-content-wrap{
 	padding-left: $menu-margin;
 	padding-right: $menu-margin;
@@ -83,22 +85,6 @@ a{
 .copy-block{
 	line-height:$menu-lineheight*.8;
 }
-// .group{
-// 	// margin-bottom:$menu-lineheight;
-// 	// overflow: auto;
-
-// }
-.group .title{
-	font-weight: 400;
-	font-size: 15px;
-	display:inline-block;
-	float:left;
-	clear: both;
-	padding-top: $menu-lineheight;
-}
-.group:first-child .title{
-	padding-top: 0;
-}
 
 .menu-dropdown{
 	// display:none;
@@ -110,9 +96,11 @@ a{
 	left:0px;
 	display:none;
 }
+
 .menu-item.open .menu-dropdown{
 	display:block;
 }
+
 .menu-dropdown .column{
 	width: $menu-column-width;
 	display: inline-block;
@@ -122,6 +110,22 @@ a{
 }
 .menu-dropdown .column:last-child{
 	margin-right: 0;
+}
+
+.column h2{
+	font-weight: 400;
+	font-size: 15px;
+	padding-top: 3px;
+	margin: 0;
+	clear: both;
+}
+
+.group{
+	padding-left:7px;
+	margin-left: -14px;
+	margin-bottom:$menu-lineheight+3;
+	overflow: auto;
+	margin-top:0px;
 }
 
 /* BUTTONS */
@@ -135,15 +139,15 @@ a{
 	clear: both;
 
 	padding: 3px 7px 0px 7px;
-	margin: -2px -7px 0px;
 	transition: background-color .2s;
 }
 #menu .button:hover{
 	background-color: $menu-yellow;	
 }
 
+/* SPECIFIC MENUS LAYOUT */
+
 #dropdown-documentation .menu-dropdown{
-	// width: 800px;
 	width: $menu-column-width*3 + $menu-gutter*2 + $menu-margin*2;
 }
 
