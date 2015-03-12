@@ -367,7 +367,9 @@ body
 
 
 
-
+#file-info {
+	padding-left: 20px;
+}
 #file-info .button {
 	font-size: 11px;
 	
@@ -396,6 +398,7 @@ body
 #file-info .info {
 	.menu-text-button ();
 	background-color: transparent;
+	color: white;
 	padding: 0;
 }
 
@@ -411,6 +414,7 @@ body
 
 #preview {
 	overflow: hidden;
+	// overflow-y: auto;
 	background-color: #CCC;
 
 }
@@ -421,14 +425,14 @@ body
 	position: absolute;
 	// outline: 3px solid red;
 	background-color: #EEE;
-	@size: 1600px;
+	@canvas-size: 1600px;
 
-	width: @size;
-	height: @size;
+	width: @canvas-size;
+	height: @canvas-size;
 	left: 50%;
-	margin-left: @size * -0.5;
+	margin-left: @canvas-size * -0.5;
 	top: 50%;
-	margin-top: @size * -0.5;
+	margin-top: @canvas-size * -0.5;
 
 }
 

@@ -7,6 +7,16 @@
 
 
 
+@menu-orange: #ff6529;
+@menu-blue: #06aaff;
+@menu-green: #1de982;
+@menu-yellow: #fffc01;
+
+
+#editor .ace_line
+{
+	color: white;
+}
 
 
 // #editor .ace_marker-layer .ace_selection {
@@ -36,22 +46,22 @@
 // #editor .ace_invisible {
 // color: #52524d
 // }
-// #editor .ace_entity.ace_name.ace_tag,
-// #editor .ace_keyword,
-// #editor .ace_meta.ace_tag,
-// #editor .ace_storage {
-// color: #F92672
-// }
+#editor .ace_entity.ace_name.ace_tag,
+#editor .ace_keyword,
+#editor .ace_meta.ace_tag,
+#editor .ace_storage {
+color: @menu-green;
+}
 // #editor .ace_punctuation,
 // #editor .ace_punctuation.ace_tag {
 // color: #fff
 // }
-// #editor .ace_constant.ace_character,
-// #editor .ace_constant.ace_language,
-// #editor .ace_constant.ace_numeric,
-// #editor .ace_constant.ace_other {
-// color: #AE81FF
-// }
+#editor .ace_constant.ace_character,
+#editor .ace_constant.ace_language,
+#editor .ace_constant.ace_numeric,
+#editor .ace_constant.ace_other {
+color: @menu-orange;
+}
 // #editor .ace_invalid {
 // color: #F8F8F0;
 // background-color: #F92672

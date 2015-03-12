@@ -1,3 +1,6 @@
+////////////////////////////////////////////////////////////////////
+// Variables
+
 @import url(http://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700);
 $uifont: 'Josefin Sans', sans-serif;
 
@@ -16,24 +19,35 @@ $menu-gutter: 12px;
 $menu-margin: 24px;
 $menu-column-width: 160px;
 
-body {
-	font-family: $uifont;
-	margin: 0;
+
+
+////////////////////////////////////////////////////////////////////
+// Mixins
+
+@mixin clearfix {
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
 }
 
-a{
-	text-decoration: none;
-	color:$menu-link-color;
-	font-weight:600;
-}
 
 #menu {
+	font-family: $uifont;
+
 	position: absolute;
 	box-sizing: border-box;
 	
 	width: 100%;
 	height: $menu-bar-height;
 	background-color: $menu-green;
+}
+
+#menu a {
+	text-decoration: none;
+	color:$menu-link-color;
+	font-weight:600;
 }
 
 #menu a:visited{
@@ -44,35 +58,23 @@ a{
 	color:$menu-text-color;
 }
 
-#menu .button a:visited{
+#menu .button a:visited {
 	color:$menu-text-color;
 }
 
-.menu-item{
+#menu .menu-item {
 	position: relative;
 	float: left;
 }
 
 ////////////////////////////////////////////////////////////////////
 // Extendables
-.dropdown-content{
-	// padding-left: $menu-margin;
+.dropdown-content {
 	margin: 0px $menu-margin $menu-lineheight*.8 $menu-margin;
 }
 
 
-
-////////////////////////////////////////////////////////////////////
-// Mixins
-@mixin clearfix {
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-}
-
-.menu-item .menu-label{
+#menu .menu-label {
 	position: relative;
 	display: inline-block;
 	padding-left: $menu-margin;
@@ -87,110 +89,115 @@ a{
 }
 
 
-.menu-item h1{
-	@extend .dropdown-content;
-	font-weight: 300;
-	font-size: 26px;
-	border-bottom: 1px dotted black;
-}
 
-.menu-item p{
-	@extend .dropdown-content;
-	line-height: $menu-lineheight*.8;
-}
 
 
 
 /* DROP DOWN */
+#menu {
+	.menu-dropdown{
+		padding: $menu-margin 0 0 0;
+		width: 300px;
+		position:absolute;
+		top:$menu-bar-height;
+		left:0px;
+		display:none;
+		user-select: none;
+		
+	}
 
-.menu-dropdown{
-	padding: $menu-margin 0 0 0;
-	width: 300px;
-	position:absolute;
-	top:$menu-bar-height;
-	left:0px;
-	display:none;
-	user-select: none;
+	.open .menu-dropdown{
+		display:block;
+	}
+
+	.menu-dropdown h1{
+		@extend .dropdown-content;
+		font-weight: 300;
+		font-size: 26px;
+		border-bottom: 1px dotted black;
+	}
+
+	.menu-dropdown p{
+		@extend .dropdown-content;
+		line-height: $menu-lineheight*.8;
+	}
 }
-
-.menu-item.open .menu-dropdown{
-	display:block;
-}
-
 
 
 /* COLUMNS */
-.column-container
-{
-	padding-left: $menu-margin;
-	@include clearfix;
-}
+#menu {
 
-.column-container.scroll
-{
-	max-height:300px;
-	overflow-y:auto;
-}
+	.column-container
+	{
+		padding-left: $menu-margin;
+		@include clearfix;
+	}
 
-.menu-dropdown .column{
-	width: $menu-column-width;
-	float: left;
-	margin-right: $menu-gutter;
-	line-height:$menu-lineheight;
-}
+	.column-container.scroll
+	{
+		max-height:300px;
+		overflow-y:auto;
+	}
 
-.menu-dropdown .column:last-child{
-	margin-right: 0;
-}
+	.column{
+		width: $menu-column-width;
+		float: left;
+		margin-right: $menu-gutter;
+		line-height:$menu-lineheight;
+	}
 
+	.column:last-child{
+		margin-right: 0;
+	}
 
-.column h2{
-	font-weight: 400;
-	font-size: 15px;
-	padding-top: 3px;
-	margin: 0;
-	clear: both;
+	.column h2{
+		font-weight: 400;
+		font-size: 15px;
+		padding-top: 3px;
+		margin: 0;
+		clear: both;
+	}
 }
 
 
 /* BUTTONS */
-/*might need to add example link back in*/
+#menu {
 
-.button-list {
-	padding-left: 0;
-	margin: 0px 0px $menu-lineheight+3 0;
-	
-	@include clearfix;
-}
-
-.button-list .button{
-	cursor: pointer;
-	user-select: none;
-	font-weight: 600;
-	font-size: 18px;
-
-	display: inline;
-	float: left;
-	clear: both;
-
-	padding: 3px $menu-button-padding 0px $menu-button-padding;
-	margin-left: -$menu-button-padding;
-	
-
-	transition: background-color .15s;
-
-	.key-shortcut{
-		font-size: 12px;
-		margin-left: 5px
+	.button-list {
+		padding-left: 0;
+		margin: 0px 0px $menu-lineheight+3 0;
+		@include clearfix;
 	}
-}
 
-.button-list .button:hover{
-	background-color: $menu-yellow;	
+	.button-list .button{
+		cursor: pointer;
+		user-select: none;
+		font-weight: 600;
+		font-size: 18px;
+
+		display: inline;
+		float: left;
+		clear: both;
+
+		padding: 3px $menu-button-padding 0px $menu-button-padding;
+		margin-left: -$menu-button-padding;
+
+		transition: background-color .15s;
+
+		.key-shortcut{
+			font-size: 12px;
+			margin-left: 5px
+		}
+	}
+
+	.button-list .button:hover{
+		background-color: $menu-yellow;	
+	}
 }
 
 
 /* SPECIFIC MENU ITEMS STYLING */
+
 #menu-item-documentation.open .menu-label,
 #menu-item-documentation .menu-dropdown{
 	background-color: $menu-blue;
@@ -258,14 +265,14 @@ a{
 	
 }
 .scroll::-webkit-scrollbar {
-    width: 10px;
+	width: 10px;
 }
- 
+
 .scroll::-webkit-scrollbar-track {
-  
+
 }
- 
+
 .scroll::-webkit-scrollbar-thumb {
-  background-color: black;
-   width: 5px;
+	background-color: black;
+	width: 5px;
 }

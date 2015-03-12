@@ -1,16 +1,10 @@
 'use strict';
 
-
-
-
-
-
 var language = require('../language.js');
 var settings = require('../Settings.js');
 var _ = require('underscore/underscore.js');
 
 module.exports = Preview;
-
 
 ////////////////////////////////////////////////////////////////////
 // Preview
@@ -21,10 +15,6 @@ function Preview() {
 	this.exportLayer = null;
 
 	this.doc = null;
-
-
-	
-
 }
 
 Preview.prototype.init = function(_element) {
@@ -107,16 +97,13 @@ Preview.prototype.setDocument = function(_doc) {
 	var oldDoc = this.doc;
 	this.doc = _doc;
 
-
+	this.buildLayer.visible = true;
+	this.previewLayer.visible = true;
 	
-
-
 	// draw preview/frame
 	this.previewLayer.activate();
 	this.previewLayer.removeChildren();
 	this.doc.preview();
-	
-
 
 	// draw build
 	this.buildLayer.activate();
