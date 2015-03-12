@@ -46,15 +46,16 @@ Menu.prototype.addClickCommand = function(_element, _command) {
 };
 
 Menu.prototype.addToggleCommand = function(_element, _command) {
-	var state = $(_element).hasClass("on");
+	var isOn = $(_element).hasClass("on");
 	// $(_element).append('<img class="strike-through" src="images/menu_icons/icon_off.svg">');
 	$(_element).click(
 		function() {
-			state = !state;
-			$(_element).toggleClass("on", state);
-			$.Topic(_command).publish(state);
+			isOn = !isOn;
+			$(_element).toggleClass("on", isOn);
+			$(_element).toggleClass("off", !isOn);
+			$.Topic(_command).publish(isOn);
 		}
 	);
 
-	$.Topic(_command).publish(state);
+	$.Topic(_command).publish(isOn);
 };

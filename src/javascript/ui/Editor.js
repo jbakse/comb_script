@@ -21,6 +21,7 @@ function Editor() {
 Editor.prototype.init = function(_element) {
 	this.editor = ace.edit(_element);
 	this.editor.setTheme("ace/theme/monokai");
+
 	this.editor.getSession().setMode("ace/mode/yaml");
 	this.editor.setShowInvisibles(false);
 	this.editor.setShowPrintMargin(false);
@@ -83,8 +84,10 @@ Editor.prototype.highlightLines = function(_firstLine, _lastLine, _class) {
 	this.editor.getSession().removeMarker(this.highlightMarker);
 
 	this.highlightMarker = this.editor.session.addMarker(
-		new Range(_firstLine, 0, _lastLine, 1), _class, "fullLine"
-	);
+		new Range(_firstLine, 0, _lastLine, 1), _class, "fullLine");
+
+
+	
 };
 
 Editor.prototype.gotoLine = function(line, focus) {

@@ -119,8 +119,8 @@ Preview.prototype.setDocument = function(_doc) {
 	var oldDoc = this.doc;
 	this.doc = _doc;
 
-	this.buildLayer.visible = true;
-	this.previewLayer.visible = true;
+	// this.buildLayer.visible = true;
+	// this.previewLayer.visible = true;
 
 	// draw preview/frame
 	this.previewLayer.activate();

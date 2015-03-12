@@ -19,7 +19,7 @@ module.exports = {
     dest: dest
   },
   less: {
-    src: [src + "/style/main.less", src + "/style/docs.less"],
+    src: [src + "/style/*.less", src + "/style/docs.less"],
     dest: dest + "/css"
   },
   sass: {

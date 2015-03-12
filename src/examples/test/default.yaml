@@ -2,5 +2,43 @@ properties:
     width: 10cm
     height: 10cm
 
+constants:
+    radius: 2cm
+
 children:
     - ellipse:
+        properties:
+            width: radius * 2  # this is a long line for long line's sake. this is a long line for long line's sake.
+            height: radius * 2
+            left: parent_left
+
+
+    - ellipse:
+        properties:
+            width: radius * 2
+            height: radius * 2
+            left: parent_left
+
+    - ellipse:
+        properties:
+            width: radius * 2
+            height: radius * 2
+            left: parent_left
+
+    - ellipse:
+        properties:
+            width: radius * 2
+            height: radius * 2
+            left: parent_left
+
+    - ellipse:
+        properties:
+            width: radius * 2
+            height: radius * 2
+            left: parent_left
+
+    - ellipse:
+        properties:
+            width: radius * 2
+            height: radius * 2
+            left: parent_left
