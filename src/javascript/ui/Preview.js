@@ -87,8 +87,30 @@ Preview.prototype.init = function(_element) {
 	);
 
 
-	Mousetrap.bindGlobal('command+=', function() { paper.view.zoom *= 2; return false; } );
-	Mousetrap.bindGlobal('command+-', function() { paper.view.zoom *= 0.5; return false; } );
+	$.Topic("UI/command/zoomIn").subscribe(
+		function() {
+			paper.view.zoom *= 2;
+			$("#zoom-level").text(paper.view.zoom*100+" %");
+		}
+	);
+
+	$.Topic("UI/command/zoomOut").subscribe(
+		function() {
+			paper.view.zoom *= 0.5;
+			$("#zoom-level").text(paper.view.zoom*100+" %");
+		}
+	);
+
+	Mousetrap.bindGlobal('command+=', function() {
+		$.Topic("UI/command/zoomIn").publish();
+		// paper.view.zoom *= 2;
+		return false;
+	});
+	Mousetrap.bindGlobal('command+-', function() {
+		$.Topic("UI/command/zoomOut").publish();
+		// paper.view.zoom *= 0.5;
+		return false;
+	});
 
 
 };
@@ -99,7 +121,7 @@ Preview.prototype.setDocument = function(_doc) {
 
 	this.buildLayer.visible = true;
 	this.previewLayer.visible = true;
-	
+
 	// draw preview/frame
 	this.previewLayer.activate();
 	this.previewLayer.removeChildren();

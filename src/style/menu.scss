@@ -227,6 +227,10 @@ $menu-column-width: 160px;
 	margin-right:10px;
 }
 
+#preview-ui div
+{
+	user-select: none;
+}
 .preview-ui-element{
 	display:inline-block;
 	float:left;

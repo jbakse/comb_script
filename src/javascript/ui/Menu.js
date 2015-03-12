@@ -13,16 +13,22 @@ function Menu() {
 
 Menu.prototype.init = function(_element) {
 	this.element = _element;
-	this.addClickCommand("#button-svg-export", "UI/command/exportSVG");
-	this.addToggleCommand("#button-view-frame", "UI/command/toggleViewPreview");
-	this.addToggleCommand("#button-view-build", "UI/command/toggleViewBuild");
-	this.addToggleCommand("#button-view-export", "UI/command/toggleViewExport");
-	
+	// file
 	this.addClickCommand("#button-connect-google-drive", "UI/command/connectGoogleDrive");
 	this.addClickCommand("#button-new", "UI/command/new");
 	this.addClickCommand("#button-open", "UI/command/open");
 	this.addClickCommand("#button-save", "UI/command/save");
 	this.addClickCommand("#button-save-as", "UI/command/saveAs");
+	this.addClickCommand("#button-svg-export", "UI/command/exportSVG");
+	
+
+	// view
+	this.addToggleCommand("#button-view-frame", "UI/command/toggleViewPreview");
+	this.addToggleCommand("#button-view-build", "UI/command/toggleViewBuild");
+	this.addToggleCommand("#button-view-export", "UI/command/toggleViewExport");
+	this.addToggleCommand("#button-zoom-in", "UI/command/zoomIn");
+	this.addToggleCommand("#button-zoom-out", "UI/command/zoomOut");
+
 
 	$('[data-example]').click ( function (_e) {
 		// console.log("_e", _e, this, $(this).data('example'));
