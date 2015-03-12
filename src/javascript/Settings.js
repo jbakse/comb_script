@@ -2,7 +2,7 @@
 
 var _ = require('underscore/underscore.js');
 
-module.exports.fileURL = "./examples/symbols.yaml";
+module.exports.fileURL = "./examples/test/default.yaml";
 // module.exports.fileURL = "../yaml/tricky_grid.yaml";
 module.exports.previewCanvasWidth = 1600;
 module.exports.previewCanvasHeight = 1600;

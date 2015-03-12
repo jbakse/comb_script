@@ -10,9 +10,9 @@ var log = require('./ui/Log.js').sharedInstance();
 var DEVELOPER_KEY = 'AIzaSyAaps9tbXrXH7Yhk94HnHv7EmVaz8Hxmjo';
 var CLIENT_ID = '1055926372216-75g9p5ttbsb7vnu18rvfn46n13llbfsn.apps.googleusercontent.com';
 var SCOPES = [
-'https://www.googleapis.com/auth/drive.install', 
-'https://www.googleapis.com/auth/drive.readonly', 
-'https://www.googleapis.com/auth/drive.file'
+	'https://www.googleapis.com/auth/drive.install',
+	'https://www.googleapis.com/auth/drive.readonly',
+	'https://www.googleapis.com/auth/drive.file'
 ];
 var APP_ID = 'combscript-jbakse';
 
@@ -44,10 +44,18 @@ module.exports.init = function() {
 	$.Topic("UI/command/open").subscribe(openFile);
 	$.Topic("UI/command/new").subscribe(newFile);
 	$.Topic("UI/command/save").subscribe(saveFile);
+	$.Topic("UI/command/saveAs").subscribe(saveFileAs);
+
+	Mousetrap.bindGlobal(['ctrl+o','command+o'], function() { openFile(); return false; } );
+	Mousetrap.bindGlobal(['ctrl+s','command+s'], function() { saveFile(); return false; } );
+	Mousetrap.bindGlobal(['ctrl+shift+s','command+shift+s'], function() { saveFileAs(); return false; } );
 
 	$.Topic("UI/editor/onContentChange").subscribe(onContentChange);
 
-	Mousetrap.bindGlobal('command+s', function(){saveFile(); return false;} );
+	Mousetrap.bindGlobal('command+s', function() {
+		saveFile();
+		return false;
+	});
 
 
 	initialized = true;
@@ -122,6 +130,7 @@ function loadAPIs() {
 			$("#button-new").removeClass('hidden');
 			$("#button-open").removeClass('hidden');
 			$("#button-save").removeClass('hidden');
+			$("#button-save-as").removeClass('hidden');
 			$("#button-connect-google-drive").addClass('hidden');
 
 			handleGoogleDriveLaunchRequest();
@@ -163,11 +172,11 @@ window.onbeforeunload = confirmPageNavigation;
 
 function confirmPageNavigation(e) {
 	if (!currentFileInfo.dirty) return;
-	
+
 	e = e || window.event;
 
-	var	message = "You have unsaved changes that will be lost.";
-	
+	var message = "You have unsaved changes that will be lost.";
+
 	// For IE6-8 and Firefox prior to version 4
 	if (e) {
 		e.returnValue = message;
@@ -183,7 +192,7 @@ function onContentChange(_e, content) {
 	$("#file-dirty").removeClass('hidden');
 }
 
-function setClean(){
+function setClean() {
 	currentFileInfo.dirty = false;
 	$("#file-dirty").addClass('hidden');
 }
@@ -259,7 +268,6 @@ function openFile(id) {
 
 
 
-
 			log.appendSuccess("File opened.");
 		})
 		.catch(function(error) {
@@ -272,29 +280,35 @@ function openFile(id) {
 
 function saveFile() {
 	if (!currentFileInfo.id) {
-
-		currentFileInfo.title = prompt('Save file as');
-
-		createDriveFile(currentFileInfo.title, currentFileInfo.content, currentFileInfo.parentId)
-			.then(function(result) {
-				currentFileInfo.id = result.id;
-
-				currentFileInfo.dirty = false;
-				$("#file-dirty").addClass('hidden');
-				$("#file-title").text(currentFileInfo.title);
-				log.appendSuccess("File created.");
-			});
-
+		saveFileAs();
 	}
 	else {
-		// console.log(currentFileInfo);
 		updateDriveFile(currentFileInfo).then(function(result) {
-
 			currentFileInfo.dirty = false;
 			$("#file-dirty").addClass('hidden');
 			log.appendSuccess("File saved.");
 		});
 	}
+}
+
+function saveFileAs() {
+	var response = prompt('Save file as');
+	if (!response) {
+		log.appendWarning("File not saved.");
+		return;
+	}
+
+	currentFileInfo.title = response;
+
+	createDriveFile(currentFileInfo.title, currentFileInfo.content, currentFileInfo.parentId)
+		.then(function(result) {
+			currentFileInfo.id = result.id;
+			currentFileInfo.dirty = false;
+			$("#file-dirty").addClass('hidden');
+			$("#file-title").text(currentFileInfo.title);
+			log.appendSuccess("File created.");
+		});
+
 }
 
 

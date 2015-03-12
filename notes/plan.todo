@@ -67,7 +67,8 @@
 -	Provide .comb specific way to reuse library items: instead of using yaml symbols, something like uses or inherit that pulls properties from another region
 
 # File Management
--	Google Drive Save As?
+-	When opening a file set the id in the url so it can be linked, and reloading will reload the file
++-	Google Drive Save As?
 +-----	Warn on navigation away from dirty file (prompt for sav)
 
 # Math Expression support

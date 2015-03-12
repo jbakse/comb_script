@@ -22,8 +22,9 @@ Menu.prototype.init = function(_element) {
 	this.addClickCommand("#button-new", "UI/command/new");
 	this.addClickCommand("#button-open", "UI/command/open");
 	this.addClickCommand("#button-save", "UI/command/save");
+	this.addClickCommand("#button-save-as", "UI/command/saveAs");
 
-	$('.example-link').click ( function (_e) {
+	$('[data-example]').click ( function (_e) {
 		// console.log("_e", _e, this, $(this).data('example'));
 		$.Topic("UI/command/loadYAML").publish($(this).data('example'));
 	});

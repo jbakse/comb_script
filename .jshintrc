@@ -3,7 +3,8 @@
 	"devel": true,
 	"jquery": true,
 	"evil": true,
-
+	"esnext": true,
+	
 	"strict": false,
 	"globalstrict": true,
 	
