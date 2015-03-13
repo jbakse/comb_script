@@ -10,8 +10,9 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Todo
 
------	Discuss requiring units always
++-----	Discuss requiring units always
 	: con, mildly tedius maybe. pro, clearer to read, cleaner/shorter parsing code with less special cases. eval is never gonna fly with "1in + 3" or "parent_height + 3" because you can't add units to non-units
+-----	Fallout from units (or soemthing else) region grid spins up the proc, locks the tab
 
 -----	Trapping Experiment.
 	Added Trapping property. it looks very promising
@@ -40,15 +41,17 @@
 	
 # Preview
 ---	Let user Pan
-	
+	----	Better solution to preserving pan on edit, and recentering.
+		preview probably should listen for an event to get sent out that a new document loaded, and resize then
+
 	+--- prevent sticky mouse pan
 	+--- prevent text selection during pan
 
 ---	Let user Zoom
-	--- scroll wheel zoom
+	-- scroll wheel zoom
 	+---- keyboard command zoom
-	--- tool bar magnifying glass?
-	--- option key maginfying glass cursor?
+	+--- tool bar magnifying glass?
+	-- option key maginfying glass cursor?
 	+---- zoom aware pan
 
 +----	Don't screw up pan on code changes
@@ -61,6 +64,7 @@
 --	Click on covered items: right now a large box over small box prevents selection of small box
 
 # Inspector
+----	Design it!
 --	List dimensions in document unit
 
 # Symbols/Mixins
@@ -74,7 +78,7 @@
 # Math Expression support
 	+---	Possible Library: http://mathjs.org/docs/expressions/customization.html
 	+---	Dimension Units
-	---	Access Parent Bounds 
+	+---	Access Parent Bounds 
 	+--	move evaluation to build/preview
 	+--	parse in region also for validation?
 	+--	(no)change the 'type' in the language files
@@ -100,6 +104,7 @@
 -	Review: how child_booleans vs self_booleans work, does it make sense?
 -	Non-Boolean Paths: flag paths as inellegible for boolean (tries to fill in letters (sutton), letters cause issues in mixed situations, should be able to opt out of mixed booleans)
 -	Many to Many: test document
+---	Document
 
 # Syntax
 -	Mirror
