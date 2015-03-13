@@ -4,20 +4,20 @@ properties:
 
 children:
     - region:
-	properties:
-	    name: parent_region
-	    width: 300cm
-	    height: 200cm
+        properties:
+            name: parent_region
+            width: 300cm
+            height: 200cm
 
-	children:
-	    - rectangle:
-		properties:
-		    # margin_left: 0cm
-		    height: 200cm
-		    width: 200cm
-	    - ellipse:
-		properties:
-		    # margin_right: 0cm
-		    height: 200cm
-		    width: 200cm
-		    boolean: subtract
+        children:
+            - rectangle:
+                properties:
+                    # margin_left: 0cm
+                    height: 200cm
+                    width: 200cm
+            - ellipse:
+                properties:
+                    # margin_right: 0cm
+                    height: 200cm
+                    width: 200cm
+                    boolean: subtract

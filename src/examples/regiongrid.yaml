@@ -9,9 +9,9 @@ children:
             - region_grid:
                 #region grids create a series of regions
                 properties:
-		    width: 100mm
-		    height: 100mm
-		    column_width: 20mm
+                    width: 100mm
+                    height: 100mm
+                    column_width: 20mm
                     rows: 4
                     registration: center
                 children:
@@ -21,10 +21,10 @@ children:
                         children:
                             - ellipse:
                                 properties:
-				    width: 15mm
-				    height: 15mm
+                                    width: 15mm
+                                    height: 15mm
                             - ellipse:
                                 properties:
-				    width: 10mm
-				    height: 10mm
+                                    width: 10mm
+                                    height: 10mm
                                     boolean: subtract
