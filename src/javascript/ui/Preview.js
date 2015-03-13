@@ -54,6 +54,11 @@ Preview.prototype.init = function(_element) {
 
 
 	var self = this;
+	$.Topic("File/onLoad").subscribe(
+		function() {
+			self.newFileFlag = true;
+		}
+	);
 
 	$.Topic("UI/command/toggleViewPreview").subscribe(
 		function(_state) {
@@ -90,14 +95,14 @@ Preview.prototype.init = function(_element) {
 	$.Topic("UI/command/zoomIn").subscribe(
 		function() {
 			paper.view.zoom *= 2;
-			$("#zoom-level").text(paper.view.zoom*100+" %");
+			$("#zoom-level").text(paper.view.zoom * 100 + "%");
 		}
 	);
 
 	$.Topic("UI/command/zoomOut").subscribe(
 		function() {
 			paper.view.zoom *= 0.5;
-			$("#zoom-level").text(paper.view.zoom*100+" %");
+			$("#zoom-level").text(paper.view.zoom * 100 + "%");
 		}
 	);
 
@@ -116,7 +121,7 @@ Preview.prototype.init = function(_element) {
 };
 
 Preview.prototype.setDocument = function(_doc) {
-	var oldDoc = this.doc;
+	// var oldDoc = this.doc;
 	this.doc = _doc;
 
 
@@ -163,9 +168,25 @@ Preview.prototype.setDocument = function(_doc) {
 	this.exportLayer.style = style;
 
 
+	function floorPow2(aSize) {
+		return Math.pow(2, Math.floor(Math.log(aSize) / Math.log(2)));
+	}
 
-	if (oldDoc === null) {
+	if (this.newFileFlag) {
+
+		// zoom to fit
+		var zX = $("#preview").width() / this.previewLayer.bounds.width;
+		var zY = $("#preview").height() / this.previewLayer.bounds.height;
+		var z = Math.min(zX, zY);
+		z = floorPow2(z);
+		paper.view.zoom = z;
+		$("#zoom-level").text(paper.view.zoom * 100 + "%");
+
+		// center
 		paper.view.center = new paper.Point(_doc.properties.width.toNumber("px") * 0.5, _doc.properties.height.toNumber("px") * 0.5);
+
+		// just the first time
+		this.newFileFlag = false;
 	}
 
 	// paper.view.zoom = _doc.properties.zoom;

@@ -2,11 +2,12 @@
 
 var _ = require('underscore/underscore.js');
 
-module.exports.fileURL = "./examples/test/default.yaml";
+module.exports.fileURL = "examples/test/boolean_debug.yaml";
 module.exports.previewCanvasWidth = 1600;
 module.exports.previewCanvasHeight = 1600;
 module.exports.inspectOnHover = false;
 
+module.exports.autoTrappingAmmount = 0.01;
 
 
 //colors

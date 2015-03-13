@@ -4,7 +4,7 @@ children:
             name: parent_region
             width: 300
             height: 200
-            
+
         children:
             - ellipse:
                 properties:

@@ -1,9 +1,9 @@
 properties:
-    width: 525
-    height: 225
+    width: 525px
+    height: 225px
 
 children:
     - ellipse:
         properties:
-            width: 200
-            height: 200
+	    width: 200px
+	    height: 200px

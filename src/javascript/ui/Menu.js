@@ -26,8 +26,8 @@ Menu.prototype.init = function(_element) {
 	this.addToggleCommand("#button-view-frame", "UI/command/toggleViewPreview");
 	this.addToggleCommand("#button-view-build", "UI/command/toggleViewBuild");
 	this.addToggleCommand("#button-view-export", "UI/command/toggleViewExport");
-	this.addToggleCommand("#button-zoom-in", "UI/command/zoomIn");
-	this.addToggleCommand("#button-zoom-out", "UI/command/zoomOut");
+	this.addClickCommand("#button-zoom-in", "UI/command/zoomIn");
+	this.addClickCommand("#button-zoom-out", "UI/command/zoomOut");
 
 
 	$('[data-example]').click ( function (_e) {

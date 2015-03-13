@@ -5,21 +5,18 @@
 - Boolean Pass
 - Trapping
 - New, Improved, Gulp. Chrips on errors, Browser Sync hosting and reload. Clean
+- New Menu, Interface Styling
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Todo
 
-+-----	Discuss requiring units always
-	: con, mildly tedius maybe. pro, clearer to read, cleaner/shorter parsing code with less special cases. eval is never gonna fly with "1in + 3" or "parent_height + 3" because you can't add units to non-units
------	Fallout from units (or soemthing else) region grid spins up the proc, locks the tab
++-----	Fallout from units (or soemthing else) region grid spins up the proc, locks the tab
 
------	Trapping Experiment.
-	Added Trapping property. it looks very promising
-	Auto trapping (like auto add trapping to all adds/subtracts) would be cool, but i can't find a way to make it work out, as when two aligned shapes are both added, adding the same trap to both of them won't work (they'll still be aligned to each other).
-	----	trap in rectangle draw: trapping probably shouldn't actually effect the region size (as used by children). trapping probably not needed for ellipses. it is meant for tiny tiny adjustments just to fix the boolean bug, not to actually effect design dimensions. (if it would be useful to have another way to spread a shape add that sperately (i don't think it would that helpful))
-	----	hardcode trap amount: should trap accept an amount at all? maybe it should be hard coded to .0001px or something. two problems, sometimes trap should be outward, sometimes inward. (maybe trapping: outward, trapping: inward or shrink/expand) second problem. might need different values in different contexts (large values work better, smaller values distort drawing less, i think we can just try some values and see if there is a good general fit)
-	----	report bug: even with the trapping the joist example still fails, seems like maybe worth reporting the case
+
++-----	Show name of example file on "tab"
+
+-----	click nothing to Select none
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Bugs
@@ -54,12 +51,13 @@
 	-- option key maginfying glass cursor?
 	+---- zoom aware pan
 
+---	DRY up zoom
+
 +----	Don't screw up pan on code changes
 	
-	----	Scroll preview to selected region in text
+	----	Pan preview to selected region in text
 
 -	Isolation Mode? 
----	Auto Pan and Zoom on code under text cursor?
 -	Ghost unselected regions?
 --	Click on covered items: right now a large box over small box prevents selection of small box
 
@@ -72,6 +70,7 @@
 
 # File Management
 -	When opening a file set the id in the url so it can be linked, and reloading will reload the file
+----	Send out file events (preClose, closed, opened that components like preview can react to)
 +-	Google Drive Save As?
 +-----	Warn on navigation away from dirty file (prompt for sav)
 
@@ -83,7 +82,7 @@
 	+--	parse in region also for validation?
 	+--	(no)change the 'type' in the language files
 	+--	should we rename/limit available variables to expressions)
-	----	Make Examples + Document
+	-----	Make Examples + Document
 		+- units
 		+- simple math
 		- parent boundary variables
@@ -99,6 +98,14 @@
 --	support percents
 +---	Basic Maths
 +---	Use document units
+
+
+# Trapping Experiment.
+	Added Trapping property. it looks very promising
+	Auto trapping (like auto add trapping to all adds/subtracts) would be cool, but i can't find a way to make it work out, as when two aligned shapes are both added, adding the same trap to both of them won't work (they'll still be aligned to each other).
+	----	trap in rectangle draw: trapping probably shouldn't actually effect the region size (as used by children). trapping probably not needed for ellipses. it is meant for tiny tiny adjustments just to fix the boolean bug, not to actually effect design dimensions. (if it would be useful to have another way to spread a shape add that sperately (i don't think it would that helpful))
+	----	hardcode trap amount: should trap accept an amount at all? maybe it should be hard coded to .0001px or something. two problems, sometimes trap should be outward, sometimes inward. (maybe trapping: outward, trapping: inward or shrink/expand) second problem. might need different values in different contexts (large values work better, smaller values distort drawing less, i think we can just try some values and see if there is a good general fit)
+	----	report bug: even with the trapping the joist example still fails, seems like maybe worth reporting the case
 
 # Booleans
 -	Review: how child_booleans vs self_booleans work, does it make sense?
@@ -135,7 +142,7 @@
 
 
 # UI
----	General Look? @Greg
+----	General Look? @Greg
 ---	Quick Reference: Some sort of context aware reference, listing legal properties/values, tooltips? @Greg
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 

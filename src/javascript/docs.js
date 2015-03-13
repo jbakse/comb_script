@@ -59,8 +59,8 @@ function renderExamples() {
 		var data = Parser.parse(source);
 		if (!data) return;
 
-		data.properties.width = data.properties.width || 525;
-		data.properties.height = data.properties.height || 225;
+		data.properties.width = data.properties.width || "525px";
+		data.properties.height = data.properties.height || "225px";
 
 		var doc = new regionTypes.Document();
 		doc.loadData(data);

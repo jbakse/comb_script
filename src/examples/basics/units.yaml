@@ -1,0 +1,13 @@
+# Dimension properties must include a unit.
+# Unit support is provided by http://mathjs.org/
+# see: units
+
+properties:
+    width: 10cm
+    height: 10centimeter
+
+children:
+    - ellipse:
+	properties:
+	    width: 2in
+	    height: 100mm

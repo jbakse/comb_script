@@ -593,19 +593,24 @@ Region.prototype.build = function(_parentContext) {
 
 
 Region.prototype._combinePaths = function(_leftPath, _rightPathSet, _op) {
-
 	if (_rightPathSet.length < 1) return _leftPath;
 	// if (typeof _op === 'undefined') return _leftPath;
 
 	_(_rightPathSet).each(function(_rightPath) {
 
 		try {
-
+			// partial work around boolean bug in paperjs
+			if (_leftPath.bounds.equals(_rightPath.bounds) && _leftPath.area === _rightPath.area){
+				var trapping = settings.autoTrappingAmmount;
+				var hScale = (_rightPath.bounds.width + trapping) / _rightPath.bounds.width;
+				var vScale = (_rightPath.bounds.height + trapping) / _rightPath.bounds.height;
+				log.appendWarning("Boolean operand shapes have same bounds. Applying auto trapping.");
+				_rightPath.scale(hScale, vScale);
+			}
 			var temp = _leftPath[_op](_rightPath);
 			_leftPath.remove();
 			_rightPath.remove();
 			_leftPath = temp;
-
 		}
 		catch (e) {
 			log.appendWarning("Failed to resolve boolean opperation.");

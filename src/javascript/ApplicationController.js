@@ -67,7 +67,7 @@ ApplicationController.prototype.init = function(_element) {
 
 ApplicationController.prototype.attachHandlers = function() {
 	var self = this;
-	$.Topic("File/onLoad").subscribe(_.bind(this.setYAML, this));
+	$.Topic("File/onLoad").subscribe(_.bind(this.onFileLoad, this));
 
 	$.Topic("UI/command/rebuild").subscribe(_.bind(this.rebuild, this));
 	$.Topic("UI/command/exportSVG").subscribe(_.bind(this.exportSVG, this));
@@ -86,10 +86,16 @@ ApplicationController.prototype.attachHandlers = function() {
 	$.Topic("region/onClick").subscribe(function(_region) {
 		self.hoverRegion = null;
 		self.keySelection = _region;
-		// $.Topic("UI/updateInspector").publish([_region]);
 		self.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
 		self.editor.gotoLine(_region.editorProperties.firstLine + 1, true);
 	});
+
+	// $("#preview").click(
+	// 	function(e){
+	// 		console.log("click window", e);
+	// 		$.Topic("region/onClick").publish();
+	// 	}
+	// );
 
 	$.Topic("region/onMouseLeave").subscribe(function(_region) {
 		self.hoverRegion = undefined;
@@ -170,8 +176,10 @@ ApplicationController.prototype.loadYAMLfromURL = function(_url) {
 		url: _url,
 
 		success: function(_data) {
-			self.setYAML(_data);
-			googleDrive.setClean();
+			console.log("loadYamlfromURL");
+			$.Topic("File/onLoad").publish(_url, _data);
+			// self.setYAML(_data);
+			// googleDrive.setClean();
 		},
 
 		fail: function(_data) {
@@ -182,55 +190,12 @@ ApplicationController.prototype.loadYAMLfromURL = function(_url) {
 	});
 };
 
-
-
-ApplicationController.prototype.exportSVG = function() {
-	log.appendMessage("Exporting SVG");
-
-	var unitScale = language.unitScales[this.doc.properties.unit] || 1;
-
-	var exportWidth = this.doc.properties.width * unitScale;
-	var exportHeight = this.doc.properties.height * unitScale;
-
-
-	var currentProject = paper.project;
-
-	var exportProject = new paper.Project($('<canvas width="' + exportWidth + '" height="' + exportHeight + '" />').get(0));
-	exportProject.activate();
-	this.doc.build();
-
-
-	var style = settings.exportStyle;
-
-	if (this.doc.properties.cut_color) {
-		style.strokeColor = new paper.Color(this.doc.properties.cut_color.red, this.doc.properties.cut_color.green, this.doc.properties.cut_color.blue);
-	}
-	if (this.doc.properties.cut_width) {
-		style.strokeWidth = this.doc.properties.cut_width;
-	}
-
-	exportProject.activeLayer.style = style;
-	// exportProject.activeLayer.translate(exportWidth * 0.5, exportHeight * 0.5);
-	var svg = exportProject.exportSVG({
-		asString: true
-	});
-
-	var blob = new Blob([svg], {
-		type: 'image/svg+xml'
-	});
-	var svgURL = URL.createObjectURL(blob);
-	util.downloadDataUri(this.doc.properties.name + '.svg', svgURL);
-
-	currentProject.activate();
+ApplicationController.prototype.onFileLoad = function(_title, _content){
+	this.setYAML(_content);
 };
 
-
 ApplicationController.prototype.setYAML = function(_yaml) {
-
 	this.editor.setText(_yaml);
-
-	//this.editor.gotoLine(1, true);
-	//this.rebuild();
 };
 
 
@@ -283,4 +248,46 @@ ApplicationController.prototype._parseYAML = function(_yaml) {
 
 	log.appendSuccess("Success");
 	return true;
+};
+
+
+
+ApplicationController.prototype.exportSVG = function() {
+	log.appendMessage("Exporting SVG");
+
+	var unitScale = language.unitScales[this.doc.properties.unit] || 1;
+
+	var exportWidth = this.doc.properties.width * unitScale;
+	var exportHeight = this.doc.properties.height * unitScale;
+
+
+	var currentProject = paper.project;
+
+	var exportProject = new paper.Project($('<canvas width="' + exportWidth + '" height="' + exportHeight + '" />').get(0));
+	exportProject.activate();
+	this.doc.build();
+
+
+	var style = settings.exportStyle;
+
+	if (this.doc.properties.cut_color) {
+		style.strokeColor = new paper.Color(this.doc.properties.cut_color.red, this.doc.properties.cut_color.green, this.doc.properties.cut_color.blue);
+	}
+	if (this.doc.properties.cut_width) {
+		style.strokeWidth = this.doc.properties.cut_width;
+	}
+
+	exportProject.activeLayer.style = style;
+	// exportProject.activeLayer.translate(exportWidth * 0.5, exportHeight * 0.5);
+	var svg = exportProject.exportSVG({
+		asString: true
+	});
+
+	var blob = new Blob([svg], {
+		type: 'image/svg+xml'
+	});
+	var svgURL = URL.createObjectURL(blob);
+	util.downloadDataUri(this.doc.properties.name + '.svg', svgURL);
+
+	currentProject.activate();
 };

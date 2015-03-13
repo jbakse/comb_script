@@ -51,6 +51,7 @@ module.exports.init = function() {
 	Mousetrap.bindGlobal(['ctrl+shift+s','command+shift+s'], function() { saveFileAs(); return false; } );
 
 	$.Topic("UI/editor/onContentChange").subscribe(onContentChange);
+	$.Topic("File/onLoad").subscribe(onFileLoad);
 
 	Mousetrap.bindGlobal('command+s', function() {
 		saveFile();
@@ -186,41 +187,64 @@ function confirmPageNavigation(e) {
 	return message;
 }
 
+function setClean() {
+	currentFileInfo.dirty = false;
+	$("#file-dirty").addClass('hidden');
+}
+// module.exports.setClean = setClean;
+
+
 function onContentChange(_e, content) {
+	if (currentFileInfo.content === content) return;
+
 	currentFileInfo.content = content;
 	currentFileInfo.dirty = true;
 	$("#file-dirty").removeClass('hidden');
 }
 
-function setClean() {
-	currentFileInfo.dirty = false;
-	$("#file-dirty").addClass('hidden');
-}
-module.exports.setClean = setClean;
 
+function onFileLoad(_title, _content) {
+	console.log("onFileLoad");
+	currentFileInfo = {};
+	currentFileInfo.title = _title;
+	currentFileInfo.content = _content;
+	setClean();
+	$("#file-title").text(currentFileInfo.title);
+}
+
+
+function confirmDiscardUnsaved(){
+	if (currentFileInfo.dirty) {
+		return window.confirm("This will cause unsaved changes to be lost. Do you want to discard these changes?");
+	}
+	return true;
+}
 
 function closeFile() {
-	return newFile();
+	if (!confirmDiscardUnsaved()) return false;
+	currentFileInfo = {};
+	setClean();
+	$("#file-title").text("");
+	return true;
 }
 module.exports.closeFile = closeFile;
 
 
+
 function newFile(parentId) {
-	if (currentFileInfo.dirty) {
-		var result = window.confirm("This will cause unsaved changes to be lost. Do you want to discard these changes?");
-		if (!result) return false;
-	}
+	if (!confirmDiscardUnsaved()) return false;
 
 	currentFileInfo = {};
 	currentFileInfo.title = "untitled";
 	currentFileInfo.content = "";
 	currentFileInfo.parentId = parentId;
 
-	//TODO need to protect code from getting trashed if the yaml parse fails
+	console.log("newFile");
 	$.Topic("File/onLoad").publish(currentFileInfo.content);
 
-	currentFileInfo.dirty = false;
-	$("#file-dirty").addClass('hidden');
+	// currentFileInfo.dirty = false;
+	// $("#file-dirty").addClass('hidden');
+	setClean();
 
 	$("#file-title").text(currentFileInfo.title);
 
@@ -257,14 +281,14 @@ function openFile(id) {
 		.then(function insertFile(content) {
 			newFileInfo.content = content;
 
-			$.Topic("File/onLoad").publish(newFileInfo.content);
+			$.Topic("File/onLoad").publish(newFileInfo.title, newFileInfo.content);
 
-			setClean();
-			// currentFileInfo.dirty = false;
-			// $("#file-dirty").addClass('hidden');
-			$("#file-title").text(newFileInfo.title);
+			// setClean();
+			// // currentFileInfo.dirty = false;
+			// // $("#file-dirty").addClass('hidden');
+			// $("#file-title").text(newFileInfo.title);
 
-			currentFileInfo = newFileInfo;
+			// currentFileInfo = newFileInfo;
 
 
 
