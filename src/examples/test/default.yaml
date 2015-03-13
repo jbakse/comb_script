@@ -3,42 +3,26 @@ properties:
     height: 10cm
 
 constants:
-    radius: 2cm
+    radius: 3cm
 
 children:
     - ellipse:
         properties:
             width: radius * 2  # this is a long line for long line's sake. this is a long line for long line's sake.
             height: radius * 2
-            left: parent_left
-
-
-    - ellipse:
-        properties:
-            width: radius * 2
-            height: radius * 2
-            left: parent_left
+            right: 1cm
 
     - ellipse:
         properties:
             width: radius * 2
             height: radius * 2
-            left: parent_left
+            left: -1cm
+            boolean: add
 
     - ellipse:
         properties:
             width: radius * 2
             height: radius * 2
-            left: parent_left
-
-    - ellipse:
-        properties:
-            width: radius * 2
-            height: radius * 2
-            left: parent_left
-
-    - ellipse:
-        properties:
-            width: radius * 2
-            height: radius * 2
-            left: parent_left
+            top: 0.5cm
+            boolean: subtract
+            registration: center

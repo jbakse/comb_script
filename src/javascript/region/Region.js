@@ -664,15 +664,11 @@ Region.prototype.onMouseLeave = function() {
 
 Region.prototype.setStyle = function(_style, _recursive) {
 	_style = _style || "default";
-	if (!settings.styles.bounds[_style]) return;
+	if (!settings.previewStyles.bounds[_style]) return;
 
-	if (this.isShape) {
-		this.previewBoundsGroup.style = settings.styles.shape[_style];
-	}
-	else {
-		this.previewBoundsGroup.style = settings.styles.bounds[_style];
-	}
-	this.previewPositionGroup.style = settings.styles.position[_style];
+	this.previewBoundsGroup.style = settings.previewStyles.bounds[_style];
+	this.previewPositionGroup.style = settings.previewStyles.position[_style];
+
 	if (_recursive) {
 		_(this.children).invoke('setStyle', _style, true);
 	}
@@ -697,5 +693,6 @@ Region.prototype.drawBuild = function(_bounds) {
 Region.prototype.drawPosition = function(_bounds, _matrix) {
 	var scaling = _matrix.scaling;
 	var rect = new paper.Rectangle(-0.5, -0.5, 1, 1); //.scale(1/scaling.x, 1/scaling.y)
+	
 	return new paper.Path.Ellipse(rect.scale(1 / scaling.x, 1 / scaling.y));
 };

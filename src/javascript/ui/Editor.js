@@ -26,6 +26,7 @@ Editor.prototype.init = function(_element) {
 	this.editor.setShowInvisibles(false);
 	this.editor.setShowPrintMargin(false);
 	this.editor.setHighlightActiveLine(false);
+	this.editor.setHighlightGutterLine(false);
 	this.editor.getSession().on('change', _(this.onChange).bind(this));
 	this.editor.getSession().selection.on('changeCursor', _(this.onChangeCursor).bind(this));
 	this.editor.$blockScrolling = Infinity;

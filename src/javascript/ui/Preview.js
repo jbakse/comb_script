@@ -119,8 +119,6 @@ Preview.prototype.setDocument = function(_doc) {
 	var oldDoc = this.doc;
 	this.doc = _doc;
 
-	// this.buildLayer.visible = true;
-	// this.previewLayer.visible = true;
 
 	// draw preview/frame
 	this.previewLayer.activate();
@@ -134,16 +132,16 @@ Preview.prototype.setDocument = function(_doc) {
 
 	// re-style build layer
 	this.buildLayer.style = settings.buildStyle;
-	_(buildShapes).each(function(shape) {
+	// _(buildShapes).each(function(shape) {
 
-		if (shape instanceof paper.Path) return;
-		if (shape instanceof paper.CompoundPath) return;
-		shape.style = {
-			fillColor: undefined,
-			strokeWidth: 1,
-			strokeColor: "red"
-		};
-	});
+	// 	if (shape instanceof paper.Path) return;
+	// 	if (shape instanceof paper.CompoundPath) return;
+	// 	shape.style = {
+	// 		fillColor: undefined,
+	// 		strokeWidth: 1,
+	// 		strokeColor: "red"
+	// 	};
+	// });
 
 
 	// draw export

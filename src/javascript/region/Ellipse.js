@@ -18,8 +18,7 @@ Ellipse.prototype = Object.create(Region.prototype);
 Ellipse.prototype.constructor = Ellipse;
 
 Ellipse.prototype.drawBuild = function(_bounds) {
-	var boundsPath = new paper.Path.Ellipse(_bounds);
-	return boundsPath;
+	return new paper.Path.Ellipse(_bounds);
 };
 
 

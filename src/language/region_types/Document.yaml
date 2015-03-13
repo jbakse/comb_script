@@ -36,12 +36,12 @@ Document:
         -   keyword: cut_color
             description: The color to use for cut lines
             type: color
-            default: {red: 255, green: 0, blue: 0}
+            # default: {red: 255, green: 0, blue: 0}
 
         -   keyword: cut_width
             description: The stroke width to use for cut lines
             type: number
-            default: 1
+            # default: 1
 
 
         # -   keyword: scale
