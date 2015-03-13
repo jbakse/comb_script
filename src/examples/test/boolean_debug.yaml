@@ -1,23 +1,15 @@
 properties:
-    width: 10cm
-    height: 10cm
+    width: 100px
+    height: 100px
 
 children:
-    - region:
+    - rectangle:
         properties:
-            name: parent_region
-            width: 300cm
-            height: 200cm
-
-        children:
-            - rectangle:
-                properties:
-                    # margin_left: 0cm
-                    height: 200cm
-                    width: 200cm
-            - ellipse:
-                properties:
-                    # margin_right: 0cm
-                    height: 200cm
-                    width: 200cm
-                    boolean: subtract
+            height: 9cm
+            width: 9.1cm
+    - ellipse:
+        properties:
+            # margin_right: 0mm
+            height: 80px
+            width: 80px
+            boolean: subtract

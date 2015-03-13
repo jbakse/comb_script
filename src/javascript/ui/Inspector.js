@@ -39,47 +39,83 @@ Inspector.prototype.update = function(_regions) {
 		return;
 	}
 
-	var t = function(_term, _data) {
-		return "<dt>" + _term + "</dt><dd>" + _data + "</dd>";
-	};
-
 	var _region = _regions[0];
 
-	var _r = _region;
-	var breadCrumbs = $('<ul class="breadcrumbs">');
-	var item;
-	while (_r) {
-		item = $("<li>").text(_r.properties.name || _r.type);
-		item.click(this.buildSelectRegionHandler(_r));
-		breadCrumbs.prepend(item);
-		_r = _r.parent;
+
+
+	var table = $("<table>");
+	$(this.element).append(table);
+
+	var top_row = $("<tr>");
+	table.append(top_row);
+	
+	var bottom_row = $("<tr>");
+	table.append(bottom_row);
+
+	function format(label, value, unit) {
+		return (
+		"<td class=\"label\">"+label+":</td>"+
+		"<td class=\"value\">"+value.toFixed(2)+"</td>"+
+		"<td class=\"unit\">"+unit+"</td>"
+		);
 	}
 
-	$(this.element).append(breadCrumbs);
-	$(this.element).append(t("Type", _region.type));
-	$(this.element).append(t("Name", _region.properties.name || "unnamed"));
-	$(this.element).append(t("Line", _region.editorProperties.firstLine + 1));
+	top_row.append( $(format("x", _region.previewBoundsGroup.bounds.center.x, "px") ) );
+	bottom_row.append( $(format("y", _region.previewBoundsGroup.bounds.center.y, "px") ) );
+
+	top_row.append( $(format("width", _region.previewBoundsGroup.bounds.width, "px") ) );
+	bottom_row.append( $(format("height", _region.previewBoundsGroup.bounds.width, "px") ) );
+
+	top_row.append( $(format("top", _region.previewBoundsGroup.bounds.top, "px") ) );
+	bottom_row.append( $(format("left", _region.previewBoundsGroup.bounds.left, "px") ) );
+	top_row.append( $(format("bottom", _region.previewBoundsGroup.bounds.bottom, "px") ) );
+	bottom_row.append( $(format("right", _region.previewBoundsGroup.bounds.right, "px") ) );
+
+
 	
-	var center = {
-		x: _region.previewBoundsGroup.bounds.center.x,
-		y: _region.previewBoundsGroup.bounds.center.y,
-	};
-	$(this.element).append(t("Center", this.formatDimensionObject(center) || "{}"));
-
-	var size = {
-		width: _region.previewBoundsGroup.bounds.width,
-		height: _region.previewBoundsGroup.bounds.height,
-	};
-	$(this.element).append(t("Dimensions", this.formatDimensionObject(size) || "{}"));
 
 
-	var bounds = {
-		left: _region.previewBoundsGroup.bounds.left,
-		top: _region.previewBoundsGroup.bounds.top,
-		bottom: _region.previewBoundsGroup.bounds.bottom,
-		right: _region.previewBoundsGroup.bounds.right,
-	};
-	$(this.element).append(t("Bounds", this.formatDimensionObject(bounds)));
+	// var t = function(_term, _data) {
+	// 	return "<dt>" + _term + "</dt><dd>" + _data + "</dd>";
+	// };
+
+	// var _region = _regions[0];
+
+	// var _r = _region;
+	// var breadCrumbs = $('<ul class="breadcrumbs">');
+	// var item;
+	// while (_r) {
+	// 	item = $("<li>").text(_r.properties.name || _r.type);
+	// 	item.click(this.buildSelectRegionHandler(_r));
+	// 	breadCrumbs.prepend(item);
+	// 	_r = _r.parent;
+	// }
+
+	// $(this.element).append(breadCrumbs);
+	// $(this.element).append(t("Type", _region.type));
+	// $(this.element).append(t("Name", _region.properties.name || "unnamed"));
+	// $(this.element).append(t("Line", _region.editorProperties.firstLine + 1));
+	
+	// var center = {
+	// 	x: _region.previewBoundsGroup.bounds.center.x,
+	// 	y: _region.previewBoundsGroup.bounds.center.y,
+	// };
+	// $(this.element).append(t("Center", this.formatDimensionObject(center) || "{}"));
+
+	// var size = {
+	// 	width: _region.previewBoundsGroup.bounds.width,
+	// 	height: _region.previewBoundsGroup.bounds.height,
+	// };
+	// $(this.element).append(t("Dimensions", this.formatDimensionObject(size) || "{}"));
+
+
+	// var bounds = {
+	// 	left: _region.previewBoundsGroup.bounds.left,
+	// 	top: _region.previewBoundsGroup.bounds.top,
+	// 	bottom: _region.previewBoundsGroup.bounds.bottom,
+	// 	right: _region.previewBoundsGroup.bounds.right,
+	// };
+	// $(this.element).append(t("Bounds", this.formatDimensionObject(bounds)));
 
 
 };
