@@ -1,210 +1,210 @@
 section#introduction
-    :markdown
-        # Introduction
+	:markdown
+		# Introduction
 
-        CombScript is a language for describing technical vector designs and a tool that exports these designs as SVG files. A primary goal of CombScript is to express designs naturally, so they are easier to adjust and customize.
+		CombScript is a language for describing technical vector designs and a tool that exports these designs as SVG files. A primary goal of CombScript is to express designs naturally, so they are easier to adjust and customize.
 
-        CombScript was inspired by [OpenSCAD](http://www.openscad.org/), CSS, HTML, and Adobe Illustrator snapping shenanigans.
+		CombScript was inspired by [OpenSCAD](http://www.openscad.org/), CSS, HTML, and Adobe Illustrator snapping shenanigans.
 
-        
-        -   **Parametric**
+		
+		-   **Parametric**
 
-            Because shapes in CombScript can be positioned relative to the bounds of their parents, it is possible to make designs that flex when dimensions change.
+			Because shapes in CombScript can be positioned relative to the bounds of their parents, it is possible to make designs that flex when dimensions change.
 
-        -   **Expressive**
+		-   **Expressive**
 
-            Positions can be described in multiple ways allowing more natural expression. For example you can specify that a circle is 10 units from the right side of its container and vertically centered, rather than expressing its global coordinates.
+			Positions can be described in multiple ways allowing more natural expression. For example you can specify that a circle is 10 units from the right side of its container and vertically centered, rather than expressing its global coordinates.
 
-        -   **Declarative**
+		-   **Declarative**
 
-            CombScript is more like HTML than JavaScript. Ideally, your document describes your design, not the steps required to make it.
+			CombScript is more like HTML than JavaScript. Ideally, your document describes your design, not the steps required to make it.
 
-        -   **Unstyled**
+		-   **Unstyled**
 
-            Shapes in CombScript represent only the path data and don't have their own style properties like fill-color, stroke-color, or stroke-width. CombScript is primarily designed for designs that describe paths for laser-cutters and plotters where such styles are not needed.
+			Shapes in CombScript represent only the path data and don't have their own style properties like fill-color, stroke-color, or stroke-width. CombScript is primarily designed for designs that describe paths for laser-cutters and plotters where such styles are not needed.
 
-        -   **Boolean Operations**
+		-   **Boolean Operations**
 
-            Combine shapes using boolean operations: Intersection, Union, and Difference
+			Combine shapes using boolean operations: Intersection, Union, and Difference
 
-        -   **Render to SVG**
+		-   **Render to SVG**
 
-            Shape data can be exported as SVG using style templates.
+			Shape data can be exported as SVG using style templates.
 
 
 
 
 section#syntax
-    :markdown
-        # Basic Syntax
-        CombScript documents are written in [YAML](http://en.wikipedia.org/wiki/YAML), a common and human-readable data-file format. CombScript recognizes predefined keywords to describe regions, shapes, and their properties. 
+	:markdown
+		# Basic Syntax
+		CombScript documents are written in [YAML](http://en.wikipedia.org/wiki/YAML), a common and human-readable data-file format. CombScript recognizes predefined keywords to describe regions, shapes, and their properties. 
 
-        Here is an example of a simple CombScript document that draws an ellipse:
+		Here is an example of a simple CombScript document that draws an ellipse:
 
-    pre.display
-        include examples/ellipse_simple.yaml
+	pre.display
+		include examples/ellipse_simple.yaml
 
-    :markdown
+	:markdown
 
-        This example begins by defining two document properties, `width` and `height` that describe the dimensions of the document. If these properties are not defined, defaults will be used. Document properties are defined using the `properties:` key followed by a set of indented **key: value** pairs.
+		This example begins by defining two document properties, `width` and `height` that describe the dimensions of the document. If these properties are not defined, defaults will be used. Document properties are defined using the `properties:` key followed by a set of indented **key: value** pairs.
 
-        Next, the example defines its children under the `children:` key. The children are indented one level and each is prefixed with a `-` to indicate a YAML array item. There are several types of children in CombScript including regions, rectangles, and ellipses. 
+		Next, the example defines its children under the `children:` key. The children are indented one level and each is prefixed with a `-` to indicate a YAML array item. There are several types of children in CombScript including regions, rectangles, and ellipses. 
 
-        This document has one child, an `ellipse`. The ellipse defines `width` and `height` properties to set its dimensions.
+		This document has one child, an `ellipse`. The ellipse defines `width` and `height` properties to set its dimensions.
 
 
 
 
 section#regions
-    :markdown
-        # Regions
-        The basic building-blocks in CombScript are called **regions**. A region describes a rectangular bounds in the drawing and and can contain child regions. Child regions are laid out in relation to the bounds of their parent.
+	:markdown
+		# Regions
+		The basic building-blocks in CombScript are called **regions**. A region describes a rectangular bounds in the drawing and and can contain child regions. Child regions are laid out in relation to the bounds of their parent.
 
-        There are several types of regions in CombScript. The basic `region` type is primarily organizational. It is used to define a new part of the drawing and to group its children. The basic `region` will not generate a vector shape in the exported SVG. 
+		There are several types of regions in CombScript. The basic `region` type is primarily organizational. It is used to define a new part of the drawing and to group its children. The basic `region` will not generate a vector shape in the exported SVG. 
 
-        The `rectangle` or `ellipse` region types have all the same properties of the basic `region` but also draw a shape in the export.
-
-
-
-        ## Region Bounds
-        Every region has a set of bounds that describe a rectangular area in the drawing. These bounds can be set using the `top`, `left`, `bottom`, and `right` properties. These values are relative to the registration position of the region's parent.
-
-        A region's bounds can also be specified relative to the parent's bounds using `margin_top`, `margin_left`, `margin_bottom`, and `margin_right` properties.
-
-        You can specify the dimensions of the bounds with the `width` and `height` properties.
-
-        These properties can be mixed any way you wish, as long as they don't conflict.
-
-    pre.display
-        include examples/bounds_simple.yaml
+		The `rectangle` or `ellipse` region types have all the same properties of the basic `region` but also draw a shape in the export.
 
 
 
-    :markdown
-        ## Registration
-        Regions can optionally set their registration position with the `registration` property. The new registration position will be used by the region's children when laying out their bounds. It will also be used for the pivot point for rotations and scales applied to the region.
+		## Region Bounds
+		Every region has a set of bounds that describe a rectangular area in the drawing. These bounds can be set using the `top`, `left`, `bottom`, and `right` properties. These values are relative to the registration position of the region's parent.
 
-        The default value of `registration` is `parent` which will keep the registration position set by the region's parent. Other values, such as 'top_left' and 'center' move it to a position determined by the region's bounds.
+		A region's bounds can also be specified relative to the parent's bounds using `margin_top`, `margin_left`, `margin_bottom`, and `margin_right` properties.
 
-    pre.display
-        include examples/registration_simple.yaml
+		You can specify the dimensions of the bounds with the `width` and `height` properties.
 
+		These properties can be mixed any way you wish, as long as they don't conflict.
 
-
-    :markdown
-        ## Transformations
-        You can transform the coordinate system used by a region and its children using the `rotation`, `scale_x`, and `scale_y` properties.
-
-    pre.display
-        include examples/rotation_simple.yaml
+	pre.display
+		include examples/bounds_simple.yaml
 
 
 
-    :markdown
-        ## Children
+	:markdown
+		## Registration
+		Regions can optionally set their registration position with the `registration` property. The new registration position will be used by the region's children when laying out their bounds. It will also be used for the pivot point for rotations and scales applied to the region.
 
-        Regions can have any number of child regions. A region's bounds, registration, and transform are used by when positioning its children. Using nesting, you can describe the positional relationships of your shapes making parts of your design parametric. 
+		The default value of `registration` is `parent` which will keep the registration position set by the region's parent. Other values, such as 'top_left' and 'center' move it to a position determined by the region's bounds.
 
-        In the following example the position of the two ellipses is determined by the width of their parent.
+	pre.display
+		include examples/registration_simple.yaml
 
 
 
-    pre.display
-        include examples/nesting_simple.yaml
+	:markdown
+		## Transformations
+		You can transform the coordinate system used by a region and its children using the `rotation`, `scale_x`, and `scale_y` properties.
+
+	pre.display
+		include examples/rotation_simple.yaml
+
+
+
+	:markdown
+		## Children
+
+		Regions can have any number of child regions. A region's bounds, registration, and transform are used by when positioning its children. Using nesting, you can describe the positional relationships of your shapes making parts of your design parametric. 
+
+		In the following example the position of the two ellipses is determined by the width of their parent.
+
+
+
+	pre.display
+		include examples/nesting_simple.yaml
 
 
 
 
 section#shapes
-    :markdown
-        # Shapes
-        The `rectangle` and `ellipse` region-types will generate a shape in the export. In these examples, exported shapes are filled in.
+	:markdown
+		# Shapes
+		The `rectangle` and `ellipse` region-types will generate a shape in the export. In these examples, exported shapes are filled in.
 
-    pre.display
-        include examples/shapes_simple.yaml
+	pre.display
+		include examples/shapes_simple.yaml
 
-    :markdown
+	:markdown
 
-        ## Combining Shapes
-        Shapes can be combined using the `boolean` property. The possible values are `add`, `subtract`, and `intersect`. 
+		## Combining Shapes
+		Shapes can be combined using the `boolean` property. The possible values are `add`, `subtract`, and `intersect`. 
 
-        Shapes with a set `boolean` property are combined with their parent's shape. If the parent does not generate a shape the shape of the first child will be used.
-
-
-    pre.display
-        include examples/boolean_simple_subtract1.yaml
+		Shapes with a set `boolean` property are combined with their parent's shape. If the parent does not generate a shape the shape of the first child will be used.
 
 
-    pre.display
-	//- include examples/boolean_simple_subtract2.yaml
+	pre.display
+		include examples/boolean_simple_subtract1.yaml
 
-    
-    :markdown
-        You can use booelan operations will applied to a region's children as well. For example you can subtract many shapes from a single shape, subtract a single shape from many shapes, or even subtract many shapes from many shapes.
 
-    pre.display
-	//- include examples/boolean_multiple.yaml
+	pre.display
+		//- include examples/boolean_simple_subtract2.yaml
+
+	
+	:markdown
+		You can use booelan operations will applied to a region's children as well. For example you can subtract many shapes from a single shape, subtract a single shape from many shapes, or even subtract many shapes from many shapes.
+
+	pre.display
+		//- include examples/boolean_multiple.yaml
 
 
 
 
 section#grids
-    :markdown
-        # Grids
-        CombScript provides a special region-type called a `region_grid`. Region grids can be used to draw a region repeatedly in a rectangular grid. 
+	:markdown
+		# Grids
+		CombScript provides a special region-type called a `region_grid`. Region grids can be used to draw a region repeatedly in a rectangular grid. 
 
-        The `rows` and `columns` properties will set the number of rows and columns in the grid directly. You can set `row_height` and `column_width` instead to create as many rows or columns as needed to fill the region grid.
+		The `rows` and `columns` properties will set the number of rows and columns in the grid directly. You can set `row_height` and `column_width` instead to create as many rows or columns as needed to fill the region grid.
 
-        Each cell in the generated grid will contain a clone of the children of the region grid.
+		Each cell in the generated grid will contain a clone of the children of the region grid.
 
-    pre.display
+	pre.display
 	//- include examples/regiongrid_simple.yaml
 
 
 section#repeat
-    :markdown
-        # YAML Repeated Nodes
+	:markdown
+		# YAML Repeated Nodes
 
-        YAML's [repeated node](http://yaml.org/spec/1.2/spec.html#id2760395) feature can be used to to create named parameters and library shapes that can be used throughout your document. Repeated nodes are defined with `&` followed by a name, and used with `*` followed by the name. Repeated nodes are genrally defined as an array under the `library:` key.
+		YAML's [repeated node](http://yaml.org/spec/1.2/spec.html#id2760395) feature can be used to to create named parameters and library shapes that can be used throughout your document. Repeated nodes are defined with `&` followed by a name, and used with `*` followed by the name. Repeated nodes are genrally defined as an array under the `library:` key.
 
-        ## Constants
+		## Constants
 
-        You can use repeated nodes as named constants (aka variables or parameters) to identify commonly used values in your document and create a single place in the document where they can be changed. 
+		You can use repeated nodes as named constants (aka variables or parameters) to identify commonly used values in your document and create a single place in the document where they can be changed. 
 
-    pre.display
+	pre.display
 	//- include examples/variable_simple.yaml
 
-    :markdown
-        ## Library Items
+	:markdown
+		## Library Items
 
-        It is common that you will reuse the same shape in multiple places in your document. Repeated nodes can represent entire regions, their properties, and even nested children. Each repeated node will be separately laid out in their parent's context.
-        
-    pre.display
+		It is common that you will reuse the same shape in multiple places in your document. Repeated nodes can represent entire regions, their properties, and even nested children. Each repeated node will be separately laid out in their parent's context.
+		
+	pre.display
 	//- include examples/symbol_simple2.yaml
 
 section#expressions
-    :markdown
-        # Expressions, Units, & Constants
-        Any property with the type `number` will also accept an expression. Expressions can be used for math operations, specifying units, and using constants. Combscript uses the [mathjs](http://mathjs.org/) library for evaluating expressions. Check out the [mathjs expression syntax documentation](http://mathjs.org/docs/expressions/syntax.html) for details.
+	:markdown
+		# Expressions, Units, & Constants
+		Any property with the type `number` will also accept an expression. Expressions can be used for math operations, specifying units, and using constants. Combscript uses the [mathjs](http://mathjs.org/) library for evaluating expressions. Check out the [mathjs expression syntax documentation](http://mathjs.org/docs/expressions/syntax.html) for details.
 
-        ## Mathematic Expressions
-        Expressions allow mathematic expressions like `4 * .7` and `sqrt(3^2 + 4^2)`.
+		## Mathematic Expressions
+		Expressions allow mathematic expressions like `4 * .7` and `sqrt(3^2 + 4^2)`.
 
-    pre.display
+	pre.display
 	//- include examples/expressions_simple.yaml
 
-    :markdown
-        ## Units
+	:markdown
+		## Units
 	//- Units can be used when specifying dimensions `3 in`. Dimension units can be mixed in expressions: `1 inch + 2 mm`. If no unit is included when specifying a property value, the document unit will be assumed. The document unit can be set in the document properties, the default is `px`.
 
-    pre.display
+	pre.display
 	//- include examples/units_simple.yaml
 
-    :markdown
-        ## Constants (Comb Vars&#8482;)
-        Constants are user defined values that can be used throughout the comb script document. Constants will also be evaluated in expressions.
+	:markdown
+		## Constants (Comb Vars&#8482;)
+		Constants are user defined values that can be used throughout the comb script document. Constants will also be evaluated in expressions.
 
-    pre.display
+	pre.display
 	//- include examples/constants_simple.yaml
 
 h1 API Reference
