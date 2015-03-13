@@ -5,39 +5,50 @@
 
 
 
+.ace_scrollbar-v
+{
+	margin-right: 10px;
+}
+
+.ace_scrollbar-h
+{
+	// position: relative;
+	bottom: -6px;
+	margin-bottom: 10px;
+}
+
 
 .ace_scrollbar::-webkit-scrollbar {
-	width: 10px;
-	height: 10px;
+	width: 6px;
+	height: 6px;
 }
 
 .ace_scrollbar::-webkit-scrollbar-track {
-	background-color: #222;
-	width: 10px;
-	height: 10px;
+	margin: 6px;
+	background: transparent;
 }
 
 .ace_scrollbar::-webkit-scrollbar-thumb {
-	background-color: black;
-	width: 10px;
-	height: 10px;
-}
-
-
-.ace_scrollbar::-webkit-scrollbar-corner,
-.ace_scrollbar::-webkit-resizer {
-	width: 10px;
-	height: 10px;
-	background-color: red;
+	background-color: darken(@menu-green, 20);
+	border-radius: 3px;
 }
 
 
 
 
+
+
+#editor
+{
+	overflow: hidden;
+}
 #editor-content
 {
-	// margin-top: 5px;
-	// margin-bottom: 5px;
+	// border: 1px solid gray;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	overflow: visible;
+
 }
 
 .ace_marker-layer {

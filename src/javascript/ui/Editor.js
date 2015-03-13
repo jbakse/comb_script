@@ -30,6 +30,8 @@ Editor.prototype.init = function(_element) {
 	this.editor.getSession().selection.on('changeCursor', _(this.onChangeCursor).bind(this));
 	this.editor.$blockScrolling = Infinity;
 	
+
+
 	var self = this;
 	this.editor.commands.addCommand({
 		name: "Remove Indent",
@@ -49,11 +51,13 @@ Editor.prototype.init = function(_element) {
 		}
 	});
 
+	this.resize();
 
 };
 
 Editor.prototype.resize = function() {
 	this.editor.resize();
+
 };
 
 Editor.prototype.setText = function(_text) {
