@@ -54,6 +54,7 @@ ApplicationController.prototype.init = function(_element) {
 	this.menu.init($('#menu').get(0));
 
 	this.attachHandlers();
+	this.buildPicker();
 
 	$('div.split-pane').splitPane();
 	var self = this;
@@ -90,10 +91,13 @@ ApplicationController.prototype.attachHandlers = function() {
 		self.editor.gotoLine(_region.editorProperties.firstLine + 1, true);
 	});
 
+
+
+
 	// $("#preview").click(
 	// 	function(e){
 	// 		console.log("click window", e);
-	// 		$.Topic("region/onClick").publish();
+	// 		// $.Topic("region/onClick").publish();
 	// 	}
 	// );
 
@@ -110,6 +114,55 @@ ApplicationController.prototype.attachHandlers = function() {
 	});
     
 
+};
+
+ApplicationController.prototype.buildPicker = function() {
+	this.picker = new paper.Tool();
+	var hoveredRegion = null;
+	var mouseDownRegion = null;
+
+	this.picker.onMouseDown = function(e) {
+		mouseDownRegion = hoveredRegion;
+	};
+
+	this.picker.onMouseUp = function(e) {
+		if(mouseDownRegion === hoveredRegion) {
+			hoveredRegion.onClick();
+		}
+	};
+
+	this.picker.onMouseMove = function(e) {
+		// check just strokes first
+		var hit = paper.project.hitTest(e.point, {
+			tolerance: 5,
+			stroke: true
+		});
+
+		// if the cursor isn't over a stroke, check for a fill
+		if (hit === null) {
+			hit = paper.project.hitTest(e.point, {
+				tolerance: 5,
+				fill: true
+			});
+		}
+		
+		var oldHoveredRegion = hoveredRegion;
+		
+		if (hit === null) {
+			hoveredRegion = null;
+		} else {
+			hoveredRegion = hit.item.region;
+		}
+
+		if (oldHoveredRegion && oldHoveredRegion !== hoveredRegion) {
+			oldHoveredRegion.onMouseLeave();
+		}
+
+		if (hoveredRegion && oldHoveredRegion !== hoveredRegion) {
+			hit.item.region.onMouseEnter();
+		}
+		
+	};
 };
 
 ApplicationController.prototype.redrawPreview = function(_region) {

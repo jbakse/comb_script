@@ -464,13 +464,15 @@ Region.prototype.preview = function(_parentContext) {
 	this.previewBoundsGroup = new paper.Group();
 	this.previewPositionGroup = new paper.Group();
 
-	this.previewBoundsGroup.onMouseEnter = _.bind(this.onMouseEnter, this);
-	this.previewBoundsGroup.onMouseLeave = _.bind(this.onMouseLeave, this);
-	this.previewBoundsGroup.onClick = _.bind(this.onClick, this);
+	// handled by the picker tool
+	// this.previewBoundsGroup.onMouseEnter = _.bind(this.onMouseEnter, this);
+	// this.previewBoundsGroup.onMouseLeave = _.bind(this.onMouseLeave, this);
+	// this.previewBoundsGroup.onClick = _.bind(this.onClick, this);
 
 	// bounds
 	var bounds = this.drawBounds(context.bounds);
 	bounds.transform(context.matrix);
+	bounds.region = this;
 	this.previewBoundsGroup.addChild(bounds);
 
 	// pos

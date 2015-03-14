@@ -6,12 +6,11 @@ children:
     - rectangle:
         properties:
             height: 9cm
-            width: 9.1cm
+            width: 9cm
         children:
             - ellipse:
                 properties:
-                    name: lippy
-                    # margin_right: 0mm
-                    height: 80px
-                    width: 80px
+                    name: circle
+                    height: 10cm
+                    width: 10cm
                     boolean: subtract
