@@ -126,7 +126,7 @@ ApplicationController.prototype.buildPicker = function() {
 	};
 
 	this.picker.onMouseUp = function(e) {
-		if(mouseDownRegion === hoveredRegion) {
+		if(hoveredRegion && mouseDownRegion === hoveredRegion) {
 			hoveredRegion.onClick();
 		}
 	};

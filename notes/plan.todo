@@ -16,7 +16,7 @@
 
 +-----	Show name of example file on "tab"
 
------	click nothing to Select none
+----	click nothing to Select none
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Bugs
@@ -39,7 +39,7 @@
 # Preview
 ---	Let user Pan
 	----	Better solution to preserving pan on edit, and recentering.
-		preview probably should listen for an event to get sent out that a new document loaded, and resize then
+-----	its a little bit better but the file new open loaded, opened, event lifecycle is kind of a mess
 
 	+--- prevent sticky mouse pan
 	+--- prevent text selection during pan
@@ -62,15 +62,15 @@
 --	Click on covered items: right now a large box over small box prevents selection of small box
 
 # Inspector
-----	Design it!
---	List dimensions in document unit
++----	Design it!
+----	List dimensions in document (user specified unit) unit
 
 # Symbols/Mixins
 -	Provide .comb specific way to reuse library items: instead of using yaml symbols, something like uses or inherit that pulls properties from another region
 
 # File Management
 -	When opening a file set the id in the url so it can be linked, and reloading will reload the file
-----	Send out file events (preClose, closed, opened that components like preview can react to)
+-----	Send out file events (preClose, closed, opened that components like preview can react to)
 +-	Google Drive Save As?
 +-----	Warn on navigation away from dirty file (prompt for sav)
 
@@ -142,7 +142,7 @@
 
 
 # UI
-----	General Look? @Greg
++----	General Look? @Greg
 ---	Quick Reference: Some sort of context aware reference, listing legal properties/values, tooltips? @Greg
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
