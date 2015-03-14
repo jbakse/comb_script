@@ -7,9 +7,11 @@ children:
         properties:
             height: 9cm
             width: 9.1cm
-    - ellipse:
-        properties:
-            # margin_right: 0mm
-            height: 80px
-            width: 80px
-            boolean: subtract
+        children:
+            - ellipse:
+                properties:
+                    name: lippy
+                    # margin_right: 0mm
+                    height: 80px
+                    width: 80px
+                    boolean: subtract

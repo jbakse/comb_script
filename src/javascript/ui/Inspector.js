@@ -42,6 +42,21 @@ Inspector.prototype.update = function(_regions) {
 	var _region = _regions[0];
 
 
+	// build breadcrumbs
+	var _r = _region;
+	var breadCrumbs = $('<ul class="breadcrumbs">');
+	$(this.element).append(breadCrumbs);
+
+	while (_r) {
+		var item = $("<li>").text(_r.properties.name || _r.type.toLowerCase());
+		item.click(this.buildSelectRegionHandler(_r));
+		breadCrumbs.prepend(item);
+		_r = _r.parent;
+	}
+
+	
+
+	// build data table
 
 	var table = $("<table>");
 	$(this.element).append(table);
@@ -120,21 +135,21 @@ Inspector.prototype.update = function(_regions) {
 
 };
 
-Inspector.prototype.formatDimensionObject = function(_o) {
-	var self = this;
-	var props = [];
-	_(_o).each( function(_value, _key) {
-		props.push ( _key + ": " + self.formatDimension(_value) );
-	});
-	var s = "{ " + props.join(", ") + " }";
+// Inspector.prototype.formatDimensionObject = function(_o) {
+// 	var self = this;
+// 	var props = [];
+// 	_(_o).each( function(_value, _key) {
+// 		props.push ( _key + ": " + self.formatDimension(_value) );
+// 	});
+// 	var s = "{ " + props.join(", ") + " }";
 	
-	return s;
-};
+// 	return s;
+// };
 
-Inspector.prototype.formatDimension = function(_v) {
-	var value = +(_v / language.unitScales[this.unit] || 1).toFixed(3);
-	return value + " " + this.unit;
-};
+// Inspector.prototype.formatDimension = function(_v) {
+// 	var value = +(_v / language.unitScales[this.unit] || 1).toFixed(3);
+// 	return value + " " + this.unit;
+// };
 
 Inspector.prototype.buildSelectRegionHandler = function(_region) {
 	return function() {

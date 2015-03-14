@@ -2,6 +2,11 @@
 @import "editor.less";
 
 // @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+@import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:400);
+
+@mono-font: 'Source Code Pro', monospace;
+@display-font: 'Josefin Sans', sans-serif;
+
 
 html, body {
 	height: 100%;
@@ -201,9 +206,9 @@ div
 // Appearance
 body
 {
-	font-family:  "Lucida Console", Monaco, monospace;
 }
 
+/*
 #menu {
 	background-color: @menu-green;
 	// border-right: 1px solid #444;
@@ -234,39 +239,6 @@ body
 	opacity: .15;
 }
 
-// #menu .icon
-// {
-// 	width: 44px;
-// 	margin: auto;
-// 	padding-top: 12px;
-// 	padding-bottom: 12px;
-// 	position: relative;
-// 	.label {
-// 		text-transform: none;
-// 		font-size: 10px;
-// 		display: block;
-// 		margin-bottom: 5px;
-// 	}
-// 	> img
-// 	{
-// 		display: block;	
-// 	}
-// 	.strike-through
-// 	{
-// 		display: none;
-// 		position: absolute;
-// 		bottom: 12px;
-// 	}
-// 	&.off .strike-through
-// 	{
-// 		display: block;
-// 	}
-// }
-// .menu-button .label
-// {
-// 	font-family:  Verdana, monospace;
-// 	padding: 12px 15px;
-// }
 .menu-popup li.togglable.on::before
 { 
 	content: '+';
@@ -357,14 +329,14 @@ body
 		cursor: pointer;
 	}
 }
-
+*/
 
 
 
 
 #file-info #file-title,
 #file-info #file-dirty {
-	font-family: Verdana, monospace;
+	font-family: @mono-font;
 	background-color: transparent;
 	background-color: @color-dark-gray;
 	height: 100%;
@@ -381,16 +353,7 @@ body
 	background: transparent;
 	color: @menu-orange;
 }
-// #file-info #file-dirty
-// {
-// 	background-color: red;
-// 	border-radius: 5px;
-// 	height: 8px;
-// 	width: 8px;
-// 	display: block;
-// 	float: left;
-// 	// &.hidden {display: none;}
-// }
+
 
 #preview {
 	overflow: hidden;
@@ -419,35 +382,67 @@ body
 
 #inspector {
 	padding: 12px;
-	font-family: 'Josefin Sans', sans-serif;
+	font-family: @display-font;
 	font-size: 16px;
 	line-height: 24px;
 }
 
 #inspector .label
 {
-
 	padding-right: 5px;
 	text-align: right;
 }
 
 #inspector .value
 {
-	// border: 1px solid red;
-	font-family:  "Lucida Console", Monaco, monospace;
-	font-size: 14px;
-
+	font-family:  @mono-font;
+	font-weight: 400;
+	font-size: 15px;
 	text-align: right;
 	padding-right: 1px;
-
 }
 
 #inspector .unit
 {
-	// border: 1px solid red;
 	padding-right: 24px;
-
 }
+
+#inspector .breadcrumbs
+{
+	margin-bottom: 10px;
+}
+
+#inspector .breadcrumbs li
+{
+	color: black;
+	border-image: url(../images/menu_icons/breadcrumb_border.png) 0 20 0 20 fill repeat;
+	border-width: 0 20px 0 20px;
+	display: inline-block;
+	height: 25px;
+	padding-top: 3px;
+	padding-left: 5px;
+	line-height: 25px;
+
+	// margin-right: 10px;
+	cursor: pointer;
+}
+
+#inspector .breadcrumbs li:hover
+{
+	text-decoration: underline;
+}
+
+#inspector .breadcrumbs li:first-child
+{
+	border-width: 0 20px 0 0;
+	padding-left: 10px;
+}
+
+#inspector .breadcrumbs li+li
+{
+	margin-left: -10px;
+}
+
 
 #right-side-outer {
 	box-shadow: -10px 0px 15px 0px rgba(0,0,0,.2);
@@ -460,8 +455,8 @@ body
 	font-size: 15px;
 	background-color: @color-dark-gray;
 	color: #E6DB74;
-	font-family:  "Lucida Console", Monaco, monospace;
-	line-height: 18px;
+	font-family: @mono-font;
+	line-height: 19px;
 }
 
 
@@ -476,8 +471,8 @@ body
 {
 	border-left: 3px solid white;
 	list-style: none;
-	font-family:  Verdana, monospace;
-	font-size: 14px;
+	font-family:  @mono-font;
+	font-size: 15px;
 	line-height: 20px;
 	padding: 1px 10px;
 	margin-bottom: 4px;
