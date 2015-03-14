@@ -41,6 +41,8 @@
 	----	Better solution to preserving pan on edit, and recentering.
 -----	its a little bit better but the file new open loaded, opened, event lifecycle is kind of a mess
 
+-----	Merge refactor css, and apply comb
+
 	+--- prevent sticky mouse pan
 	+--- prevent text selection during pan
 

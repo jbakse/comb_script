@@ -13,8 +13,6 @@ math.type.Unit.UNITS.px = {
 	offset: 0
 };
 
-
-var paperUtil = require('../paper_util.js');
 var util = require('../util.js');
 var settings = require('../Settings.js');
 var regionTypes = require('./regionTypes.js');
