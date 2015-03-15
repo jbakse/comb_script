@@ -16,9 +16,6 @@ var menuBlue = new paper.Color("#06aaff");
 var menuGreen = new paper.Color("#1de982");
 var menuYellow = new paper.Color("#fffc01");
 
-
-
-
 // Create Default Style
 var defaultStyle = {
 	strokeColor: "black",
@@ -26,14 +23,6 @@ var defaultStyle = {
 	strokeScaling: false,
 	fillColor: new paper.Color(0, 0, 0, 0)
 };
-
-// var defaultStyles = {};
-// defaultStyles.default = _(defaultStyle).clone();
-// defaultStyles.selected = _(defaultStyle).clone();
-// defaultStyles.key = _(defaultStyle).clone();
-// defaultStyles.ghost = _(defaultStyle).clone();
-// defaultStyles.hover = _(defaultStyle).clone();
-
 
 // Create Build Style
 var shapeFillColor = menuBlue.clone();
@@ -86,29 +75,6 @@ previewStyles.position.default = _(positionStyle).clone();
 previewStyles.position.selected = _(positionStyle).clone();
 previewStyles.position.key = _(positionStyle).clone();
 previewStyles.position.hover = _(positionStyle).clone();
-
-// $.extend(true, {}, defaultpreviewStyles);
-// _(previewStyles.bounds.default).extend({
-// 	strokeColor: new paper.Color("black")
-// });
-// _(previewStyles.bounds.selected).extend({
-// 	strokeColor: new paper.Color("orange"),
-// 	strokeWidth: 1
-// });
-// _(previewStyles.bounds.key).extend({
-// 	strokeColor: new paper.Color("orange"),
-// 	strokeWidth: 3
-// });
-// _(previewStyles.bounds.ghost).extend({});
-// _(previewStyles.bounds.hover).extend({
-// 	strokeColor: "black",
-// 	strokeWidth: 3
-// });
-
-
-// // Create Preview/Frame Style - Shape
-// styles.position = $.extend(true, {}, defaultStyles);
-
 
 module.exports.previewStyles = previewStyles;
 

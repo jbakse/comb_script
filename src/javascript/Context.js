@@ -1,12 +1,9 @@
 "use strict";
 
-
 var _ = require('underscore/underscore.js');
 var math = require('mathjs/math.min.js');
 
 module.exports = Context;
-
-
 
 function Context(_bounds, _matrix) {
 	this.bounds = _bounds ? _bounds.clone() : new paper.Rectangle(0, 0, 0, 0);
@@ -17,9 +14,7 @@ Context.prototype.toString = function() {
 	return "Context: " + this.bounds;
 };
 
-
 Context.prototype.scope = function() {
-
 	return {
 		parent_height: math.unit(this.bounds.height, 'px'),
 		parent_width: math.unit(this.bounds.width, 'px'),

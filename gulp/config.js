@@ -53,13 +53,8 @@ module.exports = {
       dest: dest + '/javascript',
       outputName: 'docs.js',
       paths: ['new_lib']
-      },
-      {
-      entries: src + '/javascript/menu.js',
-      dest: dest + '/javascript',
-      outputName: 'menu.js',
-      paths: ['new_lib']
-      }]
+      }
+      ]
   },
   production: {
     cssSrc: dest + '/*.css',

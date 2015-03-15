@@ -1,8 +1,8 @@
 'use strict';
-
+    
 /* global ace */
 var _ = require('underscore/underscore.js');
-var Range = ace.require('ace/range').Range;
+var AceRange = ace.require('ace/range').Range;
 
 module.exports = Editor;
 
@@ -89,7 +89,7 @@ Editor.prototype.highlightLines = function(_firstLine, _lastLine, _class) {
 	this.editor.getSession().removeMarker(this.highlightMarker);
 
 	this.highlightMarker = this.editor.session.addMarker(
-		new Range(_firstLine, 0, _lastLine, 1), _class, "fullLine");
+		new AceRange(_firstLine, 0, _lastLine, 1), _class, "fullLine");
 
 
 	

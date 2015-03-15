@@ -4,14 +4,9 @@ require('./jquery_util.js');
 
 var ApplicationController = require('./ApplicationController.js');
 
-function main() {
+$(function() {
 	var appController = new ApplicationController();
 	appController.init();
-}
-
-
-$(function() {
-	main();
 });
 
 

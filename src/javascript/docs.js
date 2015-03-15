@@ -1,3 +1,5 @@
+'use strict';
+
 require('./jquery_util.js');
 var _ = require('underscore/underscore.js');
 var Mustache = require('mustache');
