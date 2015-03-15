@@ -1,5 +1,5 @@
 'use strict';
-var math = require('mathjs/math.min.js');
+// var math = require('mathjs/math.min.js');
 
 var Region = require('./Region.js');
 var util = require('../util.js');

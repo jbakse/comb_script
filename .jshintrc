@@ -10,6 +10,7 @@
 	
 	"globals" :
 		{
+			"ace": false,
 			"module": false,
 			"paper": false,
 			"require": false,

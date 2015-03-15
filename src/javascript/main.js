@@ -2,6 +2,9 @@
 
 require('./jquery_util.js');
 
+var File = require('./File.js');
+File.test();
+
 var ApplicationController = require('./ApplicationController.js');
 
 $(function() {

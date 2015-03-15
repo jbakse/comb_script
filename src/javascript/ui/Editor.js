@@ -1,6 +1,6 @@
 'use strict';
     
-/* global ace */
+
 var _ = require('underscore/underscore.js');
 var AceRange = ace.require('ace/range').Range;
 
@@ -12,8 +12,8 @@ module.exports = Editor;
 function Editor() {
 	this.highlightMarker = null;
 	this.editor = null;
-	this.sendChangeEvents = true;
-	this.sendChangeCursorEvents = true;
+	this.blockEditedEvents = false;
+	// this.blockLineChangedEvents = false;
 	this.oldLine = 0;
 }
 
@@ -62,13 +62,12 @@ Editor.prototype.resize = function() {
 };
 
 Editor.prototype.setText = function(_text) {
-	this.sendChangeEvents = false;
-
+	this.blockEditedEvents = true;
 	this.editor.setValue(_text);
 	this.editor.clearSelection();
 	this.editor.scrollToLine(0);
-	this.sendChangeEvents = true;
-	this.onChange();
+	this.blockEditedEvents = false;
+	// this.onChange();
 };
 
 Editor.prototype.getText = function() {
@@ -96,12 +95,12 @@ Editor.prototype.highlightLines = function(_firstLine, _lastLine, _class) {
 };
 
 Editor.prototype.gotoLine = function(line, focus) {
-
-	this.sendChangeCursorEvents = false;
+	console.log("goto line");
+	// this.blockLineChangedEvents = true;
 	this.editor.gotoLine(line, 1000, true);
-	this.sendChangeCursorEvents = true;
+	// this.blockLineChangedEvents = false;
 
-	$.Topic("UI/editor/onLineChange").publish(line);
+	// $.Topic("Editor/lineChanged").publish(line);
 
 	if (focus) this.editor.focus();
 };
@@ -109,15 +108,18 @@ Editor.prototype.gotoLine = function(line, focus) {
 
 
 Editor.prototype.onChange = function(_e) {
-	if (!this.sendChangeEvents) return;
-	$.Topic("UI/editor/onContentChange").publish(_e, this.getText());
+	
+
+	if (this.blockEditedEvents) return;
+	$.Topic("Editor/edited").publish(this.getText());
 };
 
 Editor.prototype.onChangeCursor = function() {
-	if (!this.sendChangeCursorEvents) return;
+	
+	// if (this.blockLineChangedEvents) return;
 	var line = this.editor.selection.getCursor().row + 1;
 	if (this.oldLine != line) {
-		$.Topic("UI/editor/onLineChange").publish(line);
+		$.Topic("Editor/lineChanged").publish(line);
 		this.oldLine = line;
 	}
 };

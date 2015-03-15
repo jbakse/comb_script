@@ -1,7 +1,7 @@
 "use strict";
 
 var _ = require('underscore/underscore.js');
-var math = require('mathjs/math.min.js');
+// var math = require('mathjs/math.min.js');
 
 module.exports = Context;
 

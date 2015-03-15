@@ -20,7 +20,10 @@ var Inspector = require('./ui/Inspector.js');
 var Menu = require('./ui/Menu.js');
 var log = require('./ui/Log.js').sharedInstance();
 
-var googleDrive = require('./GoogleDrive.js');
+require('./ui/FileInfo.js');
+
+var File = require('./File.js');
+// var googleDrive = require('./GoogleDrive.js');
 
 module.exports = ApplicationController;
 
@@ -31,6 +34,7 @@ module.exports = ApplicationController;
 function ApplicationController() {
 	console.log("Hello, Application!");
 	this.doc = null;
+	this.file = new File();
 	this.selectedRegions = [];
 	this.keySelection = null;
 	this.hoverRegion = null;
@@ -45,7 +49,7 @@ function ApplicationController() {
 
 ApplicationController.prototype.init = function(_element) {
 
-	googleDrive.init();
+	// googleDrive.init();
 
 
 	this.preview.init($('#paper-canvas').get(0));
@@ -68,15 +72,15 @@ ApplicationController.prototype.init = function(_element) {
 
 ApplicationController.prototype.attachHandlers = function() {
 	var self = this;
-	$.Topic("File/onLoad").subscribe(_.bind(this.onFileLoad, this));
+	$.Topic("File/opened").subscribe(_.bind(this.fileOpened, this));
+	$.Topic("Editor/edited").subscribe(_.bind(this.editorEdited, this));
+	$.Topic("Editor/lineChanged").subscribe(_.bind(this.editorLineChanged, this));
 
-	$.Topic("UI/command/rebuild").subscribe(_.bind(this.rebuild, this));
+	// $.Topic("UI/command/rebuild").subscribe(_.bind(this.rebuild, this));
 	$.Topic("UI/command/exportSVG").subscribe(_.bind(this.exportSVG, this));
 	$.Topic("UI/command/loadYAML").subscribe(_.bind(this.loadYAMLfromURL, this));
 
-	$.Topic("UI/editor/onContentChange").subscribe(_.bind(this.rebuild, this));
-	$.Topic("UI/editor/onLineChange").subscribe(_.bind(this.highlightRegionsForLine, this));
-
+	
 
 	$.Topic("region/onMouseEnter").subscribe(function(_region) {
 		self.hoverRegion = _region;
@@ -90,16 +94,6 @@ ApplicationController.prototype.attachHandlers = function() {
 		self.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
 		self.editor.gotoLine(_region.editorProperties.firstLine + 1, true);
 	});
-
-
-
-
-	// $("#preview").click(
-	// 	function(e){
-	// 		console.log("click window", e);
-	// 		// $.Topic("region/onClick").publish();
-	// 	}
-	// );
 
 	$.Topic("region/onMouseLeave").subscribe(function(_region) {
 		self.hoverRegion = undefined;
@@ -222,17 +216,15 @@ ApplicationController.prototype.highlightRegionsForLine = function(_line) {
 };
 
 ApplicationController.prototype.loadYAMLfromURL = function(_url) {
-	if (!googleDrive.closeFile()) return false;
+	if (!this.file.close()) return false;
 
 	var self = this;
 	$.ajax({
 		url: _url,
 
 		success: function(_data) {
-			console.log("loadYamlfromURL");
-			$.Topic("File/onLoad").publish(_url, _data);
-			// self.setYAML(_data);
-			// googleDrive.setClean();
+			self.file = new File(_url, _data);
+			self.file.open();
 		},
 
 		fail: function(_data) {
@@ -243,19 +235,25 @@ ApplicationController.prototype.loadYAMLfromURL = function(_url) {
 	});
 };
 
-ApplicationController.prototype.onFileLoad = function(_title, _content){
-	this.setYAML(_content);
+ApplicationController.prototype.fileOpened = function(_f){
+	this.editor.setText(_f.content);
+	this.rebuild();
 };
 
-ApplicationController.prototype.setYAML = function(_yaml) {
-	this.editor.setText(_yaml);
+ApplicationController.prototype.editorEdited = function(_content){
+	this.file.setContent(_content);
+	this.rebuild();
 };
 
+ApplicationController.prototype.editorLineChanged = function(_line){
+	this.highlightRegionsForLine(_line);
+};
 
 ApplicationController.prototype.rebuild = function() {
 	try {
 		log.clear();
-		this._parseYAML(this.editor.getText());
+		this._parseYAML(this.file.content);
+		this._renderDocument();
 		this.highlightRegionsForLine(this.editor.editor.selection.getCursor().row);
 	}
 	catch (e) {
@@ -266,11 +264,10 @@ ApplicationController.prototype.rebuild = function() {
 
 
 ApplicationController.prototype._parseYAML = function(_yaml) {
-	// console.log("update yaml");
 
 	try {
 		var data = Parser.parse(_yaml);
-		if (!data) return;
+		if (!data) return false;
 
 		this.doc = new regionTypes.Document();
 		this.doc.loadData(data);
@@ -279,8 +276,7 @@ ApplicationController.prototype._parseYAML = function(_yaml) {
 	catch (e) {
 		log.appendException(e, "Exception loading document.");
 		console.error("Exception loading document.");
-		console.log(e.stack);
-		// console.log("data", data);
+		console.error(e.stack);
 		this.doc = null;
 		return false;
 	}
@@ -289,17 +285,19 @@ ApplicationController.prototype._parseYAML = function(_yaml) {
 		log.appendError("Subdocuments are not currently supported.");
 	}
 
+	return true;
+};
+
+ApplicationController.prototype._renderDocument = function() {
 	try {
 		this.preview.setDocument(this.doc);
 	}
 	catch (e) {
 		log.appendException(e, "Exception drawing document.");
 		console.error("Exception drawing document.");
-		console.log(e.stack);
+		console.error(e.stack);
+		return false;
 	}
-
-
-	log.appendSuccess("Success");
 	return true;
 };
 

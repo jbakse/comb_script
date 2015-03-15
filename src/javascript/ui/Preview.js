@@ -54,7 +54,7 @@ Preview.prototype.init = function(_element) {
 
 
 	var self = this;
-	$.Topic("File/onLoad").subscribe(
+	$.Topic("File/opened").subscribe(
 		function() {
 			self.newFileFlag = true;
 		}

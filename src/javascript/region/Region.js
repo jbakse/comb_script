@@ -2,7 +2,7 @@
 
 
 var _ = require('underscore/underscore.js');
-var math = require('mathjs/math.min.js');
+// var math = require('mathjs/math.min.js');
 
 //insert 'px' unit so math js can covert to/from px
 math.type.Unit.UNITS.px = {
