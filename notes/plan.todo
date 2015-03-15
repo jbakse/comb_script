@@ -11,53 +11,32 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Todo
 
-+-----	Fallout from units (or soemthing else) region grid spins up the proc, locks the tab
-
-
-+-----	Show name of example file on "tab"
-
-----	click nothing to Select none
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Bugs
 
-+-----	all those google drive errors in console!
-
-+----- Proxies are getting the result of math, they are not each calculating for themselves
-+----- boolean language files: boolean mixed and mixed_boolean seem to be deprecated but the language spec was not updated figure out wht the system really cares about, and update
-
-+----- mixed unit bug parent_top is a number, so you can't subtract a unit from it.  top = parent_top + 1 cm don't work (probably change parent_top, etc, to units)
-
-
+----- Selection not set properly w/ region grids (alternate)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # User facing Features
 
-# General
-+-----	Keyboard browser navigation: might need to be disabled, hitting delete or command-brackets is common in an editor and if the wrong thing is focused, you leave the page
-	
-# Preview
----	Let user Pan
-	----	Better solution to preserving pan on edit, and recentering.
------	its a little bit better but the file new open loaded, opened, event lifecycle is kind of a mess
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # 
+# w/Greg
 
 -----	Merge refactor css, and apply comb
 
-	+--- prevent sticky mouse pan
-	+--- prevent text selection during pan
+# General
+	
+# Preview
+---	Let user Pan
+	--	limit pan so you can't lose the drawing
 
 ---	Let user Zoom
-	-- scroll wheel zoom
-	+---- keyboard command zoom
-	+--- tool bar magnifying glass?
-	-- option key maginfying glass cursor?
-	+---- zoom aware pan
+	- scroll wheel zoom
+	- option key maginfying glass cursor?
 
----	DRY up zoom
-
-+----	Don't screw up pan on code changes
-	
-	----	Pan preview to selected region in text
+----	Pan preview to selected region in text
 
 -	Isolation Mode? 
 -	Ghost unselected regions?
@@ -201,3 +180,11 @@
 -	nicer dialog (alert/confirm/prompt) with a library
 
 -	move openedFile and this.file into a property on the File class called openedFile. so you can say File.openedFile
+
+
+# 
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # 
+# rejected features
+
+--	click nothing to select->none: selections follow the text cursor position, select none would have to make it so there was not text cursor postion. there always is one.

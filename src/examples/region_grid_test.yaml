@@ -1,7 +1,0 @@
-properties:
-    name: region_grid_test
-    width: 2 in
-    height: 2 in
-
-children:
-    - ellipse:

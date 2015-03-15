@@ -39,6 +39,13 @@ Menu.prototype.init = function(_element) {
 		return false;
 	});
 
+	Mousetrap.bindGlobal('command+0', function() {
+		$.Topic("UI/command/zoomActualFit").publish();
+		return false;
+	});
+
+	
+
 
 	$('[data-example]').click ( function (_e) {
 		// console.log("_e", _e, this, $(this).data('example'));

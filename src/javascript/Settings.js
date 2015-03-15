@@ -2,7 +2,7 @@
 
 var _ = require('underscore/underscore.js');
 
-module.exports.fileURL = "examples/test/boolean_debug.yaml";
+module.exports.fileURL = "examples/test/region_grid_test.yaml";
 module.exports.previewCanvasWidth = 1600;
 module.exports.previewCanvasHeight = 1600;
 module.exports.inspectOnHover = false;

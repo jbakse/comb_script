@@ -12,6 +12,7 @@
 		{
 			"ace": false,
 			"math": false,
+			"TWEEN": false,
 			"module": false,
 			"paper": false,
 			"require": false,

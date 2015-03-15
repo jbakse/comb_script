@@ -11,6 +11,7 @@ children:
             - ellipse:
                 properties:
                     name: circle
+                    top: 30cm
                     height: 10cm
                     width: 10cm
                     boolean: subtract

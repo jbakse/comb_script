@@ -1,0 +1,23 @@
+properties:
+    name: region_grid_test
+    width: 2 in
+    height: 2 in
+
+children:
+    - region_grid:
+        properties:
+            height: 4in
+            row_height: 2in
+            registration: center
+            populate: alternate
+        children:
+            - ellipse:
+                properties:
+                    width: 1in
+                    height: 1in
+                    margin_left: 0in
+            - rectangle:
+                properties:
+                    width: 1in
+                    height: 1in
+                    margin_right: 0in

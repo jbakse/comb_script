@@ -68,11 +68,20 @@ ApplicationController.prototype.init = function(_element) {
 
 	googleDrive.init();
 
+
+	step();
+
+
 	// open the default yaml file, unless a file request in query 
 	if (!util.getParameterByName('state')) {
 		this.loadYAMLfromURL(settings.fileURL);
 	}
 };
+
+function step(timestamp){
+	TWEEN.update();
+	window.requestAnimationFrame(step);
+}
 
 ApplicationController.prototype.attachHandlers = function() {
 	var self = this;
@@ -155,6 +164,7 @@ ApplicationController.prototype.editorEdited = function(_content) {
 
 ApplicationController.prototype.editorLineChanged = function(_line) {
 	this.selectRegionsForLine(_line);
+	$.Topic("UI/command/showSelection").publish(this.selection);
 };
 
 
@@ -176,14 +186,18 @@ ApplicationController.prototype.selectRegionsForLine = function(_line) {
 		return _region.editorProperties.firstLine <= (_line - 1) && _region.editorProperties.lastLine >= (_line - 1);
 	});
 
-	// collect ancestors of all those regions, flatten into single array
-	var ancestors = _(regions).map(function(r) {
-		return r.getAncestors();
-	});
-	ancestors = _(ancestors).flatten();
+	var best = _(regions).max( (r) => r.editorProperties.firstLine );
 
-	// remove ancestors from list, leaving only bottom nodes
-	regions = _(regions).difference(ancestors);
+	regions = _(regions).filter( (r) => r.editorProperties.firstLine === best.editorProperties.firstLine);
+
+	// // collect ancestors of all those regions, flatten into single array
+	// var ancestors = _(regions).map(function(r) {
+	// 	return r.getAncestors();
+	// });
+	// ancestors = _(ancestors).flatten();
+
+	// // remove ancestors from list, leaving only bottom nodes
+	// regions = _(regions).difference(ancestors);
 
 	// if we don't have any regions, just return
 	if (!regions || regions.length === 0) {
@@ -192,18 +206,20 @@ ApplicationController.prototype.selectRegionsForLine = function(_line) {
 
 	// update our selection
 	this.selection.regions = regions;
-	if (!_(regions).contains(this.selection.key)) {
-		this.selection.key = null;
-	}
-	if (this.selection.regions.length === 1) {
+	if (!_(this.selection.regions).contains(this.selection.key)) {
 		this.selection.key = this.selection.regions[0];
 	}
+	// if (this.selection.regions.length === 1) {
+	// 	this.selection.key = this.selection.regions[0];
+	// }
 
 	// draw highlight in editor
 	var r = regions[0];
 	this.editor.highlightLines(r.editorProperties.firstLine, r.editorProperties.lastLine, r.type.toLowerCase());
 
 	$.Topic("App/selectionChanged").publish(this.selection);
+
+
 	
 };
 

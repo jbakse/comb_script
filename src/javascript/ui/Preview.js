@@ -171,6 +171,18 @@ Preview.prototype.attachHandlers = function() {
 		}
 	);
 
+	$.Topic("UI/command/zoomActualFit").subscribe(
+		function() {
+			if (paper.view.zoom != 1.0) {
+				self.setZoom(1.0);
+			} else {
+				self.zoomToFit();
+			}
+		}
+	);
+
+	$.Topic("UI/command/showSelection").subscribe( _.bind(this.showSelection, this));
+
 
 	// block context menu
 	$(paper.view.element).bind('contextmenu', function(e) {
@@ -204,6 +216,7 @@ Preview.prototype.zoomToFit = function() {
 
 //	selectionChanged - called when selection changes to update the preview with new styles
 Preview.prototype.selectionChanged = function(_selection) {
+
 	if (!this.doc) {
 		console.error("selectRegionsForLine called without this.doc set");
 		return;
@@ -218,7 +231,34 @@ Preview.prototype.selectionChanged = function(_selection) {
 	if (_selection.key) _selection.key.setStyle("key");
 	if (_selection.hover) _selection.hover.setStyle("hover");
 
+	
+
 	paper.view.update();
+};
+
+var oldKeySelection;
+Preview.prototype.showSelection = function(_selection) {
+	if (!_selection.key) return;
+	if (oldKeySelection === _selection.key) return;
+	oldKeySelection = _selection.key;
+
+	var target = _selection.key.previewBoundsGroup.bounds;
+
+	var tween = new TWEEN.Tween({
+			x: paper.view.center.x,
+			y: paper.view.center.y
+		})
+		.to({
+			x: target.center.x,
+			y: target.center.y
+		}, 200)
+		.easing(TWEEN.Easing.Quadratic.InOut)
+		.start();
+
+	tween.onUpdate(function() {
+		paper.view.center = new paper.Point(this.x, this.y);
+		paper.view.update();
+	});
 };
 
 
@@ -258,4 +298,3 @@ Preview.prototype.setDocument = function(_doc) {
 
 	paper.view.update();
 };
-
