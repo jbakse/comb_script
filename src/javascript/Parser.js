@@ -5,10 +5,13 @@ var jsYAML = require('js-yaml');
 var log = require('./ui/Log.js').sharedInstance();
 var language = require('./language.js');
 
-module.exports.parse = parse;
 
 //////////////////////////////////////////////////////////////////////
 // Parser
+//
+// responsible for converting YAML into the javascript object data that a Document can load
+
+module.exports.parse = parse;
 
 function parse(_yaml) {
 	var data;

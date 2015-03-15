@@ -1,9 +1,11 @@
 'use strict';
 
-require('./jquery_util.js');
+////////////////////////////////////////////////////////////////////
+// main.js
+//
+// entry point for application
 
-var File = require('./File.js');
-File.test();
+require('./jquery_util.js');
 
 var ApplicationController = require('./ApplicationController.js');
 

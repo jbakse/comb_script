@@ -57,14 +57,3 @@ class File {
 
 module.exports = File;
 
-
-
-File.test = function() {
-	console.log("testing file!");
-	let f = new File();
-	f.setContent("My File");
-
-	console.log(f + "");
-
-
-};

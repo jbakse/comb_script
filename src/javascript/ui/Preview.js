@@ -16,43 +16,106 @@ function Preview() {
 	this.previewLayer = null;
 	this.buildLayer = null;
 	this.exportLayer = null;
+	this.element = null;
 
 	this.doc = null;
 }
 
 Preview.prototype.init = function(_element) {
-	paper.setup(_element);
+	this.element = _element;
+
+	paper.setup(this.element);
 
 	this.buildLayer = new paper.Layer();
 	this.exportLayer = new paper.Layer();
 	this.previewLayer = new paper.Layer();
 
-	
-
-	$(paper.view.element).bind('contextmenu', function(e) {
-		return false;
-	});
-
 
 	setupDragging();
+	setupPicking();
 	this.attachHandlers();
-
-	
-
-	Mousetrap.bindGlobal('command+=', function() {
-		$.Topic("UI/command/zoomIn").publish();
-		// paper.view.zoom *= 2;
-		return false;
-	});
-
-	Mousetrap.bindGlobal('command+-', function() {
-		$.Topic("UI/command/zoomOut").publish();
-		// paper.view.zoom *= 0.5;
-		return false;
-	});
-
-
 };
+
+function setupDragging() {
+
+	var isDragging = false;
+	var oldMouseLoc;
+
+	$(paper.view.element).mousedown(function(_e) {
+		if (_e.which != 1) return;
+		isDragging = true;
+		oldMouseLoc = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);
+	});
+
+	$(window).mouseup(function(_e) {
+		isDragging = false;
+	});
+
+	$(window).mousemove(function(_e) {
+		if (!isDragging) return;
+		var newMouseLoc = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);
+		paper.view.scrollBy(oldMouseLoc.subtract(newMouseLoc).multiply(1.0 / paper.view.zoom));
+		oldMouseLoc = newMouseLoc;
+	});
+}
+
+
+////////////////////////////////////////////////////////////////////
+// TODO: Put somewhere else!
+
+function setupPicking() {
+	var picker = new paper.Tool();
+
+	var hoveredRegion = null;
+	var mouseDownRegion = null;
+
+	picker.onMouseDown = function(e) {
+		mouseDownRegion = hoveredRegion;
+	};
+
+	picker.onMouseUp = function(e) {
+		if (hoveredRegion && hoveredRegion === mouseDownRegion) {
+			hoveredRegion.onClick();
+		}
+	};
+
+	picker.onMouseMove = function(e) {
+		// find the "picked" region, strokes get priority over fills so that you can pick thorugh a overlapping shape
+
+		// check just strokes first
+		var hit = paper.project.hitTest(e.point, {
+			tolerance: 5,
+			stroke: true
+		});
+
+		// if the cursor isn't over a stroke, check for a fill
+		if (hit === null) {
+			hit = paper.project.hitTest(e.point, {
+				tolerance: 5,
+				fill: true
+			});
+		}
+
+		var oldHoveredRegion = hoveredRegion;
+
+		if (hit === null) {
+			hoveredRegion = null;
+		} else {
+			hoveredRegion = hit.item.region;
+		}
+
+		if (oldHoveredRegion && oldHoveredRegion !== hoveredRegion) {
+			oldHoveredRegion.onMouseLeave();
+		}
+
+		if (hoveredRegion && oldHoveredRegion !== hoveredRegion) {
+			hit.item.region.onMouseEnter();
+		}
+
+	};
+}
+
+
 
 Preview.prototype.attachHandlers = function() {
 	var self = this;
@@ -62,6 +125,8 @@ Preview.prototype.attachHandlers = function() {
 			self.newFileFlag = true;
 		}
 	);
+
+	$.Topic("App/selectionChanged").subscribe(_.bind(this.selectionChanged, this));
 
 	$.Topic("UI/command/toggleViewPreview").subscribe(
 		function(_state) {
@@ -98,6 +163,13 @@ Preview.prototype.attachHandlers = function() {
 			self.setZoom(paper.view.zoom * 0.5);
 		}
 	);
+
+
+	// block context menu
+	$(paper.view.element).bind('contextmenu', function(e) {
+		return false;
+	});
+
 };
 
 Preview.prototype.setZoom = function(_zoom) {
@@ -105,34 +177,47 @@ Preview.prototype.setZoom = function(_zoom) {
 	$("#zoom-level").text(paper.view.zoom * 100 + "%");
 };
 
-function setupDragging() {
+Preview.prototype.zoomToFit = function() {
+	// zoom to fit
+	var zX = $("#preview").width() / this.previewLayer.bounds.width;
+	var zY = $("#preview").height() / this.previewLayer.bounds.height;
+	var z = Math.min(zX, zY);
 
-	var isDragging = false;
-	var oldMouseLoc;
+	function floorPow2(aSize) {
+		return Math.pow(2, Math.floor(Math.log(aSize) / Math.log(2)));
+	}
+	z = floorPow2(z);
 
-	$(paper.view.element).mousedown(function(_e) {
-		if (_e.which != 1) return;
-		isDragging = true;
-		oldMouseLoc = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);
+	this.setZoom(z);
+
+	// center
+	paper.view.center = new paper.Point(this.doc.properties.width.toNumber("px") * 0.5, this.doc.properties.height.toNumber("px") * 0.5);
+};
+
+
+//	selectionChanged - called when selection changes to update the preview with new styles
+Preview.prototype.selectionChanged = function(_selection) {
+	if (!this.doc) {
+		console.error("selectRegionsForLine called without this.doc set");
+		return;
+	}
+
+	this.doc.setStyle("default", true);
+
+	_(_selection.regions).each(function(_region) {
+		_region.setStyle("selected");
 	});
 
-	$(window).mouseup(function(_e) {
-		isDragging = false;
-	});
+	if (_selection.key) _selection.key.setStyle("key");
+	if (_selection.hover) _selection.hover.setStyle("hover");
 
-	$(window).mousemove(function(_e) {
-		if (!isDragging) return;
-		var newMouseLoc = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);
-		paper.view.scrollBy(oldMouseLoc.subtract(newMouseLoc).multiply(1.0 / paper.view.zoom));
-		oldMouseLoc = newMouseLoc;
-	});
+	paper.view.update();
+};
 
-}
+
 
 Preview.prototype.setDocument = function(_doc) {
-	// var oldDoc = this.doc;
 	this.doc = _doc;
-
 
 	// draw preview/frame
 	this.previewLayer.activate();
@@ -142,67 +227,28 @@ Preview.prototype.setDocument = function(_doc) {
 	// draw build
 	this.buildLayer.activate();
 	this.buildLayer.removeChildren();
-	var buildShapes = this.doc.build();
-
-	// re-style build layer
+	this.doc.build();
 	this.buildLayer.style = settings.buildStyle;
-	// _(buildShapes).each(function(shape) {
-
-	// 	if (shape instanceof paper.Path) return;
-	// 	if (shape instanceof paper.CompoundPath) return;
-	// 	shape.style = {
-	// 		fillColor: undefined,
-	// 		strokeWidth: 1,
-	// 		strokeColor: "red"
-	// 	};
-	// });
-
 
 	// draw export
 	this.exportLayer.removeChildren();
 	this.exportLayer.activate();
 	this.doc.build();
 
-
-	// re-style export layer
 	var style = settings.exportStyle;
-
 	if (this.doc.properties.cut_color) {
 		style.strokeColor = new paper.Color(this.doc.properties.cut_color.red, this.doc.properties.cut_color.green, this.doc.properties.cut_color.blue);
 	}
 	if (this.doc.properties.cut_width) {
 		style.strokeWidth = Math.max(0.5, this.doc.properties.cut_width);
 	}
-
 	this.exportLayer.style = style;
 
-
-	function floorPow2(aSize) {
-		return Math.pow(2, Math.floor(Math.log(aSize) / Math.log(2)));
-	}
-
 	if (this.newFileFlag) {
-
-		// zoom to fit
-		var zX = $("#preview").width() / this.previewLayer.bounds.width;
-		var zY = $("#preview").height() / this.previewLayer.bounds.height;
-		var z = Math.min(zX, zY);
-		z = floorPow2(z);
-		paper.view.zoom = z;
-		$("#zoom-level").text(paper.view.zoom * 100 + "%");
-
-		// center
-		paper.view.center = new paper.Point(_doc.properties.width.toNumber("px") * 0.5, _doc.properties.height.toNumber("px") * 0.5);
-
-		// just the first time
+		this.zoomToFit();
 		this.newFileFlag = false;
 	}
 
-	// paper.view.zoom = _doc.properties.zoom;
-	paper.view.update();
-
-};
-
-Preview.prototype.redraw = function() {
 	paper.view.update();
 };
+

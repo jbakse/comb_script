@@ -28,6 +28,7 @@ var Parser = require('./Parser.js');
 // Responsible for:
 // - app set up
 // - responding to UI commands and events
+// - sycronizing editor and file
 // - coordinating the change->parse->render flow
 // - managing the region selection
 //
@@ -64,7 +65,6 @@ ApplicationController.prototype.init = function(_element) {
 	this.menu.init($('#menu').get(0));
 
 	this.attachHandlers();
-	this.buildPicker();
 
 	googleDrive.init();
 
@@ -82,11 +82,8 @@ ApplicationController.prototype.attachHandlers = function() {
 	$.Topic("Editor/edited").subscribe(_.bind(this.editorEdited, this));
 	$.Topic("Editor/lineChanged").subscribe(_.bind(this.editorLineChanged, this));
 
-	$.Topic("UI/command/exportSVG").subscribe(_.bind(this.exportSVG, this));
 	$.Topic("UI/command/loadYAML").subscribe(_.bind(this.loadYAMLfromURL, this));
-
-
-	$.Topic("App/selectionChanged").subscribe(_.bind(this.selectionChanged, this));
+	$.Topic("UI/command/exportSVG").subscribe(_.bind(this.exportSVG, this));
 
 
 	$.Topic("region/onMouseEnter").subscribe(function(_region) {
@@ -100,7 +97,6 @@ ApplicationController.prototype.attachHandlers = function() {
 		self.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
 		self.editor.gotoLine(_region.editorProperties.firstLine + 1, true);
 		self.selectRegionsForLine(_region.editorProperties.firstLine + 1);
-		// $.Topic("App/selectionChanged").publish(self.selection);
 	});
 
 	$.Topic("region/onMouseLeave").subscribe(function(_region) {
@@ -135,24 +131,38 @@ ApplicationController.prototype.attachHandlers = function() {
 
 
 
-//	selectionChanged - called when selection changes to update the preview with new styles
-ApplicationController.prototype.selectionChanged = function(_region) {
-	if (!this.doc) {
-		console.error("selectRegionsForLine called without this.doc set");
-		return;
-	}
 
-	this.doc.setStyle("default", true);
 
-	_(this.selection.regions).each(function(_region) {
-		_region.setStyle("selected");
-	});
 
-	if (this.selection.key) this.selection.key.setStyle("key");
-	if (this.selection.hover) this.selection.hover.setStyle("hover");
+////////////////////////////////////////////////////////////////////
+// event handlers
 
-	this.preview.redraw();
+ApplicationController.prototype.fileOpened = function(_f) {
+	this.file = _f;
+	this.editor.setText(_f.content);
+	this.rebuild();
 };
+
+ApplicationController.prototype.fileClosed = function(_f) {
+	this.editor.setText("");
+	new File().open();
+};
+
+ApplicationController.prototype.editorEdited = function(_content) {
+	this.file.setContent(_content);
+	this.rebuild();
+};
+
+ApplicationController.prototype.editorLineChanged = function(_line) {
+	this.selectRegionsForLine(_line);
+};
+
+
+
+
+
+////////////////////////////////////////////////////////////////////
+// managing selection
 
 // selectRegionsForLine - finds the region specified around the current editor line, updates region selection
 ApplicationController.prototype.selectRegionsForLine = function(_line) {
@@ -195,10 +205,14 @@ ApplicationController.prototype.selectRegionsForLine = function(_line) {
 
 	$.Topic("App/selectionChanged").publish(this.selection);
 	
-
-	
-
 };
+
+
+
+
+
+////////////////////////////////////////////////////////////////////
+// import / export
 
 ApplicationController.prototype.loadYAMLfromURL = function(_url) {
 	if (!this.file.close()) return false;
@@ -218,82 +232,6 @@ ApplicationController.prototype.loadYAMLfromURL = function(_url) {
 		cache: false
 	});
 };
-
-ApplicationController.prototype.fileOpened = function(_f) {
-	this.file = _f;
-	this.editor.setText(_f.content);
-	this.rebuild();
-};
-
-ApplicationController.prototype.fileClosed = function(_f) {
-	this.editor.setText("");
-	new File().open();
-};
-
-ApplicationController.prototype.editorEdited = function(_content) {
-	this.file.setContent(_content);
-	this.rebuild();
-};
-
-ApplicationController.prototype.editorLineChanged = function(_line) {
-	this.selectRegionsForLine(_line);
-};
-
-ApplicationController.prototype.rebuild = function() {
-	try {
-		log.clear();
-		this._parseYAML(this.file.content);
-		this._renderDocument();
-		this.selectRegionsForLine(this.editor.editor.selection.getCursor().row);
-	} catch (e) {
-		console.error("Error rebuilding YAML", e.message);
-		console.error(e.stack);
-	}
-};
-
-
-/// todo end of Application controller class
-
-ApplicationController.prototype._parseYAML = function(_yaml) {
-
-	try {
-		var data = Parser.parse(_yaml);
-
-		this.doc = new regionTypes.Document();
-		if (data) {
-			this.doc.loadData(data);
-		} else {
-			this.doc.loadData({});
-		}
-	} catch (e) {
-		log.appendException(e, "Exception loading document.");
-		console.error("Exception loading document.", e.message);
-		console.error(e.stack);
-		this.doc = null;
-		return false;
-	}
-
-	if (this.doc.waitList.length) {
-		log.appendError("Subdocuments are not currently supported.");
-	}
-
-	return true;
-};
-
-ApplicationController.prototype._renderDocument = function() {
-
-	try {
-		this.preview.setDocument(this.doc);
-	} catch (e) {
-		log.appendException(e, "Exception drawing document.");
-		console.error("Exception drawing document.", e.message);
-		console.error(e.stack);
-		return false;
-	}
-	return true;
-};
-
-
 
 ApplicationController.prototype.exportSVG = function() {
 	log.appendMessage("Exporting SVG");
@@ -337,54 +275,58 @@ ApplicationController.prototype.exportSVG = function() {
 
 
 
+
+
 ////////////////////////////////////////////////////////////////////
-// TODO: Put somewhere else!
+// Document Building
 
-ApplicationController.prototype.buildPicker = function() {
-	this.picker = new paper.Tool();
-	var hoveredRegion = null;
-	var mouseDownRegion = null;
-
-	this.picker.onMouseDown = function(e) {
-		mouseDownRegion = hoveredRegion;
-	};
-
-	this.picker.onMouseUp = function(e) {
-		if (hoveredRegion && mouseDownRegion === hoveredRegion) {
-			hoveredRegion.onClick();
-		}
-	};
-
-	this.picker.onMouseMove = function(e) {
-		// check just strokes first
-		var hit = paper.project.hitTest(e.point, {
-			tolerance: 5,
-			stroke: true
-		});
-
-		// if the cursor isn't over a stroke, check for a fill
-		if (hit === null) {
-			hit = paper.project.hitTest(e.point, {
-				tolerance: 5,
-				fill: true
-			});
-		}
-
-		var oldHoveredRegion = hoveredRegion;
-
-		if (hit === null) {
-			hoveredRegion = null;
-		} else {
-			hoveredRegion = hit.item.region;
-		}
-
-		if (oldHoveredRegion && oldHoveredRegion !== hoveredRegion) {
-			oldHoveredRegion.onMouseLeave();
-		}
-
-		if (hoveredRegion && oldHoveredRegion !== hoveredRegion) {
-			hit.item.region.onMouseEnter();
-		}
-
-	};
+ApplicationController.prototype.rebuild = function() {
+	try {
+		log.clear();
+		this.doc = buildDocument(this.file.content);
+		this._renderDocument();
+		this.selectRegionsForLine(this.editor.editor.selection.getCursor().row);
+	} catch (e) {
+		console.error("Error rebuilding YAML", e.message);
+		console.error(e.stack);
+	}
 };
+
+ApplicationController.prototype._renderDocument = function() {
+	try {
+		this.preview.setDocument(this.doc);
+	} catch (e) {
+		log.appendException(e, "Exception drawing document. <br/>" + e.message);
+		console.error("Exception drawing document.", e.message);
+		console.error(e.stack);
+		return false;
+	}
+	return true;
+};
+
+function buildDocument(_yaml) {
+
+	// parse yaml -> javascript object
+	var data = null;
+	try {
+		data = Parser.parse(_yaml);
+	} catch (e) {
+		log.appendException(e, "Exception parsing document. <br/>" + e.message);
+		console.error("Exception parsing document.", e.message);
+		console.error(e.stack);
+	}
+
+
+	// load javascript object into new document
+	var doc = new regionTypes.Document();
+	doc.loadData(data || {});
+
+	if (doc.waitList.length) {
+		log.appendError("Subdocuments are not currently supported.");
+	}
+
+	return doc;
+}
+
+
+
