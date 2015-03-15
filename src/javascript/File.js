@@ -37,11 +37,19 @@ class File {
 		return shouldClose;
 	}
 
+	markSaved() {
+		this._savedContent = this.content;
+		this.isDirty = false;
+	}
+
 	setContent(_content) {
+		if (this.content === _content) return;
+
 		this.content = _content;
 		this.isDirty = (this.content !== this._savedContent);
 		$.Topic("File/changed").publish(this);
 	}
+
 
 	toString() {
 		return `File: ${this.title}`;

@@ -10,6 +10,6 @@ function update(_f){
 		$("#file-dirty").toggleClass("hidden", !_f.isDirty);
 	} else {
 		$("#file-title").text("");
-		$("#file-dirty").toggleClass("hidden", false);
+		$("#file-dirty").toggleClass("hidden", true);
 	}
 }

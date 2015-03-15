@@ -2,10 +2,13 @@
 /* global gapi:false */
 /* global google:false */
 
-
 var _ = require('underscore/underscore.js');
-
 var log = require('./ui/Log.js').sharedInstance();
+var util = require('./util.js');
+var File = require('./File.js');
+
+////////////////////////////////////////////////////////////////////
+// Credentials
 
 var DEVELOPER_KEY = 'AIzaSyAaps9tbXrXH7Yhk94HnHv7EmVaz8Hxmjo';
 var CLIENT_ID = '1055926372216-75g9p5ttbsb7vnu18rvfn46n13llbfsn.apps.googleusercontent.com';
@@ -17,54 +20,26 @@ var SCOPES = [
 var APP_ID = 'combscript-jbakse';
 
 
+
+////////////////////////////////////////////////////////////////////
+// google api bootstrap - authorize and load google apis
+
 var gapiLoaded = false;
 var initialized = false;
 
-
-
-function getParameterByName(name) {
-	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-		results = regex.exec(location.search);
-	return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
-
-// init - loads/authorizes google api for use
-
 window.gapiCallback = function() {
 	gapiLoaded = true;
-	kickOff();
-
+	bootstrap();
 };
 
 module.exports.init = function() {
-
 	$.Topic("UI/command/connectGoogleDrive").subscribe(manualConnect);
-	$.Topic("UI/command/open").subscribe(openFile);
-	$.Topic("UI/command/new").subscribe(newFile);
-	$.Topic("UI/command/save").subscribe(saveFile);
-	$.Topic("UI/command/saveAs").subscribe(saveFileAs);
-
-	Mousetrap.bindGlobal(['ctrl+o','command+o'], function() { openFile(); return false; } );
-	Mousetrap.bindGlobal(['ctrl+s','command+s'], function() { saveFile(); return false; } );
-	Mousetrap.bindGlobal(['ctrl+shift+s','command+shift+s'], function() { saveFileAs(); return false; } );
-
-	$.Topic("UI/editor/onContentChange").subscribe(onContentChange);
-	$.Topic("File/onLoad").subscribe(onFileLoad);
-
-	Mousetrap.bindGlobal('command+s', function() {
-		saveFile();
-		return false;
-	});
-
-
 	initialized = true;
-	kickOff();
+	bootstrap();
 };
 
 
-function kickOff() {
+function bootstrap() {
 	if (gapiLoaded && initialized) {
 		autoConnect();
 	}
@@ -88,28 +63,14 @@ function manualConnect() {
 		handleAuthResult);
 }
 
-
 function handleAuthResult(authResult) {
 	if (authResult && !authResult.error) {
-
 		log.appendSuccess("Google Drive authorized.");
 		loadAPIs();
-
-	}
-	else {
+	} else {
 		log.appendError("Google Drive authorization denied.");
 		$("#button-connect-google-drive").removeClass('hidden');
 	}
-}
-
-function loadAPI(api) {
-	return new Promise(function(resolve, reject) {
-		gapi.load(api, {
-			'callback': function(result) {
-				resolve(result);
-			}
-		});
-	});
 }
 
 
@@ -122,19 +83,18 @@ function loadAPIs() {
 		});
 	});
 
-	var picker = loadAPI('picker');
-
+	var picker = new Promise(function(resolve, reject) {
+		gapi.load('picker', {
+			'callback': function(result) {
+				resolve(result);
+			}
+		});
+	});
 
 	Promise.all([drive, picker])
 		.then(function() {
 			log.appendSuccess("Google Drive ready.");
-			$("#button-new").removeClass('hidden');
-			$("#button-open").removeClass('hidden');
-			$("#button-save").removeClass('hidden');
-			$("#button-save-as").removeClass('hidden');
-			$("#button-connect-google-drive").addClass('hidden');
-
-			handleGoogleDriveLaunchRequest();
+			connected();
 		})
 		.catch(function(e) {
 			log.appendError("Error connecting to Google Drive.");
@@ -142,201 +102,145 @@ function loadAPIs() {
 		});
 }
 
-function handleGoogleDriveLaunchRequest() {
-	var state = getParameterByName('state');
+////////////////////////////////////////////////////////////////////
+// google apis are authorized and connected
+
+function connected() {
+	$("#button-new").removeClass('hidden');
+	$("#button-open").removeClass('hidden');
+	$("#button-save").removeClass('hidden');
+	$("#button-save-as").removeClass('hidden');
+	$("#button-connect-google-drive").addClass('hidden');
+
+	$.Topic("UI/command/new").subscribe(newFile);
+	$.Topic("UI/command/open").subscribe(openFile);
+	$.Topic("UI/command/save").subscribe(saveFile);
+	$.Topic("UI/command/saveAs").subscribe(saveFileAs);
+
+	$.Topic("File/opened").subscribe(fileOpened);
+
+	Mousetrap.bindGlobal(['ctrl+o', 'command+o'], function() {
+		openFile();
+		return false;
+	});
+	Mousetrap.bindGlobal(['ctrl+s', 'command+s'], function() {
+		saveFile();
+		return false;
+	});
+	Mousetrap.bindGlobal(['ctrl+shift+s', 'command+shift+s'], function() {
+		saveFileAs();
+		return false;
+	});
+
+	// handle request (in url query) from google drive to
+	// open or create file
+
+	var state = util.getParameterByName('state');
 	var stateObj = state && JSON.parse(state);
 
 	if (stateObj && stateObj.action == "create") {
-		// console.log("create new",a stateObj);
-		// this.newYAML();
 		newFile(stateObj.folderId);
-	}
-	else if (stateObj && stateObj.action == "open") {
+	} else if (stateObj && stateObj.action == "open") {
 		openFile(stateObj.ids[0]);
-		// var self = this;
-		// window.setTimeout(function(){
-		// 	self.openYAML(stateObj.ids[0]);
-		// }, 2000);
-	}
-	else {
-		// this.loadYAMLfromURL(settings.fileURL);
-	}
-	//http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
-}
-
-
-
-var currentFileInfo = {};
-
-
-window.onbeforeunload = confirmPageNavigation;
-
-function confirmPageNavigation(e) {
-	if (!currentFileInfo.dirty) return;
-
-	e = e || window.event;
-
-	var message = "You have unsaved changes that will be lost.";
-
-	// For IE6-8 and Firefox prior to version 4
-	if (e) {
-		e.returnValue = message;
 	}
 
-	// For Chrome, Safari, IE8+ and Opera 12+
-	return message;
-}
-
-function setClean() {
-	currentFileInfo.dirty = false;
-	$("#file-dirty").addClass('hidden');
-}
-// module.exports.setClean = setClean;
-
-
-function onContentChange(_e, content) {
-	if (currentFileInfo.content === content) return;
-
-	currentFileInfo.content = content;
-	currentFileInfo.dirty = true;
-	$("#file-dirty").removeClass('hidden');
+	// $.Topic("UI/editor/onContentChange").subscribe(onContentChange);
+	// $.Topic("File/onLoad").subscribe(onFileLoad);
 }
 
 
-function onFileLoad(_title, _content) {
-	console.log("onFileLoad");
-	currentFileInfo = {};
-	currentFileInfo.title = _title;
-	currentFileInfo.content = _content;
-	setClean();
-	$("#file-title").text(currentFileInfo.title);
+
+////////////////////////////////////////////////////////////////////
+//  file handling
+
+var openedFile = new File();
+
+function fileOpened(_f) {
+	console.log("file Opened");
+	openedFile = _f;
 }
 
 
-function confirmDiscardUnsaved(){
-	if (currentFileInfo.dirty) {
-		return window.confirm("This will cause unsaved changes to be lost. Do you want to discard these changes?");
-	}
+function newFile(_parentId) {
+	if (!openedFile.close()) return false;
+
+	openedFile = new File();
+	openedFile.parentId = _parentId;
+	openedFile.open();
+
 	return true;
 }
 
-function closeFile() {
-	if (!confirmDiscardUnsaved()) return false;
-	currentFileInfo = {};
-	setClean();
-	$("#file-title").text("");
-	return true;
-}
-module.exports.closeFile = closeFile;
-
-
-
-function newFile(parentId) {
-	if (!confirmDiscardUnsaved()) return false;
-
-	currentFileInfo = {};
-	currentFileInfo.title = "untitled";
-	currentFileInfo.content = "";
-	currentFileInfo.parentId = parentId;
-
-	console.log("newFile");
-	$.Topic("File/onLoad").publish(currentFileInfo.content);
-
-	// currentFileInfo.dirty = false;
-	// $("#file-dirty").addClass('hidden');
-	setClean();
-
-	$("#file-title").text(currentFileInfo.title);
-
-	return true;
-
-}
-
-// openFile - promts user to select google drive file
-// returns an object with info about the file
-// .title .content .id
 
 function openFile(id) {
-	if (!closeFile())
-		return;
+	console.log("openFile");
+	if (!openedFile.close()) return false;
 
-	var newFileInfo = {};
+
+	var newFile = new File();
 
 	var picked;
 	if (id) {
 		picked = Promise.resolve(id);
-	}
-	else {
+	} else {
 		picked = showPicker();
 	}
 
 	picked.then(function(fileId) {
-			newFileInfo.id = fileId;
+			newFile.id = fileId;
 			return getFileResource(fileId);
 		})
 		.then(function(fileResource) {
-			newFileInfo.title = fileResource.title;
+			newFile.title = fileResource.title;
 			return downloadFilePromise(fileResource);
 		})
 		.then(function insertFile(content) {
-			newFileInfo.content = content;
-
-			$.Topic("File/onLoad").publish(newFileInfo.title, newFileInfo.content);
-
-			// setClean();
-			// // currentFileInfo.dirty = false;
-			// // $("#file-dirty").addClass('hidden');
-			// $("#file-title").text(newFileInfo.title);
-
-			// currentFileInfo = newFileInfo;
-
-
+			newFile.content = content;
+			newFile.open();
 
 			log.appendSuccess("File opened.");
 		})
 		.catch(function(error) {
 			console.log("Error opening file.", error);
-
 		});
 
 }
 
 
 function saveFile() {
-	if (!currentFileInfo.id) {
+	if (!openedFile.id) {
 		saveFileAs();
-	}
-	else {
-		updateDriveFile(currentFileInfo).then(function(result) {
-			currentFileInfo.dirty = false;
-			$("#file-dirty").addClass('hidden');
+	} else {
+		updateDriveFile(openedFile).then(function(result) {
+			openedFile.markSaved();
 			log.appendSuccess("File saved.");
 		});
 	}
 }
 
 function saveFileAs() {
-	var response = prompt('Save file as');
-	if (!response) {
+	var fileName = prompt('Save file as');
+	if (!fileName) {
 		log.appendWarning("File not saved.");
 		return;
 	}
 
-	currentFileInfo.title = response;
-
-	createDriveFile(currentFileInfo.title, currentFileInfo.content, currentFileInfo.parentId)
+	createDriveFile(fileName, openedFile.content, openedFile.parentId)
 		.then(function(result) {
-			currentFileInfo.id = result.id;
-			currentFileInfo.dirty = false;
-			$("#file-dirty").addClass('hidden');
-			$("#file-title").text(currentFileInfo.title);
+			openedFile.id = result.id;
+			openedFile.title = fileName;
+			openedFile.markSaved();
+			$.Topic("File/changed").publish(openedFile);
 			log.appendSuccess("File created.");
 		});
-
 }
 
 
+/////////////////////////////////////////////////////////////////////
+// google drive api code
+
 // updateDriveFile - updates the content of a google drive file 
+
 function updateDriveFile(fileInfo) {
 	var request = gapi.client.request({
 		'path': '/upload/drive/v2/files/' + fileInfo.id,
@@ -384,7 +288,7 @@ function createDriveFile(name, content, parentId, type) {
 
 
 
-// displays google picker
+// showPicker - displays google picker
 // resolves with a google file ID (e.g. 0BzODaS_ym7yXaFJCenRDblatb2c)
 
 function showPicker() {
@@ -440,8 +344,7 @@ function downloadFilePromise(file) {
 		downloadFile(file, function(contents) {
 			if (contents !== null) {
 				resolve(contents);
-			}
-			else {
+			} else {
 				reject(Error("Could not get file contents."));
 			}
 		});
@@ -589,8 +492,7 @@ function downloadFile(file, callback) {
 			callback(null);
 		};
 		xhr.send();
-	}
-	else {
+	} else {
 		callback(null);
 	}
 }

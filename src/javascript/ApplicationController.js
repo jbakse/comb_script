@@ -23,11 +23,9 @@ var log = require('./ui/Log.js').sharedInstance();
 require('./ui/FileInfo.js');
 
 var File = require('./File.js');
-// var googleDrive = require('./GoogleDrive.js');
+var googleDrive = require('./GoogleDrive.js');
 
 module.exports = ApplicationController;
-
-
 
 
 
@@ -49,7 +47,7 @@ function ApplicationController() {
 
 ApplicationController.prototype.init = function(_element) {
 
-	// googleDrive.init();
+	googleDrive.init();
 
 
 	this.preview.init($('#paper-canvas').get(0));
@@ -73,14 +71,12 @@ ApplicationController.prototype.init = function(_element) {
 ApplicationController.prototype.attachHandlers = function() {
 	var self = this;
 	$.Topic("File/opened").subscribe(_.bind(this.fileOpened, this));
+	$.Topic("File/closed").subscribe(_.bind(this.fileClosed, this));
 	$.Topic("Editor/edited").subscribe(_.bind(this.editorEdited, this));
 	$.Topic("Editor/lineChanged").subscribe(_.bind(this.editorLineChanged, this));
 
-	// $.Topic("UI/command/rebuild").subscribe(_.bind(this.rebuild, this));
 	$.Topic("UI/command/exportSVG").subscribe(_.bind(this.exportSVG, this));
 	$.Topic("UI/command/loadYAML").subscribe(_.bind(this.loadYAMLfromURL, this));
-
-	
 
 	$.Topic("region/onMouseEnter").subscribe(function(_region) {
 		self.hoverRegion = _region;
@@ -102,11 +98,30 @@ ApplicationController.prototype.attachHandlers = function() {
 	});
 
 
-	$(document).bind('keydown', function (event) {
-		// keyCode 8 is delete / backspace
-		if (event.keyCode === 8) { event.preventDefault(); }
+	$(document).bind('keydown', function(event) {
+		// keyCode 8 is delete / backspace, blocking browser default of navigating back
+		if (event.keyCode === 8) {
+			event.preventDefault();
+		}
 	});
-    
+
+
+	window.addEventListener("beforeunload", function confirmPageNavigation(e) {
+		if (!self.file.isDirty) return;
+
+		e = e || window.event;
+
+		var message = "The current file has unsaved changes. These changes will be discarded if you leave this page.";
+
+		// For IE6-8 and Firefox prior to version 4
+		if (e) {
+			e.returnValue = message;
+		}
+
+		// For Chrome, Safari, IE8+ and Opera 12+
+		return message;
+	});
+
 
 };
 
@@ -120,7 +135,7 @@ ApplicationController.prototype.buildPicker = function() {
 	};
 
 	this.picker.onMouseUp = function(e) {
-		if(hoveredRegion && mouseDownRegion === hoveredRegion) {
+		if (hoveredRegion && mouseDownRegion === hoveredRegion) {
 			hoveredRegion.onClick();
 		}
 	};
@@ -139,9 +154,9 @@ ApplicationController.prototype.buildPicker = function() {
 				fill: true
 			});
 		}
-		
+
 		var oldHoveredRegion = hoveredRegion;
-		
+
 		if (hit === null) {
 			hoveredRegion = null;
 		} else {
@@ -155,7 +170,7 @@ ApplicationController.prototype.buildPicker = function() {
 		if (hoveredRegion && oldHoveredRegion !== hoveredRegion) {
 			hit.item.region.onMouseEnter();
 		}
-		
+
 	};
 };
 
@@ -223,8 +238,8 @@ ApplicationController.prototype.loadYAMLfromURL = function(_url) {
 		url: _url,
 
 		success: function(_data) {
-			self.file = new File(_url, _data);
-			self.file.open();
+			var file = new File(_url, _data);
+			file.open();
 		},
 
 		fail: function(_data) {
@@ -235,17 +250,23 @@ ApplicationController.prototype.loadYAMLfromURL = function(_url) {
 	});
 };
 
-ApplicationController.prototype.fileOpened = function(_f){
+ApplicationController.prototype.fileOpened = function(_f) {
+	this.file = _f;
 	this.editor.setText(_f.content);
 	this.rebuild();
 };
 
-ApplicationController.prototype.editorEdited = function(_content){
+ApplicationController.prototype.fileClosed = function(_f) {
+	this.editor.setText("");
+	new File().open();
+};
+
+ApplicationController.prototype.editorEdited = function(_content) {
 	this.file.setContent(_content);
 	this.rebuild();
 };
 
-ApplicationController.prototype.editorLineChanged = function(_line){
+ApplicationController.prototype.editorLineChanged = function(_line) {
 	this.highlightRegionsForLine(_line);
 };
 
@@ -255,8 +276,7 @@ ApplicationController.prototype.rebuild = function() {
 		this._parseYAML(this.file.content);
 		this._renderDocument();
 		this.highlightRegionsForLine(this.editor.editor.selection.getCursor().row);
-	}
-	catch (e) {
+	} catch (e) {
 		console.error("Error rebuilding YAML");
 		console.error(e.stack);
 	}
@@ -267,13 +287,14 @@ ApplicationController.prototype._parseYAML = function(_yaml) {
 
 	try {
 		var data = Parser.parse(_yaml);
-		if (!data) return false;
-
+	
 		this.doc = new regionTypes.Document();
-		this.doc.loadData(data);
-		
-	}
-	catch (e) {
+		if (data) {
+			this.doc.loadData(data);
+		} else {
+			this.doc.loadData({});
+		}
+	} catch (e) {
 		log.appendException(e, "Exception loading document.");
 		console.error("Exception loading document.");
 		console.error(e.stack);
@@ -289,13 +310,13 @@ ApplicationController.prototype._parseYAML = function(_yaml) {
 };
 
 ApplicationController.prototype._renderDocument = function() {
+	console.log("render doc", this.doc);
 	try {
 		this.preview.setDocument(this.doc);
-	}
-	catch (e) {
+	} catch (e) {
 		log.appendException(e, "Exception drawing document.");
-		console.error("Exception drawing document.");
-		console.error(e.stack);
+		console.error("Exception drawing document.", e.message);
+		console.log(e.stack);
 		return false;
 	}
 	return true;
