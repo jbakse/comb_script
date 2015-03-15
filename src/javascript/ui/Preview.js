@@ -70,28 +70,34 @@ function setupPicking() {
 	var hoveredRegion = null;
 	var mouseDownRegion = null;
 
-	picker.onMouseDown = function(e) {
+
+	picker.onMouseDown = function(_e) {
 		mouseDownRegion = hoveredRegion;
 	};
 
-	picker.onMouseUp = function(e) {
+	picker.onMouseDrag = function(_e) {
+		//dragging cancels the click tracking
+		mouseDownRegion = null;
+	};
+
+	picker.onMouseUp = function(_e) {
 		if (hoveredRegion && hoveredRegion === mouseDownRegion) {
 			hoveredRegion.onClick();
 		}
 	};
 
-	picker.onMouseMove = function(e) {
+	picker.onMouseMove = function(_e) {
 		// find the "picked" region, strokes get priority over fills so that you can pick thorugh a overlapping shape
 
 		// check just strokes first
-		var hit = paper.project.hitTest(e.point, {
+		var hit = paper.project.hitTest(_e.point, {
 			tolerance: 5,
 			stroke: true
 		});
 
 		// if the cursor isn't over a stroke, check for a fill
 		if (hit === null) {
-			hit = paper.project.hitTest(e.point, {
+			hit = paper.project.hitTest(_e.point, {
 				tolerance: 5,
 				fill: true
 			});
