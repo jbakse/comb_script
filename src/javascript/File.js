@@ -39,6 +39,7 @@ class File {
 	markSaved() {
 		this._savedContent = this.content;
 		this.isDirty = false;
+		$.Topic("File/changed").publish(this);
 	}
 
 	setContent(_content) {
