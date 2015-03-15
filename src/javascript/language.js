@@ -4,6 +4,7 @@
 // requires
 
 module.exports.regionTypes = regionTypes;
+
 module.exports.unitScales = {
 	"px": 1,
 	"in": 72,

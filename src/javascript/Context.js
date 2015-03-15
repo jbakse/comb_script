@@ -1,7 +1,12 @@
 "use strict";
 
 var _ = require('underscore/underscore.js');
-// var math = require('mathjs/math.min.js');
+
+////////////////////////////////////////////////////////////////////
+// Context
+//
+// represents the bounds and transform of a region
+// can calculate derived child context based on region properties
 
 module.exports = Context;
 
@@ -79,31 +84,31 @@ Context.prototype.deriveContext = function(_properties) {
 	var derivedContext = new Context(derivedBounds, derivedMatrix);
 
 	if (_properties.registration === "center") {
-		derivedContext.moveRegistration(derivedContext.bounds.center.x, derivedContext.bounds.center.y);
+		derivedContext._moveRegistration(derivedContext.bounds.center.x, derivedContext.bounds.center.y);
 	}
 	if (_properties.registration === "top") {
-		derivedContext.moveRegistration(derivedContext.bounds.center.x, derivedContext.bounds.top);
+		derivedContext._moveRegistration(derivedContext.bounds.center.x, derivedContext.bounds.top);
 	}
 	if (_properties.registration === "bottom") {
-		derivedContext.moveRegistration(derivedContext.bounds.center.x, derivedContext.bounds.bottom);
+		derivedContext._moveRegistration(derivedContext.bounds.center.x, derivedContext.bounds.bottom);
 	}
 	if (_properties.registration === "left") {
-		derivedContext.moveRegistration(derivedContext.bounds.left, derivedContext.bounds.center.y);
+		derivedContext._moveRegistration(derivedContext.bounds.left, derivedContext.bounds.center.y);
 	}
 	if (_properties.registration === "right") {
-		derivedContext.moveRegistration(derivedContext.bounds.right, derivedContext.bounds.center.y);
+		derivedContext._moveRegistration(derivedContext.bounds.right, derivedContext.bounds.center.y);
 	}
 	if (_properties.registration === "top_left") {
-		derivedContext.moveRegistration(derivedContext.bounds.left, derivedContext.bounds.top);
+		derivedContext._moveRegistration(derivedContext.bounds.left, derivedContext.bounds.top);
 	}
 	if (_properties.registration === "top_right") {
-		derivedContext.moveRegistration(derivedContext.bounds.right, derivedContext.bounds.top);
+		derivedContext._moveRegistration(derivedContext.bounds.right, derivedContext.bounds.top);
 	}
 	if (_properties.registration === "bottom_left") {
-		derivedContext.moveRegistration(derivedContext.bounds.left, derivedContext.bounds.bottom);
+		derivedContext._moveRegistration(derivedContext.bounds.left, derivedContext.bounds.bottom);
 	}
 	if (_properties.registration === "bottom_right") {
-		derivedContext.moveRegistration(derivedContext.bounds.right, derivedContext.bounds.bottom);
+		derivedContext._moveRegistration(derivedContext.bounds.right, derivedContext.bounds.bottom);
 	}
 
 	if (_properties.translate_x || _properties.translate_y) {
@@ -130,18 +135,18 @@ Context.prototype.deriveContext = function(_properties) {
 };
 
 
-Context.prototype.moveRegistration = function(_x, _y) {
+Context.prototype._moveRegistration = function(_x, _y) {
 	this.bounds.x -= _x;
 	this.bounds.y -= _y;
 	this.matrix.translate(_x, _y);
 };
 
-Context.prototype.centerRegistration = function() {
-	var oldCenter = this.bounds.center;
-	this.bounds.x -= oldCenter.x;
-	this.bounds.y -= oldCenter.y;
-	this.matrix.translate(oldCenter);
-};
+// Context.prototype.centerRegistration = function() {
+// 	var oldCenter = this.bounds.center;
+// 	this.bounds.x -= oldCenter.x;
+// 	this.bounds.y -= oldCenter.y;
+// 	this.matrix.translate(oldCenter);
+// };
 
 
 

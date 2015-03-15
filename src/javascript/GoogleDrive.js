@@ -7,6 +7,12 @@ var log = require('./ui/Log.js').sharedInstance();
 var util = require('./util.js');
 var File = require('./File.js');
 
+
+////////////////////////////////////////////////////////////////////
+// GoogleDrive.js
+//
+// Adds ability to save and load files from google drive.
+
 ////////////////////////////////////////////////////////////////////
 // Credentials
 

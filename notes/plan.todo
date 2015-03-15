@@ -24,7 +24,13 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # w/Greg
 
------	Merge refactor css, and apply comb
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # 
+# Refactoring / Cleanup 
+
+-----	w/greg Merge refactor css, and apply comb
+-----	w/greg Reorg examples
+-----	Clean up relationship between main.js and docs.js (with shared.js?)
 
 # General
 	
@@ -115,9 +121,7 @@
 ---	Quick Reference: Some sort of context aware reference, listing legal properties/values, tooltips? @Greg
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
-# Refactoring / Cleanup / Developer facing features
-
-#Build Tool
+# Build System
 
 +-----	BUILD DOCS
 
