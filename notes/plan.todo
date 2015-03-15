@@ -8,24 +8,6 @@
 - New Menu, Interface Styling
 
 
-# Refactoring App controller
-
-+---	highlightRegionsForLine -> selectRegionsForLine (and factor the last bits out)
-+---	redrawPreview -> selectionChanged
-+---	? move selectionChanged to preview
----	
-+---	factor the last few functions out of the controller class
----	
-+---	UI/updateInspector -> App/selectionChanged
----	
----	move openedFile and this.file into a property on the File class called openedFile.
----	so you can say File.openedFile
----	
-+---	move the picker into the preview
----	change the region events to the past tense form (Region/clicked)
----	
----	this.inspector and this.menu might be able to be loaded in and forgotten about, like file info
-
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Todo
 
@@ -217,3 +199,5 @@
 -	combined attributes: margin: 0 or margin: 0 10 20 10
 
 -	nicer dialog (alert/confirm/prompt) with a library
+
+-	move openedFile and this.file into a property on the File class called openedFile. so you can say File.openedFile
