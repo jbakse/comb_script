@@ -15,7 +15,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Bugs
 
------ Selection not set properly w/ region grids (alternate)
++----- Selection not set properly w/ region grids (alternate)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # User facing Features
@@ -29,56 +29,41 @@
 # General
 	
 # Preview
----	Let user Pan
+-	Let user Pan
 	--	limit pan so you can't lose the drawing
 
----	Let user Zoom
-	- scroll wheel zoom
-	- option key maginfying glass cursor?
+-	Let user Zoom
+	-	scroll wheel zoom
+	-	option key maginfying glass cursor?
 
-----	Pan preview to selected region in text
 
 -	Isolation Mode? 
 -	Ghost unselected regions?
---	Click on covered items: right now a large box over small box prevents selection of small box
 
 # Inspector
-+----	Design it!
 ----	List dimensions in document (user specified unit) unit
+----	let user pick unit: maybe click on inspector to cycle? maybe button?
 
 # Symbols/Mixins
 -	Provide .comb specific way to reuse library items: instead of using yaml symbols, something like uses or inherit that pulls properties from another region
 
 # File Management
--	When opening a file set the id in the url so it can be linked, and reloading will reload the file
------	Send out file events (preClose, closed, opened that components like preview can react to)
-+-	Google Drive Save As?
-+-----	Warn on navigation away from dirty file (prompt for sav)
+-	Deep link:When opening a file set the id in the url so it can be linked, and reloading will reload the file
+	-	Google Drive File
+	-	Examples
+
 
 # Math Expression support
-	+---	Possible Library: http://mathjs.org/docs/expressions/customization.html
-	+---	Dimension Units
-	+---	Access Parent Bounds 
-	+--	move evaluation to build/preview
-	+--	parse in region also for validation?
-	+--	(no)change the 'type' in the language files
-	+--	should we rename/limit available variables to expressions)
-	-----	Make Examples + Document
-		+- units
-		+- simple math
-		- parent boundary variables
-		- constants
-			- shadowing
-			- referencing parent constants, but not own
-		+- Mathjs
+----	rotation: angle type
 
-	+----	constants: 
-		+----	DRY the math.eval stuff to check for input type, report errors, etc consistantly
-	+----	Dry Code :(and maybe consider resolving contexts during inital load/parse instead of draw/preview (this will eliminate redundancy))
+-----	Make Examples + Document
+	+- units
+	+- simple math
+	- parent boundary variables
+	- constants
+		- shadowing
+		- referencing parent constants, but not own
 
---	support percents
-+---	Basic Maths
-+---	Use document units
 
 
 # Trapping Experiment.
@@ -110,16 +95,19 @@
 -	Vertical Line
 -	Horizontal Line
 -	Polygon as array of points
-+----	Pages Plugin that creates a stack of regions and sticks each child into one. See the hassle of laying out "parts" where thier position isn't actually important.
 
 # SVG
 -	SVG Import Support
 
 # Export
----	Export Styles: finish+document
----	Support for Cut vs Etch vs Guide
---	Perserve Groups on Export?: Might at least be worth looking at having the tree represented in groups so they export nested?
---	Include source in exported .svg?
+---	Export Styles: finish and document
+---	Support for Cut vs Etch vs Guide/Note
+--	Perserve Groups on Export?: Might at least be worth looking at having the tree represented in groups so they export nested? how does it actually work now?
+-- 	Some kind of packing option: maybe you can mark a region as a part to opt in to packing, maybe with a quantity, and if you exportPackedSVG it just exports those items at those quantities, should be previewable
+
+-	Multiple file exports?
+-	Named Layers Objects in export? (So its easier to understand in illustrator)
+-	Include source in exported .svg?
 
 
 # UI
@@ -133,12 +121,12 @@
 
 +-----	BUILD DOCS
 
---	Don't like the gulp langague task:Language YAMLs: are built with the build tool, should this be handled by the javascript? not sure
---	Browserify Dependencies: rather than script tags, do we want to?
+--	Don't like the gulp langague task:Language YAMLs: are built with the build tool using concat and its a bit wonky, should this be handled by the javascript? not sure
+-	Browserify Dependencies: rather than script tags, do we want to?
 
 ---	Update Libraries
 
---	Reorg examples
+---	Reorg examples
 	/yaml + /svg are development/testing files we made to test featuers as we went (needs a cleaner organization)
 	/src/examples are the examples available from the ide
 	/src/docs/examples are the examples that show up in the api reference
