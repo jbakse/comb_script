@@ -4,10 +4,13 @@ var language = require('../language.js');
 var settings = require('../Settings.js');
 var _ = require('underscore/underscore.js');
 
-module.exports = Preview;
 
 ////////////////////////////////////////////////////////////////////
 // Preview
+//
+// renders the CombScript document canvas
+
+module.exports = Preview;
 
 function Preview() {
 	this.previewLayer = null;
@@ -19,98 +22,29 @@ function Preview() {
 
 Preview.prototype.init = function(_element) {
 	paper.setup(_element);
+
 	this.buildLayer = new paper.Layer();
 	this.exportLayer = new paper.Layer();
 	this.previewLayer = new paper.Layer();
 
-	var drag = false;
-	var lastMouse;
+	
 
 	$(paper.view.element).bind('contextmenu', function(e) {
 		return false;
 	});
 
 
-	// handle dragging/panning
-	$(paper.view.element).mousedown(function(_e) {
-		if (_e.which != 1) {
-			_e.preventDefault();
-			return false;
-		}
-		drag = true;
-		lastMouse = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);
-	});
+	setupDragging();
+	this.attachHandlers();
 
-	$(window).mouseup(function(_e) {
-		drag = false;
-	});
-
-	$(window).mousemove(function(_e) {
-		if (!drag) return;
-		var thisMouse = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);
-		paper.view.scrollBy(lastMouse.subtract(thisMouse).multiply(1.0 / paper.view.zoom));
-		lastMouse = thisMouse;
-	});
-
-
-	var self = this;
-	$.Topic("File/opened").subscribe(
-		function() {
-			self.newFileFlag = true;
-		}
-	);
-
-	$.Topic("UI/command/toggleViewPreview").subscribe(
-		function(_state) {
-			if (_state === undefined) {
-				_state = !self.previewLayer.visible;
-			}
-			self.previewLayer.visible = _state;
-			paper.view.update();
-		}
-	);
-
-	$.Topic("UI/command/toggleViewBuild").subscribe(
-		function(_state) {
-			if (_state === undefined) {
-				_state = !self.buildLayer.visible;
-			}
-			self.buildLayer.visible = _state;
-			paper.view.update();
-		}
-	);
-
-	$.Topic("UI/command/toggleViewExport").subscribe(
-		function(_state) {
-			if (_state === undefined) {
-				_state = !self.exportLayer.visible;
-			}
-			self.exportLayer.visible = _state;
-
-			paper.view.update();
-		}
-	);
-
-
-	$.Topic("UI/command/zoomIn").subscribe(
-		function() {
-			paper.view.zoom *= 2;
-			$("#zoom-level").text(paper.view.zoom * 100 + "%");
-		}
-	);
-
-	$.Topic("UI/command/zoomOut").subscribe(
-		function() {
-			paper.view.zoom *= 0.5;
-			$("#zoom-level").text(paper.view.zoom * 100 + "%");
-		}
-	);
+	
 
 	Mousetrap.bindGlobal('command+=', function() {
 		$.Topic("UI/command/zoomIn").publish();
 		// paper.view.zoom *= 2;
 		return false;
 	});
+
 	Mousetrap.bindGlobal('command+-', function() {
 		$.Topic("UI/command/zoomOut").publish();
 		// paper.view.zoom *= 0.5;
@@ -119,6 +53,81 @@ Preview.prototype.init = function(_element) {
 
 
 };
+
+Preview.prototype.attachHandlers = function() {
+	var self = this;
+
+	$.Topic("File/opened").subscribe(
+		function() {
+			self.newFileFlag = true;
+		}
+	);
+
+	$.Topic("UI/command/toggleViewPreview").subscribe(
+		function(_state) {
+			_state = typeof _state === 'undefined' ? !self.previewLayer.visible : _state;
+			self.previewLayer.visible = _state;
+			paper.view.update();
+		}
+	);
+
+	$.Topic("UI/command/toggleViewBuild").subscribe(
+		function(_state) {
+			_state = typeof _state === 'undefined' ? !self.buildLayer.visible : _state;
+			self.buildLayer.visible = _state;
+			paper.view.update();
+		}
+	);
+
+	$.Topic("UI/command/toggleViewExport").subscribe(
+		function(_state) {
+			_state = typeof _state === 'undefined' ? !self.exportLayer.visible : _state;
+			self.exportLayer.visible = _state;
+			paper.view.update();
+		}
+	);
+
+	$.Topic("UI/command/zoomIn").subscribe(
+		function() {
+			self.setZoom(paper.view.zoom * 2);
+		}
+	);
+
+	$.Topic("UI/command/zoomOut").subscribe(
+		function() {
+			self.setZoom(paper.view.zoom * 0.5);
+		}
+	);
+};
+
+Preview.prototype.setZoom = function(_zoom) {
+	paper.view.zoom = _zoom;
+	$("#zoom-level").text(paper.view.zoom * 100 + "%");
+};
+
+function setupDragging() {
+
+	var isDragging = false;
+	var oldMouseLoc;
+
+	$(paper.view.element).mousedown(function(_e) {
+		if (_e.which != 1) return;
+		isDragging = true;
+		oldMouseLoc = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);
+	});
+
+	$(window).mouseup(function(_e) {
+		isDragging = false;
+	});
+
+	$(window).mousemove(function(_e) {
+		if (!isDragging) return;
+		var newMouseLoc = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);
+		paper.view.scrollBy(oldMouseLoc.subtract(newMouseLoc).multiply(1.0 / paper.view.zoom));
+		oldMouseLoc = newMouseLoc;
+	});
+
+}
 
 Preview.prototype.setDocument = function(_doc) {
 	// var oldDoc = this.doc;

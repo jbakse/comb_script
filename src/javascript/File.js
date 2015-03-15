@@ -1,14 +1,13 @@
 ////////////////////////////////////////////////////////////////////
-// File.js
+// File
 //
 // Represents a CombScript file.
 // Using ES6
-
-// Publishes Topics
+//
+// Published Topics:
 // File/opened
-// File/changed ?
-// File/saved ?
-// File/closed ?
+// File/changed
+// File/closed
 
 class File {
 
@@ -26,7 +25,7 @@ class File {
 	}
 
 	close(_force) {
-		var shouldClose = true;
+		let shouldClose = true;
 		if (this.isDirty && !_force) {
 			shouldClose = window.confirm("The current file has unsaved changes. Do you want to discard these changes?");
 		}
@@ -62,7 +61,7 @@ module.exports = File;
 
 File.test = function() {
 	console.log("testing file!");
-	var f = new File();
+	let f = new File();
 	f.setContent("My File");
 
 	console.log(f + "");
