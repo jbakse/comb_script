@@ -86,12 +86,12 @@ ApplicationController.prototype.attachHandlers = function() {
 	$.Topic("UI/command/exportSVG").subscribe(_.bind(this.exportSVG, this));
 
 
-	$.Topic("region/onMouseEnter").subscribe(function(_region) {
+	$.Topic("Region/mouseEntered").subscribe(function(_region) {
 		self.selection.hover = _region;
 		$.Topic("App/selectionChanged").publish(self.selection);
 	});
 
-	$.Topic("region/onClick").subscribe(function(_region) {
+	$.Topic("Region/clicked").subscribe(function(_region) {
 		self.selection.hover = null;
 		self.selection.key = _region;
 		self.editor.highlightLines(_region.editorProperties.firstLine, _region.editorProperties.lastLine, _region.type.toLowerCase());
@@ -99,7 +99,7 @@ ApplicationController.prototype.attachHandlers = function() {
 		self.selectRegionsForLine(_region.editorProperties.firstLine + 1);
 	});
 
-	$.Topic("region/onMouseLeave").subscribe(function(_region) {
+	$.Topic("Region/mouseLeft").subscribe(function(_region) {
 		self.selection.hover = undefined;
 		$.Topic("App/selectionChanged").publish(self.selection);
 	});

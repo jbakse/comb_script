@@ -8,7 +8,8 @@ var _ = require('underscore/underscore.js');
 ////////////////////////////////////////////////////////////////////
 // Preview
 //
-// renders the CombScript document canvas
+// handles graphic display of the CombScript document
+// handles graphic display interactions (picking, dragging)
 
 module.exports = Preview;
 

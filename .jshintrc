@@ -11,6 +11,7 @@
 	"globals" :
 		{
 			"ace": false,
+			"math": false,
 			"module": false,
 			"paper": false,
 			"require": false,

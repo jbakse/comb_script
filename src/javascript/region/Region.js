@@ -4,6 +4,7 @@
 var _ = require('underscore/underscore.js');
 // var math = require('mathjs/math.min.js');
 
+// todo move math patch somewhere better
 //insert 'px' unit so math js can covert to/from px
 math.type.Unit.UNITS.px = {
 	name: 'px',
@@ -20,6 +21,12 @@ var Context = require('../Context.js');
 
 var language = require('../language.js');
 var log = require('../ui/Log.js').sharedInstance();
+
+
+// Published Topics:
+// Region/mouseEntered
+// Region/clicked
+// Region/mouseLeft
 
 
 module.exports = Region;
@@ -462,11 +469,6 @@ Region.prototype.preview = function(_parentContext) {
 	this.previewBoundsGroup = new paper.Group();
 	this.previewPositionGroup = new paper.Group();
 
-	// handled by the picker tool
-	// this.previewBoundsGroup.onMouseEnter = _.bind(this.onMouseEnter, this);
-	// this.previewBoundsGroup.onMouseLeave = _.bind(this.onMouseLeave, this);
-	// this.previewBoundsGroup.onClick = _.bind(this.onClick, this);
-
 	// bounds
 	var bounds = this.drawBounds(context.bounds);
 	bounds.transform(context.matrix);
@@ -656,15 +658,15 @@ Region.prototype.getAncestors = function() {
 // Events
 
 Region.prototype.onMouseEnter = function() {
-	$.Topic("region/onMouseEnter").publish(this);
+	$.Topic("Region/mouseEntered").publish(this);
 };
 
 Region.prototype.onClick = function() {
-	$.Topic("region/onClick").publish(this);
+	$.Topic("Region/clicked").publish(this);
 };
 
 Region.prototype.onMouseLeave = function() {
-	$.Topic("region/onMouseLeave").publish(this);
+	$.Topic("Region/mouseLeft").publish(this);
 };
 
 Region.prototype.setStyle = function(_style, _recursive) {
