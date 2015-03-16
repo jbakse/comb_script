@@ -1,23 +1,26 @@
-properties:
-    name: region_grid
-    width: 200 px
-    height: 200 px
+# region grids can be used to create repeating patterns
+# you can provide either the size or count of rows
+# and columns to create. The region grid's children will
+# be copied to each created cell of the grid
 
+properties:
+    width: 200px
+    height: 200px
 
 children:
-    - region: 
-        children:
-            - region_grid:
+    - region_grid:
+        properties:
+            width: 180px
+            height: 180px
+            # columns specified by size
+            column_width: 20px
+            # rows specified by count
+            rows: 3
+            registration: center
+
+        children: 
+            - ellipse: 
                 properties:
-                    width: 200px
-                    height: 200px
-                    #width of each column
-                    column_width: 20px
-                    #number of rows
-                    rows: 3
-                    registration: center
-                children: 
-                    - ellipse: 
-                        properties:
-                            width: 15px
-                            height: 45px
+                    width: 15px
+                    height: 15px
+

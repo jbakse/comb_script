@@ -2,7 +2,7 @@
 
 var _ = require('underscore/underscore.js');
 
-module.exports.fileURL = "examples/basics/constants.yaml";
+module.exports.fileURL = "examples/region_types/region_grid.yaml";
 module.exports.previewCanvasWidth = 1600;
 module.exports.previewCanvasHeight = 1600;
 module.exports.inspectOnHover = false;

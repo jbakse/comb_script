@@ -1,12 +1,11 @@
-# Dimension properties must have a unit specified
+# ellipse regions draw an ellipse
 
 properties:
     width: 150mm
     height: 150mm
 
 children:
-    #this is an ellipse
-    - rectangle:
+    - ellipse:
         properties:
-            width: 20mm
-            height: 40mm
+            width: 120mm
+            height: 80mm

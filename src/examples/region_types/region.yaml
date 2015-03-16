@@ -1,5 +1,10 @@
+# Plain regions don't output any lines of their own
+# Use them as organizational and positional containers
+# for other regions. Child region are positioned 
+# relative to their parents.
+# see: region
+
 properties:
-    name: region_grid
     width: 200px
     height: 200px
 
@@ -8,3 +13,22 @@ children:
         properties:
             width: 50px
             height: 50px
+            left: 10px
+
+        children:
+
+            # place a rectangle at the top left of the parent region
+            - rectangle:
+                properties:
+                    width: 10px
+                    height: 10px
+                    margin_top: 0px
+                    margin_left: 0px
+
+            # and another at the bottom right
+            - rectangle:
+                properties:
+                    width: 10px
+                    height: 10px
+                    margin_bottom: 0px
+                    margin_right: 0px

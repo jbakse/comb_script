@@ -1,37 +1,37 @@
 basics
-- hello, world (spage)
-- units (spage)
-- math (spage)
-- constants (spage)
+x- hello, world (spage)
+x- units (spage)
+x- math (spage)
+x- constants (spage)
 
 layout
-- nesting
-- positioning
-- margins
-- registration
-- parent bounds
-- rotate
-- scale
-- translate
+- nesting (spage)
+- positioning (spage, left, right, bottom, top)
+- margins (margin_left...)
+- registration (spage)
+- parent bounds ()
+- rotate (spage)
+- scale (spage)
+- translate ?
 
 region types
-- region (spage)
-- rectangle (spage)
-- ellipse (spage)
+x- region (spage)
+x- rectangle (spage)
+x- ellipse (spage)
 - polygon (spage)
 - text (spage)
-- regiongrid (spage)
+x- regiongrid (spage)
 
 boolean
-- add
-- subtract
-- intersect
-- mixed
+- add (spage)
+- subtract (spage)
+- intersect (spage)
+- mixed (spage)
 - pass
 
 advanced
 - symbols
-- regiongrids
+- region_grids
 - math
 
 demos
