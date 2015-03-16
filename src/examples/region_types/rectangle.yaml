@@ -1,0 +1,20 @@
+# rectangle regions draw a rectangle
+# provide a radius property to round the corners
+
+properties:
+    width: 150mm
+    height: 150mm
+
+children:
+    - rectangle:
+        properties:
+            width: 40mm
+            height: 60mm
+            radius: 12mm
+            margin_left: 10mm
+
+    - rectangle:
+        properties:
+            width: 40mm
+            height: 60mm
+            margin_right: 10mm
