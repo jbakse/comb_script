@@ -1,0 +1,17 @@
+properties:
+    width: 200px
+    height: 200px
+
+children:
+    - rectangle:
+        properties:
+            name: hello
+            width: 75px
+            height: 75px
+            margin_left: 15px
+    - ellipse:
+        properties:
+            name: world
+            width: 75px
+            height: 75px
+            margin_right: 15px

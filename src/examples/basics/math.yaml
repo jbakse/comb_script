@@ -1,0 +1,17 @@
+# Dimension properties must result in a linear unit.
+# Math support is provided by http://mathjs.org/
+# see: Expressions
+
+properties:
+    width: 15cm
+    height: 15cm
+
+children:
+    - ellipse:
+        properties:
+            width: 10cm + 3mm
+            height: 2cm * 1.7
+    - rectangle:
+        properties:
+            width: 5cm - 2cm
+            height: 12in / 4

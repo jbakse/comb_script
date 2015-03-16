@@ -1,0 +1,12 @@
+# Dimension properties must have a unit specified
+
+properties:
+    width: 150mm
+    height: 150mm
+
+children:
+    #this is an ellipse
+    - rectangle:
+        properties:
+            width: 20mm
+            height: 40mm
