@@ -1,0 +1,19 @@
+# rotation will rotate a region around its registration point
+# its children will inherit the rotation
+
+properties:
+    width: 200px
+    height: 200px
+
+children:
+    - rectangle:
+        properties:
+            width: 90px
+            height: 90px
+            rotation: 25
+        children:
+            - rectangle:
+                properties:
+                    width: 10px
+                    height: 10px
+                    margin_top: -10px
