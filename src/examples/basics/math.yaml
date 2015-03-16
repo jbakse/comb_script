@@ -1,6 +1,6 @@
-# Dimension properties must result in a linear unit.
+# Dimension properties can be given as mathematic expressions 
 # Math support is provided by http://mathjs.org/
-# see: Expressions
+# see: expressions
 
 properties:
     width: 15cm
@@ -11,7 +11,9 @@ children:
         properties:
             width: 10cm + 3mm
             height: 2cm * 1.7
+
     - rectangle:
         properties:
-            width: 5cm - 2cm
+            # you can mix units
+            width: 2in - 2cm
             height: 12in / 4

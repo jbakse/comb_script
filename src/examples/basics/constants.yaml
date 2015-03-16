@@ -1,19 +1,17 @@
-#Always use units when declaring constants
+# You can declare constants on the document (or a region) and
+# use them in expressions in child regions.
+# see: constants
 
 properties:
-    name: variables
-    unit: mm
-    width: 100 
-    height: 100 
+    width: 3in
+    height: 3in
 
-library:
-    #assign constants
-    - &size 75 mm
-    - &size2 25 mm
+constants:
+    size: 1in
+    golden_ratio: 1.618
 
 children:
     - rectangle:
         properties:
-            #use constants
-            width: *size
-            height: *size2
+            width: size
+            height: size * golden_ratio
