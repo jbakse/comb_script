@@ -387,6 +387,7 @@ body
 	font-family: @display-font;
 	font-size: 16px;
 	line-height: 24px;
+	pointer-events:none;
 }
 
 #inspector .label
@@ -417,26 +418,28 @@ body
 #inspector .breadcrumbs li
 {
 	color: black;
-	border-image: url(../images/menu_icons/breadcrumb_border.png) 0 20 0 20 fill repeat;
-	border-width: 0 20px 0 20px;
+	border-image: url(../images/menu_icons/breadcrumb_border.png) 0 10 0 10 fill repeat;
+	border-width: 0 10px 0 10px;
 	display: inline-block;
 	height: 25px;
 	padding-top: 3px;
 	padding-left: 5px;
 	line-height: 25px;
 
-	// margin-right: 10px;
+	margin-right: 5px;
 	cursor: pointer;
+	pointer-events:auto;
 }
 
 #inspector .breadcrumbs li:hover
 {
-	text-decoration: underline;
+	// text-decoration: underline;
+	border-image: url(../images/menu_icons/breadcrumb_border_hover.png) 0 10 0 10 fill repeat;
 }
 
 #inspector .breadcrumbs li:first-child
 {
-	border-width: 0 20px 0 0;
+	border-width: 0 10px 0 0;
 	padding-left: 10px;
 }
 

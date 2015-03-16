@@ -39,6 +39,11 @@ Inspector.prototype.selectionChanged = function(_selection) {
 	while (_r) {
 		var item = $("<li>").text(_r.properties.name || _r.type.toLowerCase());
 		item.click(this.buildSelectRegionHandler(_r));
+		// self=this;
+		// item.click(function(_r){
+		// 	console.log('breadcrumb', self, _r);
+		// 	// item.click(this.buildSelectRegionHandler(_r));
+		// });
 		breadCrumbs.prepend(item);
 		_r = _r.parent;
 	}
@@ -85,7 +90,7 @@ Inspector.prototype.selectionChanged = function(_selection) {
 
 Inspector.prototype.buildSelectRegionHandler = function(_region) {
 	return function() {
-		$.Topic("region/onClick").publish(_region);
+		$.Topic("Region/clicked").publish(_region);
 	};
 };
 
