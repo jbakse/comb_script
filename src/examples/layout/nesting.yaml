@@ -1,4 +1,5 @@
-# you can nest different regions within other regions.
+# you can nest regions for organization and layout
+# child region are positioned relative to their parents.
 
 properties:
     width: 200px

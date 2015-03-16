@@ -1,5 +1,5 @@
-# margin-left, margin-right, margin-top, & margin-bottom place regions
-# a specified distance from the outside borders of the parent region
+# use margin_left, margin_right, margin_top, & margin_bottom to
+# specify the position of a region's side relative to its parent's bounds
 
 properties:
     width: 200px
@@ -18,14 +18,18 @@ children:
             height: 50px
             margin_right: 20px 
 
+    # if you specify the left and the right, the width will be calculated for you
     - rectangle:
         properties:
-            width: 50px
             height: 50px
+            margin_left: 20px
+            margin_right: 20px
             margin_top: 20px 
 
     - rectangle:
         properties:
-            width: 50px
+
             height: 50px
+            margin_left: 20px
+            margin_right: 20px
             margin_bottom: 20px 

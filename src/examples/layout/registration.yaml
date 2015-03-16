@@ -1,7 +1,10 @@
-# margin-left, margin-right, margin-top, & margin-bottom place 
-# regions a specified distance from the outside borders of the 
-# parent region, while left, right, top, & bottom place regions 
-# a specified distance from the center point
+# the registration property sets the location 
+# of 0,0 (the registration position) used by a
+# region's children. If the registration property
+# is not set, the parent's registration will be
+# inherited.
+
+# see: registration
 
 properties:
     width: 200px
@@ -12,26 +15,23 @@ children:
         properties:
             width: 60px
             height: 60px
-            margin_left: 18px
+            margin_left: 20px
+            registration: top_left
 
         children:
             - ellipse:
                 properties:
                     width: 20px
                     height: 20px
-                    margin_left: 10px
-                    margin_top: 10px
-
     - rectangle:
         properties:
             width: 60px
             height: 60px
-            margin_right: 18px
+            margin_right: 20px
+            registration: center
 
         children:
             - ellipse:
                 properties:
                     width: 20px
                     height: 20px
-                    left: 10px
-                    top: 10px
