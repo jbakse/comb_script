@@ -1,0 +1,332 @@
+$menu-text-color: #000;
+$menu-link-color: #000;
+$menu-button-padding: 7px;
+
+$menu-lineheight: 26px;
+$menu-gutter: 12px;
+$menu-margin: 24px;
+$menu-column-width: 160px;
+
+
+#menu
+{
+	position: absolute;
+	z-index: 1;
+
+	box-sizing: border-box;
+	width: 100%;
+	height: $menu-bar-height;
+}
+
+
+#menu
+{
+	font-family: $display-font;
+
+	position: absolute;
+
+	box-sizing: border-box;
+	width: 100%;
+	height: $menu-bar-height;
+
+	background-color: $color-green;
+}
+
+#menu a
+{
+	font-weight: 600;
+
+	text-decoration: none;
+
+	color: $menu-link-color;
+}
+
+#menu a:visited
+{
+	color: $menu-link-color;
+}
+
+#menu .button a
+{
+	color: $menu-text-color;
+}
+
+#menu .button a:visited
+{
+	color: $menu-text-color;
+}
+
+#menu .menu-item
+{
+	position: relative;
+
+	float: left;
+}
+
+////////////////////////////////////////////////////////////////////
+// Extendables
+.dropdown-content
+{
+	margin: 0 $menu-margin $menu-lineheight*.8 $menu-margin;
+}
+
+
+#menu .menu-label
+{
+	font-size: 18px;
+	// background-color:red;
+	font-weight: 600;
+	line-height: $menu-bar-height;
+
+	position: relative;
+
+	display: inline-block;
+
+	padding-right: $menu-margin;
+	padding-left: $menu-margin;
+
+	cursor: pointer;
+	user-select: none;
+}
+
+
+
+
+
+
+/* DROP DOWN */
+#menu
+{
+	.menu-dropdown
+	{
+		position: absolute;
+		top: $menu-bar-height;
+		left: 0;
+
+		display: none;
+
+		width: 300px;
+		padding: $menu-margin 0 0 0;
+
+		user-select: none;
+	}
+	.open .menu-dropdown
+	{
+		display: block;
+	}
+	.menu-dropdown h1
+	{
+		@extend .dropdown-content;
+
+		font-size: 26px;
+		font-weight: 300;
+
+		border-bottom: 1px dotted black;
+	}
+	.menu-dropdown p
+	{
+		@extend .dropdown-content;
+
+		line-height: $menu-lineheight*.8;
+	}
+}
+
+
+/* COLUMNS */
+#menu
+{
+	.column-container
+	{
+		@include clearfix;
+
+		padding-left: $menu-margin;
+	}
+	.column-container.scroll
+	{
+		overflow-y: auto;
+
+		max-height: 300px;
+	}
+	.column
+	{
+		line-height: $menu-lineheight;
+
+		float: left;
+
+		width: $menu-column-width;
+		margin-right: $menu-gutter;
+	}
+	.column:last-child
+	{
+		margin-right: 0;
+	}
+	.column h2
+	{
+		font-size: 15px;
+		font-weight: 400;
+
+		clear: both;
+
+		margin: 0;
+		padding-top: 3px;
+	}
+}
+
+
+/* BUTTONS */
+#menu
+{
+	.button-list
+	{
+		@include clearfix;
+
+		margin: 0 0 $menu-lineheight+3 0;
+		padding-left: 0;
+	}
+	.button-list .button
+	{
+		font-size: 18px;
+		font-weight: 600;
+
+		display: inline;
+		float: left;
+		clear: both;
+
+		margin-left: -$menu-button-padding;
+		padding: 3px $menu-button-padding 0 $menu-button-padding;
+
+		cursor: pointer;
+		user-select: none;
+		transition: background-color .15s;
+		.key-shortcut
+		{
+			font-size: 12px;
+
+			margin-left: 5px;
+		}
+	}
+	.button-list .button:hover
+	{
+		background-color: $color-yellow;
+	}
+}
+
+
+/* SPECIFIC MENU ITEMS STYLING */
+
+#menu-item-documentation.open .menu-label,
+#menu-item-documentation .menu-dropdown
+{
+	background-color: $color-blue;
+}
+
+#menu-item-documentation .menu-dropdown
+{
+	width: $menu-column-width*3 + $menu-gutter*2 + $menu-margin*2;
+}
+
+#menu-item-file.open .menu-label,
+#menu-item-file .menu-dropdown
+{
+	background-color: $color-orange;
+}
+
+#menu-item-file .menu-dropdown
+{
+	width: $menu-column-width*2 + $menu-gutter + $menu-margin*2;
+}
+
+
+
+
+
+
+/* OTHER UI ELEMENTS */
+#preview-ui
+{
+	float: right;
+
+	margin-right: 10px;
+}
+
+#preview-ui .bar-button,
+#preview-ui .bar-widget,
+{
+	user-select: none;
+}
+
+.preview-ui-element
+{
+	display: inline-block;
+	float: left;
+
+	height: 30px;
+	margin-top: 5px;
+	margin-left: 5px;
+
+	color: white;
+	background-color: #139855;
+}
+
+.bar-button
+{
+	@extend .preview-ui-element;
+
+	font-size: 30px;
+	line-height: 30px;
+
+	display: inline-block;
+
+	width: 30px;
+	width: 30px;
+
+	text-align: center;
+}
+
+.bar-button.off
+{
+	background-color: rgba(0,0,0,.1);
+}
+
+.bar-info
+{
+	@extend .preview-ui-element;
+
+	line-height: 34px;
+	// font-family:  "Lucida Console", Monaco, monospace;
+
+	display: inline-block;
+
+	padding: 0 9px 0 9px;
+
+	text-align: center;
+}
+
+
+#zoom-level
+{
+	min-width: 65px;
+}
+
+
+////////////////////////////////////////////////////////////////////
+// scroll
+
+.scroll
+{
+	margin-right: 6px;
+}
+
+.scroll::-webkit-scrollbar
+{
+	width: 10px;
+}
+
+
+
+.scroll::-webkit-scrollbar-thumb
+{
+	width: 5px;
+
+	background-color: black;
+}

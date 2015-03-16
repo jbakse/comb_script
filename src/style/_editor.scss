@@ -1,7 +1,7 @@
-@menu-orange: #ff6529;
-@menu-blue: #06aaff;
-@menu-green: #1de982;
-@menu-yellow: #fffc01;
+$menu-orange: #ff6529;
+$menu-blue: #06aaff;
+$menu-green: #1de982;
+$menu-yellow: #fffc01;
 
 
 
@@ -29,7 +29,7 @@
 }
 
 .ace_scrollbar::-webkit-scrollbar-thumb {
-	background-color: darken(@menu-green, 20);
+	background-color: darken($menu-green, 20);
 	border-radius: 3px;
 }
 
@@ -56,7 +56,7 @@
 }
 
 .highlight {
-	border-left: 1px solid @menu-green;
+	border-left: 1px solid $menu-green;
 	position: absolute;
 }
 
@@ -64,7 +64,7 @@
 .highlight.ellipse,
 .highlight.regiongrid
 {
-	border-left: 1px solid @menu-blue;
+	border-left: 1px solid $menu-blue;
 }
 
 
@@ -80,14 +80,14 @@
 
 #editor .ace_line
 {
-	color: @menu-orange;
+	color: $menu-orange;
 }
 
 #editor .ace_entity.ace_name.ace_tag,
 #editor .ace_keyword,
 #editor .ace_meta.ace_tag,
 #editor .ace_storage {
-	color: @menu-green;
+	color: $menu-green;
 }
 
 #editor .ace_constant.ace_character,

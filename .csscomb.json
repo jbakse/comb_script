@@ -5,7 +5,7 @@
 	"bower_components/**"
 	],
 	"always-semicolon": true,
-	"block-indent": "    ",
+	"block-indent": "\t",
 	"color-case": "lower",
 	"color-shorthand": true,
 	"element-case": "lower",

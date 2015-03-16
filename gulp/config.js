@@ -18,10 +18,10 @@ module.exports = {
     src: [src + "/**/*.html", src + "/**/*.yaml"],
     dest: dest
   },
-  less: {
-    src: [src + "/style/*.less", src + "/style/docs.less"],
-    dest: dest + "/css"
-  },
+  // less: {
+  //   src: [src + "/style/*.less", src + "/style/docs.less"],
+  //   dest: dest + "/css"
+  // },
   sass: {
     src: src + "/style/*.{sass,scss}",
     dest: dest + "/css",

@@ -9,7 +9,7 @@ var config   = require('../config');
 gulp.task('watch', ['watchify','browserSync'], function(callback) {
   gulp.watch(config.images.src, ['images']);
   gulp.watch(config.markup.src, ['markup']);
-  gulp.watch(config.less.src, ['less']);
+  // gulp.watch(config.less.src, ['less']);
   gulp.watch(config.sass.src, ['sass']);
   gulp.watch(config.jade.watch, ['jade']);
 
