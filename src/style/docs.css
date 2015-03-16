@@ -1,14 +1,14 @@
-@import "code.less";
+@import "_syntax_highlight.scss";
 
-@doc-property: #ff2259;
-@link-color: #228fff;
-@light-text-color: rgb(121, 121, 121);
-@bg-color: rgb(247, 247, 247);
-@code-bg-color: rgb(235, 235, 235);
+$doc-property: #ff2259;
+$link-color: #228fff;
+$light-text-color: rgb(121, 121, 121);
+$bg-color: rgb(247, 247, 247);
+$code-bg-color: rgb(235, 235, 235);
 
-@header-font: 'Arvo', serif;
-@body-font: 'Oxygen', sans-serif;
-@monospace-font: Monaco, monospace;
+$header-font: 'Arvo', serif;
+$body-font: 'Oxygen', sans-serif;
+$monospace-font: Monaco, monospace;
 
 /* Micro ClearFix Mixin */
 .clearfix
@@ -24,14 +24,14 @@
 }
 
 
-.link(@color)
+.link($color)
 {
-	&:hover{ background-color: @color; color:white; }
-	
+	&:hover{ background-color: $color; color:white; }
+
 	//&:visited{ color: black; }
 
-	color: @color;
-	border-bottom: 1px solid @color;
+	color: $color;
+	border-bottom: 1px solid $color;
 	text-decoration: none;
 	padding: 2px;
 	padding-bottom: 0px;
@@ -41,8 +41,8 @@
 
 body
 {
-	font-family: @body-font;
-	background-color: @bg-color;
+	font-family: $body-font;
+	background-color: $bg-color;
 	//background-color: red;
 	font-size: 16px;
 	line-height: 2;
@@ -57,14 +57,14 @@ html
 
 a
 {
-	.link(@link-color);
+	.link($link-color);
 }
 
 
 h1, h2, h3
 {
 	margin: 40px 0 0 0;
-	font-family: @header-font;
+	font-family: $header-font;
 	line-height: 1;
 	font-weight: normal;
 	// color: #009900;
@@ -72,7 +72,7 @@ h1, h2, h3
 h1
 {
 	font-size: 2em;
-	
+
 }
 
 h2
@@ -93,7 +93,7 @@ ul
 	margin-bottom: 2em;
 }
 
-section 
+section
 {
 	padding-top: 1px;
 }
@@ -105,7 +105,7 @@ section ul
 }
 section ul li
 {
-	// border-left: 3px solid @link-color;
+	// border-left: 3px solid $link-color;
 	// padding-left: 5px;
 	// margin-left: -8px;
 	list-style: disc;
@@ -129,7 +129,7 @@ section ul li
 	margin-left: 210px;
 }
 
-	
+
 .region-type
 {
 	overflow: hidden; //prevent margin collapse (makes top align properly when achor navigated to)
@@ -147,11 +147,11 @@ section ul li
 	li
 	{
 		margin-bottom: 15px;
-		border-bottom: 1px solid @code-bg-color;
+		border-bottom: 1px solid $code-bg-color;
 	}
 
 	.property-name{
-		.link(@doc-property);
+		.link($doc-property);
 		margin-bottom: 10px;
 		display: inline-block;
 	}
@@ -185,22 +185,22 @@ dd
 	margin-right: 15px;
 	font-weight: bold;
 	font-size: 16px;
-	color: @light-text-color;
+	color: $light-text-color;
 }
 
 pre
 {
 	display: block;
 
-	color: @light-text-color;
+	color: $light-text-color;
 	font-size: 14px;
-	font-family: @monospace-font;
-	
-	background-color: @code-bg-color;
-	border-left: 3px solid darken(@code-bg-color, 30);
-	
+	font-family: $monospace-font;
+
+	background-color: $code-bg-color;
+	border-left: 3px solid darken($code-bg-color, 30);
+
 	padding: 10px;
-	
+
 	white-space: pre-wrap;       /* css-3 */
 	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
 	white-space: -pre-wrap;      /* Opera 4-6 */
@@ -216,19 +216,19 @@ pre
 
 p code
 {
-	color: @light-text-color;
+	color: $light-text-color;
 	padding: 1px 2px;
 	font-size: 14px;
-	font-family: @monospace-font;
-	background-color: @code-bg-color;
-	border: 1px solid darken(@code-bg-color, 10);
+	font-family: $monospace-font;
+	background-color: $code-bg-color;
+	border: 1px solid darken($code-bg-color, 10);
 }
 
 
 canvas.example
 {
 	box-sizing: border-box;
-	border: 1px solid @light-text-color;
+	border: 1px solid $light-text-color;
 	position: absolute;
 	left: 570px;
 	@media (max-width: 1300px) {
