@@ -29,14 +29,14 @@
 # Refactoring / Cleanup 
 
 -----	w/greg Merge refactor css, and apply comb
------	w/greg Reorg examples
+-----	w/greg/spage Reorg examples
 -----	Clean up relationship between main.js and docs.js (with shared.js?)
 
 # General
 	
 # Preview
 -	Let user Pan
-	--	limit pan so you can't lose the drawing
+	--	limit pan so you can't lose the `
 
 -	Let user Zoom
 	-	scroll wheel zoom
@@ -119,6 +119,11 @@
 # UI
 +----	General Look? @Greg
 ---	Quick Reference: Some sort of context aware reference, listing legal properties/values, tooltips? @Greg
+---	choose unit for inspector
+---	should preview pan to editor selection
+---	should preview zoom to editor selection
+---	think about view mode
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Build System

@@ -8,6 +8,6 @@ properties:
 
 children:
     - ellipse:
-	properties:
-	    width: 2in
-	    height: 100mm
+        properties:
+            width: 2in
+            height: 100mm
