@@ -1,0 +1,20 @@
+# intersect can be used to create a new shape out of the 
+# overlapping portion of two or more shapes
+
+properties:
+    width: 100mm
+    height: 100mm
+
+children:
+    - ellipse:
+        properties:
+            width: 60mm
+            height: 60mm
+            margin_left: 5mm
+
+    - ellipse:
+        properties:
+            width: 60mm
+            height: 60mm
+            margin_right: 5mm
+            boolean: intersect

@@ -1,0 +1,43 @@
+# you can nest different regions within other regions.
+
+properties:
+    width: 200px
+    height: 200px
+
+children:
+    - region:
+        properties:
+            width: 120px
+            height: 120px
+            left: -20px
+
+        children:
+
+            - rectangle:
+                properties:
+                    width: 50px
+                    height: 50px
+                    margin_top: 0px
+                    margin_left: 0px
+
+                children: 
+                    - ellipse:
+                        properties:
+                            width: 25px
+                            height: 25px
+                            margin_top: 0px
+                            margin_left: 0px
+
+                    - ellipse:
+                        properties:
+                            width: 25px
+                            height: 25px
+                            margin_bottom: 0px
+                            margin_right: 0px
+
+            - rectangle:
+                properties:
+                    width: 50px
+                    height: 50px
+                    margin_bottom: 0px
+                    margin_right: 0px

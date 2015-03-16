@@ -1,0 +1,28 @@
+# you can use left and right to position a region 
+# relative to the center point. 
+# left positions the left-most side of a region the 
+# specified distance from the center.
+# right positions the right-most side of a region the
+# specified distance from the center.
+
+properties:
+    width: 200px
+    height: 200px
+
+children:
+    - rectangle:
+        properties:
+            width: 120px
+            height: 120px
+
+    - ellipse:
+        properties:
+            width: 40px
+            height: 40px
+            left: 10px
+
+    - ellipse:
+        properties:
+            width: 40px
+            height: 40px
+            right: 10px

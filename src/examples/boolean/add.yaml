@@ -1,0 +1,19 @@
+# add can be used to merge two regions into one distinct shape
+
+properties:
+    width: 100mm
+    height: 100mm
+
+children:
+    - ellipse:
+        properties:
+            width: 60mm
+            height: 60mm
+            margin_left: 5mm
+
+    - ellipse:
+        properties:
+            width: 60mm
+            height: 60mm
+            margin_right: 5mm
+            boolean: add

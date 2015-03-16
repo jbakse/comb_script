@@ -1,0 +1,27 @@
+# you can both add and subtract child regions from the same region to 
+# create specific shapes
+
+properties:
+    width: 100mm
+    height: 100mm
+
+children:
+    - rectangle:
+        properties:
+            width: 50mm
+            height: 50mm
+
+        children:
+            - ellipse:
+                properties:
+                    width: 20mm
+                    height: 20mm
+                    left: -35mm
+                    boolean: subtract
+
+            - ellipse:
+                properties:
+                    width: 20mm
+                    height: 20mm
+                    right: 35mm
+                    boolean: add

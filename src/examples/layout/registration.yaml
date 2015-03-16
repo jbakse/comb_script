@@ -1,0 +1,37 @@
+# margin-left, margin-right, margin-top, & margin-bottom place 
+# regions a specified distance from the outside borders of the 
+# parent region, while left, right, top, & bottom place regions 
+# a specified distance from the center point
+
+properties:
+    width: 200px
+    height: 200px
+
+children:
+    - rectangle:
+        properties:
+            width: 60px
+            height: 60px
+            margin_left: 18px
+
+        children:
+            - ellipse:
+                properties:
+                    width: 20px
+                    height: 20px
+                    margin_left: 10px
+                    margin_top: 10px
+
+    - rectangle:
+        properties:
+            width: 60px
+            height: 60px
+            margin_right: 18px
+
+        children:
+            - ellipse:
+                properties:
+                    width: 20px
+                    height: 20px
+                    left: 10px
+                    top: 10px
