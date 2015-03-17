@@ -1,0 +1,271 @@
+@import '_reset';
+
+@import '_common';
+
+@import '_syntax_highlight';
+
+$doc-property: $color-blue;
+$link-color: $color-blue;
+$light-text-color: $color-orange;//rgb(121, 121, 121);
+$bg-color: $color-canvas;
+$code-bg-color: white;
+
+$header-font: $display-font;
+$body-font: $display-font;
+$monospace-font: $mono-font;
+
+
+////////////////////////////////////////////////////////////////////
+// mixins
+
+@mixin link($color)
+{
+	font-weight: bold;
+
+	margin-left: -2px;
+	padding: 2px;
+	padding-bottom: 0;
+
+	text-decoration: none;
+	//&:visited{ color: black; }
+
+	color: $color;
+	border-bottom: 1px solid $color;
+	&:hover
+	{color: white; 
+		background-color: $color;
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////
+// 
+
+html
+{
+	margin: 0;
+	padding: 0;
+}
+
+body
+{
+	font-family: $body-font;
+	font-size: 18px;
+	line-height: 1.75;
+
+	margin: 0;
+
+	background-color: $bg-color;
+}
+
+
+a
+{
+	@include link($link-color);
+}
+
+
+////////////////////////////////////////////////////////////////////
+// structure
+
+#menu
+{
+	position: fixed;
+	top: 10px;
+	left: 10px;
+	li
+	{
+		margin-bottom: 5px;
+	}
+}
+
+
+#content
+{
+	position: relative;
+
+	width: 550px;
+	margin-left: 210px;
+}
+
+section
+{
+	// padding-top: 1px; 
+	overflow: hidden;
+	//prevent margin collapse (makes top align properly when achor navigated to)
+}
+
+
+////////////////////////////////////////////////////////////////////
+// type
+
+h1,
+h2,
+h3
+{
+	font-family: $header-font;
+	font-weight: normal;
+	line-height: 1;
+
+	margin: 40px 0 0 0;
+	// color: #009900;
+}
+
+h1
+{
+	font-size: 2em;
+}
+
+h2
+{
+	font-size: 1.3em;
+}
+
+h3
+{
+	font-size: 1.0em;
+}
+
+
+////////////////////////////////////////////////////////////////////
+// lists
+
+section ul
+{
+	margin: 1em 0;
+}
+
+section ul li
+{
+	line-height: 1.5;
+
+	margin-bottom: 1em;
+	// border-left: 3px solid $link-color;
+	// padding-left: 5px;
+	// margin-left: -8px;
+
+	list-style: disc;
+}
+
+
+
+////////////////////////////////////////////////////////////////////
+// code examples - syntax
+
+pre
+{
+	font-family: $monospace-font;
+	font-size: 14px;
+
+	display: block;
+
+	box-sizing: border-box;
+	min-height: 250px;
+	padding: 10px;
+
+	white-space: pre;
+	// white-space: pre-wrap;       /* css-3 */
+	// white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	// white-space: -pre-wrap;      /* Opera 4-6 */
+	// white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;       /* Internet Explorer 5.5+ */
+
+	color: $light-text-color;
+	border-left: 3px solid darken($code-bg-color, 30);
+	background-color: $code-bg-color;
+}
+
+p code
+{
+	font-family: $monospace-font;
+	font-size: 14px;
+
+	padding: 1px 2px;
+
+	color: $light-text-color;
+	border: 1px solid darken($code-bg-color, 10);
+	background-color: $code-bg-color;
+}
+
+
+////////////////////////////////////////////////////////////////////
+// example canvas
+
+canvas.example
+{
+	position: absolute;
+	left: 570px;
+
+	box-sizing: border-box;
+	background-color: white;
+	border: 1px solid $light-text-color;
+	@media (max-width: 1300px)
+	{
+		position: relative;
+		left: 0;
+	}
+}
+
+
+
+////////////////////////////////////////////////////////////////////
+// API - Regions
+
+.region-description
+{
+	margin-bottom: 40px;
+}
+
+.region-type .properties
+{
+	margin-bottom: 50px;
+	li
+	{
+		margin-bottom: 15px;
+
+		border-bottom: 1px solid $code-bg-color;
+	}
+	.property-name
+	{
+		@include link($doc-property);
+
+		display: inline-block;
+
+		margin-bottom: 10px;
+	}
+	.closed .description,
+	.closed dl
+	{
+		display: none;
+	}
+}
+
+
+dl
+{
+	@include clearfix;
+
+	margin-top: 5px;
+}
+
+dt
+{
+	display: block;
+	float: left;
+	clear: left;
+
+	width: 75px;
+}
+
+dd
+{
+	font-size: 16px;
+	font-weight: bold;
+
+	float: left;
+
+	margin-right: 15px;
+	margin-left: 0;
+
+	color: $light-text-color;
+}
