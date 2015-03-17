@@ -281,6 +281,7 @@ $menu-column-width: 160px;
 	width: 30px;
 
 	text-align: center;
+	cursor:pointer;
 }
 
 .bar-button.off
@@ -292,13 +293,13 @@ $menu-column-width: 160px;
 {
 	@extend .preview-ui-element;
 
-	line-height: 34px;
-	// font-family:  "Lucida Console", Monaco, monospace;
+	line-height: 30px;
+	font-family: $mono-font;
 
 	display: inline-block;
 
 	padding: 0 9px 0 9px;
-
+	cursor:pointer;
 	text-align: center;
 }
 
@@ -306,6 +307,7 @@ $menu-column-width: 160px;
 #zoom-level
 {
 	min-width: 65px;
+	user-select:none;
 }
 
 
