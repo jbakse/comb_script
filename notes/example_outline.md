@@ -35,6 +35,7 @@ advanced
 - math
 
 demos
+- comb
 - tslot box
 - finger joint box
 - stool

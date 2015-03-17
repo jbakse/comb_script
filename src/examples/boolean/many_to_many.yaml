@@ -1,0 +1,40 @@
+# you can combine entire groups of shapes with other groups of shapes
+# by specifying a boolean property on a region that has children
+
+properties:
+    width: 100mm
+    height: 100mm
+
+children:
+    - region:
+        children:
+            - ellipse:
+                properties:
+                    width: 30mm
+                    height: 30mm
+                    left: 3mm
+
+            - ellipse:
+                properties:
+                    width: 30mm
+                    height: 30mm
+                    right: -3mm
+
+
+    - region:
+        properties:
+            # subtract each of this region's children
+            # from each of the previous region's children
+            boolean: subtract
+        children:
+            - ellipse:
+                properties:
+                    width: 30mm
+                    height: 30mm
+                    top: 3mm
+
+            - ellipse:
+                properties:
+                    width: 30mm
+                    height: 30mm
+                    bottom: -3mm

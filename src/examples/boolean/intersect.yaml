@@ -1,5 +1,5 @@
 # intersect can be used to create a new shape out of the 
-# overlapping portion of two or more shapes
+# overlapping portion of two shapes
 
 properties:
     width: 100mm

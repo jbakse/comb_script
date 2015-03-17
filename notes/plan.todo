@@ -31,6 +31,8 @@
 -----	w/greg Merge refactor css, and apply comb
 -----	w/greg/spage Reorg examples
 -----	Clean up relationship between main.js and docs.js (with shared.js?)
+-----	Preview tracks mouse through menu dropdowns
+-----	Boolean many-to-many adds leave leftovers (is this a bug?)
 
 # General
 	

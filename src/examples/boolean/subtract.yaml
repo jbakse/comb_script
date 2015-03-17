@@ -1,5 +1,5 @@
-# subtract can be used to remove the overlapping portion 
-# of a region's shape from another shape
+# subtract can be used to remove the the shape of one region
+# from another's
 
 properties:
     width: 100mm

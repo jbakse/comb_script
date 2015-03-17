@@ -1,4 +1,4 @@
-# add can be used to merge two regions into one distinct shape
+# add can be used to merge the shapes of two regions into one new shape
 
 properties:
     width: 100mm
