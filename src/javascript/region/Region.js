@@ -601,7 +601,7 @@ Region.prototype._combinePaths = function(_leftPath, _rightPathSet, _op) {
 		try {
 			// partial work around boolean bug in paperjs
 			if (_leftPath.bounds.equals(_rightPath.bounds) && _leftPath.area === _rightPath.area){
-				var trapping = settings.autoTrappingAmmount;
+				var trapping = settings.autocAmmount;
 				var hScale = (_rightPath.bounds.width + trapping) / _rightPath.bounds.width;
 				var vScale = (_rightPath.bounds.height + trapping) / _rightPath.bounds.height;
 				log.appendWarning("Boolean operand shapes have same bounds. Applying auto trapping.");

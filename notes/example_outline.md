@@ -35,6 +35,7 @@ advanced
 - boolean
 - region_grids
 - math
+- trapping (maybe in boolean?)
 
 demos
 - comb

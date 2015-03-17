@@ -6,24 +6,16 @@ properties:
     height: 100mm
 
 children:
-    - region:
-        children:
-            - ellipse:
-                properties:
-                    width: 50mm
-                    height: 50mm
-                    bottom: 0mm
-                # children:
-            - ellipse:
-                properties:
-                    width: 20mm
-                    height: 20mm
-                    top: 0mm
-                    # boolean: subtract
+    - ellipse:
+	properties:
+	    width: 20mm
+	    height: 20mm
+	    top: 0mm
+	    # boolean: subtract
 
     - ellipse:
         properties:
             width: 20mm
             height: 20mm
-            right: 0mm
+	    top: 0mm
             boolean: add

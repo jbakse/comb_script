@@ -21,6 +21,11 @@
 # User facing Features
 
 
+# # # # # # # # # # # # # # # # # # # # # # # # # #
+# Language Design
+
+- 	trapping: right now trapping effects the region dimensions, so children will be affected
+----	x and y: center x, center y. for drill holes -> x: 10, y: 10, radius: 3
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # w/Greg
@@ -31,11 +36,9 @@
 
 -----	w/greg/spage Reorg examples
 
-+-----	w/greg Merge refactor css, and apply comb
-+-----	Clean up relationship between main.js and docs.js (with shared.js?)
-
 -----	Preview tracks mouse through menu dropdowns
-+-----	Boolean many-to-many adds leave leftovers (is this a bug?)
+
+-----	GET TEXT ONLINE
 
 # General
 	
@@ -43,13 +46,7 @@
 -	Let user Pan
 	--	limit pan so you can't lose the image
 
--	Let user Zoom
-	-	scroll wheel zoom
-	-	option key maginfying glass cursor?
-
-
--	Isolation Mode? 
--	Ghost unselected regions?
+---	zoom to editor selection
 
 # Inspector
 ----	List dimensions in document (user specified unit) unit
@@ -65,24 +62,16 @@
 
 
 # Math Expression support
-----	rotation: angle type
++----	rotation: angle type
 
 -----	Make Examples + Document
 	+- units
 	+- simple math
-	- parent boundary variables
-	- constants
-		- shadowing
+	+- parent boundary variables
+	+- constants
+		+- shadowing
 		- referencing parent constants, but not own
 
-
-
-# Trapping Experiment.
-	Added Trapping property. it looks very promising
-	Auto trapping (like auto add trapping to all adds/subtracts) would be cool, but i can't find a way to make it work out, as when two aligned shapes are both added, adding the same trap to both of them won't work (they'll still be aligned to each other).
-	----	trap in rectangle draw: trapping probably shouldn't actually effect the region size (as used by children). trapping probably not needed for ellipses. it is meant for tiny tiny adjustments just to fix the boolean bug, not to actually effect design dimensions. (if it would be useful to have another way to spread a shape add that sperately (i don't think it would that helpful))
-	----	hardcode trap amount: should trap accept an amount at all? maybe it should be hard coded to .0001px or something. two problems, sometimes trap should be outward, sometimes inward. (maybe trapping: outward, trapping: inward or shrink/expand) second problem. might need different values in different contexts (large values work better, smaller values distort drawing less, i think we can just try some values and see if there is a good general fit)
-	----	report bug: even with the trapping the joist example still fails, seems like maybe worth reporting the case
 
 # Booleans
 -	Review: how child_booleans vs self_booleans work, does it make sense?
@@ -105,10 +94,10 @@
 # Plugins
 -	Vertical Line
 -	Horizontal Line
--	Polygon as array of points
+----	Polygon as array of points
 
 # SVG
--	SVG Import Support
+---	SVG Import Support
 
 # Export
 ---	Export Styles: finish and document
@@ -123,7 +112,7 @@
 
 # UI
 +----	General Look? @Greg
----	Quick Reference: Some sort of context aware reference, listing legal properties/values, tooltips? @Greg
+--	Quick Reference: Some sort of context aware reference, listing legal properties/values, tooltips? @Greg
 ---	choose unit for inspector
 ---	should preview pan to editor selection
 ---	should preview zoom to editor selection
