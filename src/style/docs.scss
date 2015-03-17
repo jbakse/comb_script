@@ -239,7 +239,8 @@ canvas.example
 
 	box-sizing: border-box;
 	background-color: white;
-	border: 1px solid $light-text-color;
+	// border: 1px solid $light-text-color;
+	border-left: 1px solid darken($color-green, 10);
 	@media (max-width: 1300px)
 	{
 		position: relative;

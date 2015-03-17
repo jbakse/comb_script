@@ -11,17 +11,17 @@ RegionGrid:
         children:
             - region_grid:
                 properties:
-                    width: 400
-                    height: 60
+                    width: 400px
+                    height: 60px
                     columns: 10
                     registration: center
                 children:
                     - rectangle:
                         properties:
-                            margin_top: 6
-                            margin_bottom: 6
-                            margin_left: 6
-                            margin_right: 6
+                            margin_top: 6px
+                            margin_bottom: 6px
+                            margin_left: 6px
+                            margin_right: 6px
         </pre>
 
     properties:

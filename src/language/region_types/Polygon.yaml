@@ -8,11 +8,12 @@ Polygon:
         Polygon draws a polygon.
         </p>
         <pre>
+        #radius isn't working
         children:
             - polygon:
                 properties:
-                    radius: 100
-                    sides: 3
+                    radius: 20px
+                    sides: 5
         </pre>
 
     properties:

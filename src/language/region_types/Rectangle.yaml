@@ -11,9 +11,9 @@ Rectangle:
         children:
             - rectangle:
                 properties:
-                    width: 200
-                    height: 200
-                    radius: 10
+                    width: 200px
+                    height: 200px
+                    radius: 10px
         </pre>
 
     properties:

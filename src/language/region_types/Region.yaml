@@ -10,15 +10,15 @@ Region:
             - region:
                 properties:
                     name: parent_region
-                    width: 200
-                    height: 200
+                    width: 200px
+                    height: 200px
                 children:
                     - region:
                         properties:
                             name: child_region
-                            width: 100
-                            height: 100
-                            margin_left: 10
+                            width: 100px
+                            height: 100px
+                            margin_left: 10px
         </pre>
 
     properties:

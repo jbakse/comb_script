@@ -4,8 +4,8 @@
 .pln { color: darken($color-green, 15) }  /* plain text */
 
 @media screen {
-  .str { color: #00FF00 }  /* string content */
-  .kwd { color: #00C }  /* a keyword */
+  .str { color: $color-blue }  /* string content */
+  .kwd { color: $color-green}  /* a keyword */
   .com { color: #888 }  /* a comment */
   .typ { color: #A0A }  /* a type name */
   .lit { color: #000000 }  /* a literal value */
