@@ -45,15 +45,30 @@ Menu.prototype.init = function(_element) {
 		return false;
 	});
 
-	
-
-
 	$('[data-example]').click ( function (_e) {
 		// console.log("_e", _e, this, $(this).data('example'));
 		$.Topic("UI/command/loadYAML").publish($(this).data('example'));
 	});
 
+	$(".menu-label").mousedown(
+		function() {
+			$(this).parent().toggleClass("open");
+		}
+	);
+
+	$(document).mousedown(
+		function(e) {
+			$(".menu-item").each( function(i, item){
+				if($(e.target).closest('.menu-item')[0] !== item) {
+					$(item).removeClass("open");
+				}
+			});
+		}
+	);
+
 };
+
+
 
 Menu.prototype.addClickCommand = function(_element, _command) {
 	$(_element).click(

@@ -19,18 +19,14 @@ Rectangle.prototype = Object.create(Region.prototype);
 Rectangle.prototype.constructor = Rectangle;
 
 Rectangle.prototype.drawBuild = function(_bounds) {
-	console.log(this.properties);
 	var r = 0;
 	if (this.properties.radius) r = this.properties.radius.toNumber("px");
-
-	var boundsPath = new paper.Path.Rectangle(_bounds, r);
-	return boundsPath;
+	return new paper.Path.Rectangle(_bounds, r);
 };
 
 Rectangle.prototype.drawBounds = function(_bounds) {
 	var r = 0;
 	if (this.properties.radius) r = this.properties.radius.toNumber("px");
-
 	return new paper.Path.Rectangle(_bounds, r);
 };
 
