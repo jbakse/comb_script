@@ -1,7 +1,7 @@
 children:
     - region:
         properties:
-	    top: -100px
-	    bottom: 0px
-	    margin_left: 10px
-	    width: 100px
+            top: -100px
+            bottom: 0px
+            margin_left: 10px
+            width: 100px

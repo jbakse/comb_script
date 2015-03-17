@@ -1,11 +1,11 @@
-@import '_reset';
+@import "_reset";
 
-@import '_common';
+@import "_common";
 
-@import '_syntax_highlight';
+@import "_syntax_highlight";
 
 $doc-property: $color-blue;
-$link-color: $color-blue;
+$link-color: $color-magenta;
 $light-text-color: $color-orange;//rgb(121, 121, 121);
 $bg-color: $color-canvas;
 $code-bg-color: white;
@@ -20,7 +20,7 @@ $monospace-font: $mono-font;
 
 @mixin link($color)
 {
-	font-weight: bold;
+	font-weight: 400;
 
 	margin-left: -2px;
 	padding: 2px;
@@ -51,6 +51,7 @@ body
 {
 	font-family: $body-font;
 	font-size: 18px;
+	font-weight: 300;
 	line-height: 1.75;
 
 	margin: 0;
@@ -64,6 +65,11 @@ a
 	@include link($link-color);
 }
 
+p
+{
+	margin-bottom:1em;
+}
+
 
 ////////////////////////////////////////////////////////////////////
 // structure
@@ -73,10 +79,6 @@ a
 	position: fixed;
 	top: 10px;
 	left: 10px;
-	li
-	{
-		margin-bottom: 5px;
-	}
 }
 
 
@@ -93,6 +95,10 @@ section
 	// padding-top: 1px; 
 	overflow: hidden;
 	//prevent margin collapse (makes top align properly when achor navigated to)
+}
+strong
+{
+	font-weight: 400;
 }
 
 
@@ -114,16 +120,43 @@ h3
 h1
 {
 	font-size: 2em;
+	border-bottom: 1px dotted black;
+	font-weight:300;
+	margin-bottom: .5em;
 }
 
 h2
 {
 	font-size: 1.3em;
+	margin-bottom: .5em;
 }
 
 h3
 {
 	font-size: 1.0em;
+}
+
+#menu{
+	h2
+	{
+		font-size: 1em;
+		line-height: 1.3em;
+		margin-bottom: .8em;
+	}
+	li
+	{
+		// margin-bottom: 5px;
+		line-height: 36px;
+
+	}
+	a
+	{
+		@include link($color-blue);
+		border-bottom: none;
+		padding: 5px;
+		margin-left: -5px;
+		font-weight: 400;
+	}
 }
 
 
@@ -171,8 +204,9 @@ pre
 	word-wrap: break-word;       /* Internet Explorer 5.5+ */
 
 	color: $light-text-color;
-	border-left: 3px solid darken($code-bg-color, 30);
+	border-left: 1px solid darken($color-green, 10);
 	background-color: $code-bg-color;
+	margin-bottom: 1em;
 }
 
 p code
@@ -204,6 +238,7 @@ canvas.example
 		position: relative;
 		left: 0;
 	}
+	margin-bottom: .5em;
 }
 
 

@@ -2,14 +2,14 @@ children:
     - rectangle:
         properties:
             name: base_rectangle
-            width: 100
-            height: 100
+            width: 100px
+            height: 100px
         children:
             - ellipse:
                 properties:
                     name: subtract_ellipse
-                    height: 100
-                    width: 100
-                    left: -100
-                    top: -100
+                    height: 100px
+                    width: 100px
+                    left: -100px
+                    top: -100px
                     boolean: subtract
