@@ -1,13 +1,11 @@
-properties:
-    unit: in
 children:
     - rectangle:
         properties:
-            width: 1
-            height: 1
-            right: -1
+            width: 1px
+            height: 1px
+            right: -1px
     - rectangle:
         properties:
             width: 1 in + 25.4 mm
             height: 2 feet / 12
-            left: 1
+            left: 1mm

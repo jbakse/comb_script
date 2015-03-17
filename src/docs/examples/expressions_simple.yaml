@@ -1,5 +1,5 @@
 children:
     - ellipse:
         properties:
-            width: 50 * 3
-            height: 100 / 2
+            width: 50px * 3
+            height: 100px / 2

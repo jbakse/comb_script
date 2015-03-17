@@ -92,14 +92,18 @@ p
 
 section
 {
-	// padding-top: 1px; 
-	overflow: hidden;
+	padding-top: 1px;
+	// overflow: hidden;
 	//prevent margin collapse (makes top align properly when achor navigated to)
 }
 strong
 {
 	font-weight: 400;
 }
+
+// .deprecated{
+// 	background-color:$color-yellow;
+// }
 
 
 ////////////////////////////////////////////////////////////////////
@@ -177,7 +181,10 @@ section ul li
 	// padding-left: 5px;
 	// margin-left: -8px;
 
-	list-style: disc;
+	// list-style: disc;
+	list-style-type: none;
+    padding: 0px;
+    margin: 0px;
 }
 
 
@@ -253,16 +260,24 @@ canvas.example
 
 .region-type .properties
 {
-	margin-bottom: 50px;
+	margin-bottom: 35px;
 	li
 	{
-		margin-bottom: 15px;
+		padding-bottom: 10px;
+		margin-bottom: 10px;
 
-		border-bottom: 1px solid $code-bg-color;
+		border-bottom: 1px dotted $color-magenta;
+	}
+	li.closed
+	{
+			padding-bottom: 0px;
 	}
 	.property-name
 	{
-		@include link($doc-property);
+		@include link($color-magenta);
+		border-bottom: none;
+		padding: 2px 5px;
+		margin-left: -5px;
 
 		display: inline-block;
 
@@ -281,6 +296,7 @@ dl
 	@include clearfix;
 
 	margin-top: 5px;
+	line-height:31px;
 }
 
 dt
@@ -290,17 +306,26 @@ dt
 	clear: left;
 
 	width: 75px;
+
+
 }
 
 dd
 {
 	font-size: 16px;
-	font-weight: bold;
-
+	font-weight:600;
 	float: left;
 
 	margin-right: 15px;
 	margin-left: 0;
 
-	color: $light-text-color;
+	color: darken($color-green, 10);
+
+	a{
+		@include link($color-blue);
+		border-bottom: none;
+		padding: 5px;
+		margin-left: -7px;
+		font-weight: 400;
+	}
 }

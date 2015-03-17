@@ -136,14 +136,14 @@ section#shapes
 
 
 	pre.display.comb-script
-		//- include examples/boolean_simple_subtract2.yaml
+		include examples/boolean_simple_subtract2.yaml
 
 	
 	:markdown
 		You can use booelan operations will applied to a region's children as well. For example you can subtract many shapes from a single shape, subtract a single shape from many shapes, or even subtract many shapes from many shapes.
 
 	pre.display.comb-script
-		//- include examples/boolean_multiple.yaml
+		include examples/boolean_multiple.yaml
 
 
 
@@ -158,21 +158,15 @@ section#grids
 		Each cell in the generated grid will contain a clone of the children of the region grid.
 
 	pre.display.comb-script
-	//- include examples/regiongrid_simple.yaml
+		include examples/regiongrid_simple.yaml
 
 
 section#repeat
+
 	:markdown
 		# YAML Repeated Nodes
 
 		YAML's [repeated node](http://yaml.org/spec/1.2/spec.html#id2760395) feature can be used to to create named parameters and library shapes that can be used throughout your document. Repeated nodes are defined with `&` followed by a name, and used with `*` followed by the name. Repeated nodes are genrally defined as an array under the `library:` key.
-
-		## Constants
-
-		You can use repeated nodes as named constants (aka variables or parameters) to identify commonly used values in your document and create a single place in the document where they can be changed. 
-
-	pre.display.comb-script
-	//- include examples/variable_simple.yaml
 
 	:markdown
 		## Library Items
@@ -180,7 +174,7 @@ section#repeat
 		It is common that you will reuse the same shape in multiple places in your document. Repeated nodes can represent entire regions, their properties, and even nested children. Each repeated node will be separately laid out in their parent's context.
 		
 	pre.display.comb-script
-	//- include examples/symbol_simple2.yaml
+		include examples/symbol_simple2.yaml
 
 section#expressions
 	:markdown
@@ -191,20 +185,22 @@ section#expressions
 		Expressions allow mathematic expressions like `4 * .7` and `sqrt(3^2 + 4^2)`.
 
 	pre.display.comb-script
-	//- include examples/expressions_simple.yaml
+		include examples/expressions_simple.yaml
 
 	:markdown
 		## Units
-	//- Units can be used when specifying dimensions `3 in`. Dimension units can be mixed in expressions: `1 inch + 2 mm`. If no unit is included when specifying a property value, the document unit will be assumed. The document unit can be set in the document properties, the default is `px`.
+		Units can be used when specifying dimensions `3 in`. Dimension units can be mixed in expressions: `1 inch + 2 mm`. If no unit is included when specifying a property value, the document unit will be assumed. The document unit can be set in the document properties, the default is `px`.
 
 	pre.display.comb-script
-	//- include examples/units_simple.yaml
+		include examples/units_simple.yaml
 
 	:markdown
-		## Constants (Comb Vars&#8482;)
+		## Constants
 		Constants are user defined values that can be used throughout the comb script document. Constants will also be evaluated in expressions.
 
 	pre.display.comb-script
-	//- include examples/constants_simple.yaml
+		include examples/constants_simple.yaml
 
-h1 API Reference
+h1 Language Reference
+
+p The following is a list of the CombScript region types and their available properties.

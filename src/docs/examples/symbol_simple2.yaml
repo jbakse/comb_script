@@ -2,26 +2,26 @@ library:
     - &ex
         rectangle:
             properties:
-                margin_top: 10
-                margin_bottom: 10
-                width: 40
-                radius: 4
+                margin_top: 10px
+                margin_bottom: 10px
+                width: 40px
+                radius: 4px
 
 children:
     - region:
         properties:
-            margin_left: 10
-            width: 150
-            height: 150
+            margin_left: 10px
+            width: 150px
+            height: 150px
             registration: center
         children:
             - *ex
 
     - region:
         properties:
-            margin_right: 10
-            width: 100
-            height: 100
+            margin_right: 10px
+            width: 100px
+            height: 100px
             registration: center
         children:
             - *ex

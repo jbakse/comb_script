@@ -9,12 +9,12 @@ Document:
         </p>
         <pre>
         properties:
-            unit: in
+            name: example_doc
         children:
             - region:
                 properties:
-                    width: 1
-                    height: 1
+                    width: 200px
+                    height: 200px
         </pre>
 
     properties:

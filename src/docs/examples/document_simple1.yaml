@@ -2,5 +2,5 @@
 children:
     - region:
         properties:
-            width: 200
-            height: 150
+            width: 200px
+            height: 150px

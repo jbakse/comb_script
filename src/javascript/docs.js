@@ -69,7 +69,7 @@ function renderExamples() {
 		if (!data) return;
 
 		// inject a height and width if not specified in the CombScript source 
-		data.properties.width = data.properties.width || "525px";
+		data.properties.width = data.properties.width || "546px";
 		data.properties.height = data.properties.height || "225px";
 
 		// build the document

@@ -1,5 +1,5 @@
 library:
-    - &size 200
+    - &size 200px
 
 children:
     - ellipse:

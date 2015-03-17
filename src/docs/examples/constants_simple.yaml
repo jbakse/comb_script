@@ -1,14 +1,14 @@
-properties:
-    combvars:
-        my_scale: 2
+constants:
+    my_scale: 2
+
 children:
     - ellipse:
         properties:
-            margin_right:0
-            width: 2 * my_scale
-            height: 2 * my_scale
+            margin_right: 30px
+            width: 50px * my_scale
+            height: 50px * my_scale
     - rectangle:
         properties:
-            margin_left:0
-            width: 2 / my_scale
-            height: 2 / my_scale
+            margin_left: 30px
+            width: 50px / my_scale
+            height: 50px / my_scale

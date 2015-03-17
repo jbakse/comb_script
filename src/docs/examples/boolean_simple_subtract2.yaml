@@ -2,18 +2,18 @@ children:
     - region:
         properties:
             name: parent_region
-            width: 300
-            height: 200
+            width: 300px
+            height: 200px
 
         children:
             - ellipse:
                 properties:
-                    margin_left: 0
-                    height: 200
-                    width: 200
+                    margin_left: 0px
+                    height: 200px
+                    width: 200px
             - ellipse:
                 properties:
-                    margin_right: 0
-                    height: 200
-                    width: 200
+                    margin_right: 0px
+                    height: 200px
+                    width: 200px
                     boolean: intersect

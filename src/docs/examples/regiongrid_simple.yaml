@@ -1,13 +1,13 @@
 children:
     - region_grid:
         properties:
-            width: 400
-            height: 200
-            column_width: 50
+            width: 400px
+            height: 200px
+            column_width: 50px
             rows: 4
             registration: center
         children:
             - ellipse:
                 properties:
-                    width: 30
-                    height: 30
+                    width: 30px
+                    height: 30px
