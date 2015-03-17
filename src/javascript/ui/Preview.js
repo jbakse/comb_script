@@ -42,7 +42,9 @@ function setupDragging() {
 	var isDragging = false;
 	var oldMouseLoc;
 
+	paper.view.element.paperProject  = paper.project;
 	$(paper.view.element).mousedown(function(_e) {
+		_e.target.paperProject.activate();
 		if (_e.which != 1) return;
 		isDragging = true;
 		oldMouseLoc = new paper.Point(_e.originalEvent.screenX, _e.originalEvent.screenY);

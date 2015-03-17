@@ -89,6 +89,8 @@ function renderExamples() {
 		var preview = new Preview();
 		preview.init(canvas.get(0));
 		preview.setDocument(doc);
+		preview.previewLayer.visible = true;
+		paper.view.update();
 
 		
 	});
