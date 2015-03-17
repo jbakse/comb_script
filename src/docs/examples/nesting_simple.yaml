@@ -1,16 +1,17 @@
 children:
     - region:
         properties:
-            width: 400
-            height: 200
+            width: 400px
+            height: 200px
+
         children:
             - ellipse:
                 properties:
-                    height: 100
-                    width: 100
-                    margin_left: 30
+                    height: 100px
+                    width: 100px
+                    margin_left: 30px
             - ellipse:
                 properties:
-                    height: 100
-                    width: 100
-                    margin_right: 30
+                    height: 100px
+                    width: 100px
+                    margin_right: 30px
