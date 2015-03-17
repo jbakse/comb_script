@@ -21,6 +21,7 @@
 # User facing Features
 
 
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # w/Greg
 
@@ -28,17 +29,19 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Refactoring / Cleanup 
 
------	w/greg Merge refactor css, and apply comb
 -----	w/greg/spage Reorg examples
+
+-----	w/greg Merge refactor css, and apply comb
 -----	Clean up relationship between main.js and docs.js (with shared.js?)
+
 -----	Preview tracks mouse through menu dropdowns
------	Boolean many-to-many adds leave leftovers (is this a bug?)
++-----	Boolean many-to-many adds leave leftovers (is this a bug?)
 
 # General
 	
 # Preview
 -	Let user Pan
-	--	limit pan so you can't lose the `
+	--	limit pan so you can't lose the image
 
 -	Let user Zoom
 	-	scroll wheel zoom

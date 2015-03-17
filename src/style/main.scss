@@ -1,19 +1,7 @@
-@import 'reset.scss';
+@import '_reset';
 
-@import '_editor';
+@import '_common';
 
-@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
-$mono-font: 'Droid Sans Mono', monospace;
-
-@import url(http://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700);
-$display-font: 'Josefin Sans', sans-serif;
-
-$color-dark-gray: #303030;
-$color-green: #1de982;
-$color-blue: #06aaff;
-$color-orange: #ff6529;
-$color-yellow: #fffc01;
-$color-canvas: #eee;
 
 html,
 body
@@ -35,16 +23,7 @@ div
 	display: none !important;
 }
 
-////////////////////////////////////////////////////////////////////
-// Mixins
 
-@mixin clearfix {
-	&:after {
-		content: "";
-		display: table;
-		clear: both;
-	}
-}
 
 
 
@@ -52,6 +31,10 @@ div
 // menu
 $menu-bar-height: 40px;
 @import '_menu';
+
+////////////////////////////////////////////////////////////////////
+// editor
+@import '_editor';
 
 ////////////////////////////////////////////////////////////////////
 // Application Layout
@@ -178,13 +161,12 @@ $log-min-height: 24px;
 	padding: 12px;
 
 	pointer-events: none;
-
 }
 
 #inspector .label
 {
 	padding-right: 5px;
-	
+
 	text-align: right;
 }
 
@@ -192,7 +174,7 @@ $log-min-height: 24px;
 {
 	font-family: $mono-font;
 	font-size: 15px;
-	
+
 	padding-right: 1px;
 
 	text-align: right;
@@ -228,8 +210,8 @@ $log-min-height: 24px;
 
 #inspector .breadcrumbs li:hover
 {
+	color: white;
 	border-image: url(../images/menu_icons/breadcrumb_border_hover.png) 0 10 0 10 fill repeat;
-	color:white;
 }
 
 #inspector .breadcrumbs li:first-child

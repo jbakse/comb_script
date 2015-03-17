@@ -31,7 +31,7 @@ module.exports = {
     }
   },
   jade: {
-    watch: [src + "/*/**.jade", src + "/docs/**"],
+    watch: [src + "/**.jade", src + "/docs/**"],
     src: src + "/docs.jade",
     dest: dest
   },

@@ -23,7 +23,7 @@ children:
 
     - region:
         properties:
-            # subtract each of this region's children
+            # subtract all of this region's children
             # from each of the previous region's children
             boolean: subtract
         children:

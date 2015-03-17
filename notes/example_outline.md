@@ -5,12 +5,12 @@ x- math (spage)
 x- constants (spage)
 
 layout
-- nesting (spage)
-- positioning (spage, left, right, bottom, top)
-- margins (margin_left...)
-- registration (spage)
+x- nesting (spage)
+x- positioning (spage, left, right, bottom, top)
+x- margins (margin_left...)
+x- registration (spage)
 - parent bounds ()
-- rotate (spage)
+x- rotation (spage)
 - scale (spage)
 - translate ?
 
@@ -23,14 +23,16 @@ x- ellipse (spage)
 x- regiongrid (spage)
 
 boolean
-- add (spage)
-- subtract (spage)
-- intersect (spage)
-- mixed (spage)
+x- add (spage)
+x- subtract (spage)
+x- intersect (spage)
+x- mixed (spage)
+x- many to many
 - pass
 
 advanced
 - symbols
+- boolean
 - region_grids
 - math
 

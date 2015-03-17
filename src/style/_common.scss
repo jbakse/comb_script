@@ -1,0 +1,35 @@
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+$mono-font: 'Droid Sans Mono', monospace;
+
+@import url(http://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700);
+$display-font: 'Josefin Sans', sans-serif;
+
+$color-dark-gray: #303030;
+$color-green: #1de982;
+$color-blue: #06aaff;
+$color-orange: #ff6529;
+$color-yellow: #fffc01;
+$color-canvas: #eee;
+
+
+
+////////////////////////////////////////////////////////////////////
+// Mixins
+
+@mixin clearfix
+{
+	&:after
+	{
+		display: table;
+		clear: both;
+
+		content: '';
+	}
+}
+
+.hidden
+{
+	display: none !important;
+}
+
+
