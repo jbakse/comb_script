@@ -54,6 +54,10 @@ Context.prototype.deriveContext = function(_properties) {
 			}
 		});
 
+	if (_properties.rotation) {
+		_properties.rotation = _properties.rotation.toNumber("deg");
+	}
+
 	// Calculate Bounds
 	var derivedBounds = new paper.Rectangle();
 

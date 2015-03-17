@@ -10,7 +10,7 @@ children:
         properties:
             width: 90px
             height: 90px
-            rotation: 25
+            rotation: 25deg
         children:
             - rectangle:
                 properties:

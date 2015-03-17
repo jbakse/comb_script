@@ -89,8 +89,8 @@ Region:
             type: dimension 
 
         -   keyword: rotation
-            description: Rotation in degrees.
-            type: number
+            description: Rotation in degrees or radians (include a unit).
+            type: angle
 
         -   keyword: scale_x
             description: Horizontal scale.

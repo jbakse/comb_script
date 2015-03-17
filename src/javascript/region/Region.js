@@ -189,6 +189,10 @@ Region.prototype.loadProperties = function(_properties) {
 			allowedInputTypes = ["string"];
 		}
 
+		if (def.type == "angle") {
+			allowedInputTypes = ["string"];
+		}
+
 		if (def.type == "number") {
 			allowedInputTypes = ["number", "string"];
 		}
@@ -267,6 +271,8 @@ Region.prototype.evalMathProperties = function(context) {
 		}
 	});
 
+
+	// process defined "dimension" properties
 	_(definitions).chain()
 	.filter(function(_def) {
 		return _def && _def.type === "dimension" && (typeof self.properties[_def.keyword] !== "undefined");
@@ -274,42 +280,34 @@ Region.prototype.evalMathProperties = function(context) {
 	.each(function(_def) {
 		try {
 			self.properties[_def.keyword] = evalMathjsDimension(self.properties[_def.keyword], scope);
+			if(!self.properties[_def.keyword].equalBase(math.unit("0mm"))) {
+				throw new Error("Dimensions should be expressed with a linear dimension unit (inches, mm, px, etc.).");
+			}
 		} catch (e) {
+			self.properties[_def.keyword] = math.unit("0mm");
+			logPropertyError(self, _def.keyword, e.message);
+		}
+	});
+
+	// process defined "angle" properties
+	_(definitions).chain()
+	.filter(function(_def) {
+		return _def && _def.type === "angle" && (typeof self.properties[_def.keyword] !== "undefined");
+	})
+	.each(function(_def) {
+		try {
+			self.properties[_def.keyword] = evalMathjsDimension(self.properties[_def.keyword], scope);
+			if(!self.properties[_def.keyword].equalBase(math.unit("0deg"))) {
+				throw new Error("Angles should be expressed in degrees or radians.");
+			}
+		} catch (e) {
+			self.properties[_def.keyword] = math.unit("0deg");
 			logPropertyError(self, _def.keyword, e.message);
 		}
 	});
 
 
 
-
-	// var dimensionProperties = _(definitions).filter(function(_def) {
-	// 	return _def && _def.type === "number";
-	// });
-
-	// _(definitions).chain()
-	// 	.filter(function(_def) {
-	// 		return _def && _def.type === "number";
-	// 	})
-	// 	.each(function(_def) {
-	// 		var pValue = self.properties[_def.keyword];
-	// 		if (typeof pValue === "undefined") {
-	// 			return;
-	// 		}
-
-	// 		var scope = _(self.constants).clone();
-	// 		scope = _(scope).extend(context.scope());
-	// 		try {
-	// 			var result = evalMathjsExpression(pValue, scope);
-	// 			if (result instanceof math.type.Unit) {
-	// 				result = result.toNumber("px");
-	// 			}
-	// 			self.properties[_def.keyword] = result;
-	// 		}
-	// 		catch (e) {
-	// 			logPropertyError(self, _def.keyword, e.message);
-	// 		}
-
-	// 	});
 
 };
 
