@@ -7,15 +7,15 @@ properties:
 
 children:
     - ellipse:
-	properties:
-	    width: 20mm
-	    height: 20mm
-	    top: 0mm
-	    # boolean: subtract
+        properties:
+            width: 20mm
+            height: 20mm
+            top: 0mm
+            # boolean: subtract
 
     - ellipse:
         properties:
             width: 20mm
             height: 20mm
-	    top: 0mm
+            top: 0mm
             boolean: add

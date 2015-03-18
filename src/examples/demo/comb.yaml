@@ -1,0 +1,41 @@
+constants:
+    comb_length: 100mm
+    comb_depth: 30mm
+    tooth_depth: 20mm
+
+children:
+    - region:
+        properties:
+            width: comb_length
+            height: comb_depth
+        children:
+
+            - rectangle:
+                properties:
+                    margin_top: 0mm
+                    margin_bottom: 2mm
+                    radius: 5mm
+
+            - rectangle:
+                properties:
+                    margin_bottom: 0mm
+                    height: 10mm
+                    radius: 2mm
+                    boolean: add
+                    trapping: .01mm
+
+            - region_grid:
+                properties:
+                    margin_bottom: 0mm
+                    height: tooth_depth
+                    margin_left: 5mm
+                    margin_right: 5mm
+                    column_width: 5mm
+                    registration: center
+                    boolean: subtract
+                children:
+                    - rectangle:
+                        properties:
+                            width: 3mm
+                            margin_bottom: -1mm
+                            radius: 1mm
