@@ -1,7 +1,16 @@
 children:
-    - region:
+    - rectangle:
         properties:
+            # height determined from top and bottom
+            # horizontally centered by default
             top: -100px
-            bottom: 0px
-            margin_left: 10px
+            bottom: 100px
             width: 100px
+
+    - rectangle:
+        properties:
+            # height and width explict
+            # position constrained to right side
+            margin_right: 10px
+            width: 100px
+            height: 100px

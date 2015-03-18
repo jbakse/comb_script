@@ -9,7 +9,7 @@ section#introduction
 		
 		-   ###Parametric
 
-			Because shapes in CombScript can be positioned relative to the bounds of their parents, it is possible to make designs that flex when dimensions change.
+			CombScript documents can use relative positioning and simple math to express flexible designs that can can be easily customized by tweaking parameters.
 
 		-   ###Expressive
 
@@ -17,7 +17,7 @@ section#introduction
 
 		-   ###Declarative
 
-			CombScript is more like HTML than JavaScript. Ideally, your document describes your design, not the steps required to make it.
+			CombScript is more like HTML than JavaScript. A CombScript document describes a design, not the steps required to make it.
 
 		-   ###Unstyled
 
@@ -25,11 +25,11 @@ section#introduction
 
 		-   ###Boolean Operations
 
-			Combine shapes using boolean operations: Intersection, Union, and Difference
+			Complex shapes are created by combining simple shapes using boolean operations like intersection, union, and difference.
 
-		-   ###Render to SVG
+		-   ###Export to SVG
 
-			Shape data can be exported as SVG using style templates.
+			Shape data can be exported as `.svg` files.
 
 
 
@@ -37,20 +37,31 @@ section#introduction
 section#syntax
 	:markdown
 		# Basic Syntax
-		CombScript documents are written in [YAML](http://en.wikipedia.org/wiki/YAML), a common and human-readable data-file format. CombScript recognizes predefined keywords to describe regions, shapes, and their properties. 
+		CombScript syntax is based on [YAML](http://en.wikipedia.org/wiki/YAML), a common and human-readable data-file format. CombScript builds on YAML with predefined keywords to describe designs and support for mathematic expressions.
 
 		Here is an example of a simple CombScript document that draws an ellipse:
 
 	pre.display.comb-script
-		include examples/ellipse_simple.yaml
+		| # basic CombScript example, draws a circle
+		| 
+		| properties:
+		|     name: hello_world
+		| 
+		| children:
+		|     - ellipse:
+		|         properties:
+		|             width: 200px
+		|             height: 200px
 
 	:markdown
 
-		This example begins by defining two document properties, `width` and `height` that describe the dimensions of the document. If these properties are not defined, defaults will be used. Document properties are defined using the `properties:` key followed by a set of indented **key: value** pairs.
+		This example begins by defining an optional document property, `name`, which is used when exporting. Document properties are defined using the `properties:` key followed by a set of indented **key: value** pairs.
 
 		Next, the example defines its children under the `children:` key. The children are indented one level and each is prefixed with a `-` to indicate a YAML array item. There are several types of children in CombScript including regions, rectangles, and ellipses. 
 
-		This document has one child, an `ellipse`. The ellipse defines `width` and `height` properties to set its dimensions.
+		This document has one child, an `ellipse`. The ellipse has `width` and `height` properties which set its dimensions.
+
+		The very first line of the document is a **comment**. Comments start with `#` and are ignored by CombScript. Use comments to leave helpful notes for human readers.
 
 
 
@@ -58,46 +69,24 @@ section#syntax
 section#regions
 	:markdown
 		# Regions
-		The basic building-blocks in CombScript are called **regions**. A region describes a rectangular bounds in the drawing and and can contain child regions. Child regions are laid out in relation to the bounds of their parent.
+		The basic building-blocks in CombScript are called regions. A region describes a rectangular bounds in the drawing and can contain child regions. Child regions are laid out in relation to the bounds of their parent.
 
 		There are several types of regions in CombScript. The basic `region` type is primarily organizational. It is used to define a new part of the drawing and to group its children. The basic `region` will not generate a vector shape in the exported SVG. 
 
-		The `rectangle` or `ellipse` region types have all the same properties of the basic `region` but also draw a shape in the export.
-
+		The `rectangle` or `ellipse` region types can do everything that a plain `region` can do, and also draw a shape in the export.
 
 
 		## Region Bounds
-		Every region has a set of bounds that describe a rectangular area in the drawing. These bounds can be set using the `top`, `left`, `bottom`, and `right` properties. These values are relative to the registration position of the region's parent.
+		Every region has a set of bounds that describe a rectangular area in the drawing. These bounds can be set using the `top`, `left`, `bottom`, and `right` properties. These values are relative to the **registration position** of the region's parent.
 
-		A region's bounds can also be specified relative to the parent's bounds using `margin_top`, `margin_left`, `margin_bottom`, and `margin_right` properties.
+		A region's bounds can also be specified relative to the parent's **bounds** using `margin_top`, `margin_left`, `margin_bottom`, and `margin_right` properties.
 
-		You can specify the dimensions of the bounds with the `width` and `height` properties.
+		You can specify the dimensions of a region's bounds with the `width` and `height` properties.
 
 		These properties can be mixed any way you wish, as long as they don't conflict.
 
 	pre.display.comb-script
 		include examples/bounds_simple.yaml
-
-
-
-	:markdown
-		## Registration
-		Regions can optionally set their registration position with the `registration` property. The new registration position will be used by the region's children when laying out their bounds. It will also be used for the pivot point for rotations and scales applied to the region.
-
-		The default value of `registration` is `parent` which will keep the registration position set by the region's parent. Other values, such as 'top_left' and 'center' move it to a position determined by the region's bounds.
-
-	pre.display.comb-script
-		include examples/registration_simple.yaml
-
-
-
-	:markdown
-		## Transformations
-		You can transform the coordinate system used by a region and its children using the `rotation`, `scale_x`, and `scale_y` properties.
-
-	pre.display.comb-script
-		include examples/rotation_simple.yaml
-
 
 
 	:markdown
@@ -112,20 +101,159 @@ section#regions
 	pre.display.comb-script
 		include examples/nesting_simple.yaml
 
-
-
-
-section#shapes
 	:markdown
-		# Shapes
-		The `rectangle` and `ellipse` region-types will generate a shape in the export. In these examples, exported shapes are filled in.
+		## Registration
+		Regions can optionally set their registration position with the `registration` property. The new registration position will be used by the region's children when laying out their bounds. It will also be used as the pivot point for rotations and scales applied to the region.
+
+		The default value of `registration` is `parent` which will keep the registration position set by the region's parent. Other values, such as 'top_left' and 'center' move it to a position determined by the region's bounds.
+
+		In this example, the outer region does not have a set `registration` property and the rectangle is positioned relative to the document's registration position (the center).
 
 	pre.display.comb-script
-		include examples/shapes_simple.yaml
+		include examples/registration_simple_3.yaml
+
+	:markdown
+		In the following two examples the outer regions have set `registration` values explicitly, and the rectangle is positioned accordingly.
+
+	pre.display.comb-script
+		include examples/registration_simple.yaml
+
+	pre.display.comb-script
+		include examples/registration_simple_2.yaml
+
+
+
+
+	:markdown
+		## Transformations
+		You can transform the coordinate system used by a region and its children using the `rotation`, `scale_x`, and `scale_y` properties. A region's transforms are inherited by its children.
+
+	pre.display.comb-script
+		include examples/rotation_simple.yaml
+
+
+
+	
+
+section#property-types
+	:markdown
+		# Property Types
+
+		Different region properties have different required types. These types include dimensions, angles, numbers, and strings.
+
+		## Dimensions
+
+		Dimensions are the most common property type. When specifying the value for a dimension property, you must include a linear unit such as `inches`, `millimeters`, or `pixels`. Units can also be given with their common abbreviation: `in`, `mm`, `px`. You don't have to use the same unit for every property, choose the unit that makes the most sense.
+
+	pre.comb-script
+		| margin_top: 1cm
+		| width: .25in
+		| height: .25in
+
+	:markdown
+		## Angles
+
+		Angle property values must include an angular unit such as `degrees` or `radians`.
+
+	pre.comb-script
+		| rotation: 25deg
 
 	:markdown
 
-		## Combining Shapes
+		## Numbers
+
+		Some properties require a simple number value, and should not include a unit label.
+
+	pre.comb-script
+		| scale_x: 2.5
+		| sides: 4
+		| rows: 2
+
+	:markdown
+		## Strings
+
+		Some properties require a string (text) value. Placing quotes around strings is generally optional, but you may need them if your text is a number or includes special characters.
+
+	pre.comb-script
+		| registration: top_left
+		| boolean: add
+		| name: table_leg
+		| name: "10"
+		| name: "table/front"
+
+section#math
+	:markdown
+		# Using Math
+
+		You can use mathematic expressions in `dimension`, `angle`, and `number` property values. Combscript uses the [mathjs](http://mathjs.org/) library for evaluating expressions. Check out the [mathjs expression syntax documentation](http://mathjs.org/docs/expressions/syntax.html) for details.
+
+
+		## Expressions
+		
+		You can use expressions like `4 * .7` and `(1 + 2) * 3in`. You can mix dimensions like `1in + 2mm`. 
+
+
+		The result of the expression must have a legal unit for the property. You can't set a `width` to `2in * 2in` because the result is 4 **square inches**, which is not a legal linear dimension.
+
+	pre.display.comb-script
+		include examples/expressions_simple.yaml
+
+	:markdown
+		## Functions
+
+		You can use common math functions like `sin`, `cos`, `max`, and `round` in expressions.
+
+	pre.display.comb-script
+		| children:
+		|     - rectangle:
+		|         properties:
+		|             width: 180px
+		|             height: 180px
+		|     - rectangle:
+		|         properties:
+		|             width: 30px
+		|             height: 180px / sin(45deg) 
+		|             rotation: 45deg
+
+
+	:markdown
+		## Accessing Parent Bounds
+
+		Regions can reference their parent's bounds using special variables in expressions. CombScript provides the following variables:  `parent_height`, `parent_width`, `parent_left`, `parent_right`, `parent_top`, `parent_bottom`.
+
+
+	pre.display.comb-script
+		| children:
+		|     - rectangle:
+		|         properties:
+		|             width: 150px
+		|             height: 75px
+		|         children:
+		|             - rectangle:
+		|                 properties:
+		|                     width: 50px
+		|                     height: parent_width
+		|                     left: parent_right + 10px
+
+	
+	:markdown
+		## User Constants
+		Constants are user defined values that can be used as property values and referenced in expressions.
+
+	pre.display.comb-script
+		include examples/constants_simple.yaml
+
+	:markdown
+		In the previous example, the `my_size` constant was declared on the document. If you declare a constant on a region, it will be available only in that region and its children. 
+
+	pre.display.comb-script
+		include examples/constants_shadowing.yaml
+
+
+
+section#boolean
+	:markdown
+		# Combining Shapes with Boolean Operations
 		Shapes can be combined using the `boolean` property. The possible values are `add`, `subtract`, and `intersect`. 
 
 		Shapes with a set `boolean` property are combined with their parent's shape. If the parent does not generate a shape the shape of the first child will be used.

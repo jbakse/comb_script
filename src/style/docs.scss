@@ -98,7 +98,7 @@ section
 }
 strong
 {
-	font-weight: 400;
+	font-weight: 600;
 }
 
 // .deprecated{
@@ -200,7 +200,7 @@ pre
 	display: block;
 
 	box-sizing: border-box;
-	min-height: 250px;
+	
 	padding: 10px;
 
 	white-space: pre;
@@ -214,6 +214,11 @@ pre
 	border-left: 1px solid darken($color-green, 10);
 	background-color: $code-bg-color;
 	margin-bottom: 1em;
+}
+
+pre.display
+{
+	min-height: 250px;
 }
 
 p code

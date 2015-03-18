@@ -1,0 +1,13 @@
+children:
+    - region:
+        properties:
+            width: 200px
+            height: 200px
+
+        children:
+            - rectangle:
+                properties:
+                    top: 0px
+                    left: 0px
+                    width: 75px
+                    height: 75px

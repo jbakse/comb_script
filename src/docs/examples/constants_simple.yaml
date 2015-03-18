@@ -1,14 +1,9 @@
 constants:
-    my_scale: 2
+    my_size: 100px
 
 children:
-    - ellipse:
-        properties:
-            margin_right: 30px
-            width: 50px * my_scale
-            height: 50px * my_scale
     - rectangle:
         properties:
-            margin_left: 30px
-            width: 50px / my_scale
-            height: 50px / my_scale
+            width: my_size
+            height: my_size*2
+       

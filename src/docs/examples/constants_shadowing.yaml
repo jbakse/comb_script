@@ -1,0 +1,20 @@
+constants:
+    rect_size: 100px
+
+children:
+    - rectangle:
+        constants:
+            extra_size: 50px
+
+        properties:
+            margin_left: 50px
+            width: rect_size
+            height: rect_size + extra_size
+
+    - rectangle:
+        properties:
+            # this rectangle's properties cannot
+            # reference extra_size
+            margin_right: 50px
+            width: rect_size
+            height: rect_size

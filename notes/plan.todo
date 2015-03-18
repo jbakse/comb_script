@@ -34,6 +34,8 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Refactoring / Cleanup 
 
+-----	add 'pixel' 'pixels'
+
 -----	w/greg/spage Reorg examples
 
 -----	Preview tracks mouse through menu dropdowns
@@ -79,7 +81,7 @@
 
 # Booleans
 -	Review: how child_booleans vs self_booleans work, does it make sense?
--	Non-Boolean Paths: flag paths as inellegible for boolean (tries to fill in letters (sutton), letters cause issues in mixed situations, should be able to opt out of mixed booleans)
+----	Non-Boolean Paths: flag paths as inellegible for boolean (tries to fill in letters (sutton), letters cause issues in mixed situations, should be able to opt out of mixed booleans)
 -	Many to Many: test document
 ---	Document
 
@@ -94,6 +96,7 @@
 
 # Polygon
 --	Sizes: should follow provided bounds, maybe make radius optional, maybe consider fit/cover options
+---	fix radius (not working)
 
 # Plugins
 -	Vertical Line

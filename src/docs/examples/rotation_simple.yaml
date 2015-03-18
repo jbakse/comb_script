@@ -3,4 +3,10 @@ children:
         properties:
             width: 100px
             height: 100px
-            rotation: 45
+            rotation: 25deg
+            scale_x: 3
+        children:
+            - rectangle:
+                properties:
+                    width: 50px
+                    height: 50px
