@@ -2,7 +2,7 @@
 
 var _ = require('underscore/underscore.js');
 
-module.exports.fileURL = "examples/demo/comb.yaml";
+module.exports.fileURL = "examples/region_types/text.yaml";
 module.exports.previewCanvasWidth = 1600;
 module.exports.previewCanvasHeight = 1600;
 module.exports.inspectOnHover = false;

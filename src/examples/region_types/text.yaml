@@ -1,0 +1,7 @@
+children:
+    - text:
+        properties:
+            text: "Hello, CombScript!"
+            align: center
+            vertical_align: bottom
+            size: 30px
