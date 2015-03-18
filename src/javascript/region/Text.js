@@ -113,6 +113,7 @@ function Text(_data, _parent) {
 	Region.call(this, _data, _parent);
 	this.type = "Text";
 	this.isShape = true;
+	this.isSolid = false;
 }
 
 Text.prototype = Object.create(Region.prototype);

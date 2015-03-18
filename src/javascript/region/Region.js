@@ -40,8 +40,6 @@ math.type.Unit.UNITS.px = {
 
 
 
-
-
 // Published Topics:
 // Region/mouseEntered
 // Region/clicked
@@ -77,6 +75,7 @@ function Region(_parent) {
 	this.context = null;
 
 	this.isShape = false;
+	this.isSolid = true;
 }
 
 Region.prototype.proxy = function() {
@@ -223,7 +222,7 @@ Region.prototype.loadProperties = function(_properties) {
 
 		// correct color type
 		if (!_(allowedInputTypes).contains(typeof pValue)) {
-			logPropertyError(self, pKey, "incorrect type", "\""+pValue+"\" is a " + typeof pValue + "; expected " + def.type);
+			logPropertyError(self, pKey, "incorrect type", "\"" + pValue + "\" is a " + typeof pValue + "; expected " + def.type);
 			return;
 		}
 
@@ -279,52 +278,54 @@ Region.prototype.evalMathProperties = function(context) {
 
 	// process defined "number" properties
 	_(definitions).chain()
-	.filter(function(_def) {
-		return _def && _def.type === "number" && (typeof self.properties[_def.keyword] !== "undefined");
-	})
-	.each(function(_def) {
-		try {
-			self.properties[_def.keyword] = evalMathjsNumber(self.properties[_def.keyword], scope);
-		} catch (e) {
-			logPropertyError(self, _def.keyword, e.message);
-		}
-	});
+		.filter(function(_def) {
+			return _def && _def.type === "number" && (typeof self.properties[_def.keyword] !== "undefined");
+		})
+		.each(function(_def) {
+			try {
+				self.properties[_def.keyword] = evalMathjsNumber(self.properties[_def.keyword], scope);
+			}
+			catch (e) {
+				logPropertyError(self, _def.keyword, e.message);
+			}
+		});
 
 
 	// process defined "dimension" properties
 	_(definitions).chain()
-	.filter(function(_def) {
-		return _def && _def.type === "dimension" && (typeof self.properties[_def.keyword] !== "undefined");
-	})
-	.each(function(_def) {
-		try {
-			self.properties[_def.keyword] = evalMathjsDimension(self.properties[_def.keyword], scope);
-			if(!self.properties[_def.keyword].equalBase(math.unit("0mm"))) {
-				throw new Error("Dimensions should be expressed with a linear dimension unit (inches, mm, px, etc.).");
+		.filter(function(_def) {
+			return _def && _def.type === "dimension" && (typeof self.properties[_def.keyword] !== "undefined");
+		})
+		.each(function(_def) {
+			try {
+				self.properties[_def.keyword] = evalMathjsDimension(self.properties[_def.keyword], scope);
+				if (!self.properties[_def.keyword].equalBase(math.unit("0mm"))) {
+					throw new Error("Dimensions should be expressed with a linear dimension unit (inches, mm, px, etc.).");
+				}
 			}
-		} catch (e) {
-			self.properties[_def.keyword] = math.unit("0mm");
-			logPropertyError(self, _def.keyword, e.message);
-		}
-	});
+			catch (e) {
+				self.properties[_def.keyword] = math.unit("0mm");
+				logPropertyError(self, _def.keyword, e.message);
+			}
+		});
 
 	// process defined "angle" properties
 	_(definitions).chain()
-	.filter(function(_def) {
-		return _def && _def.type === "angle" && (typeof self.properties[_def.keyword] !== "undefined");
-	})
-	.each(function(_def) {
-		try {
-			self.properties[_def.keyword] = evalMathjsDimension(self.properties[_def.keyword], scope);
-			if(!self.properties[_def.keyword].equalBase(math.unit("0deg"))) {
-				throw new Error("Angles should be expressed in degrees or radians.");
+		.filter(function(_def) {
+			return _def && _def.type === "angle" && (typeof self.properties[_def.keyword] !== "undefined");
+		})
+		.each(function(_def) {
+			try {
+				self.properties[_def.keyword] = evalMathjsDimension(self.properties[_def.keyword], scope);
+				if (!self.properties[_def.keyword].equalBase(math.unit("0deg"))) {
+					throw new Error("Angles should be expressed in degrees or radians.");
+				}
 			}
-		} catch (e) {
-			self.properties[_def.keyword] = math.unit("0deg");
-			logPropertyError(self, _def.keyword, e.message);
-		}
-	});
-
+			catch (e) {
+				self.properties[_def.keyword] = math.unit("0deg");
+				logPropertyError(self, _def.keyword, e.message);
+			}
+		});
 
 
 
@@ -524,6 +525,10 @@ Region.prototype.build = function(_parentContext) {
 	// build own paths
 	var ownPaths = [].concat(this.drawBuild(context.bounds));
 	_.each(ownPaths, function(p) {
+		p.style = settings.buildStyle;
+		if (!this.isSolid) {
+			p.style.fillColor = null;
+		}
 		p.transform(context.matrix);
 	}, this);
 
@@ -575,10 +580,11 @@ Region.prototype.build = function(_parentContext) {
 	}
 
 
-	// filter out non booleanable paths (skips)
+	// deal with non booleanable paths (skips)
 	var skips = _(leftPathSet).filter(function(_path) {
 		return !(_path instanceof paper.Path || _path instanceof paper.CompoundPath);
 	});
+
 	resultPaths = resultPaths.concat(skips);
 	leftPathSet = _(leftPathSet).difference(skips);
 
@@ -619,7 +625,7 @@ Region.prototype._combinePaths = function(_leftPath, _rightPathSet, _op) {
 
 		try {
 			// partial work around boolean bug in paperjs
-			if (_leftPath.bounds.equals(_rightPath.bounds) && _leftPath.area === _rightPath.area){
+			if (_leftPath.bounds.equals(_rightPath.bounds) && _leftPath.area === _rightPath.area) {
 				var trapping = settings.autocAmmount;
 				var hScale = (_rightPath.bounds.width + trapping) / _rightPath.bounds.width;
 				var vScale = (_rightPath.bounds.height + trapping) / _rightPath.bounds.height;
@@ -717,6 +723,6 @@ Region.prototype.drawBuild = function(_bounds) {
 Region.prototype.drawPosition = function(_bounds, _matrix) {
 	var scaling = _matrix.scaling;
 	var rect = new paper.Rectangle(-0.5, -0.5, 1, 1); //.scale(1/scaling.x, 1/scaling.y)
-	
+
 	return new paper.Path.Ellipse(rect.scale(1 / scaling.x, 1 / scaling.y));
 };

@@ -1,28 +1,9 @@
-properties:
-    width: 10cm
-    height: 10cm
-
-constants:
-    radius: 3cm
-
 children:
-    - ellipse:
+    - rectangle:
+    - text:
         properties:
-            width: radius * 2  # this is a long line for long line's sake. this is a long line for long line's sake.
-            height: radius * 2
-            right: 1cm
-
-    - ellipse:
-        properties:
-            width: radius * 2
-            height: radius * 2
-            left: -1cm
+            text: "Hello, CombScript!"
+            align: center
+            vertical_align: bottom
+            size: 30px
             boolean: add
-
-    - ellipse:
-        properties:
-            width: radius * 2
-            height: radius * 2
-            top: 0.5cm
-            boolean: subtract
-            registration: center

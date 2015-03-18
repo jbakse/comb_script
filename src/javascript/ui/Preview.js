@@ -110,7 +110,14 @@ function setupPicking() {
 		if (hit === null) {
 			hoveredRegion = null;
 		} else {
-			hoveredRegion = hit.item.region;
+			// get the region that created the picked path (walk up the ancestors if needed for compound shapes)
+			var item = hit.item;
+			var region = item.region;
+			while (!region && item.parent) {
+				item = item.parent;
+				region = item.region;
+			}
+			hoveredRegion = region;
 		}
 
 		if (oldHoveredRegion && oldHoveredRegion !== hoveredRegion) {
@@ -118,7 +125,7 @@ function setupPicking() {
 		}
 
 		if (hoveredRegion && oldHoveredRegion !== hoveredRegion) {
-			hit.item.region.onMouseEnter();
+			hoveredRegion.onMouseEnter();
 		}
 
 	};
@@ -277,7 +284,7 @@ Preview.prototype.setDocument = function(_doc) {
 	this.buildLayer.activate();
 	this.buildLayer.removeChildren();
 	this.doc.build();
-	this.buildLayer.style = settings.buildStyle;
+	// this.buildLayer.style = settings.buildStyle;
 
 	// draw export
 	this.exportLayer.removeChildren();

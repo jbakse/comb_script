@@ -34,7 +34,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Refactoring / Cleanup 
 
------	add 'pixel' 'pixels'
++-----	add 'pixel' 'pixels'
 
 -----	w/greg/spage Reorg examples
 
@@ -108,7 +108,7 @@
 
 # Export
 ---	Export Styles: finish and document
----	Support for Cut vs Etch vs Guide/Note
+---	Support for Cut vs Etch vs Guide/Note (how about call the property `tool`, tool: cut, tool: etch)
 --	Perserve Groups on Export?: Might at least be worth looking at having the tree represented in groups so they export nested? how does it actually work now?
 -- 	Some kind of packing option: maybe you can mark a region as a part to opt in to packing, maybe with a quantity, and if you exportPackedSVG it just exports those items at those quantities, should be previewable
 
