@@ -1,18 +1,6 @@
 'use strict';
 
-
 var _ = require('underscore/underscore.js');
-// var math = require('mathjs/math.min.js');
-
-// todo move math patch somewhere better
-//insert 'px' unit so math js can covert to/from px
-math.type.Unit.UNITS.px = {
-	name: 'px',
-	base: math.type.Unit.BASE_UNITS.LENGTH,
-	prefixes: math.type.Unit.PREFIXES.NONE,
-	value: 0.0254 / 72.0,
-	offset: 0
-};
 
 var util = require('../util.js');
 var settings = require('../Settings.js');
@@ -21,6 +9,37 @@ var Context = require('../Context.js');
 
 var language = require('../language.js');
 var log = require('../ui/Log.js').sharedInstance();
+
+
+
+// todo move math patch somewhere better
+//insert 'px' unit so math js can covert to/from px
+math.type.Unit.UNITS.pixel = {
+	name: 'pixel',
+	base: math.type.Unit.BASE_UNITS.LENGTH,
+	prefixes: math.type.Unit.PREFIXES.NONE,
+	value: 0.0254 / 72.0,
+	offset: 0
+};
+
+math.type.Unit.UNITS.pixels = {
+	name: 'pixels',
+	base: math.type.Unit.BASE_UNITS.LENGTH,
+	prefixes: math.type.Unit.PREFIXES.NONE,
+	value: 0.0254 / 72.0,
+	offset: 0
+};
+
+math.type.Unit.UNITS.px = {
+	name: 'px',
+	base: math.type.Unit.BASE_UNITS.LENGTH,
+	prefixes: math.type.Unit.PREFIXES.NONE,
+	value: 0.0254 / 72.0,
+	offset: 0
+};
+
+
+
 
 
 // Published Topics:

@@ -6,9 +6,9 @@
 	- Basic Building Block (brief note about nesting)
 	- Different Types (briefly) / Shapes
 	- Bounds
+	- Children
 	- Regsistration
 	- Transform
-	- Children
 
 - Property Types
 	- Dimensions
