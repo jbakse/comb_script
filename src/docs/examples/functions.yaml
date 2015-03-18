@@ -1,0 +1,10 @@
+children:
+    - rectangle:
+        properties:
+            width: 180px
+            height: 180px
+    - rectangle:
+        properties:
+            width: 30px
+            height: 180px / sin(45deg)
+            rotation: 45deg

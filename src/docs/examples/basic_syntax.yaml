@@ -1,0 +1,10 @@
+# basic CombScript example, draws a circle
+
+properties:
+    name: hello_world
+
+children:
+    - ellipse:
+        properties:
+            width: 200px
+            height: 200px

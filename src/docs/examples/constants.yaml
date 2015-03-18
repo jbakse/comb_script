@@ -6,4 +6,3 @@ children:
         properties:
             width: my_size
             height: my_size*2
-       
