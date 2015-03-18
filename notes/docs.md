@@ -1,3 +1,59 @@
+- Introduction / Basics
+	- YAML
+	- Hello World
+
+- Regions
+	- Basic Building Block (brief note about nesting)
+	- Different Types (briefly) / Shapes
+	- Bounds
+	- Regsistration
+	- Transform
+	- Children
+
+- Property Types
+	- Dimensions
+	- Angles
+	- Numbers
+	- Strings
+
+- Math
+	- Arethmatic
+	- Functions
+	- Parent Bounds
+	- User Defined Constants
+
+- Boolean/Combining Shapes
+	- Add
+	- Subtract
+	- Intersect
+	- Mixing
+	- Many to Many
+	- Explination
+	- Pass
+	- Trapping
+
+- Using Region Grids
+	- Making Patterns
+	- Alternate
+
+- Library Items
+	- YAML repeated nodes
+
+- Exporting
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Region properties like width, height, left, and top require
 # `dimension` values that contain both a number and a unit.
 # Dimensions can be given in standard units like meters,
