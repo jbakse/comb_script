@@ -11,6 +11,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Todo
 
+-----	Preview tracks mouse through menu dropdowns
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Bugs
@@ -38,9 +39,9 @@
 
 -----	w/greg/spage Reorg examples
 
------	Preview tracks mouse through menu dropdowns
 
-----	Text
+
+---	Text
 	+----- Get Text working
 	+----	Opt text out of build fill styling
 	+----	Make sure it doesn't try to get booleaned
@@ -55,8 +56,9 @@
 ---	zoom to editor selection
 
 # Inspector
-----	List dimensions in document (user specified unit) unit
-----	let user pick unit: maybe click on inspector to cycle? maybe button?
+----	inspctor units
+	+----	List dimensions in document (user specified unit) unit
+	----	let user pick unit: maybe click on inspector to cycle? maybe button?
 
 # Symbols/Mixins
 -	Provide .comb specific way to reuse library items: instead of using yaml symbols, something like uses or inherit that pulls properties from another region
@@ -81,7 +83,7 @@
 
 # Booleans
 -	Review: how child_booleans vs self_booleans work, does it make sense?
-----	Non-Boolean Paths: flag paths as inellegible for boolean (tries to fill in letters (sutton), letters cause issues in mixed situations, should be able to opt out of mixed booleans)
+-	Non-Boolean Paths: flag paths as inellegible for boolean (tries to fill in letters (sutton), letters cause issues in mixed situations, should be able to opt out of mixed booleans) (low priority, because i think this is handled fine already)
 -	Many to Many: test document
 ---	Document
 
