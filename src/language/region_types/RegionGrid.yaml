@@ -5,7 +5,7 @@ RegionGrid:
 
     description: |
         <p>
-        Draws a grid. See <a href="grids">Grids</a>.
+        Draws a grid of regions and distributes/clones it's children into each region. See <a href="#grids">Grids</a>.
         </p>
         <pre>
         children:
@@ -26,7 +26,7 @@ RegionGrid:
 
     properties:
         -   keyword: populate
-            description:
+            description: The mode for distributing children throughout the grid.
             type: string
             values: [repeat, alternate]
             default: repeat

@@ -1,0 +1,27 @@
+library:
+    - &ex
+        rectangle:
+            properties:
+                margin_top: 10px
+                margin_bottom: 10px
+                width: 40px
+                radius: 4px
+
+children:
+    - region:
+        properties:
+            margin_left: 10px
+            width: 150px
+            height: 150px
+            registration: center
+        children:
+            - *ex
+
+    - region:
+        properties:
+            margin_right: 10px
+            width: 100px
+            height: 100px
+            registration: center
+        children:
+            - *ex

@@ -169,7 +169,8 @@ section#property-types
 		| name: "10"
 		| name: "table/front"
 
-section#math
+section#using-math
+
 	:markdown
 		# Using Math
 
@@ -220,7 +221,7 @@ section#math
 
 
 
-section#boolean
+section#booleans
 	:markdown
 		# Booleans & Combining Shapes
 		Shapes can be combined using the `boolean` property. The possible values are `add`, `subtract`, `intersect` and `pass`
@@ -280,10 +281,10 @@ section#boolean
 
 
 
-section#grids
+section#using-region-grids
 	:markdown
-		# Grids
-		CombScript provides a special region-type called a `region_grid`. Region grids can be used to draw a region repeatedly in a rectangular grid. 
+		# Using Region Grids
+		**[needs editing]**CombScript provides a special region-type called a `region_grid`. Region grids can be used to draw a region repeatedly in a rectangular grid.
 
 		The `rows` and `columns` properties will set the number of rows and columns in the grid directly. You can set `row_height` and `column_width` instead to create as many rows or columns as needed to fill the region grid.
 
@@ -293,21 +294,26 @@ section#grids
 		include examples/regiongrid_simple.yaml
 
 
-section#library_items
+section#yaml-repeated-nodes
 
 	:markdown
 		# YAML Repeated Nodes
 
-		YAML's [repeated node](http://yaml.org/spec/1.2/spec.html#id2760395) feature can be used to to create named parameters and library shapes that can be used throughout your document. Repeated nodes are defined with `&` followed by a name, and used with `*` followed by the name. Repeated nodes are genrally defined as an array under the `library:` key.
-
-	:markdown
-		## Library Items
+		YAML's [repeated node](http://yaml.org/spec/1.2/spec.html#id2760395) feature can be used to to create named parameters and library shapes that can be used throughout your document. Repeated nodes are defined with `&` followed by a name, and used with `*` followed by the name. Repeated nodes are can be defined pretty much anywhere throughout the document, but it's a good practice to define them as an array under the `library:` key.
 
 		It is common that you will reuse the same shape in multiple places in your document. Repeated nodes can represent entire regions, their properties, and even nested children. Each repeated node will be separately laid out in their parent's context.
 		
 	pre.display.comb-script
-		include examples/symbol_simple2.yaml
+		include examples/library_items.yaml
 
-h1 Language Reference
+section#exporting
 
-p The following is a list of the CombScript region types and their available properties.
+	:markdown
+		# Exporting
+
+		lorem ipsum
+
+section#language-reference
+	h1.bump Language Reference
+
+	//- p The following is a list of the CombScript region types and their available properties.
