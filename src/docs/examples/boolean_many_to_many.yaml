@@ -1,0 +1,33 @@
+children:
+    - region:
+        children:
+            - ellipse:
+                properties:
+                    width: 30mm
+                    height: 30mm
+                    left: 3mm
+
+            - ellipse:
+                properties:
+                    width: 30mm
+                    height: 30mm
+                    right: -3mm
+
+
+    - region:
+        properties:
+            # subtract all of this region's children
+            # from each of the previous region's children
+            boolean: subtract
+        children:
+            - ellipse:
+                properties:
+                    width: 30mm
+                    height: 30mm
+                    top: 3mm
+
+            - ellipse:
+                properties:
+                    width: 30mm
+                    height: 30mm
+                    bottom: -3mm

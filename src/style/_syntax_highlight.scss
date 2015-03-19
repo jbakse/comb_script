@@ -5,7 +5,7 @@
 
 @media screen {
   .str { color: $color-blue }  /* string content */
-  .kwd { color: $color-green}  /* a keyword */
+  .kwd { color: darken($color-green, 15)}  /* a keyword */
   .com { color: #888 }  /* a comment */
   .typ { color: #A0A }  /* a type name */
   .lit { color: #000000 }  /* a literal value */

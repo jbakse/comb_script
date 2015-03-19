@@ -1,0 +1,22 @@
+children:
+    - ellipse:
+        properties:
+            width: 60mm
+            height: 60mm
+            left: -15mm
+
+    - region:
+        properties:
+            width: 60mm
+            height: 60mm
+            right: 15mm
+            registration: center
+            boolean: pass
+
+        children:
+            - ellipse:
+                properties:
+                    width: 20mm
+                    height: 20mm
+                    # left: -25mm
+                    boolean: subtract

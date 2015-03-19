@@ -1,0 +1,13 @@
+children:
+    - ellipse:
+        properties:
+            width: 60mm
+            height: 60mm
+            left: -15mm
+
+    - ellipse:
+        properties:
+            width: 60mm
+            height: 60mm
+            right: 15mm
+            boolean: add

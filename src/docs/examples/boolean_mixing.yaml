@@ -1,0 +1,19 @@
+children:
+    - rectangle:
+        properties:
+            width: 150px
+            height: 150px
+
+    - ellipse:
+        properties:
+            width: 120px
+            height: 120px
+            right: -15px
+            boolean: subtract
+
+    - ellipse:
+        properties:
+            width: 80px
+            height: 80px
+            right: 0px
+            boolean: add

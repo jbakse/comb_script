@@ -1,0 +1,14 @@
+children:
+    - rectangle:
+        properties:
+            width: 60mm
+            height: 60mm
+            left: 0mm
+
+    - rectangle:
+        properties:
+            width: 60mm
+            height: 60mm
+            right: 0mm
+            boolean: add
+            trapping: 1mm

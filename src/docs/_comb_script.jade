@@ -223,51 +223,59 @@ section#math
 section#boolean
 	:markdown
 		# Booleans & Combining Shapes
-		Shapes can be combined using the `boolean` property. The possible values are `add`, `subtract`, `intersect` and 'pass'
+		Shapes can be combined using the `boolean` property. The possible values are `add`, `subtract`, `intersect` and `pass`
+
+		The following examples show how each boolean operation behaves.
 
 		##Add
-		lorem
 
 	pre.display.comb-script
-		include examples/boolean_simple_subtract1.yaml
+		include examples/boolean_add.yaml
 
 	:markdown
 		##Subtract
-		lorem
 
 	pre.display.comb-script
-		include examples/boolean_simple_subtract2.yaml
+		include examples/boolean_subtract.yaml
+
+	:markdown
+		##Intersect
+
+	pre.display.comb-script
+		include examples/boolean_intersect.yaml
 
 	:markdown
 		##Mixing
-		You can use booelan operations will applied to a region's children as well. For example you can subtract many shapes from a single shape, subtract a single shape from many shapes, or even subtract many shapes from many shapes.
+		It's possible to perform multiple boolean operations on the same shape. Boolean operations will be applied in order, descending through a regions children. In this example the ellipse is subtracted from the rectangle, then the smaller ellipse is added.
 
 	pre.display.comb-script
-		include examples/boolean_simple_subtract2.yaml
+		include examples/boolean_mixing.yaml
 
 	:markdown
 		##Many to Many
-		lorem
+		Boolean operations will be applied to a region's children as well. For example you can subtract many shapes from a single shape, subtract a single shape from many shapes, or even subtract many shapes from many shapes.
 
 	pre.display.comb-script
-		include examples/boolean_multiple.yaml
+		include examples/boolean_many_to_many.yaml
 
 	:markdown
 		##Boolean Flow
 		Shapes with a set `boolean` property are combined with their parent's shape. If the parent does not generate a shape the shape of the first child will be used. **[pictures here]**
 
 		##Pass
-		lorem
+		The `pass` value will pass the boolean operations through to the parent region's scope?
 
 	pre.display.comb-script
-		include examples/boolean_multiple.yaml
+		include examples/boolean_pass.yaml
 
 	:markdown
 		##Trapping
-		lorem
+		Trapping allows you to slightly adjust the bounds in which a shape is drawn. The trapping value will be added to the bounds of the region. Trapping is primarily used when performing a boolean on two shapes that are exactly next to each other, adding a small trapping value to one of the shapes will ensure that the shapes overlap and that the boolean is successful.
+
+		Trapping values should be tiny (hundredths or thousandths of a unit). In this example the trapping has been set quite high to illustrate the effect.
 
 	pre.display.comb-script
-		include examples/boolean_multiple.yaml
+		include examples/boolean_trapping.yaml
 
 
 
