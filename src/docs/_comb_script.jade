@@ -234,46 +234,62 @@ section#booleans
 		include examples/boolean_add.yaml
 
 	:markdown
-		##Subtract
+		## Subtract
 
 	pre.display.comb-script
 		include examples/boolean_subtract.yaml
 
 	:markdown
-		##Intersect
+		## Intersect
 
 	pre.display.comb-script
 		include examples/boolean_intersect.yaml
 
 	:markdown
-		##Mixing
-		It's possible to perform multiple boolean operations on the same shape. Boolean operations will be applied in order, descending through a regions children. In this example the ellipse is subtracted from the rectangle, then the smaller ellipse is added.
+		## Multiple Operations
+		It's possible to perform multiple boolean operations on the same target shape. Boolean operations are applied in order. In this example the large ellipse is subtracted from the rectangle, then the smaller ellipse is added.
 
 	pre.display.comb-script
 		include examples/boolean_mixing.yaml
 
 	:markdown
+		## The Boolean Target
+		When a region has a defined `boolean:` property, its shape is added to, subtracted from, or interesected with the shape of another region, the **target**. The target is usually the region's parent. If the parent does not generate a shape, then the parent's first child becomes the target.
+
+	pre.display.comb-script
+		include examples/boolean_target_parent.yaml
+
+	pre.display.comb-script
+		include examples/boolean_target_sibling.yaml
+
+	:markdown
+		## Pass
+		If a region sets `boolean: pass`, then the boolean operations of its children will target its parent.
+
+	pre.display.comb-script
+		include examples/boolean_pass.yaml
+	
+
+	:markdown
 		##Many to Many
-		Boolean operations will be applied to a region's children as well. For example you can subtract many shapes from a single shape, subtract a single shape from many shapes, or even subtract many shapes from many shapes.
+
+		When regions with children are combined by a boolean operation, the children are drawn first, and then the boolean operation is applied to each of the resulting shapes in turn.
+
+		For example, you can subtract many shapes from a single shape, subtract a single shape from many shapes, or even subtract many shapes from many shapes.
+
+
 
 	pre.display.comb-script
 		include examples/boolean_many_to_many.yaml
 
-	:markdown
-		##Boolean Flow
-		Shapes with a set `boolean` property are combined with their parent's shape. If the parent does not generate a shape the shape of the first child will be used. **[pictures here]**
-
-		##Pass
-		The `pass` value will pass the boolean operations through to the parent region's scope?
-
-	pre.display.comb-script
-		include examples/boolean_pass.yaml
 
 	:markdown
 		##Trapping
-		Trapping allows you to slightly adjust the bounds in which a shape is drawn. The trapping value will be added to the bounds of the region. Trapping is primarily used when performing a boolean on two shapes that are exactly next to each other, adding a small trapping value to one of the shapes will ensure that the shapes overlap and that the boolean is successful.
+		Boolean operations sometimes produce bad results due to a bug in how overlapping edges are handled. The `trapping:` property helps to work around this bug by making it easy to slightly adjust the bounds of one of the rectangles to ensure they overlap enough for the boolean operation to work correctly. 
 
-		Trapping values should be tiny (hundredths or thousandths of a unit). In this example the trapping has been set quite high to illustrate the effect.
+		Postivie trapping values expand the region bounds in all directions, negative values contract the bounds. 
+
+		Be careful when using trapping as it does effect the dimensions of the shape output. Trapping values should be tiny (e.g. .01mm), so their effect on the output will be minimal.
 
 	pre.display.comb-script
 		include examples/boolean_trapping.yaml
@@ -284,14 +300,21 @@ section#booleans
 section#using-region-grids
 	:markdown
 		# Using Region Grids
-		**[needs editing]**CombScript provides a special region-type called a `region_grid`. Region grids can be used to draw a region repeatedly in a rectangular grid.
+		CombScript provides a powerful region-type called a `region_grid`. Region grids can be used to create patterns and to help with layout.
 
 		The `rows` and `columns` properties will set the number of rows and columns in the grid directly. You can set `row_height` and `column_width` instead to create as many rows or columns as needed to fill the region grid.
 
-		Each cell in the generated grid will contain a clone of the children of the region grid.
+		By default, each cell in the generated grid will contain clones of the specified children of the region grid.
 
 	pre.display.comb-script
 		include examples/regiongrid_simple.yaml
+
+	:markdown
+
+		Set `populate: alterante` on the region grid to distribute the children in an alternating fashion.
+
+	pre.display.comb-script
+		include examples/regiongrid_alternate.yaml
 
 
 section#yaml-repeated-nodes

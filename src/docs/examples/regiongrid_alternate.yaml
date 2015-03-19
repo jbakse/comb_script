@@ -6,6 +6,8 @@ children:
             column_width: 50px
             rows: 4
             registration: center
+            populate: alternate
+
         children:
             - ellipse:
                 properties:

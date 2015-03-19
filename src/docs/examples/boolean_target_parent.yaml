@@ -1,0 +1,16 @@
+children:
+    # rectangle regions create a shape
+    # so they become the target of their children's
+    # boolean operations
+    - rectangle:
+        properties:
+            width: 5cm
+            height: 5cm
+
+        children:
+            - rectangle:
+                properties:
+                    width: 1cm
+                    height: 2cm
+                    margin_left: 0cm
+                    boolean: subtract

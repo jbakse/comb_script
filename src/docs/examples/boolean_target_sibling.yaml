@@ -1,0 +1,19 @@
+children:
+    # plain regions don't create a shape...
+    - region:
+        properties:
+            width: 5cm
+            height: 5cm
+
+        children:
+            # ... so the first child becomes the target
+            - rectangle:
+                properties:
+                    margin_left: 5mm
+
+            - rectangle:
+                properties:
+                    width: 1cm
+                    height: 2cm
+                    margin_left: 0cm
+                    boolean: subtract

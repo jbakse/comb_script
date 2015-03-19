@@ -1,14 +1,41 @@
 children:
-    - rectangle:
+    - region:
         properties:
-            width: 60mm
-            height: 60mm
-            left: 0mm
+            margin_top: 10mm
+            height: 20mm
+        children:
+            # these rectangles are adjacent but adding them
+            # doesn't always work quite right
+            - rectangle:
+                properties:
+                    width: 60mm
+                    left: 0mm
 
-    - rectangle:
+            - rectangle:
+                properties:
+                    width: 60mm
+                    right: 0mm
+                    boolean: add
+
+
+    - region:
         properties:
-            width: 60mm
-            height: 60mm
-            right: 0mm
-            boolean: add
-            trapping: 1mm
+            margin_bottom: 10mm
+            height: 20mm
+        children:
+            - rectangle:
+                properties:
+                    width: 60mm
+                    left: 0mm
+
+            - rectangle:
+                properties:
+                    width: 60mm
+                    right: 0mm
+                    boolean: add
+                    # use trapping to make this rectangle
+                    # slightly larger (and overlap slightly)
+                    # so the boolean add works as expected
+                    trapping: .01mm
+
+

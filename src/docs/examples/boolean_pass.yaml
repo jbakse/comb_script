@@ -3,20 +3,27 @@ children:
         properties:
             width: 60mm
             height: 60mm
-            left: -15mm
-
-    - region:
-        properties:
-            width: 60mm
-            height: 60mm
-            right: 15mm
-            registration: center
-            boolean: pass
 
         children:
-            - ellipse:
+            - rectangle:
                 properties:
-                    width: 20mm
+                    width: 60mm
                     height: 20mm
-                    # left: -25mm
-                    boolean: subtract
+                    margin_bottom: 0mm
+                    boolean: pass
+                    registration: center
+
+                children:
+                    - ellipse:
+                        properties:
+                            width: 20mm
+                            height: 20mm
+                            margin_left: 0mm
+                            boolean: subtract
+
+                    - ellipse:
+                        properties:
+                            width: 20mm
+                            height: 20mm
+                            margin_right: 0mm
+                            boolean: add

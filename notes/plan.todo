@@ -1,22 +1,18 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # New Features (DOCUMENT ME)
 
-- Region Grid `Alternate`
-- Boolean Pass
-- Trapping
-- New, Improved, Gulp. Chrips on errors, Browser Sync hosting and reload. Clean
-- New Menu, Interface Styling
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # 
+# Bugs
+
+-----	Preview tracks mouse through menu dropdowns
+
+-----	Shape Regions with boolean/pass don't build (change boolean/pass, boolean_pass/true)
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Todo
 
------	Preview tracks mouse through menu dropdowns
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # 
-# Bugs
-
-+----- Selection not set properly w/ region grids (alternate)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # User facing Features
@@ -25,8 +21,14 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Language Design
 
-- 	trapping: right now trapping effects the region dimensions, so children will be affected
 ----	x and y: center x, center y. for drill holes -> x: 10, y: 10, radius: 3
+
+
+-	boolean targeting: currently does parent, first sibling. Should it do previous sibling, parent, ancesotor?
+	: keep for now
+- 	trapping: right now trapping effects the region dimensions, so children will be affected
+	: keep for now
+	
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # w/Greg
