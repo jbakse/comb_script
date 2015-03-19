@@ -42,9 +42,9 @@
 
 ----	Text
 	+----- Get Text working
-	----	Opt text out of build fill styling
-	----	Make sure it doesn't try to get booleaned
-	----	Text rendering is slow, maybe some kind of caching?
+	+----	Opt text out of build fill styling
+	+----	Make sure it doesn't try to get booleaned
+	---	Text rendering is slow, maybe some kind of caching?
 
 # General
 	

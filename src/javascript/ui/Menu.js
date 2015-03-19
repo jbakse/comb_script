@@ -45,6 +45,11 @@ Menu.prototype.init = function(_element) {
 		return false;
 	});
 
+	Mousetrap.bindGlobal('command+u', function() {
+		$.Topic("UI/command/changeInspectorUnit").publish();
+		return false;
+	});
+
 	$('[data-example]').click ( function (_e) {
 		// console.log("_e", _e, this, $(this).data('example'));
 		$.Topic("UI/command/loadYAML").publish($(this).data('example'));
