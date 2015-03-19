@@ -5,7 +5,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Bugs
 
------	Preview tracks mouse through menu dropdowns
+--	Preview tracks mouse through menu dropdowns
 
 -----	Shape Regions with boolean/pass don't build (change boolean/pass, boolean_pass/true)
 
@@ -14,14 +14,10 @@
 # Todo
 
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # 
-# User facing Features
-
-
 # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Language Design
 
-----	x and y: center x, center y. for drill holes -> x: 10, y: 10, radius: 3
+---	x and y: center x, center y. for drill holes -> x: 10, y: 10, radius: 3
 
 
 -	boolean targeting: currently does parent, first sibling. Should it do previous sibling, parent, ancesotor?
@@ -29,38 +25,34 @@
 - 	trapping: right now trapping effects the region dimensions, so children will be affected
 	: keep for now
 	
-
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
-# w/Greg
+# User Docs/Examples
 
+---	see docs.todo and example_outline.todo
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Refactoring / Cleanup 
 
-+-----	add 'pixel' 'pixels'
 
------	w/greg/spage Reorg examples
-
-
-
----	Text
-	+----- Get Text working
-	+----	Opt text out of build fill styling
-	+----	Make sure it doesn't try to get booleaned
-	---	Text rendering is slow, maybe some kind of caching?
-
+# # # # # # # # # # # # # # # # # # # # # # # # # # 
 # General
+
+
+# Text
+---	Text rendering is slow, maybe some kind of caching? :_()memoize?
+
 	
 # Preview
 -	Let user Pan
-	--	limit pan so you can't lose the image
+	-	limit pan so you can't lose the image
 
----	zoom to editor selection
+---	zoom to editor selection *UI
+---	click nothing to select->doc?
 
 # Inspector
-----	inspctor units
+---	inspctor units
 	+----	List dimensions in document (user specified unit) unit
-	----	let user pick unit: maybe click on inspector to cycle? maybe button?
+	---	let user pick unit *UI: maybe click on inspector to cycle? maybe button?
 
 # Symbols/Mixins
 -	Provide .comb specific way to reuse library items: instead of using yaml symbols, something like uses or inherit that pulls properties from another region
@@ -72,35 +64,22 @@
 
 
 # Math Expression support
-+----	rotation: angle type
-
------	Make Examples + Document
-	+- units
-	+- simple math
-	+- parent boundary variables
-	+- constants
-		+- shadowing
-		- referencing parent constants, but not own
 
 
 # Booleans
--	Review: how child_booleans vs self_booleans work, does it make sense?
--	Non-Boolean Paths: flag paths as inellegible for boolean (tries to fill in letters (sutton), letters cause issues in mixed situations, should be able to opt out of mixed booleans) (low priority, because i think this is handled fine already)
--	Many to Many: test document
----	Document
 
 # Syntax
--	Mirror
--	min/max width/height
-
 
 # Type
--	Single Live vs Wrap
--	Scale?
+-	Single Line vs Wrap
 
 # Polygon
 --	Sizes: should follow provided bounds, maybe make radius optional, maybe consider fit/cover options
 ---	fix radius (not working)
+
+# Ellipse
+
+--	radius/diameter/x/y
 
 # Plugins
 -	Vertical Line
@@ -109,15 +88,15 @@
 
 # SVG
 ---	SVG Import Support
+	-----	inline svg
 
 # Export
----	Export Styles: finish and document
----	Support for Cut vs Etch vs Guide/Note (how about call the property `tool`, tool: cut, tool: etch)
+----	Export Styles: finish and document, move out of properties *UI
+----	Support for Cut vs Etch vs Guide/Note (how about call the property `tool`, tool: cut, tool: etch)
 --	Perserve Groups on Export?: Might at least be worth looking at having the tree represented in groups so they export nested? how does it actually work now?
+--	Named Layers/Objects in export? (So its easier to understand in illustrator)
 -- 	Some kind of packing option: maybe you can mark a region as a part to opt in to packing, maybe with a quantity, and if you exportPackedSVG it just exports those items at those quantities, should be previewable
-
 -	Multiple file exports?
--	Named Layers Objects in export? (So its easier to understand in illustrator)
 -	Include source in exported .svg?
 
 
@@ -128,24 +107,19 @@
 ---	should preview pan to editor selection
 ---	should preview zoom to editor selection
 ---	think about view mode
-
+---	list key commands
+-----	UI Menus close when selection made
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Build System
 
 +-----	BUILD DOCS
 
---	Don't like the gulp langague task:Language YAMLs: are built with the build tool using concat and its a bit wonky, should this be handled by the javascript? not sure
+-	Don't like the gulp langague task:Language YAMLs: are built with the build tool using concat and its a bit wonky, should this be handled by the javascript? not sure
 -	Browserify Dependencies: rather than script tags, do we want to?
 
----	Update Libraries
+----	Update Libraries
 
----	Reorg examples
-	/yaml + /svg are development/testing files we made to test featuers as we went (needs a cleaner organization)
-	/src/examples are the examples available from the ide
-	/src/docs/examples are the examples that show up in the api reference
-
-	this orginization just needs total rethinking
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
@@ -156,16 +130,8 @@
 --	Project Directories
 
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # 
-# User Docs
 
--	Document boolean system: whole booelan system really
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # 
-# Demo Projects
-
--	Drawbot
--	T-Slot Box
 
 
 
@@ -181,10 +147,6 @@
 
 -	nicer dialog (alert/confirm/prompt) with a library
 
--	move openedFile and this.file into a property on the File class called openedFile. so you can say File.openedFile
-
-
-# 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # rejected features

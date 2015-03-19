@@ -1,0 +1,55 @@
+basics
++---	 hello, world 
++---	 units 
++---	 math 
++---	 constants 
+
+layout
++---	 nesting 
++---	 positioning
++---	 margins
++---	 registration 
+---	 parent bounds
++---	 rotation 
+---	 scale 
+---	 translate ?
+
+region types
++---	 region 
++---	 rectangle 
++---	 ellipse 
+---	 polygon 
++---	 text 
++---	 regiongrid 
+
+boolean
++---	 add 
++---	 subtract 
++---	 intersect 
++---	 mixed 
++---	 many to many
+---	 pass
+
+advanced
+---	 symbols
+---	 boolean
+---	 region_grids
+---	 math 
+	- min(100px, max(0px, parent_width - 40px))
+---	 trapping (maybe in boolean?)
+
+demos
+-	 comb
+---	 tslot box
+---	 finger joint box
+---	 stool
+---	 table
+---	 chair 
+
+---	 lamp
+---	 desk
+---	 drawbot
+
+
+
+-- clear out old examples
