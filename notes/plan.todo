@@ -30,6 +30,8 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # User Docs/Examples
 
+----	Tool
+
 ---	see docs.todo and example_outline.todo
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
@@ -95,7 +97,7 @@
 
 
 # Export
-----	Export Styles: finish and document, move out of properties *UI
+----	Custom Export Styles: finish and document, move out of properties *UI
 +----	Support for Cut vs Etch vs Guide/Note (how about call the property `tool`, tool: cut, tool: etch)
 --	Perserve Groups on Export?: Might at least be worth looking at having the tree represented in groups so they export nested? how does it actually work now?
 --	Named Layers/Objects in export? (So its easier to understand in illustrator)
@@ -113,7 +115,7 @@
 ---	think about view mode
 ---	list key commands
 +-----	UI Menus close when selection made
-----	Keep UI Menus open for some tools
++----	Keep UI Menus open for some tools
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
