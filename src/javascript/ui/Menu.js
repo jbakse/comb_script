@@ -71,6 +71,13 @@ Menu.prototype.init = function(_element) {
 		}
 	);
 
+	$(".menu-dropdown").mouseup (  function(e) {
+		console.log("clickky");
+		$(this).closest('.menu-item').removeClass("open");
+	});
+
+
+
 };
 
 
