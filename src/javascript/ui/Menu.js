@@ -71,9 +71,22 @@ Menu.prototype.init = function(_element) {
 		}
 	);
 
+
+	$(".menu-dropdown").click (  function(e) {
+		if (e.target.tagName !== "SELECT") {
+			$(this).closest('.menu-item').removeClass("open");
+		}
+	});
+
+	$(".menu-dropdown").change ( function(e) {
+		$(this).closest('.menu-item').removeClass("open");
+	});
+
+
 	//options drop downs
 	$("#unit-select").change(
 		function() {
+			console.log("unit select change");
 			$.Topic("UI/command/changeInspectorUnit").publish($(this).val());
 		}
 	);
@@ -84,10 +97,7 @@ Menu.prototype.init = function(_element) {
 			//$.Topic("UI/command/changeInspectorUnit").publish($(this).val());
 		}
 	);
-	$(".menu-dropdown").mouseup (  function(e) {
-		console.log("clickky");
-		$(this).closest('.menu-item').removeClass("open");
-	});
+	
 
 };
 

@@ -9,11 +9,11 @@
 
 +-----	Shape Regions with boolean/pass don't build (change boolean/pass, boolean_pass/true)
 
-----	change key command symbols based on operating system? ctrl vs command
-
+-----	undo on editor clears it out if there are no user changes 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Todo
+----	change key command symbols based on operating system? ctrl vs command
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -91,6 +91,8 @@
 # SVG
 ---	SVG Import Support
 	-----	inline svg
+
+
 
 # Export
 ----	Export Styles: finish and document, move out of properties *UI
