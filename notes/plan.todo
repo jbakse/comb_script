@@ -9,6 +9,8 @@
 
 -----	Shape Regions with boolean/pass don't build (change boolean/pass, boolean_pass/true)
 
+----	change key command symbols based on operating system? ctrl vs command
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Todo
