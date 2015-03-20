@@ -71,9 +71,7 @@ Menu.prototype.init = function(_element) {
 		}
 	);
 
-<<<<<<< HEAD
 	//options drop downs
-
 	$("#unit-select").change(
 		function() {
 			$.Topic("UI/command/changeInspectorUnit").publish($(this).val());
@@ -86,14 +84,10 @@ Menu.prototype.init = function(_element) {
 			//$.Topic("UI/command/changeInspectorUnit").publish($(this).val());
 		}
 	);
-=======
 	$(".menu-dropdown").mouseup (  function(e) {
 		console.log("clickky");
 		$(this).closest('.menu-item').removeClass("open");
 	});
-
-
->>>>>>> origin/master
 
 };
 
