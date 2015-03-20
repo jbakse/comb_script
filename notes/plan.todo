@@ -110,7 +110,9 @@
 ---	should preview zoom to editor selection
 ---	think about view mode
 ---	list key commands
------	UI Menus close when selection made
++-----	UI Menus close when selection made
+----	Keep UI Menus open for some tools
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Build System
