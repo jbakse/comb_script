@@ -20,7 +20,7 @@ Inspector.prototype.init = function(_element) {
 	this.clear();
 	
 	this.unit = "px";
-	this.units = ["px", "mm", "in"];
+	this.units = ["px", "mm", "cm", "in", "ft"];
 	this.keyRegion = null;
 
 	$.Topic("App/selectionChanged").subscribe(_.bind(this.selectionChanged, this));
@@ -29,7 +29,6 @@ Inspector.prototype.init = function(_element) {
 
 
 Inspector.prototype.changeInspectorUnit = function(_unit) {
-
 	if (_unit && _(this.units).contains(_unit)) {
 		this.unit = _unit;
 	}
@@ -37,6 +36,7 @@ Inspector.prototype.changeInspectorUnit = function(_unit) {
 		var currentIndex = _(this.units).indexOf(this.unit);
 		var nextIndex = (currentIndex + 1) % this.units.length;
 		this.unit = this.units[nextIndex];
+		$("#unit-select").val(this.unit);
 	}
 
 	this.redraw();

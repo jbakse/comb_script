@@ -71,6 +71,21 @@ Menu.prototype.init = function(_element) {
 		}
 	);
 
+	//options drop downs
+
+	$("#unit-select").change(
+		function() {
+			$.Topic("UI/command/changeInspectorUnit").publish($(this).val());
+		}
+	);
+
+	$("#on-selection").change(
+		function() {
+			//DISPATCH MESSAGE HERE
+			//$.Topic("UI/command/changeInspectorUnit").publish($(this).val());
+		}
+	);
+
 };
 
 
