@@ -5,12 +5,12 @@ children:
             height: 60mm
 
         children:
-	    - region:
+            - region:
                 properties:
                     width: 60mm
                     height: 20mm
                     margin_bottom: 0mm
-		    boolean_pass: true
+                    boolean_pass: true
                     registration: center
 
                 children:
