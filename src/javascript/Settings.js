@@ -43,12 +43,13 @@ module.exports.buildStyles = buildStyles;
 buildStyles.cut = _(buildStyleBase).clone();
 
 buildStyles.etch = _(buildStyleBase).clone();
-buildStyles.etch.strokeColor = "green";
+buildStyles.etch.strokeWidth = 1;
 buildStyles.etch.fillColor = null;
 
 buildStyles.guide = _(buildStyleBase).clone();
-buildStyles.guide.strokeColor = "blue";
-buildStyles.etch.fillColor = null;
+buildStyles.guide.strokeWidth = 1.5;
+buildStyles.guide.dashArray = [4, 4];
+buildStyles.guide.fillColor = null;
 
 // Create Export Style
 var exportStyleBase = {
