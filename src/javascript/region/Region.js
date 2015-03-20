@@ -203,6 +203,10 @@ Region.prototype.loadProperties = function(_properties) {
 			allowedInputTypes = ["string"];
 		}
 
+		if (def.type == "boolean") {
+			allowedInputTypes = ["boolean"];
+		}
+
 		if (def.type == "dimension") {
 			allowedInputTypes = ["string"];
 		}
@@ -547,17 +551,20 @@ Region.prototype.build = function(_parentContext) {
 	function collectBooleanChildren(_node) {
 		_(_node.children).each(
 			function(_childNode) {
-				if (_childNode.properties.boolean === 'pass') {
+				booleanChildren = booleanChildren.concat(_childNode);
+				if (_childNode.properties.boolean_pass === true) {
 					collectBooleanChildren(_childNode);
 				}
-				else {
-					booleanChildren = booleanChildren.concat(_childNode);
-				}
+				// else {
+				// 	booleanChildren = booleanChildren.concat(_childNode);
+				// }
 			}
 		);
 
 	}
-	collectBooleanChildren(this);
+	if (this.properties.boolean_pass !== true) {
+		collectBooleanChildren(this);
+	}
 
 
 	_.each(booleanChildren, function(_child) {

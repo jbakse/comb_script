@@ -12,10 +12,13 @@ children:
             height: 20mm
             top: 0mm
             # boolean: subtract
-
-    - ellipse:
+    - rectangle:
         properties:
-            width: 20mm
-            height: 20mm
-            top: 0mm
-            boolean: add
+	    boolean_pass: true
+	children:
+	    - ellipse:
+		properties:
+		    width: 20mm
+		    height: 20mm
+		    top: 10mm
+		    boolean: subtract

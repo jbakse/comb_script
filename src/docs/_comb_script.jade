@@ -224,7 +224,7 @@ section#using-math
 section#booleans
 	:markdown
 		# Booleans & Combining Shapes
-		Shapes can be combined using the `boolean` property. The possible values are `add`, `subtract`, `intersect` and `pass`
+		Shapes can be combined using the `boolean` property. The possible values are `add`, `subtract`, and `intersect`.
 
 		The following examples show how each boolean operation behaves.
 
@@ -263,8 +263,8 @@ section#booleans
 		include examples/boolean_target_sibling.yaml
 
 	:markdown
-		## Pass
-		If a region sets `boolean: pass`, then the boolean operations of its children will target its parent.
+		## Boolean Pass
+		If a region sets `boolean_pass: true`, then the boolean operations of its children will target its parent.
 
 	pre.display.comb-script
 		include examples/boolean_pass.yaml

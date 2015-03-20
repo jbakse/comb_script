@@ -7,7 +7,7 @@
 
 --	Preview tracks mouse through menu dropdowns
 
------	Shape Regions with boolean/pass don't build (change boolean/pass, boolean_pass/true)
++-----	Shape Regions with boolean/pass don't build (change boolean/pass, boolean_pass/true)
 
 ----	change key command symbols based on operating system? ctrl vs command
 
