@@ -1,0 +1,49 @@
+children:
+    - ellipse:
+        properties:
+            width: 3cm
+            height: 3cm
+            margin_left: 0cm
+            registration: center
+            tool: etch
+        children:
+            - ellipse:
+                properties:
+                    width: 2cm
+                    height: 2cm
+
+    - ellipse:
+        properties:
+            width: 3cm
+            height: 3cm
+            registration: center
+            tool: etch
+            # margin_left: 0cm
+        children:
+            - ellipse:
+                properties:
+                    width: 2cm
+                    height: 2cm
+                    tool: cut
+
+    - ellipse:
+        properties:
+            width: 3cm
+            height: 3cm
+            margin_right: 0cm
+            registration: center
+            tool: guide
+        children:
+            - ellipse:
+                properties:
+                    width: 2cm
+                    height: 2cm
+                    # boolean: add
+                    tool: cut
+            - ellipse:
+                properties:
+                    width: 2cm
+                    height: 2cm
+                    top: 0cm
+                    boolean: subtract
+                    tool: cut

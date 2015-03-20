@@ -262,20 +262,8 @@ ApplicationController.prototype.exportSVG = function() {
 
 	var exportProject = new paper.Project($('<canvas width="' + exportWidth + '" height="' + exportHeight + '" />').get(0));
 	exportProject.activate();
-	this.doc.build();
+	this.doc.export();
 
-
-	var style = settings.exportStyle;
-
-	if (this.doc.properties.cut_color) {
-		style.strokeColor = new paper.Color(this.doc.properties.cut_color.red, this.doc.properties.cut_color.green, this.doc.properties.cut_color.blue);
-	}
-	if (this.doc.properties.cut_width) {
-		style.strokeWidth = this.doc.properties.cut_width;
-	}
-
-	exportProject.activeLayer.style = style;
-	// exportProject.activeLayer.translate(exportWidth * 0.5, exportHeight * 0.5);
 	var svg = exportProject.exportSVG({
 		asString: true
 	});

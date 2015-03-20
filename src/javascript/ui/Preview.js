@@ -289,16 +289,16 @@ Preview.prototype.setDocument = function(_doc) {
 	// draw export
 	this.exportLayer.removeChildren();
 	this.exportLayer.activate();
-	this.doc.build();
+	this.doc.export();
 
-	var style = settings.exportStyle;
-	if (this.doc.properties.cut_color) {
-		style.strokeColor = new paper.Color(this.doc.properties.cut_color.red, this.doc.properties.cut_color.green, this.doc.properties.cut_color.blue);
-	}
-	if (this.doc.properties.cut_width) {
-		style.strokeWidth = Math.max(0.5, this.doc.properties.cut_width);
-	}
-	this.exportLayer.style = style;
+	// var style = settings.exportStyle;
+	// if (this.doc.properties.cut_color) {
+	// 	style.strokeColor = new paper.Color(this.doc.properties.cut_color.red, this.doc.properties.cut_color.green, this.doc.properties.cut_color.blue);
+	// }
+	// if (this.doc.properties.cut_width) {
+	// 	style.strokeWidth = Math.max(0.5, this.doc.properties.cut_width);
+	// }
+	// this.exportLayer.style = style;
 
 	if (this.newFileFlag) {
 		this.zoomToFit();
