@@ -3,7 +3,7 @@
 var _ = require('underscore/underscore.js');
 
 // module.exports.fileURL = "examples/test/default.yaml";
-module.exports.fileURL = "examples/test/boolean_debug.yaml";
+module.exports.fileURL = "examples/test/tools.yaml";
 
 module.exports.previewCanvasWidth = 1600;
 module.exports.previewCanvasHeight = 1600;
@@ -18,55 +18,91 @@ var menuBlue = new paper.Color("#06aaff");
 var menuGreen = new paper.Color("#1de982");
 var menuYellow = new paper.Color("#fffc01");
 
-// Create Default Style
-var defaultStyle = {
+
+
+// Create Build Style
+
+var shapeFillColor = menuBlue.clone();
+shapeFillColor.alpha = 0.25;
+var shapeStrokeColor = menuBlue.clone();
+shapeStrokeColor.alpha = 0.5;
+
+
+var buildStyleBase = {
+	strokeColor: shapeStrokeColor,
+	fillColor: shapeFillColor,
+	strokeWidth: 3,
+	strokeScaling: false
+};
+
+var buildStyles = {};
+module.exports.buildStyles = buildStyles;
+
+
+
+buildStyles.cut = _(buildStyleBase).clone();
+
+buildStyles.etch = _(buildStyleBase).clone();
+buildStyles.etch.strokeColor = "green";
+buildStyles.etch.fillColor = null;
+
+buildStyles.guide = _(buildStyleBase).clone();
+buildStyles.guide.strokeColor = "blue";
+buildStyles.etch.fillColor = null;
+
+// Create Export Style
+var exportStyleBase = {
+	strokeColor: "black",
+	strokeWidth: 1,
+	strokeScaling: false
+};
+
+
+var exportStyles = {};
+module.exports.exportStyles = exportStyles;
+
+exportStyles.cut = _(exportStyleBase).clone();
+exportStyles.cut.strokeColor = "red";
+
+exportStyles.etch = _(exportStyleBase).clone();
+exportStyles.etch.strokeColor = "green";
+
+exportStyles.guide = _(exportStyleBase).clone();
+exportStyles.guide.strokeColor = "blue";
+
+
+
+
+// Create Preview/Frame Style - Bounds
+var previewStyleBase = {
 	strokeColor: "black",
 	strokeWidth: 1,
 	strokeScaling: false,
 	fillColor: new paper.Color(0, 0, 0, 0)
 };
 
-// Create Build Style
-var shapeFillColor = menuBlue.clone();
-shapeFillColor.alpha = 0.25;
-var shapeStrokeColor = menuBlue.clone();
-shapeStrokeColor.alpha = 0.5;
-var buildStyle = {
-	fillColor: shapeFillColor,
-	strokeColor: shapeStrokeColor,
-	strokeWidth: 3,
-	strokeScaling: false,
-};
-module.exports.buildStyle = buildStyle;
-
-// Create Export Style
-var exportStyle = _(defaultStyle).clone();
-_(exportStyle).extend({});
-module.exports.exportStyle = exportStyle;
-
-
-// Create Preview/Frame Style - Bounds
 var previewStyles = {};
+module.exports.previewStyles = previewStyles;
+
 previewStyles.bounds = {};
 
-previewStyles.bounds.default = _(defaultStyle).clone();
-previewStyles.bounds.default.strokeColor = new paper.Color(0,0,0,.1);
+previewStyles.bounds.default = _(previewStyleBase).clone();
+previewStyles.bounds.default.strokeColor = new paper.Color(0,0,0,0.1);
 
-previewStyles.bounds.selected = _(defaultStyle).clone();
+previewStyles.bounds.selected = _(previewStyleBase).clone();
 previewStyles.bounds.selected.strokeColor = menuOrange;
 
-previewStyles.bounds.key = _(defaultStyle).clone();
+previewStyles.bounds.key = _(previewStyleBase).clone();
 previewStyles.bounds.key.strokeColor = menuOrange;
 previewStyles.bounds.key.strokeWidth = 3;
 
-previewStyles.bounds.hover = _(defaultStyle).clone();
-previewStyles.bounds.hover.strokeColor = new paper.Color(0,0,0,.5);
+previewStyles.bounds.hover = _(previewStyleBase).clone();
+previewStyles.bounds.hover.strokeColor = new paper.Color(0,0,0,0.5);
 previewStyles.bounds.hover.strokeWidth = 3;
 
 
-
 var positionStyle = {
-	strokeColor: new paper.Color(0, 0, 0, .5),
+	strokeColor: new paper.Color(0, 0, 0, 0.5),
 	strokeWidth: 0.5,
 	strokeScaling: false,
 	fillColor: new paper.Color(0, 0, 0, 0)
@@ -78,6 +114,5 @@ previewStyles.position.selected = _(positionStyle).clone();
 previewStyles.position.key = _(positionStyle).clone();
 previewStyles.position.hover = _(positionStyle).clone();
 
-module.exports.previewStyles = previewStyles;
 
 

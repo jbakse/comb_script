@@ -105,13 +105,13 @@ Region:
         -   keyword: boolean
             description: The location of the regions registration point.
             type: string
-	    values: [add, subtract, intersect, none]
+            values: [add, subtract, intersect, none]
 
-	-   keyword: boolean_pass
-	    description: Should the boolean operations of this region's children be applied to this region's parent.
-	    type: boolean
-	    default: false
-	    values: [true, false]
+        -   keyword: boolean_pass
+            description: Should the boolean operations of this region's children be applied to this region's parent.
+            type: boolean
+            default: false
+            values: [true, false]
 
         # EXPERIMENTAL
 
@@ -120,3 +120,7 @@ Region:
             type: dimension
             default: .0001cm
 
+        -   keyword: tool
+            description: Describes how the line should be drawn and handled.
+            type: string
+            values: [cut, etch, guide]

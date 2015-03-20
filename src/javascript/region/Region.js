@@ -484,7 +484,7 @@ Region.prototype.tree = function(_depth) {
 
 
 
-Region.prototype.preview = function(_parentContext) {
+Region.prototype.preview = function() {
 
 	var context = this.context;
 
@@ -520,16 +520,22 @@ Region.prototype.previewChildren = function(_context) {
 //////////////////////////////////////////////////////////////////////
 // Build
 
+Region.prototype.export = function() {
+	this.build(true);
+};
 
-
-Region.prototype.build = function(_parentContext) {
-
+Region.prototype.build = function(_isExport = false) {
 	var context = this.context;
 
 	// build own paths
 	var ownPaths = [].concat(this.drawBuild(context.bounds));
 	_.each(ownPaths, function(p) {
-		p.style = settings.buildStyle;
+		var tool = this.getCascadingProperty('tool') || "cut";
+		if (_isExport) {
+			p.style = settings.exportStyles[tool];
+		} else {
+			p.style = settings.buildStyles[tool];
+		}
 		if (!this.isSolid) {
 			p.style.fillColor = null;
 		}
@@ -555,9 +561,6 @@ Region.prototype.build = function(_parentContext) {
 				if (_childNode.properties.boolean_pass === true) {
 					collectBooleanChildren(_childNode);
 				}
-				// else {
-				// 	booleanChildren = booleanChildren.concat(_childNode);
-				// }
 			}
 		);
 
@@ -568,7 +571,7 @@ Region.prototype.build = function(_parentContext) {
 
 
 	_.each(booleanChildren, function(_child) {
-		var s = _child.build(context);
+		var s = _child.build(_isExport);
 		childPathSets.push(s);
 		childOps.push(booleanOperations[_child.properties.boolean]);
 	});
@@ -676,10 +679,18 @@ Region.prototype.getDecendants = function() {
 
 Region.prototype.getAncestors = function() {
 	var a = [];
+	// console.log(this);
 	if (this.parent) {
 		return [this.parent].concat(this.parent.getAncestors());
 	}
 	return [];
+};
+
+Region.prototype.getCascadingProperty = function(_property) {
+	var ancestors = [this];
+	ancestors = ancestors.concat(this.getAncestors());
+	var r = _(ancestors).find( (a) => typeof a.properties[_property] !== "undefined" );
+	return r && r.properties[_property];
 };
 
 
