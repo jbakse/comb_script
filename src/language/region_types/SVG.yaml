@@ -13,17 +13,13 @@ SVG:
         </pre>
 
     properties:
-        -   keyword: source
-            description: The file path to the svg. Path can be relative or absolute.
+
+        -   keyword: svg_data
+            description: Embedded SVG data
             type: string
             required: true
 
-        #not sure we would want any of these
-        # -   keyword: embed
-        #     description: Inlined source of an svg.
-        #     type: string
-
-        # -   keyword: mode
-        #     description: How to draw the svg in it's parent.
-        #     type: string
-        #     values: [scale_to_fill, aspect_fill, top_left]
+        -   keyword: scale
+            description: how to scale the svg to fit the bounding box
+            type: string
+            values: [cover, contain, fit, none]

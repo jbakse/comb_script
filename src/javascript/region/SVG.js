@@ -2,9 +2,9 @@
 
 var _ = require('underscore/underscore.js');
 var Region = require('./Region.js');
-var UI = require('../UI.js');
+var log = require('../ui/Log.js').sharedInstance();
 
-module.exports.SVG = SVG;
+module.exports = SVG;
 
 
 //////////////////////////////////////////////////////////////////////
@@ -12,69 +12,52 @@ module.exports.SVG = SVG;
 
 function SVG(_data, _parent) {
 	Region.call(this, _data, _parent);
-	
 	this.type = "SVG";
 	this.isShape = true;
-	this.svgMarkup = undefined;
 
-	_.extend(this.typeProperties.boundsStyle, {
-		strokeColor: '#888'
-	});
+	
+
 }
 
 SVG.prototype = Object.create(Region.prototype);
 SVG.prototype.constructor = SVG;
 
-SVG.prototype.loadData = function(_data) {
-	Region.prototype.loadData.call(this, _data);
-	var self = this;
-	if (this.properties.source) {
-		UI.log.appendMessage("Loading SVG " + this.properties.source);
-		var jqXHR = $.ajax({
-			url: this.properties.source,
-			dataType: "text",
-			success: function(_data) {
-				UI.log.appendSuccess("Loaded SVG Markup" + self.properties.source);
-				self.svgMarkup = _data;
-			},
-
-			error: function(_data) {
-				UI.log.appendError("Couldn't retrieve SVG " + self.properties.source);
-			},
-
-			cache: false
-		});
-		this.root.waitList.push(jqXHR);
-	}
-}
-
 
 SVG.prototype.drawBuild = function(_bounds) {
-	if (!this.svgMarkup) {
-		return [];
+	if (!this.properties.svg_data) {
+		return new paper.Group();
 	}
-	var p = new paper.Group().importSVG(this.svgMarkup, {
+
+
+
+	var g = new paper.Group().importSVG(this.properties.svg_data, {
 		expandShapes: true
 	});
-	return p.children;
+	var boundsPath = new paper.Path.Rectangle(_bounds);
+
+	g.transformContent = true;
+	
+	g.translate(boundsPath.position.subtract(g.position));
+
+	if (this.properties.scale === "fit") {
+		g.scale(boundsPath.bounds.size.divide(g.bounds.size));
+	}
+
+	if (this.properties.scale === "cover") {
+		var ratio = boundsPath.bounds.size.divide(g.bounds.size);
+		g.scale(Math.max(ratio.width, ratio.height));
+	}
+
+	if (this.properties.scale === "contain") {
+		var ratio = boundsPath.bounds.size.divide(g.bounds.size);
+		g.scale(Math.min(ratio.width, ratio.height));
+	}
+
+
+
+	return g.children;
 };
 
 SVG.prototype.drawBounds = function(_bounds) {
-	var g = new paper.Group();
-	if (!this.svgMarkup) {
-		return g;
-	}
-
-	// var boundsPath = new paper.Path.Rectangle(_bounds, this.properties.radius || 0);
-	var svg = new paper.Group().importSVG(this.svgMarkup, {
-		expandShapes: true
-	});
-	// svg.translate(boundsPath.position.subtract(svg.position));
-	// svg.scale(boundsPath.bounds.size.divide(svg.bounds.size));
-
-	// g.addChild(boundsPath);
-	g.addChild(svg);
-
-	return g;
+	return new paper.Path.Rectangle(_bounds);
 };
-

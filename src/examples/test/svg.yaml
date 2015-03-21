@@ -1,0 +1,16 @@
+children:
+    - rectangle:
+        properties:
+            width: 10cm
+            height: 10cm
+    - svg:
+        properties:
+            width: 5cm
+            height: 3cm
+            svg_data: >
+                <svg xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="56.599,23.959 81.197,1.227 78.761,34.632 111.871,39.69 84.235,58.613 100.923,87.653 68.898,77.845 56.599,108.999 44.3,77.845 12.275,87.653 28.963,58.613 1.328,39.69 34.437,34.632 32.001,1.227 "/>
+                </svg>
+            boolean: subtract
+            scale: cover
+

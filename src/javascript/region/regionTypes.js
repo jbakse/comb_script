@@ -9,5 +9,7 @@ module.exports.Ellipse = require('./Ellipse.js');
 module.exports.RegionGrid = require('./RegionGrid.js');
 module.exports.Text = require('./Text.js');
 
+module.exports.SVG = require('./SVG.js');
+
 module.exports.Polygon = require('./Polygon.js');
 
