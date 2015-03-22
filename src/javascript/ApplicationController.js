@@ -287,8 +287,11 @@ ApplicationController.prototype.exportSVG = function() {
 ApplicationController.prototype.rebuild = function() {
 	try {
 		log.clear();
+		// console.time("build");
 		this.doc = buildDocument(this.file.content);
 		this._renderDocument();
+		// console.timeEnd("build");
+		
 		this.selectRegionsForLine(this.editor.editor.selection.getCursor().row);
 	} catch (e) {
 		console.error("Error rebuilding YAML", e.message);

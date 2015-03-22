@@ -119,6 +119,23 @@ function Text(_data, _parent) {
 Text.prototype = Object.create(Region.prototype);
 Text.prototype.constructor = Text;
 
+
+function glyphForID(glyphID) {
+	var glyphSVG = $("#" + glyphID, font).removeAttr("display").get(0);
+		
+	var glyph = new paper.Group();
+
+	glyph.importSVG(glyphSVG, {
+		expandShapes: true
+	});
+
+	glyph.remove();
+
+	return glyph;
+}
+
+var fastGlyphForID = _.memoize(glyphForID);
+
 Text.prototype.drawBounds = function(_bounds) {
 	var textGroup = new paper.Group();
 
@@ -141,14 +158,9 @@ Text.prototype.drawBounds = function(_bounds) {
 	_(this.properties.text).each(function(c, i) {
 		if (c === ' ') return;
 
-		//var glyphID = glyphMap[c.toUpperCase()] || 'char-period';
 		var glyphID = glyphMap[c] || 'char-period';
-		var glyphSVG = $("#" + glyphID, font).removeAttr("display").get(0);
-		var glyph = new paper.Group();
-
-		glyph.importSVG(glyphSVG, {
-			expandShapes: true
-		});
+		var cachedGlyph = fastGlyphForID(glyphID);
+		var glyph = cachedGlyph.clone();
 
 		glyph.scale(scale, new paper.Point(0, 0));
 		glyph.translate(position);

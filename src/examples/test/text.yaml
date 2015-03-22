@@ -1,0 +1,12 @@
+children:
+    - text:
+        properties:
+            text: "Hello, World! This is some long, don't pay attention"
+
+    - text:
+        properties:
+            text: "text to test speed of text. this text is long"
+
+    - text:
+        properties:
+            text: "Some long long text, don't worry about it."

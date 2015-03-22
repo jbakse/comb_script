@@ -45,7 +45,7 @@
 
 
 # Text
----	Text rendering is slow, maybe some kind of caching? :_()memoize?
++---	Text rendering is slow, maybe some kind of caching? :_()memoize?
 
 	
 # Preview
