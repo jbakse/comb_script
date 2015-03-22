@@ -198,6 +198,9 @@ Preview.prototype.attachHandlers = function() {
 		return false;
 	});
 
+
+	$.Topic("UI/command/setAutopan").subscribe( _.bind(this.setAutopan, this));
+
 };
 
 Preview.prototype.setZoom = function(_zoom) {
@@ -245,9 +248,16 @@ Preview.prototype.selectionChanged = function(_selection) {
 	paper.view.update();
 };
 
+
+Preview.prototype.setAutopan = function(_mode) {
+	this.autopan = _mode;
+}
+
 var oldKeySelection;
 Preview.prototype.showSelection = function(_selection) {
 	if (!_selection.key) return;
+	if (this.autopan === "none") return;
+	
 	if (oldKeySelection === _selection.key) return;
 	oldKeySelection = _selection.key;
 

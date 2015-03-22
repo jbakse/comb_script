@@ -3,7 +3,7 @@
 var _ = require('underscore/underscore.js');
 
 // module.exports.fileURL = "examples/test/default.yaml";
-module.exports.fileURL = "examples/test/text.yaml";
+module.exports.fileURL = "examples/test/default.yaml";
 
 module.exports.previewCanvasWidth = 1600;
 module.exports.previewCanvasHeight = 1600;

@@ -78,22 +78,23 @@ Menu.prototype.init = function(_element) {
 		}
 	});
 
-	$(".menu-dropdown").change ( function(e) {
-		$(this).closest('.menu-item').removeClass("open");
-	});
+	// $(".menu-dropdown").change ( function(e) {
+	// 	$(this).closest('.menu-item').removeClass("open");
+	// });
 
 
 	//options drop downs
-	$("#unit-select").change(
+	$("#select-unit").change(
 		function() {
-			console.log("unit select change");
+			// console.log("unit select change");
 			$.Topic("UI/command/changeInspectorUnit").publish($(this).val());
 		}
 	);
 
-	$("#on-selection").change(
+	$("#select-autopan").change(
 		function() {
 			//DISPATCH MESSAGE HERE
+			$.Topic("UI/command/setAutopan").publish($(this).val());
 			//$.Topic("UI/command/changeInspectorUnit").publish($(this).val());
 		}
 	);

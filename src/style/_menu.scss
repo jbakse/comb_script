@@ -87,6 +87,8 @@ $menu-column-width: 160px;
 
 	cursor: pointer;
 	user-select: none;
+
+
 }
 
 
@@ -231,7 +233,7 @@ $menu-column-width: 160px;
 		font-weight: 600;
 
 		background: transparent;
-		width: 152px;
+		width: 150px;
 		padding: 6px 10px;
 		font-size: 16px;
 		line-height: 22px;
@@ -241,6 +243,13 @@ $menu-column-width: 160px;
 		-webkit-appearance: none;
 		color: white;
 		cursor:pointer;
+
+		&:focus
+		{
+			border: none;
+			outline: 1px solid $color-magenta;
+
+		} 
 	}
 	.select-wrap{
 		margin-left: -2px;
