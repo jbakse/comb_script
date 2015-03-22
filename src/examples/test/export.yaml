@@ -20,6 +20,11 @@ children:
             right: -10mm
             width: 10mm
             height: 10mm
+            group: true
         children:
             - rectangle:
+                properties:
+                    name: smally_rect
             - ellipse:
+                properties:
+                    name: smally_ellipse

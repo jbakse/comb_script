@@ -625,6 +625,19 @@ Region.prototype.build = function(_isExport = false) {
 
 	resultPaths = resultPaths.concat(leftPathSet);
 
+	if (this.properties.group) {
+		console.log("group");
+		var g = new paper.Group();
+		_(resultPaths).each( (path) => {
+			g.addChild(path);
+		});
+		if (this.properties.name) {
+			console.log("named group", this.properties.name);
+
+			g.name = this.properties.name;
+		}
+		return g;
+	}
 	return resultPaths;
 
 };

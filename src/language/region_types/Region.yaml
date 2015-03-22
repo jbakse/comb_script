@@ -120,7 +120,14 @@ Region:
             type: dimension
             default: .0001cm
 
+        -   keyword: group
+            description: EXPERIMENTAL should this region's shapes be grouped on export
+            type: boolean
+            default: false
+            values: [true, false]
+
         -   keyword: tool
             description: Describes how the line should be drawn and handled.
             type: string
             values: [cut, etch, guide]
+
