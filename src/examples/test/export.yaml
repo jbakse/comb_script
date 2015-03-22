@@ -1,0 +1,25 @@
+children:
+    - region:
+        properties:
+            name: biggy
+            width: 20mm
+            height: 20mm
+            left: 20mm
+        children:
+            - rectangle:
+                properties:
+                    name: biggy_rect
+            - ellipse:
+                properties:
+                    name: biggy_ellpise
+                    boolean: subtract
+
+    - region:
+        properties:
+            name: smally
+            right: -10mm
+            width: 10mm
+            height: 10mm
+        children:
+            - rectangle:
+            - ellipse:

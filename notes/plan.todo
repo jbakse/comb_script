@@ -45,20 +45,14 @@
 
 
 # Text
-+---	Text rendering is slow, maybe some kind of caching? :_()memoize?
+--	Does text respect its bound proeprties at all?
+--	Wrapping?
 
-	
 # Preview
--	Let user Pan
-	-	limit pan so you can't lose the image
-
 ---	zoom to editor selection *UI
 ---	click nothing to select->doc?
 
 # Inspector
----	inspctor units
-	+----	List dimensions in document (user specified unit) unit
-	---	let user pick unit *UI: maybe click on inspector to cycle? maybe button?
 
 # Symbols/Mixins
 -	Provide .comb specific way to reuse library items: instead of using yaml symbols, something like uses or inherit that pulls properties from another region
@@ -68,57 +62,46 @@
 	-	Google Drive File
 	-	Examples
 
-
 # Math Expression support
-
 
 # Booleans
 
 # Syntax
 
-# Type
--	Single Line vs Wrap
+## Region
+--	radius/diameter/x/y: particularily for setting ellipses for m3pass etc.
 
 # Polygon
---	Sizes: should follow provided bounds, maybe make radius optional, maybe consider fit/cover options
----	fix radius (not working)
+-	Sizes: should follow provided bounds, maybe make radius optional, maybe consider fit/cover options
+-	fix radius (not working)
 
-# Ellipse
-
---	radius/diameter/x/y
-
-# Plugins
+# New Regions
 -	Vertical Line
 -	Horizontal Line
 ----	Polygon as array of points
 
+# Rectangle
+-	different radius per corner?
+
 # SVG
----	SVG Import Support
-	+-----	inline svg
+---	preview: Can svg do what type does concerning preview so that you can click it, instead of bounding box
 
 
 
 # Export
 ----	Custom Export Styles: finish and document, move out of properties *UI
-+----	Support for Cut vs Etch vs Guide/Note (how about call the property `tool`, tool: cut, tool: etch)
 --	Perserve Groups on Export?: Might at least be worth looking at having the tree represented in groups so they export nested? how does it actually work now?
 --	Named Layers/Objects in export? (So its easier to understand in illustrator)
 -- 	Some kind of packing option: maybe you can mark a region as a part to opt in to packing, maybe with a quantity, and if you exportPackedSVG it just exports those items at those quantities, should be previewable
 -	Multiple file exports?
 -	Include source in exported .svg?
 
+# Filters
+-	like round/bevel inside/outside corners
+-	:http://www.whizkidtech.redprince.net/bezier/circle/kappa/
 
 # UI
-+----	General Look? @Greg
---	Quick Reference: Some sort of context aware reference, listing legal properties/values, tooltips? @Greg
----	choose unit for inspector
----	should preview pan to editor selection
----	should preview zoom to editor selection
----	think about view mode
----	list key commands
-+-----	UI Menus close when selection made
-+----	Keep UI Menus open for some tools
-
+-	think about view mode
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Build System
@@ -157,7 +140,7 @@
 
 -	nicer dialog (alert/confirm/prompt) with a library
 
-
+-	Quick Reference: Some sort of context aware reference, listing legal properties/values, tooltips? @Greg
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # rejected features
 

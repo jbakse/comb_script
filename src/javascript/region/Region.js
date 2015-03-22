@@ -530,6 +530,9 @@ Region.prototype.build = function(_isExport = false) {
 	// build own paths
 	var ownPaths = [].concat(this.drawBuild(context.bounds));
 	_.each(ownPaths, function(p) {
+		if (this.properties.name) {
+			p.name = this.properties.name;
+		}
 		var tool = this.getCascadingProperty('tool') || "cut";
 		if (_isExport) {
 			p.style = settings.exportStyles[tool];
@@ -643,6 +646,7 @@ Region.prototype._combinePaths = function(_leftPath, _rightPathSet, _op) {
 				_rightPath.scale(hScale, vScale);
 			}
 			var temp = _leftPath[_op](_rightPath);
+			temp.name = _leftPath.name;
 			_leftPath.remove();
 			_rightPath.remove();
 			_leftPath = temp;
