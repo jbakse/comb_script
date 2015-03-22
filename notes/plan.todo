@@ -10,7 +10,7 @@
 
 +-----	Shape Regions with boolean/pass don't build (change boolean/pass, boolean_pass/true)
 
------	undo on editor clears it out if there are no user changes 
++-----	undo on editor clears it out if there are no user changes 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Todo

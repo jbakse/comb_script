@@ -78,7 +78,14 @@ Editor.prototype.setText = function(_text) {
 	this.editor.setValue(_text);
 	this.editor.clearSelection();
 	this.editor.scrollToLine(0);
+	this.gotoLine(1);
+	
 	this.blockEditedEvents = false;
+	
+	setTimeout( () => {
+		this.editor.getSession().getUndoManager().reset();
+	}
+	, 1);
 };
 
 Editor.prototype.getText = function() {
