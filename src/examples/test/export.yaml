@@ -1,3 +1,6 @@
+properties:
+    name: export_test
+
 children:
     - region:
         properties:
@@ -17,14 +20,22 @@ children:
     - region:
         properties:
             name: smally
-            right: -10mm
+            left: -15mm
             width: 10mm
             height: 10mm
             group: true
+            tool: etch
+            # boolean: subtract
         children:
-            - rectangle:
-                properties:
-                    name: smally_rect
             - ellipse:
                 properties:
                     name: smally_ellipse
+            - ellipse:
+                properties:
+                    margin_top: 2mm
+                    margin_left: 2mm
+                    margin_bottom: 2mm
+                    margin_right: 2mm
+                    
+                    name: smally_inner
+                    tool: guide

@@ -78,7 +78,7 @@ ApplicationController.prototype.init = function(_element) {
 	}
 };
 
-function step(timestamp){
+function step(timestamp) {
 	TWEEN.update();
 	window.requestAnimationFrame(step);
 }
@@ -140,9 +140,6 @@ ApplicationController.prototype.attachHandlers = function() {
 
 
 
-
-
-
 ////////////////////////////////////////////////////////////////////
 // event handlers
 
@@ -169,8 +166,6 @@ ApplicationController.prototype.editorLineChanged = function(_line) {
 
 
 
-
-
 ////////////////////////////////////////////////////////////////////
 // managing selection
 
@@ -186,9 +181,9 @@ ApplicationController.prototype.selectRegionsForLine = function(_line) {
 		return _region.editorProperties.firstLine <= (_line - 1) && _region.editorProperties.lastLine >= (_line - 1);
 	});
 
-	var best = _(regions).max( (r) => r.editorProperties.firstLine );
+	var best = _(regions).max((r) => r.editorProperties.firstLine);
 
-	regions = _(regions).filter( (r) => r.editorProperties.firstLine === best.editorProperties.firstLine);
+	regions = _(regions).filter((r) => r.editorProperties.firstLine === best.editorProperties.firstLine);
 
 	// // collect ancestors of all those regions, flatten into single array
 	// var ancestors = _(regions).map(function(r) {
@@ -220,10 +215,8 @@ ApplicationController.prototype.selectRegionsForLine = function(_line) {
 	$.Topic("App/selectionChanged").publish(this.selection);
 
 
-	
+
 };
-
-
 
 
 
@@ -252,32 +245,38 @@ ApplicationController.prototype.loadYAMLfromURL = function(_url) {
 ApplicationController.prototype.exportSVG = function() {
 	log.appendMessage("Exporting SVG");
 
-	var unitScale = language.unitScales[this.doc.properties.unit] || 1;
-
-	var exportWidth = this.doc.properties.width * unitScale;
-	var exportHeight = this.doc.properties.height * unitScale;
-
-
 	var currentProject = paper.project;
 
-	var exportProject = new paper.Project($('<canvas width="' + exportWidth + '" height="' + exportHeight + '" />').get(0));
-	exportProject.activate();
-	this.doc.export();
+	{
+		var exportWidth = this.doc.properties.width.toNumber("px");
+		var exportHeight = this.doc.properties.height.toNumber("px");
+		var exportProject = new paper.Project($('<canvas width="' + exportWidth + '" height="' + exportHeight + '" />').get(0));
+		exportProject.activate();
+		this.doc.export();
 
-	var svg = exportProject.exportSVG({
-		asString: true
-	});
+		// export with project.exportSVG (creates a top level group)
+		// var svg = exportProject.exportSVG({
+		// 	asString: true
+		// });
+	
 
-	var blob = new Blob([svg], {
-		type: 'image/svg+xml'
-	});
-	var svgURL = URL.createObjectURL(blob);
-	util.downloadDataUri(this.doc.properties.name + '.svg', svgURL);
+		// export each item/group and manually wrap (to avoid top level group)	
+		var svg = `<svg x="0" y="0" width="${exportWidth}" height="${exportWidth}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">`;
+		_(exportProject.activeLayer.children).each( (child) => {
+			svg += child.exportSVG({asString: true});
+		});
+		svg += "</svg>"
 
+		// download the file
+		var blob = new Blob([svg], {
+			type: 'image/svg+xml'
+		});
+		var svgURL = URL.createObjectURL(blob);
+		util.downloadDataUri(this.doc.properties.name + '.svg', svgURL);
+	}
+	
 	currentProject.activate();
 };
-
-
 
 
 
@@ -291,7 +290,7 @@ ApplicationController.prototype.rebuild = function() {
 		this.doc = buildDocument(this.file.content);
 		this._renderDocument();
 		// console.timeEnd("build");
-		
+
 		this.selectRegionsForLine(this.editor.editor.selection.getCursor().row);
 	} catch (e) {
 		console.error("Error rebuilding YAML", e.message);
@@ -334,6 +333,3 @@ function buildDocument(_yaml) {
 
 	return doc;
 }
-
-
-

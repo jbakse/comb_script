@@ -27,12 +27,18 @@
 	: keep for now
 - 	trapping: right now trapping effects the region dimensions, so children will be affected
 	: keep for now
-	
+
+
+-	in the laguage.yamls can we add a way to raise errors for incompatible properties (setting group and boolean on the same thing....)
+
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # User Docs/Examples
 
 ----	Tool
 ----	SVG
+----	Group/Name in exports
+	----	Groups cannot be booleaned.
 
 ---	see docs.todo and example_outline.todo
 
@@ -90,8 +96,8 @@
 
 # Export
 ----	Custom Export Styles: finish and document, move out of properties *UI
---	Perserve Groups on Export?: Might at least be worth looking at having the tree represented in groups so they export nested? how does it actually work now?
---	Named Layers/Objects in export? (So its easier to understand in illustrator)
++--	Perserve Groups on Export?: Might at least be worth looking at having the tree represented in groups so they export nested? how does it actually work now?
++--	Named Layers/Objects in export? (So its easier to understand in illustrator)
 -- 	Some kind of packing option: maybe you can mark a region as a part to opt in to packing, maybe with a quantity, and if you exportPackedSVG it just exports those items at those quantities, should be previewable
 -	Multiple file exports?
 -	Include source in exported .svg?
