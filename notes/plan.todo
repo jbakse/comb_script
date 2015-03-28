@@ -95,7 +95,7 @@
 
 
 # Export
-----	Custom Export Styles: finish and document, move out of properties *UI
+---	Custom Export Styles: finish and document, move out of properties *UI
 +--	Perserve Groups on Export?: Might at least be worth looking at having the tree represented in groups so they export nested? how does it actually work now?
 +--	Named Layers/Objects in export? (So its easier to understand in illustrator)
 -- 	Some kind of packing option: maybe you can mark a region as a part to opt in to packing, maybe with a quantity, and if you exportPackedSVG it just exports those items at those quantities, should be previewable

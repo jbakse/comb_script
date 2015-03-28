@@ -88,7 +88,7 @@ ApplicationController.prototype.attachHandlers = function() {
 
 	$.Topic("File/opened").subscribe(_.bind(this.fileOpened, this));
 	$.Topic("File/closed").subscribe(_.bind(this.fileClosed, this));
-	$.Topic("Editor/edited").subscribe(_.bind(this.editorEdited, this));
+	$.Topic("Editor/edited").subscribe(_.bind(this.editorEditedDebounced, this));
 	$.Topic("Editor/lineChanged").subscribe(_.bind(this.editorLineChanged, this));
 
 	$.Topic("UI/command/loadYAML").subscribe(_.bind(this.loadYAMLfromURL, this));
@@ -158,6 +158,8 @@ ApplicationController.prototype.editorEdited = function(_content) {
 	this.file.setContent(_content);
 	this.rebuild();
 };
+
+ApplicationController.prototype.editorEditedDebounced = _.throttle(ApplicationController.prototype.editorEdited, 1000);
 
 ApplicationController.prototype.editorLineChanged = function(_line) {
 	this.selectRegionsForLine(_line);
