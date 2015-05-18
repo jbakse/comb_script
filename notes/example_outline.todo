@@ -21,6 +21,7 @@ region types
 ---	 polygon 
 +---	 text 
 +---	 regiongrid 
+---	 svg
 
 boolean
 +---	 add 
@@ -31,12 +32,14 @@ boolean
 ---	 pass
 
 advanced
+---	tools (etch, etc.)
 ---	 symbols
 ---	 boolean
 ---	 region_grids
 ---	 math 
 	- min(100px, max(0px, parent_width - 40px))
 ---	 trapping (maybe in boolean?)
+
 
 demos
 -	 comb
@@ -49,6 +52,8 @@ demos
 ---	 lamp
 ---	 desk
 ---	 drawbot
+
+
 
 
 

@@ -14,7 +14,7 @@
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Todo
-----	change key command symbols based on operating system? ctrl vs command
+----	change key command symbols (shown in menu) based on operating system? ctrl vs command
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -35,11 +35,6 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # User Docs/Examples
 
-----	Tool
-----	SVG
-----	Group/Name in exports
-	----	Groups cannot be booleaned.
-
 ---	see docs.todo and example_outline.todo
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
@@ -51,12 +46,13 @@
 
 
 # Text
---	Does text respect its bound proeprties at all?
+--	Does text respect its bound properties at all?
 --	Wrapping?
 
 # Preview
----	zoom to editor selection *UI
----	click nothing to select->doc?
+--	zoom to editor selection *UI
+--	click nothing to select->doc?
+--	center zoom on selection?
 
 # Inspector
 
@@ -90,12 +86,12 @@
 -	different radius per corner?
 
 # SVG
----	preview: Can svg do what type does concerning preview so that you can click it, instead of bounding box
+--	preview: Can svg do what type does concerning preview so that you can click it, instead of bounding box
 
 
 
 # Export
----	Custom Export Styles: finish and document, move out of properties *UI
+--	Custom Export Styles: finish and document, move out of properties *UI
 +--	Perserve Groups on Export?: Might at least be worth looking at having the tree represented in groups so they export nested? how does it actually work now?
 +--	Named Layers/Objects in export? (So its easier to understand in illustrator)
 -- 	Some kind of packing option: maybe you can mark a region as a part to opt in to packing, maybe with a quantity, and if you exportPackedSVG it just exports those items at those quantities, should be previewable

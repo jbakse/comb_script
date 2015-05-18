@@ -38,12 +38,19 @@
 	-	Many to Many
 	-	Trapping
 
+
+
 -	Using Region Grids
 	
 
 -	YAML repeated nodes
 
 ---	Exporting
+	---	Exports as SVG, open in illustrator, etc
+	---	Tools
+	----	Group/Name in exports
+		----	Groups cannot be booleaned.	
+
 
 --	Credits
 	--	Team?
