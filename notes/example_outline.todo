@@ -18,10 +18,10 @@ region types
 +---	 region 
 +---	 rectangle 
 +---	 ellipse 
----	 polygon 
+---	 polygon (g)
 +---	 text 
 +---	 regiongrid 
----	 svg
+---	 svg (g)
 
 boolean
 +---	 add 
@@ -34,9 +34,9 @@ boolean
 advanced
 ---	tools (etch, etc.)
 ---	 symbols
----	 boolean
+---	 boolean (g)
 ---	 region_grids
----	 math 
+---	 math  (g)
 	- min(100px, max(0px, parent_width - 40px))
 ---	 trapping (maybe in boolean?)
 
