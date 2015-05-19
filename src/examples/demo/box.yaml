@@ -1,0 +1,362 @@
+# glue box 
+
+properties:
+    width: max(box_width * 3 + edge_margin * 8, box_width + box_depth + edge_margin * 8)
+    height: box_height + box_depth + 2in
+
+constants:
+    box_width: 4in
+    box_height: 4in #height of the box NOT including the lid
+    box_depth: 6in
+    material_thickness: .125in
+    tab_count_w: 5
+    tab_count_h: 9
+    tab_count_d: 5
+    
+    edge_margin: .25in
+
+children:
+    - region:
+        properties:
+            name: "Sides A Width x Height"
+            width: box_width
+            height: box_height - material_thickness
+            margin_top: edge_margin
+            margin_left: edge_margin
+        children:
+            - rectangle:
+            - region_grid:
+                properties:
+                    name: "left tabs"
+                    width: material_thickness
+                    margin_left: 0in
+                    rows: tab_count_h
+                    populate: alternate
+                    boolean: subtract
+                children:
+                    - rectangle:
+                    - region:
+                    
+            - region_grid:
+                properties:
+                    name: "right tabs"
+                    width: material_thickness
+                    margin_right: 0in
+                    rows: tab_count_h
+                    populate: alternate
+                    boolean: subtract
+                children:
+                    - rectangle:
+                    - region:
+            - region_grid:
+                properties:
+                    name: "bottom tabs"
+                    height: material_thickness
+                    margin_bottom: material_thickness *-1
+                    margin_left: 0in
+                    columns: tab_count_w
+                    populate: alternate
+                    boolean: add
+                children:
+                    - region:
+                    - rectangle:
+    - region:
+        properties:
+            name: "Sides B Depth x Height"
+            width: box_depth
+            height: box_height - material_thickness
+            margin_top: edge_margin
+            margin_right: edge_margin
+        children:
+            - rectangle:
+            - region_grid:
+                properties:
+                    name: "left tabs"
+                    width: material_thickness
+                    margin_left: 0in
+                    rows: tab_count_h
+                    populate: alternate
+                    boolean: subtract
+                children:
+                    - region:
+                    - rectangle:
+                    
+            - region_grid:
+                properties:
+                    name: "right tabs"
+                    width: material_thickness
+                    margin_right: 0in
+                    rows: tab_count_h
+                    populate: alternate
+                    boolean: subtract
+                children:
+                    - region:
+                    - rectangle:
+            - region_grid:
+                properties:
+                    name: "bottom tabs"
+                    height: material_thickness
+                    margin_bottom: material_thickness *-1
+                    margin_left: 0in
+                    columns: tab_count_d
+                    populate: alternate
+                    boolean: add
+                children:
+                    - region:
+                    - rectangle:
+    - region:
+        properties:
+            name: "Side Bottom Width x Depth"
+            width: box_width
+            height: box_depth
+            margin_bottom: edge_margin
+            margin_left: edge_margin
+        children:
+            - rectangle:
+            - region_grid:
+                properties:
+                    name: "bottom left tabs"
+                    width: material_thickness
+                    margin_left: 0in
+                    rows: tab_count_d
+                    populate: alternate
+                    boolean: subtract
+                children:
+                    - region:
+                    - rectangle:
+            - region_grid:
+                properties:
+                    name: "bottom right tabs"
+                    width: material_thickness
+                    margin_right: 0in
+                    rows: tab_count_d
+                    populate: alternate
+                    boolean: subtract
+                children:
+                    - region:
+                    - rectangle:
+            - region_grid:
+                properties:
+                    name: "bottom top tabs"
+                    height: material_thickness
+                    margin_top: 0in
+                    columns: tab_count_w
+                    populate: alternate
+                    boolean: subtract
+                children:
+                    - rectangle:
+                        properties:
+                            width: 0in
+                            height: 0in
+                    - rectangle:
+            - region_grid:
+                properties:
+                    name: "bottom top tabs"
+                    height: material_thickness
+                    margin_bottom: 0in
+                    columns: tab_count_w
+                    populate: alternate
+                    boolean: subtract
+                children:
+                    - region:
+                    - rectangle:
+    - rectangle:
+        properties:
+            name: "Lid Width x Depth"
+            width: box_width
+            height: box_depth
+            margin_bottom: edge_margin
+            margin_right: edge_margin
+    - rectangle:
+        properties:
+            name: "Lid inner Width x Depth"
+            width: box_width - (material_thickness*2)
+            height: box_depth - (material_thickness*2)
+            margin_bottom: edge_margin
+            margin_right: box_width + edge_margin * 4
+    
+                    
+                    
+                        
+                
+# glue box 
+
+properties:
+    width: max(box_width * 3 + edge_margin * 8, box_width + box_depth + edge_margin * 8)
+    height: box_height + box_depth + 2in
+
+constants:
+    box_width: 4in
+    box_height: 4in #height of the box NOT including the lid
+    box_depth: 6in
+    material_thickness: .125in
+    tab_count_w: 5
+    tab_count_h: 9
+    tab_count_d: 5
+    
+    edge_margin: .25in
+
+children:
+    - region:
+        properties:
+            name: "Sides A Width x Height"
+            width: box_width
+            height: box_height - material_thickness
+            margin_top: edge_margin
+            margin_left: edge_margin
+        children:
+            - rectangle:
+            - region_grid:
+                properties:
+                    name: "left tabs"
+                    width: material_thickness
+                    margin_left: 0in
+                    rows: tab_count_h
+                    populate: alternate
+                    boolean: subtract
+                children:
+                    - rectangle:
+                    - region:
+                    
+            - region_grid:
+                properties:
+                    name: "right tabs"
+                    width: material_thickness
+                    margin_right: 0in
+                    rows: tab_count_h
+                    populate: alternate
+                    boolean: subtract
+                children:
+                    - rectangle:
+                    - region:
+            - region_grid:
+                properties:
+                    name: "bottom tabs"
+                    height: material_thickness
+                    margin_bottom: material_thickness *-1
+                    margin_left: 0in
+                    columns: tab_count_w
+                    populate: alternate
+                    boolean: add
+                children:
+                    - region:
+                    - rectangle:
+    - region:
+        properties:
+            name: "Sides B Depth x Height"
+            width: box_depth
+            height: box_height - material_thickness
+            margin_top: edge_margin
+            margin_right: edge_margin
+        children:
+            - rectangle:
+            - region_grid:
+                properties:
+                    name: "left tabs"
+                    width: material_thickness
+                    margin_left: 0in
+                    rows: tab_count_h
+                    populate: alternate
+                    boolean: subtract
+                children:
+                    - region:
+                    - rectangle:
+                    
+            - region_grid:
+                properties:
+                    name: "right tabs"
+                    width: material_thickness
+                    margin_right: 0in
+                    rows: tab_count_h
+                    populate: alternate
+                    boolean: subtract
+                children:
+                    - region:
+                    - rectangle:
+            - region_grid:
+                properties:
+                    name: "bottom tabs"
+                    height: material_thickness
+                    margin_bottom: material_thickness *-1
+                    margin_left: 0in
+                    columns: tab_count_d
+                    populate: alternate
+                    boolean: add
+                children:
+                    - region:
+                    - rectangle:
+    - region:
+        properties:
+            name: "Side Bottom Width x Depth"
+            width: box_width
+            height: box_depth
+            margin_bottom: edge_margin
+            margin_left: edge_margin
+        children:
+            - rectangle:
+            - region_grid:
+                properties:
+                    name: "bottom left tabs"
+                    width: material_thickness
+                    margin_left: 0in
+                    rows: tab_count_d
+                    populate: alternate
+                    boolean: subtract
+                children:
+                    - region:
+                    - rectangle:
+            - region_grid:
+                properties:
+                    name: "bottom right tabs"
+                    width: material_thickness
+                    margin_right: 0in
+                    rows: tab_count_d
+                    populate: alternate
+                    boolean: subtract
+                children:
+                    - region:
+                    - rectangle:
+            - region_grid:
+                properties:
+                    name: "bottom top tabs"
+                    height: material_thickness
+                    margin_top: 0in
+                    columns: tab_count_w
+                    populate: alternate
+                    boolean: subtract
+                children:
+                    - rectangle:
+                        properties:
+                            width: 0in
+                            height: 0in
+                    - rectangle:
+            - region_grid:
+                properties:
+                    name: "bottom top tabs"
+                    height: material_thickness
+                    margin_bottom: 0in
+                    columns: tab_count_w
+                    populate: alternate
+                    boolean: subtract
+                children:
+                    - region:
+                    - rectangle:
+    - rectangle:
+        properties:
+            name: "Lid Width x Depth"
+            width: box_width
+            height: box_depth
+            margin_bottom: edge_margin
+            margin_right: edge_margin
+    - rectangle:
+        properties:
+            name: "Lid inner Width x Depth"
+            width: box_width - (material_thickness*2)
+            height: box_depth - (material_thickness*2)
+            margin_bottom: edge_margin
+            margin_right: box_width + edge_margin * 4
+    
+                    
+                    
+                        
+                
