@@ -2,6 +2,7 @@
   "name": "Comb_Script",
   "version": "0.0.3",
   "description": "The BEST Way to Design a Comb.",
+  "license":  "MIT",
   "main": "dist/main.js",
   "author": "Justin Bakse",
   "devDependencies": {

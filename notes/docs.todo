@@ -1,7 +1,7 @@
 -	Introduction 
-	--- github mention
-	--- version mention
-	
+	- github mention
+	- feature list
+
 -	Basics
 	-	YAML
 	-	Hello World
@@ -45,16 +45,16 @@
 
 -	YAML repeated nodes
 
----	Exporting
-	---	Exports as SVG, open in illustrator, etc
-	---	Tools
-	----	Group/Name in exports
-		----	Groups cannot be booleaned.	
+-	Exporting
+	-	Exports as SVG, open in illustrator, etc
+	-	Name
+	-	Group
+	-	Tools
 
 
---	Credits
-	--	Team?
-	--	Libraries
+-	Credits
+	-	Team?
+	-	Libraries
 
 
 

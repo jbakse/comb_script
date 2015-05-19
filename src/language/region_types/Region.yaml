@@ -121,7 +121,7 @@ Region:
             default: .0001cm
 
         -   keyword: group
-            description: EXPERIMENTAL should this region's shapes be grouped on export
+            description: "If true, this region's shapes will be grouped on export."
             type: boolean
             default: false
             values: [true, false]

@@ -1,11 +1,12 @@
 section#introduction
 	:markdown
-		# Introduction
+		# CombScript
 
 		CombScript is a language for describing technical vector designs and a tool that exports these designs as SVG files. A primary goal of CombScript is to express designs naturally, so they are easier to adjust and customize.
 
 		CombScript was inspired by [OpenSCAD](http://www.openscad.org/), CSS, HTML, and Adobe Illustrator snapping shenanigans.
 
+		CombScript is an open source project under the MIT license, source code is available on [Github](https://github.com/jbakse/comb_script).
 		
 		-   ###Parametric
 
@@ -333,8 +334,45 @@ section#exporting
 
 	:markdown
 		# Exporting
+		CombScript documents can be exported as `.svg` files for use with other software.
+		You can specify names, groups, and tools to control how the shape data will appear in the exported `.svg`.
 
-		lorem ipsum
+		
+		## Names
+		The `name` property can be used to specify a name for a region. 
+		This name is displayed in the UI breadcrumbs, and will be assigned to the shape when exported.
+		If the document properties includes a name, it will be used for the document filename.
+
+		## Groups
+		Setting the `group` property to `true` on a region will cause the region's shapes to be grouped in the export. Groups are skipped in boolean operations.
+
+		## Tools
+		Some laser cutters and other tools use stroke color to identify how a shape should be handled.
+		Setting the `tool` property controls the stroke color for a region in the export.
+		Possible values are `cut` (red), `etch` (green), and `guide` (blue). Tool colors cannot be customized at this time.
+
+
+
+
+
+
+section#credits
+
+	:markdown
+		# Credits
+
+		## Authors
+		CombScript was created by [Justin Bakse](http://justinbakse.com) 
+		and [Greg Schomburg](http://gregschomburg.com), with contributions by
+		Sara Page.
+
+		## Libraries
+		CombScript builds on dozens of opensource web projects, big and small. 
+		Including: [Paper.js](http://paperjs.org/), [Math.js](http://mathjs.org/), [Ace](http://ace.c9.io/), [JS-Yaml](http://nodeca.github.io/js-yaml/), [jQuery](https://jquery.com/), and [Underscore](http://underscorejs.org/)
+
+		# License
+		CombScript is distributed under the MIT License. Source is available at https://github.com/jbakse/comb_script.
+
 
 section#language-reference
 	h1.bump Language Reference
