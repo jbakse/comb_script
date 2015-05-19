@@ -1,0 +1,36 @@
+children:
+    - rectangle:
+        properties:
+            width: 1in
+            height: 2in
+        children:
+
+
+
+            - region_grid:
+                properties:
+                    width: .5in
+                    rows: 6
+                    populate: alternate
+                    boolean: subtract
+                children:
+                    - region:
+                    - ellipse:
+                    - ellipse:
+
+            # - region:
+            #     properties:
+            #         boolean: subtract
+            #         name: parent
+            #     children:
+            #         - region:
+            #             properties:
+            #                 width: 1in
+            #                 height: 1in
+            #                 name: badseed
+                    
+            #         - ellipse:
+            #             properties:
+            #                 width: 1in
+            #                 height: 1in
+            #                 name: goodseed

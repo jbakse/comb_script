@@ -552,11 +552,7 @@ Region.prototype.build = function(_isExport = false) {
 	var childOps = [];
 
 	// collectBooleanChildren
-	// we are about to boolean each of this region's children against this region
-	// if a child has boolean pass set, we need to include that child's children (recursively)
-	// this function collects the eligible decendants
 	var booleanChildren = [];
-
 	function collectBooleanChildren(_node) {
 		_(_node.children).each(
 			function(_childNode) {
@@ -571,14 +567,13 @@ Region.prototype.build = function(_isExport = false) {
 	if (this.properties.boolean_pass !== true) {
 		collectBooleanChildren(this);
 	}
-
-
 	_.each(booleanChildren, function(_child) {
 		var s = _child.build(_isExport);
-		childPathSets.push(s);
-		childOps.push(booleanOperations[_child.properties.boolean]);
+		if (s.length > 0) {
+			childPathSets.push(s);
+			childOps.push(booleanOperations[_child.properties.boolean]);
+		}
 	});
-
 
 
 	// arrange operands
