@@ -8,20 +8,25 @@ Polygon:
         Polygon draws a polygon.
         </p>
         <pre>
-        #radius isn't working
         children:
             - polygon:
                 properties:
-                    radius: 20px
+                    radius: 100px
                     sides: 5
         </pre>
 
     properties:
         -   keyword: radius
-            description: radius of the polygon
+            description: radius of the polygon. Setting radius will override any scale the scale property
             type: dimension
 
         -   keyword: sides
             description: number of sides of the polygon
             type: number
             default: 8
+
+        -   keyword: scale
+            description: how to scale the polygon to fit the bounding box if radius is not set
+            type: string
+            default: fit
+            values: [cover, contain, fit]

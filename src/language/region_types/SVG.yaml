@@ -22,4 +22,5 @@ SVG:
         -   keyword: scale
             description: how to scale the svg to fit the bounding box
             type: string
+            default: none
             values: [cover, contain, fit, none]

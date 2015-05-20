@@ -8,5 +8,7 @@ children:
     #this is a polygon
     - polygon:
         properties:
+        	radius: 20mm
             width: 40mm
             height: 60mm
+            scale: cover
