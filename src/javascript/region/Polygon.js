@@ -21,14 +21,15 @@ Polygon.prototype.drawBuild = function(_bounds) {
 	// var boundsPath = new paper.Path.RegularPolygon(new paper.Point(0, 0), 8, 50);
 	// return boundsPath;
 	var polygon;
+	var center = new paper.Point(_bounds.x + _bounds.width/2, _bounds.y + _bounds.height/2);
 	if (this.properties.radius){
 		console.log("props width " + this.properties.width);
 		var r = null;
 		r = this.properties.radius.toNumber("px");
-		polygon = new paper.Path.RegularPolygon(new paper.Point(_bounds.x + _bounds.width/2, _bounds.y + _bounds.height/2), this.properties.sides, r);
+		polygon = new paper.Path.RegularPolygon(center, this.properties.sides, r);
 
 	}else{
-		polygon = new paper.Path.RegularPolygon(new paper.Point(_bounds.x + _bounds.width/2, _bounds.y + _bounds.height/2), this.properties.sides, _bounds.height/2);
+		polygon = new paper.Path.RegularPolygon(center, this.properties.sides, _bounds.height/2);
 
 		if (this.properties.scale === "fit") {
 			polygon.scale(_bounds.size.divide(polygon.bounds.size));

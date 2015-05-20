@@ -17,16 +17,16 @@ Polygon:
 
     properties:
         -   keyword: radius
-            description: radius of the polygon. Setting radius will override any scale the scale property
+            description: Radius of the polygon. Setting radius will ignore the scale property.
             type: dimension
 
         -   keyword: sides
-            description: number of sides of the polygon
+            description: Number of sides of the polygon
             type: number
             default: 8
 
         -   keyword: scale
-            description: how to scale the polygon to fit the bounding box if radius is not set
+            description: How to scale the polygon to fit the bounding box if radius is not set.
             type: string
             default: fit
             values: [cover, contain, fit]

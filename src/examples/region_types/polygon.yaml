@@ -1,14 +1,17 @@
-# Dimension properties must have a unit specified
-
 properties:
-    width: 150mm
+    width: 250mm
     height: 150mm
 
 children:
-    #this is a polygon
     - polygon:
         properties:
-        	radius: 20mm
-            width: 40mm
-            height: 60mm
-            scale: cover
+            radius: 50mm
+            #when radius is set width and height are only used for adjusting the container
+            #scale is ignored all together
+            width: 125mm
+            margin_left: 0mm
+    - polygon:
+        properties:
+            width: 125mm
+            margin_right: 0mm
+            scale: fit
