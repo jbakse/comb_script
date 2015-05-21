@@ -54,6 +54,8 @@ RegionGrid.prototype.generateChildren = function() {
 		gridChild.root = this.root;
 		gridChild.properties.name = this.properties.name + "_" + i;
 		gridChild.context = gridContext;
+		gridChild.properties.boolean_pass = true;
+		
 
 		this.children.push(gridChild);
 

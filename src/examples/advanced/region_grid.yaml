@@ -1,0 +1,29 @@
+children:
+    - rectangle:
+        properties:
+            width: 2cm
+            height: 9cm
+
+        children:
+
+            - region_grid:
+                properties:
+                    width: 1cm
+
+                    left: .5cm
+                    row_height: 1cm
+                    populate: alternate
+                    registration: center
+                    boolean_pass: true
+
+
+                children:
+                    - ellipse:
+                        properties: 
+                            boolean: add
+                    - rectangle:
+                        properties:
+                            width: 5mm
+                            height: 5mm
+                            rotation: 45deg
+                            boolean: subtract
