@@ -1,0 +1,64 @@
+
+constants:
+    rect_a_width: 30mm
+    rect_b_width: 50mm
+
+    slot_a_width: 10mm
+    slot_b_width: 30mm
+
+properties:
+    width: 100mm
+    height: 100mm
+    name: Min Max
+
+children:
+    - region:
+        properties:
+            name: Min
+            #make sure that slot c will fit inside of rect a and b
+            bottom: -10mm
+            registration: center
+        children:
+            - rectangle:
+                properties:
+                    width: rect_a_width
+                    height: 20mm
+                    bottom: 0mm
+            - rectangle:
+                properties:
+                    width: rect_b_width
+                    height: 20mm
+                    top: 0mm
+                    boolean: add
+
+            - rectangle:
+                properties:
+                    name: slot c
+                    width: min(rect_a_width, rect_b_width) - 5mm
+                    height: 20mm
+                    boolean: subtract
+
+    - rectangle:
+        properties:
+            name: Max
+            #make the this rectangle wide enough to fit it's children
+            width: max(slot_a_width, slot_b_width) + 5mm
+            top: 10mm
+            registration: center
+        children:
+            - rectangle:
+                properties:
+                    name: slot a
+                    width: slot_a_width
+                    height: 10mm
+                    bottom: -5mm
+                    boolean: subtract
+
+            - rectangle:
+                properties:
+                    name: slot b
+                    width: slot_b_width
+                    height: 10mm
+                    top: 5mm
+                    boolean: subtract
+    
