@@ -1,0 +1,52 @@
+properties:
+    width: 100mm
+    height: 100mm
+    name: Socket Joint
+    
+constants:
+    jointSize: 20mm
+    jointLength: 70mm
+
+children:
+    - region:
+        properties:
+            width: jointSize
+            height: jointLength
+            
+        children:
+            - ellipse:
+                properties:
+                    width: jointSize
+                    height: jointSize
+                    margin_top: 0mm
+            - rectangle:
+                properties:
+                    width: jointSize * .25
+                    margin_top: jointSize / 2
+                    margin_bottom: jointSize
+                    boolean: add
+            - ellipse:
+                properties:
+                    width: jointSize * 2
+                    height: jointSize * 2
+                    margin_bottom: 0mm
+                    boolean: add
+                   
+            - ellipse:
+                properties:
+                    width: jointSize
+                    height: jointSize
+                    margin_bottom: jointSize / 2
+                    boolean: subtract
+                    rotation: 45deg
+                    registration: center
+                children:
+                    - rectangle:
+                        properties:
+                            top: 0mm
+                            left: 0mm
+                            height: jointSize * 1.5
+                            width: jointSize * 1.5
+                            boolean: add
+
+                    
