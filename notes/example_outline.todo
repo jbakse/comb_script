@@ -37,14 +37,14 @@ advanced
 +---	boolean (g)
 +---	region_grids (j)
 -	math  (g)
----	min/max (g)
++---	min/max (g)
 	?- min(100px, max(0px, parent_width - 40px))
 ---	trapping (maybe in boolean?)
 
 
 demos
 -	 comb
-----	finger joint box (name)
++----	finger joint box (name)
 ---	stool (from justin)
 ---	desk (from justin)
 
