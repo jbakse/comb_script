@@ -35,7 +35,7 @@ advanced
 +---	tools (etch, etc.) (creat from test)
 ---	symbols
 +---	boolean (g)
----	region_grids (j)
++---	region_grids (j)
 -	math  (g)
 ---	min/max (g)
 	?- min(100px, max(0px, parent_width - 40px))
