@@ -32,26 +32,28 @@ boolean
 ---	 pass
 
 advanced
----	tools (etch, etc.)
----	 symbols
-+---	 boolean (g)
----	 region_grids
----	 math  (g)
-	- min(100px, max(0px, parent_width - 40px))
----	 trapping (maybe in boolean?)
++---	tools (etch, etc.) (creat from test)
+---	symbols
++---	boolean (g)
+---	region_grids (j)
+-	math  (g)
+---	min/max (g)
+	?- min(100px, max(0px, parent_width - 40px))
+---	trapping (maybe in boolean?)
 
 
 demos
 -	 comb
----	 tslot box
----	 finger joint box
----	 stool
----	 table
----	 chair 
+----	finger joint box (name)
+---	stool (from justin)
+---	desk (from justin)
 
----	 lamp
----	 desk
----	 drawbot
+
+-	tslot box
+---	table
+---	chair 
+---	lamp
+---	drawbot
 
 
 

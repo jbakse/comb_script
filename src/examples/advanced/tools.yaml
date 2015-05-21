@@ -1,49 +1,59 @@
 children:
     - ellipse:
         properties:
+            tool: etch
+
             width: 3cm
             height: 3cm
             margin_left: 0cm
             registration: center
-            tool: etch
+
         children:
             - ellipse:
                 properties:
+                    # tool will be etch from parent
                     width: 2cm
                     height: 2cm
 
     - ellipse:
         properties:
+            tool: etch
             width: 3cm
             height: 3cm
             registration: center
-            tool: etch
-            # margin_left: 0cm
+
+
         children:
             - ellipse:
                 properties:
+                    tool: cut
+                    # tool will be cut, overriding parent
                     width: 2cm
                     height: 2cm
-                    tool: cut
+
 
     - ellipse:
         properties:
+            tool: guide
             width: 3cm
             height: 3cm
             margin_right: 0cm
             registration: center
-            tool: guide
+
         children:
             - ellipse:
                 properties:
+                    tool: cut
                     width: 2cm
                     height: 2cm
-                    # boolean: add
-                    tool: cut
+
             - ellipse:
                 properties:
+                    tool: cut
+                    # assign to cut won't work, because this shape is subtracted from parent
+
                     width: 2cm
                     height: 2cm
                     top: 0cm
                     boolean: subtract
-                    tool: cut
+
