@@ -2,17 +2,18 @@ properties:
     width: 100mm
     height: 100mm
     name: Socket Joint
-    
+
 constants:
     jointSize: 20mm
     jointLength: 70mm
+    neckSize: 8mm
 
 children:
     - region:
         properties:
             width: jointSize
             height: jointLength
-            
+
         children:
             - ellipse:
                 properties:
@@ -21,7 +22,7 @@ children:
                     margin_top: 0mm
             - rectangle:
                 properties:
-                    width: jointSize * .25
+                    width: neckSize
                     margin_top: jointSize / 2
                     margin_bottom: jointSize
                     boolean: add
@@ -31,7 +32,7 @@ children:
                     height: jointSize * 2
                     margin_bottom: 0mm
                     boolean: add
-                   
+
             - ellipse:
                 properties:
                     width: jointSize
@@ -43,10 +44,9 @@ children:
                 children:
                     - rectangle:
                         properties:
-                            top: 0mm
-                            left: 0mm
+                            top: -neckSize * .5
+                            left: -neckSize * .5
                             height: jointSize * 1.5
                             width: jointSize * 1.5
                             boolean: add
 
-                    
