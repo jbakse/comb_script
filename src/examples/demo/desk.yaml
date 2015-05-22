@@ -1,0 +1,429 @@
+properties:
+    name: desk
+    width: 8ft
+    height: 4ft
+
+constants:
+    desk_height: 28in
+    desk_depth: 24in
+    desk_length: 3ft + 11in
+    shelf_under_height: 22in
+    shelf_tab_margin: 1in
+    under_shelf_margin: .5in
+    material_thickness: .75in
+    tool_radius: .25in    
+    slot_margin: 2in
+    joist_height: 6in
+    joist_neck: 2in
+    joist_radius: 1in
+
+library:
+    - &slot
+        - rectangle:
+            properties:
+                trapping: -0.0001inch
+        
+        - rectangle:
+            properties:
+                margin_left: -tool_radius
+                margin_right: -tool_radius
+                height: tool_radius * 2
+                radius: tool_radius
+                margin_top: 0in
+
+        - rectangle:
+            properties:
+                margin_left: -tool_radius
+                margin_right: -tool_radius
+                height: tool_radius * 2
+                radius: tool_radius
+                margin_bottom: 0in
+
+                
+    - &hslot
+        - rectangle:
+            properties:
+                trapping: .0001in
+                 
+        - rectangle:
+            properties:
+                left: parent_left
+                width: tool_radius * 2
+                margin_top: -tool_radius
+                margin_bottom: -tool_radius
+                radius: tool_radius
+                
+        - rectangle:
+            properties:
+                right: parent_right
+                width: tool_radius * 2
+                margin_top: -tool_radius
+                margin_bottom: -tool_radius
+                radius: tool_radius
+    - &tab
+        - rectangle:
+            properties:
+                boolean: add
+                trapping: .0001in
+                 
+        - rectangle:
+            properties:
+                right: parent_left
+                width: tool_radius * 2
+                margin_top: -tool_radius
+                margin_bottom: -tool_radius
+                radius: tool_radius
+                boolean: subtract
+                
+        - rectangle:
+            properties:
+                left: parent_right
+                width: tool_radius * 2
+                margin_top: -tool_radius
+                margin_bottom: -tool_radius
+                radius: tool_radius
+                boolean: subtract
+                
+    - &vtab
+        - rectangle:
+            properties:
+                boolean: add
+                trapping: .0001in
+                 
+        - rectangle:
+            properties:
+                bottom: parent_top
+                height: tool_radius * 2
+                margin_left: -tool_radius
+                margin_right: -tool_radius
+                radius: tool_radius
+                boolean: subtract
+                
+        - rectangle:
+            properties:
+                top: parent_bottom
+                height: tool_radius * 2
+                margin_left: -tool_radius
+                margin_right: -tool_radius
+                radius: tool_radius
+                boolean: subtract        
+children:
+    - region_grid:             
+        properties:
+            name: pages
+            width: 8ft
+            height: 5 * 4ft
+            rows: 5
+            registration: center
+            populate: alternate
+        
+        children:
+            - rectangle:
+                properties:
+                    name: leg
+                    group: true
+                    width: desk_depth
+                    height: desk_height - material_thickness
+                
+                children:
+                    - region:
+                        properties:
+                            name: front_connections
+                            margin_left: 0inch
+                            right: 0inch
+                            boolean_pass: true
+                            
+                        children: &leg_connections
+                            - region:
+                                properties:
+                                    name: top_tab
+                                    bottom: parent_top
+                                    margin_left: slot_margin
+                                    margin_right: slot_margin
+                                    height: material_thickness
+                                    boolean_pass: true
+                                children: *tab
+                                
+                            - region:
+                                properties:
+                                    width: material_thickness
+                                    margin_left: slot_margin - material_thickness
+                                    margin_top: -2inch
+                                    bottom: parent_top + slot_margin
+                                    boolean: subtract
+                                children: *slot
+                                
+                            - region:
+                                properties:
+                                    width: material_thickness
+                                    margin_right: slot_margin - material_thickness
+                                    margin_top: -2inch
+                                    bottom: parent_top + slot_margin
+                                    boolean: subtract
+                                children: *slot
+                            
+                            - region:
+                                properties:
+                                    name: shelf_slot
+                                    bottom: parent_bottom - shelf_under_height
+                                    margin_left: slot_margin + under_shelf_margin + shelf_tab_margin
+                                    margin_right: slot_margin + under_shelf_margin + shelf_tab_margin
+                                    height: material_thickness
+                                    boolean: subtract
+                                children: *hslot
+                                
+                    - region:
+                        properties:
+                            name: back_connections
+                            margin_right: 0inch
+                            left: 0inch
+                            boolean_pass: true
+                        children: *leg_connections
+                    
+                    - rectangle:
+                        properties:
+                            margin_left: 4in
+                            margin_right: 4in
+                            top: parent_bottom - shelf_under_height + slot_margin
+                            margin_bottom: -joist_radius
+                            radius: joist_radius
+                            boolean: subtract
+                            
+            
+            - region:
+                properties:
+                    name: top
+                    group: true
+                    width: desk_length
+                    height: desk_depth
+                    # tool: guide
+                children:
+                    - rectangle:
+                        properties:
+                            name: top_back
+                            
+                            height: desk_depth * .5
+                            tool: cut
+                            margin_top: 0in
+                        children: &slots
+                            - region:
+                                properties:
+                                    width: material_thickness
+                                    height: 12in
+                                    margin_left: slot_margin
+                                    margin_top: slot_margin
+                                    margin_bottom: slot_margin
+                                    boolean: subtract
+                                children: *slot
+                            
+                            - region:
+                                properties:
+                                    width: material_thickness
+                                    height: 12in
+                                    margin_right: slot_margin
+                                    margin_top: slot_margin
+                                    margin_bottom: slot_margin
+                                    boolean: subtract
+                                children: *slot
+                            
+                            - rectangle:
+                                properties:
+                                    height: 1/8inch
+                                    # margin_left: slot_margin
+                                    boolean: subtract
+                            
+                            - rectangle:
+                                properties:
+                                    height: .75in
+                                    
+                                    margin_left: slot_margin * 2 + material_thickness
+                                    margin_right: slot_margin * 2 + material_thickness
+                                    radius: tool_radius
+                                    boolean: subtract
+                                    
+                            - rectangle:
+                                properties:
+                                    height: .75in
+                                    bottom: -desk_depth*.25 + .75in*.5
+                                    margin_left: slot_margin * 2 + material_thickness
+                                    margin_right: slot_margin * 2 + material_thickness
+                                    radius: tool_radius
+                                    boolean: subtract
+                                    registration: center
+                                children:
+                                    - rectangle:
+                                        properties:
+                                            width: .75in + tool_radius * 4
+                                            height: .75in + tool_radius * 4
+                                            margin_left: 0in
+                                            # registration: center
+                                            # rotation: 45deg
+                                            radius: tool_radius
+                                            boolean: add
+                                            
+                                        children:
+                                            # - rectangle:
+                                            #     properties:
+                                            #         width: .25inch
+                                            #         height: .25inch
+                                            #         left: parent_right
+                                            #         margin_top: tool_radius #+ .125inch
+                                            #         registration: top_right
+                                            #         boolean: add
+                                            #         trapping: .001in
+                                            #     children:
+                                            #         - ellipse:
+                                            #             properties:
+                                            #                 width: tool_radius * 2
+                                            #                 height: tool_radius * 2
+                                            #                 boolean: subtract
+                                                
+                                            # - rectangle:
+                                            #     properties:
+                                            #         width: .25inch
+                                            #         height: .25inch
+                                            #         left: parent_right
+                                            #         margin_bottom: tool_radius #+ .125in
+                                            #         registration: bottom_right
+                                            #         boolean: add
+                                            #         trapping: .001in
+                                            #     children:
+                                            #         - ellipse:
+                                            #             properties:
+                                            #                 width: tool_radius * 2
+                                            #                 height: tool_radius * 2
+                                            #                 boolean: subtract    
+                                                    
+                                                
+                                    
+                    - rectangle:
+                        properties:
+                            name: top_front
+                            height: desk_depth * .5
+                            tool: cut
+                            margin_bottom: 0in
+                        children: *slots
+                    
+            - rectangle:
+                properties:
+                    name: joist
+                    width: desk_length
+                    height: joist_height
+                
+                children:
+
+                    - region:
+                        properties:
+                            width: material_thickness
+                            margin_left: slot_margin
+                            margin_top: joist_neck
+                            margin_bottom: -1inch
+                            boolean: subtract
+                        children: *slot
+                    - region:
+                        properties:
+                            width: material_thickness
+                            margin_right: slot_margin
+                            margin_top: joist_neck
+                            margin_bottom: -1inch
+                            boolean: subtract
+                        children: *slot
+                        
+                    - rectangle:
+                        properties:
+                            height: .75in
+                            margin_top: -.75inch  * .5
+                            margin_left: slot_margin * 2 + material_thickness
+                            width: 6in
+                            radius: tool_radius
+                            boolean: subtract 
+                            
+                    - rectangle:
+                        properties:
+                            height: .75in
+                            margin_top: -.75inch  * .5
+                            width: 6in
+                            margin_right: slot_margin * 2 + material_thickness
+                            radius: tool_radius
+                            boolean: subtract 
+            
+            - rectangle:
+                properties:
+                    name: front_joist
+                    width: desk_length
+                    height: joist_height
+                
+                children:
+
+                    - region:
+                        properties:
+                            width: material_thickness
+                            margin_left: slot_margin
+                            margin_top: slot_margin
+                            margin_bottom: -1inch
+                            boolean: subtract
+                        children: *slot
+                        
+                    - region:
+                        properties:
+                            width: material_thickness
+                            margin_right: slot_margin
+                            margin_top: slot_margin
+                            margin_bottom: -1inch
+                            boolean: subtract
+                        children: *slot
+                    
+                    - rectangle:
+                        properties:
+                            margin_left: 2 * slot_margin + material_thickness
+                            margin_right: 2 * slot_margin + material_thickness
+                            margin_top: joist_neck
+                            margin_bottom: -joist_radius
+                            radius: joist_radius
+                            boolean: subtract
+                            
+                        
+            - rectangle:
+                properties:
+                    name: shelf
+                    width: desk_length - 2 * (slot_margin + material_thickness)
+                    height: desk_depth * .5 - 2 * (slot_margin + under_shelf_margin)
+                children:
+                    - rectangle: 
+                        properties:
+                            name: cord_drop
+                            margin_left: 4in
+                            width: 2in
+                            margin_top: -tool_radius
+                            height: 1in + tool_radius
+                            radius: tool_radius
+                            boolean: subtract
+                            
+                    - rectangle: 
+                        properties:
+                            name: cord_drop
+                            margin_left: 4in
+                            width: 2in
+                            margin_bottom: -tool_radius
+                            height: 1in + tool_radius
+                            radius: tool_radius
+                            boolean: subtract
+                            
+                            
+                    - region:
+                        properties:
+                            margin_top: shelf_tab_margin
+                            margin_bottom: shelf_tab_margin
+                            width: material_thickness
+                            right: parent_left
+                            boolean_pass: true
+                        children: *vtab
+                    - region:
+                        properties:
+                            margin_top: shelf_tab_margin
+                            margin_bottom: shelf_tab_margin
+                            width: material_thickness
+                            left: parent_right
+                            boolean_pass: true
+                        children: *vtab
+        

@@ -1,0 +1,20 @@
+children:
+    - rectangle:
+        properties:
+            width: 10cm
+            height: 10cm
+        
+        children:
+        
+            - ellipse:
+                properties:
+                    width: 1cm
+                    height: 1cm
+                    left: parent_right + 2mm    
+
+            - rectangle:
+                properties:
+                    width: 1cm
+                    height: 1cm
+                    top: parent_bottom * .25
+                    bottom: parent_bottom * .75

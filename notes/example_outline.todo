@@ -9,9 +9,9 @@ layout
 +---	 positioning
 +---	 margins
 +---	 registration 
----	 parent bounds
++---	 parent bounds
 +---	 rotation 
----	 scale 
+---	 scale ?
 ---	 translate ?
 
 region types
@@ -46,7 +46,7 @@ demos
 -	 comb
 +----	finger joint box (name)
 ---	stool (from justin)
----	desk (from justin)
++---	desk (from justin)
 
 
 -	tslot box
