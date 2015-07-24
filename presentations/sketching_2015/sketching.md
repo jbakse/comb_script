@@ -99,9 +99,10 @@ We wish web apps could save and load to the local filesystem
 ---
 
 ## Under the Hood
-	- Performance Enhancements (No, Really)
-	- Updated Libraries
-	- New Build System
+
+- Performance Enhancements (No, Really)
+- Updated Libraries
+- New Build System
  
 ---
 
@@ -110,16 +111,19 @@ We wish web apps could save and load to the local filesystem
 ---
 
 ## Parametric Boxes
+
 		[code, drawing, photos]
 
 ---
 
 ## Camera Speed Rail
+
 		[code, drawing, photos]
 
 ---
 
 ## Desk and Stool
+
 		[code, drawing, photos]
 
 
@@ -127,12 +131,15 @@ We wish web apps could save and load to the local filesystem
 
 # Whats Next?
 
-- We Don't Know? 
+- We Don't Know. 
 - Will it even be used?
+- We have some ideas, but using it is probably more important than improving it at this point.
 
 ---
 
 # See Also
+
+Some related projects:
 
 - http://microsoft.github.io/maker.js/demos/
 - http://openjscad.org/
