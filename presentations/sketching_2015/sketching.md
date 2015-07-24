@@ -9,11 +9,6 @@
 
 ---
 
-# Gillete Video Room
-[images]
-
----
-
 # Combscript
 
 - Language and editor for designing for laser cutters and CNC machines
