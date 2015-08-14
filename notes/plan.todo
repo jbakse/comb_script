@@ -1,4 +1,28 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# Sketching 2015 ideas
+
+---	consider using http://electron.atom.io/ to make standalone with filesystem access
+	---	this will make multi file (#include) projects much easier
+
+---	auto dog boning (evil mad science)
+---	auto t boning (evil mad science)
+---	use as a post processing tool (processing->combscript cleanup->export) (tom igoe)
+	---	or maybe show how to include javascript generators
+
+---	kerf assit (Jan Borchers)
+
+---	standard lib
+	--- e.g. arduino mounting holes
+
+---	rotational (region_fan?) (Paula Te) (Tiffany Tseng)
+
+---	the "brief" "pithy" syntax
+
+---	easy access to older versions of the interpreter
+
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # 
 # New Features (DOCUMENT ME)
 
 
