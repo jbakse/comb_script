@@ -62,12 +62,12 @@ Then open http://localhost:8000/.
 
 ## Deploy
 
-The site is hosted on Netlify at https://combscript.justinbakse.com/. Netlify doesn't build it. Deploy a local build with the Netlify CLI:
+The site is hosted on Netlify at https://combscript.justinbakse.com/ (the `combscript` project in Justin's personal Netlify team, `jbakse`). Netlify doesn't build it. Deploy a local build with the Netlify CLI, logged in to the personal account (`npx netlify-cli switch` to change accounts):
 
 ```bash
-npx netlify-cli deploy --prod --dir build
+npx netlify-cli deploy --prod --dir build --site 510f7219-5711-479c-894e-20d2e8776d9d
 ```
 
-The first run asks which Netlify site to deploy to (and saves the answer in `.netlify/`).
+Netlify's Pretty URLs setting rewrites links like `./docs.html#introduction` to `/docs#introduction` as it serves the HTML. Both forms work.
 
 `scripts/live.sh` is the old rsync deploy to DreamHost, which no longer hosts the site.
