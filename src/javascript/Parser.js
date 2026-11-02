@@ -80,7 +80,8 @@ function injectEditorProperties(_yaml) {
 
 	for (var i = 0; i < lines.length; i++) {
 
-		var isTarget = mapPattern.test(lines[i]);
+		// skip commented-out regions, or the injected lines become duplicate keys
+		var isTarget = lines[i].trim().charAt(0) !== '#' && mapPattern.test(lines[i]);
 
 		if (isTarget) {
 			var indent = "    ";
