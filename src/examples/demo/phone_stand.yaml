@@ -1,0 +1,238 @@
+# Phone Stand
+#
+# A slot-together phone stand: two side pieces and two braces.
+# Cut two of each, stand the braces on edge, and drop the side
+# pieces onto them. The slots interlock like an egg crate.
+#
+# Change the lean angle or phone thickness and the side profile
+# (including the base depth) is recalculated to fit.
+
+properties:
+    name: phone_stand
+    # sized to fit the parts: two side pieces side by side, braces below
+    # (the same math as base_depth and side_height further down)
+    width: 3 * gap + 2 * max(stand_width, front_margin + (phone_thickness + case_clearance + lip_thickness) * sin(lean_angle) + (seat_depth + support_length) * cos(lean_angle) + support_width * sin(lean_angle) + back_margin)
+    height: 3 * gap + 2 * foot_height + support_length * sin(lean_angle)
+
+constants:
+    # material
+    material_thickness: 3mm
+    slot_play: 0mm          # widen the slots if the fit is too tight
+
+    # phone
+    phone_thickness: 11mm   # include the case
+    case_clearance: 2mm
+    lean_angle: 70deg       # from the table, try 55deg to 80deg
+
+    # stand
+    stand_width: 70mm
+    foot_height: 18mm
+    support_length: 85mm
+    support_width: 16mm
+    support_overlap: 6mm    # how far the support sinks into the base
+    seat_depth: 8mm
+    lip_height: 9mm
+    lip_thickness: 4mm
+    front_margin: 6mm
+    back_margin: 10mm
+    brace_inset: 10mm       # brace slots, from the front and back of the sides
+    brace_overhang: 8mm     # side slots, from the ends of the braces
+    cable_width: 12mm
+    cable_height: 8mm
+    corner_radius: 3mm
+
+    # layout
+    gap: 6mm
+
+
+children:
+    - region:
+        properties:
+            name: stand
+            registration: top_left
+
+        # constants can only use constants from their ancestors,
+        # so derived values are declared one level down
+        constants:
+            tilt: 90deg - lean_angle
+            channel: phone_thickness + case_clearance
+            slot_width: material_thickness + slot_play
+
+        children:
+            - region:
+                properties:
+                    name: parts
+
+                constants:
+                    # where the front of the support meets the top of the base
+                    pivot_x: front_margin + (channel + lip_thickness) * cos(tilt) + seat_depth * sin(tilt)
+                    # (repeats pivot_x, which isn't visible in this block)
+                    base_depth: front_margin + (channel + lip_thickness) * cos(tilt) + seat_depth * sin(tilt) + support_length * sin(tilt) + support_width * cos(tilt) + back_margin
+                    side_height: foot_height + support_length * cos(tilt)
+
+                children:
+                    - region:
+                        properties:
+                            name: side_a
+                            left: gap
+                            top: gap
+                            width: base_depth
+                            height: side_height
+                            # origin at the front of the base, on the ground
+                            registration: bottom_left
+
+                        children: &side_parts
+                            - rectangle:
+                                properties:
+                                    name: base
+                                    left: 0mm
+                                    bottom: 0mm
+                                    width: base_depth
+                                    height: foot_height
+                                    radius: corner_radius
+
+                            - rectangle:
+                                properties:
+                                    name: arch
+                                    left: brace_inset + slot_width + 6mm
+                                    right: base_depth - brace_inset - slot_width - 6mm
+                                    top: -foot_height * .4
+                                    bottom: 5mm
+                                    radius: 4mm
+                                    boolean: subtract
+
+                            - region:
+                                properties:
+                                    name: support_assembly
+                                    left: pivot_x
+                                    top: -foot_height
+                                    width: 1mm
+                                    height: 1mm
+                                    # pivot around the front of the support
+                                    registration: top_left
+                                    rotation: tilt
+                                    boolean: add
+
+                                children:
+                                    - rectangle:
+                                        properties:
+                                            name: support
+                                            left: 0mm
+                                            width: support_width
+                                            top: -support_length
+                                            bottom: support_overlap
+                                            radius: corner_radius
+
+                                        children:
+                                            - rectangle:
+                                                properties:
+                                                    name: window
+                                                    margin_left: support_width / 3
+                                                    margin_right: support_width / 3
+                                                    margin_top: 12mm
+                                                    margin_bottom: support_overlap + 18mm
+                                                    radius: 2mm
+                                                    boolean: subtract
+
+                                    - rectangle:
+                                        properties:
+                                            name: seat
+                                            left: -channel - lip_thickness
+                                            right: support_width / 2
+                                            top: 0mm
+                                            height: seat_depth
+                                            boolean: add
+
+                                    - rectangle:
+                                        properties:
+                                            name: lip
+                                            left: -channel - lip_thickness
+                                            width: lip_thickness
+                                            top: -lip_height
+                                            bottom: seat_depth / 2
+                                            radius: lip_thickness / 2
+                                            # the lip and seat share an edge
+                                            trapping: .01mm
+                                            boolean: add
+
+                            - rectangle:
+                                properties:
+                                    name: front_slot
+                                    left: brace_inset
+                                    width: slot_width
+                                    bottom: 1mm
+                                    height: foot_height / 2 + 1mm
+                                    boolean: subtract
+
+                            - rectangle:
+                                properties:
+                                    name: back_slot
+                                    right: base_depth - brace_inset
+                                    width: slot_width
+                                    bottom: 1mm
+                                    height: foot_height / 2 + 1mm
+                                    boolean: subtract
+
+                    - region:
+                        properties:
+                            name: side_b
+                            left: gap * 2 + base_depth
+                            top: gap
+                            width: base_depth
+                            height: side_height
+                            registration: bottom_left
+
+                        children: *side_parts
+
+                    - rectangle:
+                        properties:
+                            name: brace_a
+                            left: gap
+                            top: gap * 2 + side_height
+                            width: stand_width
+                            height: foot_height
+                            radius: 2mm
+
+                        children: &brace_parts
+                            - rectangle:
+                                properties:
+                                    name: left_slot
+                                    margin_left: brace_overhang
+                                    width: slot_width
+                                    margin_top: -1mm
+                                    height: foot_height / 2 + 1mm
+                                    # works around a paper.js boolean glitch
+                                    trapping: .01mm
+                                    boolean: subtract
+
+                            - rectangle:
+                                properties:
+                                    name: right_slot
+                                    margin_right: brace_overhang
+                                    width: slot_width
+                                    margin_top: -1mm
+                                    height: foot_height / 2 + 1mm
+                                    # works around a paper.js boolean glitch
+                                    trapping: .01mm
+                                    boolean: subtract
+
+                            - rectangle:
+                                properties:
+                                    name: cable_notch
+                                    margin_left: (stand_width - cable_width) / 2
+                                    width: cable_width
+                                    margin_bottom: -cable_width / 2
+                                    height: cable_height + cable_width / 2
+                                    radius: cable_width / 2
+                                    boolean: subtract
+
+                    - rectangle:
+                        properties:
+                            name: brace_b
+                            left: gap * 2 + stand_width
+                            top: gap * 2 + side_height
+                            width: stand_width
+                            height: foot_height
+                            radius: 2mm
+
+                        children: *brace_parts
