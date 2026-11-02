@@ -4,3 +4,4 @@ exp_lib
 *.log
 *.sublime-workspace
 build/*
+.netlify
